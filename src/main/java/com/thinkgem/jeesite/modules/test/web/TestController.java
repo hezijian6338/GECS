@@ -26,7 +26,7 @@ import com.thinkgem.jeesite.modules.test.service.TestService;
 
 /**
  * 测试Controller
- * @author ThinkGem
+ * @author ThinkGem测试
  * @version 2013-10-17
  */
 @Controller
