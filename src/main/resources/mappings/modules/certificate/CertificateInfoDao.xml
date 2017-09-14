@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.certificate.dao.CertificateInfoDao">
+    
+	<sql id="certificateInfoColumns">
+		a.id AS "id",
+		a.certificate_type_id AS "certificateTypeId",
+		a.certificate_code AS "certificateCode",
+		a.certificate_name AS "certificateName",
+		a.unit_id AS "unitId",
+		a.unit_name AS "unitName",
+		a.establish_date AS "establishDate",
+		a.effective_date_star AS "effectiveDateStar",
+		a.effective_date_end AS "effectiveDateEnd",
+		a.registered_type AS "registeredType",
+		a.registered_capital AS "registeredCapital",
+		a.address AS "address",
+		a.persion_name AS "persionName",
+		a.persion_id_type AS "persionIdType",
+		a.person_id AS "personId",
+		a.persion_phone AS "persionPhone",
+		a.handler_name AS "handlerName",
+		a.handler_id_type AS "handlerIdType",
+		a.handler_id AS "handlerId",
+		a.handler_phone AS "handlerPhone",
+		a.scope AS "scope",
+		a.building_name AS "buildingName",
+		a.floor_number AS "floorNumber",
+		a.use_area AS "useArea",
+		a.usage1 AS "usage1",
+		a.dealfire_facilities AS "dealfireFacilities",
+		a.postcode AS "postcode",
+		a.area_id AS "area.id",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a28.name AS "area.name",
+		o5.name AS "office.name"
+	</sql>
+	
+	<sql id="certificateInfoJoins">
+		LEFT JOIN sys_area a28 ON a28.id = a.area_id
+		LEFT JOIN sys_office o5 ON o5.id = a.unit_name
+	</sql>
+    
+	<select id="get" resultType="CertificateInfo">
+		SELECT 
+			<include refid="certificateInfoColumns"/>
+		FROM certificate_info a
+		<include refid="certificateInfoJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CertificateInfo">
+		SELECT 
+			<include refid="certificateInfoColumns"/>
+		FROM certificate_info a
+		<include refid="certificateInfoJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="certificateCode != null and certificateCode != ''">
+				AND a.certificate_code LIKE 
+					<if test="dbName == 'oracle'">'%'||#{certificateCode}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{certificateCode}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{certificateCode},'%')</if>
+			</if>
+			<if test="certificateName != null and certificateName != ''">
+				AND a.certificate_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{certificateName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{certificateName}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{certificateName},'%')</if>
+			</if>
+			<if test="unitName != null and unitName != ''">
+				AND a.unit_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{unitName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{unitName}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{unitName},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="CertificateInfo">
+		SELECT 
+			<include refid="certificateInfoColumns"/>
+		FROM certificate_info a
+		<include refid="certificateInfoJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO certificate_info(
+			id,
+			certificate_type_id,
+			certificate_code,
+			certificate_name,
+			unit_id,
+			unit_name,
+			establish_date,
+			effective_date_star,
+			effective_date_end,
+			registered_type,
+			registered_capital,
+			address,
+			persion_name,
+			persion_id_type,
+			person_id,
+			persion_phone,
+			handler_name,
+			handler_id_type,
+			handler_id,
+			handler_phone,
+			scope,
+			building_name,
+			floor_number,
+			use_area,
+			usage1,
+			dealfire_facilities,
+			postcode,
+			area_id,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{certificateTypeId},
+			#{certificateCode},
+			#{certificateName},
+			#{unitId},
+			#{office.id},
+			#{establishDate},
+			#{effectiveDateStar},
+			#{effectiveDateEnd},
+			#{registeredType},
+			#{registeredCapital},
+			#{address},
+			#{persionName},
+			#{persionIdType},
+			#{personId},
+			#{persionPhone},
+			#{handlerName},
+			#{handlerIdType},
+			#{handlerId},
+			#{handlerPhone},
+			#{scope},
+			#{buildingName},
+			#{floorNumber},
+			#{useArea},
+			#{usage1},
+			#{dealfireFacilities},
+			#{postcode},
+			#{area.id},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE certificate_info SET 	
+			certificate_code = #{certificateCode},
+			certificate_name = #{certificateName},
+			unit_name = #{office.id},
+			establish_date = #{establishDate},
+			effective_date_star = #{effectiveDateStar},
+			effective_date_end = #{effectiveDateEnd},
+			registered_type = #{registeredType},
+			registered_capital = #{registeredCapital},
+			address = #{address},
+			persion_name = #{persionName},
+			persion_id_type = #{persionIdType},
+			person_id = #{personId},
+			persion_phone = #{persionPhone},
+			handler_name = #{handlerName},
+			handler_id_type = #{handlerIdType},
+			handler_id = #{handlerId},
+			handler_phone = #{handlerPhone},
+			scope = #{scope},
+			building_name = #{buildingName},
+			floor_number = #{floorNumber},
+			use_area = #{useArea},
+			usage1 = #{usage1},
+			dealfire_facilities = #{dealfireFacilities},
+			postcode = #{postcode},
+			area_id = #{area.id},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE certificate_info SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

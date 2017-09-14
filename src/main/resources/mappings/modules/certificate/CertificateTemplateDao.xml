@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.certificate.dao.CertificateTemplateDao">
+    
+	<sql id="certificateTemplateColumns">
+		a.id AS "id",
+		a.template_name AS "templateName",
+		a.template_type AS "templateType",
+		a.unit_id AS "unitId",
+		a.area_id AS "area.id",
+		a.is_share AS "isShare",
+		a.path AS "path",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a5.name AS "area.name"
+	</sql>
+	
+	<sql id="certificateTemplateJoins">
+		LEFT JOIN sys_area a5 ON a5.id = a.area_id
+	</sql>
+    
+	<select id="get" resultType="CertificateTemplate">
+		SELECT 
+			<include refid="certificateTemplateColumns"/>
+		FROM certificate_template a
+		<include refid="certificateTemplateJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CertificateTemplate">
+		SELECT 
+			<include refid="certificateTemplateColumns"/>
+		FROM certificate_template a
+		<include refid="certificateTemplateJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="templateName != null and templateName != ''">
+				AND a.template_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{templateName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{templateName}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{templateName},'%')</if>
+			</if>
+			<if test="templateType != null and templateType != ''">
+				AND a.template_type LIKE 
+					<if test="dbName == 'oracle'">'%'||#{templateType}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{templateType}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{templateType},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="CertificateTemplate">
+		SELECT 
+			<include refid="certificateTemplateColumns"/>
+		FROM certificate_template a
+		<include refid="certificateTemplateJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO certificate_template(
+			id,
+			template_name,
+			template_type,
+			unit_id,
+			area_id,
+			is_share,
+			path,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{templateName},
+			#{templateType},
+			#{unitId},
+			#{area.id},
+			#{isShare},
+			#{path},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE certificate_template SET 	
+			template_name = #{templateName},
+			template_type = #{templateType},
+			area_id = #{area.id},
+			is_share = #{isShare},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE certificate_template SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

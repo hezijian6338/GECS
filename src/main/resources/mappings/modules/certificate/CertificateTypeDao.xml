@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.certificate.dao.CertificateTypeDao">
+    
+	<sql id="certificateTypeColumns">
+		a.id AS "id",
+		a.certificate_type_code AS "certificateTypeCode",
+		a.certificate_type_name AS "certificateTypeName",
+		a.unit_id AS "unitId",
+		a.unit_name AS "unitName",
+		a.effective_date AS "effectiveDate",
+		a.description AS "description",
+		a.owner_type AS "ownerType",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		o5.name AS "office.name"
+	</sql>
+	
+	<sql id="certificateTypeJoins">
+		LEFT JOIN sys_office o5 ON o5.id = a.unit_name
+	</sql>
+    
+	<select id="get" resultType="CertificateType">
+		SELECT 
+			<include refid="certificateTypeColumns"/>
+		FROM certificate_type a
+		<include refid="certificateTypeJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CertificateType">
+		SELECT 
+			<include refid="certificateTypeColumns"/>
+		FROM certificate_type a
+		<include refid="certificateTypeJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="certificateTypeCode != null and certificateTypeCode != ''">
+				AND a.certificate_type_code LIKE 
+					<if test="dbName == 'oracle'">'%'||#{certificateTypeCode}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{certificateTypeCode}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{certificateTypeCode},'%')</if>
+			</if>
+			<if test="certificateTypeName != null and certificateTypeName != ''">
+				AND a.certificate_type_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{certificateTypeName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{certificateTypeName}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{certificateTypeName},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="CertificateType">
+		SELECT 
+			<include refid="certificateTypeColumns"/>
+		FROM certificate_type a
+		<include refid="certificateTypeJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO certificate_type(
+			id,
+			certificate_type_code,
+			certificate_type_name,
+			unit_id,
+			unit_name,
+			effective_date,
+			description,
+			owner_type,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{certificateTypeCode},
+			#{certificateTypeName},
+			#{unitId},
+			#{office.id},
+			#{effectiveDate},
+			#{description},
+			#{ownerType},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE certificate_type SET 	
+			certificate_type_code = #{certificateTypeCode},
+			certificate_type_name = #{certificateTypeName},
+			unit_name = #{office.id},
+			effective_date = #{effectiveDate},
+			description = #{description},
+			owner_type = #{ownerType},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE certificate_type SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

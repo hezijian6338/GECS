@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.certificate.dao.CertificateLibraryDao">
+    
+	<sql id="certificateLibraryColumns">
+		a.id AS "id",
+		a.certificate_name AS "certificateName",
+		a.certificate_type_id AS "certificateTypeId",
+		a.description AS "description",
+		a.unit_id AS "unitId",
+		a.unit_name AS "unitName",
+		a.owner_type AS "ownerType",
+		a.effective_date_start AS "effectiveDateStart",
+		a.effective_date_end AS "effectiveDateEnd",
+		a.status AS "status",
+		a.area_id AS "area.id",
+		a.path AS "path",
+		a.is_issue AS "isIssue",
+		a.issue_date AS "issueDate",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a11.name AS "area.name",
+		o6.name AS "office.name"
+	</sql>
+	
+	<sql id="certificateLibraryJoins">
+		LEFT JOIN sys_office o6 ON o6.id = a.unit_name
+		LEFT JOIN sys_area a11 ON a11.id = a.area_id
+	</sql>
+    
+	<select id="get" resultType="CertificateLibrary">
+		SELECT 
+			<include refid="certificateLibraryColumns"/>
+		FROM certificate_library a
+		<include refid="certificateLibraryJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CertificateLibrary">
+		SELECT 
+			<include refid="certificateLibraryColumns"/>
+		FROM certificate_library a
+		<include refid="certificateLibraryJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="certificateName != null and certificateName != ''">
+				AND a.certificate_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{certificateName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{certificateName}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{certificateName},'%')</if>
+			</if>
+			<if test="effectiveDateStart != null and effectiveDateStart != ''">
+				AND a.effective_date_start &gt;= #{effectiveDateStart}
+			</if>
+			<if test="effectiveDateEnd != null and effectiveDateEnd != ''">
+				AND a.effective_date_end &lt;= #{effectiveDateEnd}
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="CertificateLibrary">
+		SELECT 
+			<include refid="certificateLibraryColumns"/>
+		FROM certificate_library a
+		<include refid="certificateLibraryJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO certificate_library(
+			id,
+			certificate_name,
+			certificate_type_id,
+			description,
+			unit_id,
+			unit_name,
+			owner_type,
+			effective_date_start,
+			effective_date_end,
+			status,
+			area_id,
+			path,
+			is_issue,
+			issue_date,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{certificateName},
+			#{certificateTypeId},
+			#{description},
+			#{unitId},
+			#{office.id},
+			#{ownerType},
+			#{effectiveDateStart},
+			#{effectiveDateEnd},
+			#{status},
+			#{area.id},
+			#{path},
+			#{isIssue},
+			#{issueDate},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE certificate_library SET 	
+			certificate_name = #{certificateName},
+			description = #{description},
+			unit_name = #{office.id},
+			owner_type = #{ownerType},
+			effective_date_start = #{effectiveDateStart},
+			effective_date_end = #{effectiveDateEnd},
+			status = #{status},
+			area_id = #{area.id},
+			path = #{path},
+			is_issue = #{isIssue},
+			issue_date = #{issueDate},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE certificate_library SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
