@@ -1,0 +1,92 @@
+#printf {
+    position: relative;
+    float: left;
+    width: 800px;
+    height: 500px;
+    border: 0.1em solid #000;
+}
+
+#products {
+    float: left;
+    width: 20%;
+    height: auto;
+}
+
+.printComponents { /* position: relative; background: red; */
+    overflow: hidden;
+    text-align:center;
+    z-index: 3;
+    width: 30%;
+    cursor: move;
+}
+
+.textarea {
+    width: 100%;
+    resize: none;
+    list-style: none;
+}
+
+.components {
+    cursor: pointer;
+}
+
+.horizontallineStyle {
+    position: relative;
+    height: auto;
+    width: auto;
+    border-bottom: 0.2em solid #000000;
+    cursor: move;
+}
+
+.verticallineStyle {
+    position: relative;
+    height: auto;
+    width: auto;
+    border-right: 1em solid #000000;
+    cursor: move;
+}
+
+.textarea {
+    background: transparent;
+}
+
+.FormAcount {
+    width: 40%;
+    height: 4%;
+}
+
+.pageRight {
+    float: right;
+    width: 76%;
+    height: 80%;
+}
+
+.util {
+    width: auto;
+    height: 20%;
+}
+
+._util {
+    margin-right: 2em;
+    margin-bottom: 0.5em;
+    width: auto;
+    height: auto;
+    clear: both;
+    /*border: 0.1em solid #000;*/
+}
+
+/* The Close Button */
+.close {
+    position: absolute;
+    top: 2%;
+    right: 10%;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #999;
+    text-decoration: none;
+    cursor: pointer;
+}
