@@ -34,8 +34,22 @@
 		<type name="images">
 			<url>%BASE_URL%images/</url>
 			<directory>%BASE_DIR%images</directory>
-			<maxSize>2M</maxSize>
-			<allowedExtensions>bmp,gif,jpeg,jpg,png</allowedExtensions>
+			<maxSize>10M</maxSize>
+			<allowedExtensions>jpg,png,jpeg,JPEG,bmp</allowedExtensions>
+			<deniedExtensions></deniedExtensions>
+		</type>
+		<type name="modelPhoto">
+			<url>%BASE_URL%modelPhoto/</url>
+			<directory>%BASE_DIR%modelPhoto</directory>
+			<maxSize>10M</maxSize>
+			<allowedExtensions>jpg,png,jpeg,JPEG,bmp</allowedExtensions>
+			<deniedExtensions></deniedExtensions>
+		</type>
+		<type name="pdf">
+			<url>%BASE_URL%pdf/</url>
+			<directory>%BASE_DIR%pdf</directory>
+			<maxSize>10M</maxSize>
+			<allowedExtensions>pdf</allowedExtensions>
 			<deniedExtensions></deniedExtensions>
 		</type>
 		<type name="flash">
@@ -51,24 +65,24 @@
 			<role>*</role>
 			<resourceType>*</resourceType>
 			<folder>/</folder>
-			<folderView>false</folderView>
-			<folderCreate>false</folderCreate>
-			<folderRename>false</folderRename>
-			<folderDelete>false</folderDelete>
-			<fileView>false</fileView>
-			<fileUpload>false</fileUpload>
-			<fileRename>false</fileRename>
-			<fileDelete>false</fileDelete>
+			<folderView>true</folderView>
+			<folderCreate>true</folderCreate>
+			<folderRename>true</folderRename>
+			<folderDelete>true</folderDelete>
+			<fileView>true</fileView>
+			<fileUpload>true</fileUpload>
+			<fileRename>true</fileRename>
+			<fileDelete>true</fileDelete>
 		</accessControl>
 	</accessControls>
 	<thumbs>
 		<enabled>true</enabled>
 		<url>%BASE_URL%_thumbs/</url>
 		<directory>%BASE_DIR%_thumbs</directory>
-		<directAccess>true</directAccess>
-		<maxWidth>320</maxWidth>
-		<maxHeight>240</maxHeight>
-		<quality>80</quality>
+		<directAccess>false</directAccess>
+		<maxWidth>220</maxWidth>
+		<maxHeight>140</maxHeight>
+		<quality>60</quality>
 	</thumbs>
 	<plugins>
 		<plugin>

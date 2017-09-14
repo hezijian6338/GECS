@@ -3,9 +3,12 @@
  */
 package com.thinkgem.jeesite.modules.certificate.web;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.thinkgem.jeesite.common.config.Global;
+import com.thinkgem.jeesite.common.persistence.Page;
+import com.thinkgem.jeesite.common.utils.StringUtils;
+import com.thinkgem.jeesite.common.web.BaseController;
+import com.thinkgem.jeesite.modules.certificate.entity.CertificateTemplate;
+import com.thinkgem.jeesite.modules.certificate.service.CertificateTemplateService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,12 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.thinkgem.jeesite.common.config.Global;
-import com.thinkgem.jeesite.common.persistence.Page;
-import com.thinkgem.jeesite.common.web.BaseController;
-import com.thinkgem.jeesite.common.utils.StringUtils;
-import com.thinkgem.jeesite.modules.certificate.entity.CertificateTemplate;
-import com.thinkgem.jeesite.modules.certificate.service.CertificateTemplateService;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 证照模板管理Controller
@@ -59,6 +58,13 @@ public class CertificateTemplateController extends BaseController {
 	public String form(CertificateTemplate certificateTemplate, Model model) {
 		model.addAttribute("certificateTemplate", certificateTemplate);
 		return "modules/certificate/certificateTemplateForm";
+	}
+
+	@RequiresPermissions("certificate:certificateTemplate:view")
+	@RequestMapping(value = "makeModel")
+	public String makeModel(CertificateTemplate certificateTemplate, Model model) {
+		model.addAttribute("certificateTemplate", certificateTemplate);
+		return "modules/certificate/index";
 	}
 
 	@RequiresPermissions("certificate:certificateTemplate:edit")
