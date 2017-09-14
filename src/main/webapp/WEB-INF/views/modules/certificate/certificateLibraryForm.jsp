@@ -63,17 +63,25 @@
 		<div class="control-group">
 			<label class="control-label">证照有效期（起始：</label>
 			<div class="controls">
-				<input name="effectiveDateStart" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
+				<input name="effectiveDateStart" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
 					value="<fmt:formatDate value="${certificateLibrary.effectiveDateStart}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">证照有效期（截至）：</label>
 			<div class="controls">
-				<input name="effectiveDateEnd" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
+				<input name="effectiveDateEnd" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
 					value="<fmt:formatDate value="${certificateLibrary.effectiveDateEnd}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">下载次数：</label>
+			<div class="controls">
+				<form:input path="downloadsNum" htmlEscape="false" maxlength="10" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -86,7 +94,8 @@
 			<label class="control-label">所属区域：</label>
 			<div class="controls">
 				<sys:treeselect id="area" name="area.id" value="${certificateLibrary.area.id}" labelName="area.name" labelValue="${certificateLibrary.area.name}"
-					title="区域" url="/sys/area/treeData" cssClass="" allowClear="true" notAllowSelectParent="true"/>
+					title="区域" url="/sys/area/treeData" cssClass="required" allowClear="true" notAllowSelectParent="true"/>
+				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">

@@ -12,6 +12,7 @@
 		a.owner_type AS "ownerType",
 		a.effective_date_start AS "effectiveDateStart",
 		a.effective_date_end AS "effectiveDateEnd",
+		a.downloads_num AS "downloadsNum",
 		a.status AS "status",
 		a.area_id AS "area.id",
 		a.path AS "path",
@@ -23,13 +24,13 @@
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
-		a11.name AS "area.name",
-		o6.name AS "office.name"
+		a12.name AS "area.name",
+		o5.name AS "office.name"
 	</sql>
 	
 	<sql id="certificateLibraryJoins">
-		LEFT JOIN sys_office o6 ON o6.id = a.unit_name
-		LEFT JOIN sys_area a11 ON a11.id = a.area_id
+		LEFT JOIN sys_area a12 ON a12.id = a.area_id
+		LEFT JOIN sys_office o5 ON o5.id = a.unit_name
 	</sql>
     
 	<select id="get" resultType="CertificateLibrary">
@@ -53,14 +54,17 @@
 					<if test="dbName == 'mssql'">'%'+#{certificateName}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{certificateName},'%')</if>
 			</if>
+			<if test="unitName != null and unitName != ''">
+				AND a.unit_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{unitName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{unitName}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{unitName},'%')</if>
+			</if>
 			<if test="effectiveDateStart != null and effectiveDateStart != ''">
 				AND a.effective_date_start &gt;= #{effectiveDateStart}
 			</if>
 			<if test="effectiveDateEnd != null and effectiveDateEnd != ''">
 				AND a.effective_date_end &lt;= #{effectiveDateEnd}
-			</if>
-			<if test="status != null and status != ''">
-				AND a.status = #{status}
 			</if>
 		</where>
 		<choose>
@@ -102,6 +106,7 @@
 			owner_type,
 			effective_date_start,
 			effective_date_end,
+			downloads_num,
 			status,
 			area_id,
 			path,
@@ -123,6 +128,7 @@
 			#{ownerType},
 			#{effectiveDateStart},
 			#{effectiveDateEnd},
+			#{downloadsNum},
 			#{status},
 			#{area.id},
 			#{path},
@@ -145,6 +151,7 @@
 			owner_type = #{ownerType},
 			effective_date_start = #{effectiveDateStart},
 			effective_date_end = #{effectiveDateEnd},
+			downloads_num = #{downloadsNum},
 			status = #{status},
 			area_id = #{area.id},
 			path = #{path},
