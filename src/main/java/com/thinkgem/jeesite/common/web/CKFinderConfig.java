@@ -3,17 +3,15 @@
  */
 package com.thinkgem.jeesite.common.web;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.http.HttpServletRequest;
-
-import com.thinkgem.jeesite.common.config.Global;
+import com.ckfinder.connector.configuration.Configuration;
+import com.ckfinder.connector.data.AccessControlLevel;
+import com.ckfinder.connector.utils.AccessControlUtil;
 import com.thinkgem.jeesite.common.utils.FileUtils;
 import com.thinkgem.jeesite.modules.sys.security.SystemAuthorizingRealm.Principal;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
-import com.ckfinder.connector.configuration.Configuration;
-import com.ckfinder.connector.data.AccessControlLevel;
-import com.ckfinder.connector.utils.AccessControlUtil;
+import javax.servlet.ServletConfig;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * CKFinder配置
@@ -53,8 +51,16 @@ public class CKFinderConfig extends Configuration {
 		try {
 //			Principal principal = (Principal)SecurityUtils.getSubject().getPrincipal();
 //			this.baseURL = ServletContextFactory.getServletContext().getContextPath()+"/userfiles/"+principal+"/";
-			this.baseURL = FileUtils.path(Servlets.getRequest().getContextPath() + Global.USERFILES_BASE_URL + principal + "/");
-			this.baseDir = FileUtils.path(Global.getUserfilesBaseDir() + Global.USERFILES_BASE_URL + principal + "/");
+
+
+			//this.baseURL = FileUtils.path(Servlets.getRequest().getContextPath() + Global.USERFILES_BASE_URL + principal + "/");
+			this.baseURL = FileUtils.path("\\upload\\"+ principal + "/");
+			//this.baseURL = FileUtils.path("/");
+
+			//this.baseDir = FileUtils.path(Global.getUserfilesBaseDir() + Global.USERFILES_BASE_URL + principal + "/");
+			this.baseDir = FileUtils.path("E:\\photo\\upload\\"+ principal + "/");
+
+
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

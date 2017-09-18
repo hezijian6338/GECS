@@ -3,9 +3,12 @@
  */
 package com.thinkgem.jeesite.modules.certificate.web;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.thinkgem.jeesite.common.config.Global;
+import com.thinkgem.jeesite.common.persistence.Page;
+import com.thinkgem.jeesite.common.utils.StringUtils;
+import com.thinkgem.jeesite.common.web.BaseController;
+import com.thinkgem.jeesite.modules.certificate.entity.CertificateType;
+import com.thinkgem.jeesite.modules.certificate.service.CertificateTypeService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,12 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.thinkgem.jeesite.common.config.Global;
-import com.thinkgem.jeesite.common.persistence.Page;
-import com.thinkgem.jeesite.common.web.BaseController;
-import com.thinkgem.jeesite.common.utils.StringUtils;
-import com.thinkgem.jeesite.modules.certificate.entity.CertificateType;
-import com.thinkgem.jeesite.modules.certificate.service.CertificateTypeService;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 证照类型Controller
@@ -53,6 +52,7 @@ public class CertificateTypeController extends BaseController {
 		model.addAttribute("page", page);
 		return "modules/certificate/certificateTypeList";
 	}
+
 
 	@RequiresPermissions("certificate:certificateType:view")
 	@RequestMapping(value = "form")

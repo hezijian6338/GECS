@@ -29,7 +29,7 @@
 		manager with ease.</div>
 	<p style="padding-left: 30px; padding-right: 30px;">
 	<!-- CKFinder tag on your JSP page -->
-	<ckfinder:ckfinder basePath="../" width="100%" height="500" />
+	<ckfinder:ckfinder  basePath="../" width="100%" height="500" />
 	</p>
 	<div id="footer">
 		<hr />

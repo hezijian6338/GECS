@@ -1,0 +1,66 @@
+<html>
+<head><title></title></head>
+<meta charset="utf-8">
+<style>
+
+    .pdfobject-container { height: 500px;}
+    .pdfobject { border: 1px solid #666; }
+
+    /* The Modal (background) */
+    .modal {
+        display: none;
+        margin-top:5%;
+        margin-left:7%;
+        z-index: 1;
+        padding-top: 6%;
+        left: 0;
+        top: 0;
+        width: 40%;
+        height:60%;
+        overflow: auto;
+        background-color: black;
+    }
+
+
+    /* The Close Button */
+    .close {
+        color: white;
+        position: absolute;
+        top: 10px;
+        right: 25px;
+        font-size: 35px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #999;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+<script type="text/javascript" src="./pdfobject.js"></script>
+<script type="text/javascript" src="./pdfobject.min.js"></script>
+<body>
+<div class="pull-right">
+    <a id="preBack" style="cursor: pointer"
+       onclick="openModal();">预览</a>
+</div>
+<div id="myModal" class="modal">
+
+</div>
+</body>
+<script>
+    function openModal() {
+        <span class="close cursor" onclick="closeModal()">&times;</span>
+         <div id="displayPDF"></div>
+        document.getElementById('myModal').innerHTML = "<div id='displayPDF' onclick='closeModal()'></div>";
+        PDFObject.embed("./dgree.pdf", "#displayPDF");
+    }
+
+    function closeModal() {
+        document.getElementById('myModal').innerHTML = "";
+    }
+
+</script>
+</html>
