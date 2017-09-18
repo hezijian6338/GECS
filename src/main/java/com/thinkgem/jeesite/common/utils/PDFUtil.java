@@ -190,6 +190,7 @@ public class PDFUtil {
         BaseFont bfChinese = BaseFont.createFont(CHARACTOR_FONT_CH_FILE, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 
         // 图片路径获取
+       String imagePath = "E:/";
 //        String imagePath = "E:/"+certificateInfo.getStuImg();
 
         // 通过域名获取所在页和坐标，左下角为起点
