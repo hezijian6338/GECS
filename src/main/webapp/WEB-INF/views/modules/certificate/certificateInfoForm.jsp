@@ -36,7 +36,8 @@
 		<div class="control-group">
 			<label class="control-label">证照编号：</label>
 			<div class="controls">
-				<form:input path="certificateCode" htmlEscape="false" maxlength="100" class="input-xlarge "/>
+				<form:input path="certificateCode" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
@@ -47,11 +48,10 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">颁发机构名称：</label>
+			<label class="control-label">颁发机构id：</label>
 			<div class="controls">
 				<sys:treeselect id="office" name="office.id" value="${certificateInfo.office.id}" labelName="office.name" labelValue="${certificateInfo.office.name}"
-								title="部门" url="/sys/office/treeData?type=2" cssClass="required" allowClear="true" notAllowSelectParent="true"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+					title="部门" url="/sys/office/treeData?type=2" cssClass="" allowClear="true" notAllowSelectParent="true"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -84,13 +84,15 @@
 		<div class="control-group">
 			<label class="control-label">注册公司类型：</label>
 			<div class="controls">
-				<form:input path="registeredType" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				<form:input path="registeredType" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">注册资本：</label>
 			<div class="controls">
-				<form:input path="registeredCapital" htmlEscape="false" maxlength="20" class="input-xlarge "/>
+				<form:input path="registeredCapital" htmlEscape="false" maxlength="20" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
@@ -102,19 +104,22 @@
 		<div class="control-group">
 			<label class="control-label">法人姓名：</label>
 			<div class="controls">
-				<form:input path="persionName" htmlEscape="false" maxlength="20" class="input-xlarge "/>
+				<form:input path="persionName" htmlEscape="false" maxlength="20" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">法人身份证件类型：</label>
 			<div class="controls">
-				<form:input path="persionIdType" htmlEscape="false" maxlength="20" class="input-xlarge "/>
+				<form:input path="persionIdType" htmlEscape="false" maxlength="20" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">法人身份证件号码：</label>
 			<div class="controls">
-				<form:input path="personId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				<form:input path="personId" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
@@ -189,13 +194,13 @@
 				<form:input path="postcode" htmlEscape="false" maxlength="10" class="input-xlarge "/>
 			</div>
 		</div>
-<%--		<div class="control-group">
+		<div class="control-group">
 			<label class="control-label">所属区域：</label>
 			<div class="controls">
 				<sys:treeselect id="area" name="area.id" value="${certificateInfo.area.id}" labelName="area.name" labelValue="${certificateInfo.area.name}"
 					title="区域" url="/sys/area/treeData" cssClass="" allowClear="true" notAllowSelectParent="true"/>
 			</div>
-		</div>--%>
+		</div>
 		<div class="control-group">
 			<label class="control-label">备注信息：</label>
 			<div class="controls">

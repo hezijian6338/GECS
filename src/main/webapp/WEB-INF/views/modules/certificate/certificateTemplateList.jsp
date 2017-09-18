@@ -31,6 +31,14 @@
 			<li><label>模板类型：</label>
 				<form:input path="templateType" htmlEscape="false" maxlength="20" class="input-medium"/>
 			</li>
+			<li><label>所属单位id：</label>
+				<sys:treeselect id="office" name="office.id" value="${certificateTemplate.office.id}" labelName="office.name" labelValue="${certificateTemplate.office.name}"
+					title="部门" url="/sys/office/treeData?type=2" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/>
+			</li>
+			<li><label>所属区域：</label>
+				<sys:treeselect id="area" name="area.id" value="${certificateTemplate.area.id}" labelName="area.name" labelValue="${certificateTemplate.area.name}"
+					title="区域" url="/sys/area/treeData" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/>
+			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
 		</ul>
@@ -41,8 +49,10 @@
 			<tr>
 				<th>模板名称</th>
 				<th>模板类型</th>
+				<th>所属单位id</th>
 				<th>所属区域</th>
 				<th>是否共享</th>
+				<th>更新者</th>
 				<th>更新时间</th>
 				<th>备注信息</th>
 				<shiro:hasPermission name="certificate:certificateTemplate:edit"><th>操作</th></shiro:hasPermission>
@@ -58,10 +68,16 @@
 					${certificateTemplate.templateType}
 				</td>
 				<td>
+					${certificateTemplate.office.name}
+				</td>
+				<td>
 					${certificateTemplate.area.name}
 				</td>
 				<td>
 					${certificateTemplate.isShare}
+				</td>
+				<td>
+					${certificateTemplate.updateBy.id}
 				</td>
 				<td>
 					<fmt:formatDate value="${certificateTemplate.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>

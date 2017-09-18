@@ -14,9 +14,9 @@ import com.thinkgem.jeesite.modules.certificate.entity.CertificateInfo;
 import com.thinkgem.jeesite.modules.certificate.dao.CertificateInfoDao;
 
 /**
- * 证照元数据管理Service
+ * 证照元数据Service
  * @author xucaikai
- * @version 2017-09-13
+ * @version 2017-09-18
  */
 @Service
 @Transactional(readOnly = true)

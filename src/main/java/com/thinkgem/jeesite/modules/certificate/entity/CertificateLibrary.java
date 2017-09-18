@@ -3,12 +3,10 @@
  */
 package com.thinkgem.jeesite.modules.certificate.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.thinkgem.jeesite.modules.sys.entity.Office;
 import org.hibernate.validator.constraints.Length;
+import com.thinkgem.jeesite.modules.sys.entity.Office;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import javax.validation.constraints.NotNull;
 import com.thinkgem.jeesite.modules.sys.entity.Area;
 
 import com.thinkgem.jeesite.common.persistence.DataEntity;
@@ -16,7 +14,7 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 /**
  * 证照库管理Entity
  * @author xucaikai
- * @version 2017-09-14
+ * @version 2017-09-18
  */
 public class CertificateLibrary extends DataEntity<CertificateLibrary> {
 	
@@ -24,9 +22,7 @@ public class CertificateLibrary extends DataEntity<CertificateLibrary> {
 	private String certificateName;		// 证照名称
 	private String certificateTypeId;		// 证照类型id
 	private String description;		// 证照描述
-	private String unitId;		// 颁发机构id
-	private String unitName;		// 颁发机构名称
-	private Office office;    //部门名称
+	private Office office;		// 颁发机构id
 	private String ownerType;		// 持证者类型
 	private Date effectiveDateStart;		// 证照有效期（起始
 	private Date effectiveDateEnd;		// 证照有效期（截至）
@@ -45,7 +41,7 @@ public class CertificateLibrary extends DataEntity<CertificateLibrary> {
 		super(id);
 	}
 
-	@Length(min=1, max=100, message="证照名称长度必须介于 1 和 100 之间")
+	@Length(min=0, max=100, message="证照名称长度必须介于 0 和 100 之间")
 	public String getCertificateName() {
 		return certificateName;
 	}
@@ -72,35 +68,13 @@ public class CertificateLibrary extends DataEntity<CertificateLibrary> {
 		this.description = description;
 	}
 	
-	@Length(min=0, max=18, message="颁发机构id长度必须介于 0 和 18 之间")
-	public String getUnitId() {
-		return unitId;
-	}
-
-	public void setUnitId(String unitId) {
-		this.unitId = unitId;
-	}
-	
-	@Length(min=1, max=64, message="颁发机构名称长度必须介于 1 和 64 之间")
-	public String getUnitName() {
-		return unitName;
-	}
-
-	public void setUnitName(String unitName) {
-		this.unitName = unitName;
-	}
-
-	@JsonIgnore
-	@NotNull(message="归属部门不能为空")
 	public Office getOffice() {
-		return this.office;
-
+		return office;
 	}
 
 	public void setOffice(Office office) {
 		this.office = office;
 	}
-
 	
 	@Length(min=0, max=64, message="持证者类型长度必须介于 0 和 64 之间")
 	public String getOwnerType() {
@@ -112,7 +86,6 @@ public class CertificateLibrary extends DataEntity<CertificateLibrary> {
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	@NotNull(message="证照有效期（起始不能为空")
 	public Date getEffectiveDateStart() {
 		return effectiveDateStart;
 	}
@@ -122,7 +95,6 @@ public class CertificateLibrary extends DataEntity<CertificateLibrary> {
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	@NotNull(message="证照有效期（截至）不能为空")
 	public Date getEffectiveDateEnd() {
 		return effectiveDateEnd;
 	}
@@ -149,7 +121,6 @@ public class CertificateLibrary extends DataEntity<CertificateLibrary> {
 		this.status = status;
 	}
 	
-	@NotNull(message="所属区域不能为空")
 	public Area getArea() {
 		return area;
 	}

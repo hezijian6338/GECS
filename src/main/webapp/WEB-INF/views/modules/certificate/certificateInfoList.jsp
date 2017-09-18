@@ -31,9 +31,9 @@
 			<li><label>证照名称：</label>
 				<form:input path="certificateName" htmlEscape="false" maxlength="100" class="input-medium"/>
 			</li>
-			<li><label>颁发机构名称：</label>
+			<li><label>颁发机构id：</label>
 				<sys:treeselect id="office" name="office.id" value="${certificateInfo.office.id}" labelName="office.name" labelValue="${certificateInfo.office.name}"
-								title="部门" url="/sys/office/treeData?type=2" cssClass="required" allowClear="true" notAllowSelectParent="true"/>
+					title="部门" url="/sys/office/treeData?type=2" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
@@ -45,7 +45,7 @@
 			<tr>
 				<th>证照编号</th>
 				<th>证照名称</th>
-				<th>颁发机构名称</th>
+				<th>颁发机构id</th>
 				<th>成立日期</th>
 				<th>证照有效期（起始</th>
 				<th>证照有效期（截至）</th>
@@ -68,6 +68,7 @@
 				<th>现有消防设施</th>
 				<th>邮政编码</th>
 				<th>所属区域</th>
+				<th>创建者</th>
 				<th>更新者</th>
 				<th>更新时间</th>
 				<th>备注信息</th>
@@ -151,6 +152,9 @@
 				</td>
 				<td>
 					${certificateInfo.area.name}
+				</td>
+				<td>
+					${certificateInfo.createBy.id}
 				</td>
 				<td>
 					${certificateInfo.updateBy.id}

@@ -25,7 +25,7 @@ import com.thinkgem.jeesite.modules.certificate.service.CertificateLibraryServic
 /**
  * 证照库管理Controller
  * @author xucaikai
- * @version 2017-09-14
+ * @version 2017-09-18
  */
 @Controller
 @RequestMapping(value = "${adminPath}/certificate/certificateLibrary")

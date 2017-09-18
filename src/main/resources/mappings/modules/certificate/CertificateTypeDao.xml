@@ -6,8 +6,7 @@
 		a.id AS "id",
 		a.certificate_type_code AS "certificateTypeCode",
 		a.certificate_type_name AS "certificateTypeName",
-		a.unit_id AS "unitId",
-		a.unit_name AS "unitName",
+		a.office_id AS "office.id",
 		a.effective_date AS "effectiveDate",
 		a.description AS "description",
 		a.owner_type AS "ownerType",
@@ -17,11 +16,11 @@
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
-		o5.name AS "office.name"
+		o4.name AS "office.name"
 	</sql>
 	
 	<sql id="certificateTypeJoins">
-		LEFT JOIN sys_office o5 ON o5.id = a.unit_name
+		LEFT JOIN sys_office o4 ON o4.id = a.office_id
 	</sql>
     
 	<select id="get" resultType="CertificateType">
@@ -50,6 +49,12 @@
 					<if test="dbName == 'oracle'">'%'||#{certificateTypeName}||'%'</if>
 					<if test="dbName == 'mssql'">'%'+#{certificateTypeName}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{certificateTypeName},'%')</if>
+			</if>
+			<if test="office != null and office.id != null and office.id != ''">
+				AND a.office_id LIKE 
+					<if test="dbName == 'oracle'">'%'||#{office.id}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{office.id}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{office.id},'%')</if>
 			</if>
 		</where>
 		<choose>
@@ -85,8 +90,7 @@
 			id,
 			certificate_type_code,
 			certificate_type_name,
-			unit_id,
-			unit_name,
+			office_id,
 			effective_date,
 			description,
 			owner_type,
@@ -100,7 +104,6 @@
 			#{id},
 			#{certificateTypeCode},
 			#{certificateTypeName},
-			#{unitId},
 			#{office.id},
 			#{effectiveDate},
 			#{description},
@@ -118,7 +121,7 @@
 		UPDATE certificate_type SET 	
 			certificate_type_code = #{certificateTypeCode},
 			certificate_type_name = #{certificateTypeName},
-			unit_name = #{office.id},
+			office_id = #{office.id},
 			effective_date = #{effectiveDate},
 			description = #{description},
 			owner_type = #{ownerType},

@@ -28,18 +28,12 @@
 			<li><label>证照名称：</label>
 				<form:input path="certificateName" htmlEscape="false" maxlength="100" class="input-medium"/>
 			</li>
-			<li><label>颁发机构名称：</label>
-				<form:input path="unitName" htmlEscape="false" maxlength="64" class="input-medium"/>
+			<li><label>颁发机构id：</label>
+				<sys:treeselect id="office" name="office.id" value="${certificateLibrary.office.id}" labelName="office.name" labelValue="${certificateLibrary.office.name}"
+					title="部门" url="/sys/office/treeData?type=2" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/>
 			</li>
-			<li><label>证照有效期（起始：</label>
-				<input name="effectiveDateStart" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
-					value="<fmt:formatDate value="${certificateLibrary.effectiveDateStart}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
-			</li>
-			<li><label>证照有效期（截至）：</label>
-				<input name="effectiveDateEnd" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
-					value="<fmt:formatDate value="${certificateLibrary.effectiveDateEnd}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+			<li><label>状态：</label>
+				<form:input path="status" htmlEscape="false" maxlength="2" class="input-medium"/>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
@@ -51,7 +45,7 @@
 			<tr>
 				<th>证照名称</th>
 				<th>证照描述</th>
-				<th>颁发机构名称</th>
+				<th>颁发机构id</th>
 				<th>持证者类型</th>
 				<th>证照有效期（起始</th>
 				<th>证照有效期（截至）</th>

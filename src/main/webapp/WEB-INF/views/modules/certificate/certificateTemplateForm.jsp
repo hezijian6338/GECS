@@ -36,7 +36,8 @@
 		<div class="control-group">
 			<label class="control-label">模板名称：</label>
 			<div class="controls">
-				<form:input path="templateName" htmlEscape="false" maxlength="100" class="input-xlarge "/>
+				<form:input path="templateName" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
@@ -47,11 +48,18 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">所属单位id：</label>
+			<div class="controls">
+				<sys:treeselect id="office" name="office.id" value="${certificateTemplate.office.id}" labelName="office.name" labelValue="${certificateTemplate.office.name}"
+					title="部门" url="/sys/office/treeData?type=2" cssClass="required" allowClear="true" notAllowSelectParent="true"/>
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">所属区域：</label>
 			<div class="controls">
 				<sys:treeselect id="area" name="area.id" value="${certificateTemplate.area.id}" labelName="area.name" labelValue="${certificateTemplate.area.name}"
-					title="区域" url="/sys/area/treeData" cssClass="required" allowClear="true" notAllowSelectParent="true"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+					title="区域" url="/sys/area/treeData" cssClass="" allowClear="true" notAllowSelectParent="true"/>
 			</div>
 		</div>
 		<div class="control-group">

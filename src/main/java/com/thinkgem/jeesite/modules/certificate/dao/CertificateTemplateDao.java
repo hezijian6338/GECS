@@ -10,7 +10,7 @@ import com.thinkgem.jeesite.modules.certificate.entity.CertificateTemplate;
 /**
  * 证照模板管理DAO接口
  * @author xucaikai
- * @version 2017-09-14
+ * @version 2017-09-18
  */
 @MyBatisDao
 public interface CertificateTemplateDao extends CrudDao<CertificateTemplate> {

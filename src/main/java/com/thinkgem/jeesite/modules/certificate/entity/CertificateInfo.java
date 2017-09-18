@@ -3,9 +3,8 @@
  */
 package com.thinkgem.jeesite.modules.certificate.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.thinkgem.jeesite.modules.sys.entity.Office;
 import org.hibernate.validator.constraints.Length;
+import com.thinkgem.jeesite.modules.sys.entity.Office;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.validation.constraints.NotNull;
@@ -14,9 +13,9 @@ import com.thinkgem.jeesite.modules.sys.entity.Area;
 import com.thinkgem.jeesite.common.persistence.DataEntity;
 
 /**
- * 证照元数据管理Entity
+ * 证照元数据Entity
  * @author xucaikai
- * @version 2017-09-13
+ * @version 2017-09-18
  */
 public class CertificateInfo extends DataEntity<CertificateInfo> {
 	
@@ -24,9 +23,7 @@ public class CertificateInfo extends DataEntity<CertificateInfo> {
 	private String certificateTypeId;		// 证照类型
 	private String certificateCode;		// 证照编号
 	private String certificateName;		// 证照名称
-	private String unitId;		// 颁发机构id
-	private String unitName;		// 颁发机构名称
-	private Office office;       // 归属部门
+	private Office office;		// 颁发机构id
 	private Date establishDate;		// 成立日期
 	private Date effectiveDateStar;		// 证照有效期（起始
 	private Date effectiveDateEnd;		// 证照有效期（截至）
@@ -67,7 +64,7 @@ public class CertificateInfo extends DataEntity<CertificateInfo> {
 		this.certificateTypeId = certificateTypeId;
 	}
 	
-	@Length(min=0, max=100, message="证照编号长度必须介于 0 和 100 之间")
+	@Length(min=1, max=100, message="证照编号长度必须介于 1 和 100 之间")
 	public String getCertificateCode() {
 		return certificateCode;
 	}
@@ -85,33 +82,14 @@ public class CertificateInfo extends DataEntity<CertificateInfo> {
 		this.certificateName = certificateName;
 	}
 	
-	@Length(min=0, max=64, message="颁发机构id长度必须介于 0 和 64 之间")
-	public String getUnitId() {
-		return unitId;
-	}
-
-	public void setUnitId(String unitId) {
-		this.unitId = unitId;
-	}
-	
-	@Length(min=1, max=64, message="颁发机构名称长度必须介于 1 和 64 之间")
-	public String getUnitName() {
-		return unitName;
-	}
-
-	public void setUnitName(String unitName) {
-		this.unitName = unitName;
-	}
-	@JsonIgnore
-	@NotNull(message="归属部门不能为空")
 	public Office getOffice() {
-		return this.office;
-
+		return office;
 	}
 
 	public void setOffice(Office office) {
 		this.office = office;
 	}
+	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@NotNull(message="成立日期不能为空")
 	public Date getEstablishDate() {
@@ -142,7 +120,7 @@ public class CertificateInfo extends DataEntity<CertificateInfo> {
 		this.effectiveDateEnd = effectiveDateEnd;
 	}
 	
-	@Length(min=0, max=64, message="注册公司类型长度必须介于 0 和 64 之间")
+	@Length(min=1, max=64, message="注册公司类型长度必须介于 1 和 64 之间")
 	public String getRegisteredType() {
 		return registeredType;
 	}
@@ -151,7 +129,7 @@ public class CertificateInfo extends DataEntity<CertificateInfo> {
 		this.registeredType = registeredType;
 	}
 	
-	@Length(min=0, max=20, message="注册资本长度必须介于 0 和 20 之间")
+	@Length(min=1, max=20, message="注册资本长度必须介于 1 和 20 之间")
 	public String getRegisteredCapital() {
 		return registeredCapital;
 	}
@@ -169,7 +147,7 @@ public class CertificateInfo extends DataEntity<CertificateInfo> {
 		this.address = address;
 	}
 	
-	@Length(min=0, max=20, message="法人姓名长度必须介于 0 和 20 之间")
+	@Length(min=1, max=20, message="法人姓名长度必须介于 1 和 20 之间")
 	public String getPersionName() {
 		return persionName;
 	}
@@ -178,7 +156,7 @@ public class CertificateInfo extends DataEntity<CertificateInfo> {
 		this.persionName = persionName;
 	}
 	
-	@Length(min=0, max=20, message="法人身份证件类型长度必须介于 0 和 20 之间")
+	@Length(min=1, max=20, message="法人身份证件类型长度必须介于 1 和 20 之间")
 	public String getPersionIdType() {
 		return persionIdType;
 	}
@@ -187,7 +165,7 @@ public class CertificateInfo extends DataEntity<CertificateInfo> {
 		this.persionIdType = persionIdType;
 	}
 	
-	@Length(min=0, max=64, message="法人身份证件号码长度必须介于 0 和 64 之间")
+	@Length(min=1, max=64, message="法人身份证件号码长度必须介于 1 和 64 之间")
 	public String getPersonId() {
 		return personId;
 	}

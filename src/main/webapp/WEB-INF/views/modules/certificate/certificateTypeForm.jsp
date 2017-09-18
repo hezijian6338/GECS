@@ -48,7 +48,7 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">颁发机构名称：</label>
+			<label class="control-label">颁发机构id：</label>
 			<div class="controls">
 				<sys:treeselect id="office" name="office.id" value="${certificateType.office.id}" labelName="office.name" labelValue="${certificateType.office.name}"
 					title="部门" url="/sys/office/treeData?type=2" cssClass="required" allowClear="true" notAllowSelectParent="true"/>

@@ -23,9 +23,9 @@ import com.thinkgem.jeesite.modules.certificate.entity.CertificateType;
 import com.thinkgem.jeesite.modules.certificate.service.CertificateTypeService;
 
 /**
- * 证照类型管理Controller
+ * 证照类型Controller
  * @author xucaikai
- * @version 2017-09-13
+ * @version 2017-09-18
  */
 @Controller
 @RequestMapping(value = "${adminPath}/certificate/certificateType")

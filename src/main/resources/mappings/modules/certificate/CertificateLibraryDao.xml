@@ -7,8 +7,7 @@
 		a.certificate_name AS "certificateName",
 		a.certificate_type_id AS "certificateTypeId",
 		a.description AS "description",
-		a.unit_id AS "unitId",
-		a.unit_name AS "unitName",
+		a.office_id AS "office.id",
 		a.owner_type AS "ownerType",
 		a.effective_date_start AS "effectiveDateStart",
 		a.effective_date_end AS "effectiveDateEnd",
@@ -24,13 +23,13 @@
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
-		a12.name AS "area.name",
-		o5.name AS "office.name"
+		o5.name AS "office.name",
+		a11.name AS "area.name"
 	</sql>
 	
 	<sql id="certificateLibraryJoins">
-		LEFT JOIN sys_area a12 ON a12.id = a.area_id
-		LEFT JOIN sys_office o5 ON o5.id = a.unit_name
+		LEFT JOIN sys_office o5 ON o5.id = a.office_id
+		LEFT JOIN sys_area a11 ON a11.id = a.area_id
 	</sql>
     
 	<select id="get" resultType="CertificateLibrary">
@@ -54,17 +53,14 @@
 					<if test="dbName == 'mssql'">'%'+#{certificateName}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{certificateName},'%')</if>
 			</if>
-			<if test="unitName != null and unitName != ''">
-				AND a.unit_name LIKE 
-					<if test="dbName == 'oracle'">'%'||#{unitName}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{unitName}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{unitName},'%')</if>
+			<if test="office != null and office.id != null and office.id != ''">
+				AND a.office_id LIKE 
+					<if test="dbName == 'oracle'">'%'||#{office.id}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{office.id}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{office.id},'%')</if>
 			</if>
-			<if test="effectiveDateStart != null and effectiveDateStart != ''">
-				AND a.effective_date_start &gt;= #{effectiveDateStart}
-			</if>
-			<if test="effectiveDateEnd != null and effectiveDateEnd != ''">
-				AND a.effective_date_end &lt;= #{effectiveDateEnd}
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
 			</if>
 		</where>
 		<choose>
@@ -101,8 +97,7 @@
 			certificate_name,
 			certificate_type_id,
 			description,
-			unit_id,
-			unit_name,
+			office_id,
 			owner_type,
 			effective_date_start,
 			effective_date_end,
@@ -123,7 +118,6 @@
 			#{certificateName},
 			#{certificateTypeId},
 			#{description},
-			#{unitId},
 			#{office.id},
 			#{ownerType},
 			#{effectiveDateStart},
@@ -147,14 +141,13 @@
 		UPDATE certificate_library SET 	
 			certificate_name = #{certificateName},
 			description = #{description},
-			unit_name = #{office.id},
+			office_id = #{office.id},
 			owner_type = #{ownerType},
 			effective_date_start = #{effectiveDateStart},
 			effective_date_end = #{effectiveDateEnd},
 			downloads_num = #{downloadsNum},
 			status = #{status},
 			area_id = #{area.id},
-			path = #{path},
 			is_issue = #{isIssue},
 			issue_date = #{issueDate},
 			update_by = #{updateBy.id},

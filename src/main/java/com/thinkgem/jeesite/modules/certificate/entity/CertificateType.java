@@ -3,29 +3,23 @@
  */
 package com.thinkgem.jeesite.modules.certificate.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.thinkgem.jeesite.common.supcan.annotation.treelist.cols.SupCol;
-import com.thinkgem.jeesite.common.utils.excel.annotation.ExcelField;
-import com.thinkgem.jeesite.modules.sys.entity.Office;
 import org.hibernate.validator.constraints.Length;
+import com.thinkgem.jeesite.modules.sys.entity.Office;
+import javax.validation.constraints.NotNull;
 
 import com.thinkgem.jeesite.common.persistence.DataEntity;
 
-import javax.validation.constraints.NotNull;
-
 /**
- * 证照类型管理Entity
+ * 证照类型Entity
  * @author xucaikai
- * @version 2017-09-13
+ * @version 2017-09-18
  */
 public class CertificateType extends DataEntity<CertificateType> {
 	
 	private static final long serialVersionUID = 1L;
 	private String certificateTypeCode;		// 证照类型编号
 	private String certificateTypeName;		// 证照类型名称
-	private String unitId;		// 颁发机构id
-//	private String unitName;		// 颁发机构名称
-	private Office office;       // 归属部门
+	private Office office;		// 颁发机构id
 	private String effectiveDate;		// 有效期限（年）
 	private String description;		// 证照描述
 	private String ownerType;		// 持证者类型
@@ -56,32 +50,9 @@ public class CertificateType extends DataEntity<CertificateType> {
 		this.certificateTypeName = certificateTypeName;
 	}
 	
-	@Length(min=0, max=64, message="颁发机构id长度必须介于 0 和 64 之间")
-	public String getUnitId() {
-		return unitId;
-	}
-
-	public void setUnitId(String unitId) {
-		this.unitId = unitId;
-	}
-
-	/*public String getUnitName() {
-		return unitName;
-	}
-
-	public void setUnitName(String unitName) {
-		this.unitName = unitName;
-	}*/
-	@SupCol(isUnique="true", isHide="true")
-	public String getId() {
-		return id;
-	}
-
-	@JsonIgnore
-	@NotNull(message="归属部门不能为空")
+	@NotNull(message="颁发机构id不能为空")
 	public Office getOffice() {
-		return this.office;
-
+		return office;
 	}
 
 	public void setOffice(Office office) {

@@ -7,8 +7,7 @@
 		a.certificate_type_id AS "certificateTypeId",
 		a.certificate_code AS "certificateCode",
 		a.certificate_name AS "certificateName",
-		a.unit_id AS "unitId",
-		a.unit_name AS "unitName",
+		a.office_id AS "office.id",
 		a.establish_date AS "establishDate",
 		a.effective_date_star AS "effectiveDateStar",
 		a.effective_date_end AS "effectiveDateEnd",
@@ -37,13 +36,13 @@
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
-		a28.name AS "area.name",
-		o5.name AS "office.name"
+		o5.name AS "office.name",
+		a27.name AS "area.name"
 	</sql>
 	
 	<sql id="certificateInfoJoins">
-		LEFT JOIN sys_area a28 ON a28.id = a.area_id
-		LEFT JOIN sys_office o5 ON o5.id = a.unit_name
+		LEFT JOIN sys_office o5 ON o5.id = a.office_id
+		LEFT JOIN sys_area a27 ON a27.id = a.area_id
 	</sql>
     
 	<select id="get" resultType="CertificateInfo">
@@ -73,11 +72,8 @@
 					<if test="dbName == 'mssql'">'%'+#{certificateName}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{certificateName},'%')</if>
 			</if>
-			<if test="unitName != null and unitName != ''">
-				AND a.unit_name LIKE 
-					<if test="dbName == 'oracle'">'%'||#{unitName}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{unitName}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{unitName},'%')</if>
+			<if test="office != null and office.id != null and office.id != ''">
+				AND a.office_id = #{office.id}
 			</if>
 		</where>
 		<choose>
@@ -114,8 +110,7 @@
 			certificate_type_id,
 			certificate_code,
 			certificate_name,
-			unit_id,
-			unit_name,
+			office_id,
 			establish_date,
 			effective_date_star,
 			effective_date_end,
@@ -149,7 +144,6 @@
 			#{certificateTypeId},
 			#{certificateCode},
 			#{certificateName},
-			#{unitId},
 			#{office.id},
 			#{establishDate},
 			#{effectiveDateStar},
@@ -186,7 +180,7 @@
 		UPDATE certificate_info SET 	
 			certificate_code = #{certificateCode},
 			certificate_name = #{certificateName},
-			unit_name = #{office.id},
+			office_id = #{office.id},
 			establish_date = #{establishDate},
 			effective_date_star = #{effectiveDateStar},
 			effective_date_end = #{effectiveDateEnd},

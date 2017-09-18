@@ -8,9 +8,9 @@ import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
 import com.thinkgem.jeesite.modules.certificate.entity.CertificateInfo;
 
 /**
- * 证照元数据管理DAO接口
+ * 证照元数据DAO接口
  * @author xucaikai
- * @version 2017-09-13
+ * @version 2017-09-18
  */
 @MyBatisDao
 public interface CertificateInfoDao extends CrudDao<CertificateInfo> {

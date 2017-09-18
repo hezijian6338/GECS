@@ -36,8 +36,7 @@
 		<div class="control-group">
 			<label class="control-label">证照名称：</label>
 			<div class="controls">
-				<form:input path="certificateName" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+				<form:input path="certificateName" htmlEscape="false" maxlength="100" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -47,11 +46,10 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">颁发机构名称：</label>
+			<label class="control-label">颁发机构id：</label>
 			<div class="controls">
 				<sys:treeselect id="office" name="office.id" value="${certificateLibrary.office.id}" labelName="office.name" labelValue="${certificateLibrary.office.name}"
-								title="部门" url="/sys/office/treeData?type=2" cssClass="required" allowClear="true" notAllowSelectParent="true"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+					title="部门" url="/sys/office/treeData?type=2" cssClass="" allowClear="true" notAllowSelectParent="true"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -63,19 +61,17 @@
 		<div class="control-group">
 			<label class="control-label">证照有效期（起始：</label>
 			<div class="controls">
-				<input name="effectiveDateStart" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
+				<input name="effectiveDateStart" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
 					value="<fmt:formatDate value="${certificateLibrary.effectiveDateStart}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
-				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">证照有效期（截至）：</label>
 			<div class="controls">
-				<input name="effectiveDateEnd" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
+				<input name="effectiveDateEnd" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
 					value="<fmt:formatDate value="${certificateLibrary.effectiveDateEnd}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
-				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
@@ -94,14 +90,7 @@
 			<label class="control-label">所属区域：</label>
 			<div class="controls">
 				<sys:treeselect id="area" name="area.id" value="${certificateLibrary.area.id}" labelName="area.name" labelValue="${certificateLibrary.area.name}"
-					title="区域" url="/sys/area/treeData" cssClass="required" allowClear="true" notAllowSelectParent="true"/>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">文件路径：</label>
-			<div class="controls">
-				<form:input path="path" htmlEscape="false" maxlength="200" class="input-xlarge "/>
+					title="区域" url="/sys/area/treeData" cssClass="" allowClear="true" notAllowSelectParent="true"/>
 			</div>
 		</div>
 		<div class="control-group">

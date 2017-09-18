@@ -6,7 +6,7 @@
 		a.id AS "id",
 		a.template_name AS "templateName",
 		a.template_type AS "templateType",
-		a.unit_id AS "unitId",
+		a.office_id AS "office.id",
 		a.area_id AS "area.id",
 		a.is_share AS "isShare",
 		a.path AS "path",
@@ -16,10 +16,12 @@
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
+		o4.name AS "office.name",
 		a5.name AS "area.name"
 	</sql>
 	
 	<sql id="certificateTemplateJoins">
+		LEFT JOIN sys_office o4 ON o4.id = a.office_id
 		LEFT JOIN sys_area a5 ON a5.id = a.area_id
 	</sql>
     
@@ -49,6 +51,18 @@
 					<if test="dbName == 'oracle'">'%'||#{templateType}||'%'</if>
 					<if test="dbName == 'mssql'">'%'+#{templateType}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{templateType},'%')</if>
+			</if>
+			<if test="office != null and office.id != null and office.id != ''">
+				AND a.office_id LIKE 
+					<if test="dbName == 'oracle'">'%'||#{office.id}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{office.id}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{office.id},'%')</if>
+			</if>
+			<if test="area != null and area.id != null and area.id != ''">
+				AND a.area_id LIKE 
+					<if test="dbName == 'oracle'">'%'||#{area.id}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{area.id}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{area.id},'%')</if>
 			</if>
 		</where>
 		<choose>
@@ -84,7 +98,7 @@
 			id,
 			template_name,
 			template_type,
-			unit_id,
+			office_id,
 			area_id,
 			is_share,
 			path,
@@ -98,7 +112,7 @@
 			#{id},
 			#{templateName},
 			#{templateType},
-			#{unitId},
+			#{office.id},
 			#{area.id},
 			#{isShare},
 			#{path},
@@ -115,6 +129,7 @@
 		UPDATE certificate_template SET 	
 			template_name = #{templateName},
 			template_type = #{templateType},
+			office_id = #{office.id},
 			area_id = #{area.id},
 			is_share = #{isShare},
 			update_by = #{updateBy.id},

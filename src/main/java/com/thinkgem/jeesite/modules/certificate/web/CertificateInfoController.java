@@ -23,9 +23,9 @@ import com.thinkgem.jeesite.modules.certificate.entity.CertificateInfo;
 import com.thinkgem.jeesite.modules.certificate.service.CertificateInfoService;
 
 /**
- * 证照元数据管理Controller
+ * 证照元数据Controller
  * @author xucaikai
- * @version 2017-09-13
+ * @version 2017-09-18
  */
 @Controller
 @RequestMapping(value = "${adminPath}/certificate/certificateInfo")
