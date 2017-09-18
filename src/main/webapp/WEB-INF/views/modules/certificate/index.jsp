@@ -610,6 +610,7 @@
                     <input type="button" value="Browse Server" onclick="BrowseServer('modelPhoto:/','xFilePath');"/>
                     <input type="button" value="confirm" onclick="createNewElements();"/>
                     <input type="button" value="查看历史模板" onclick="viewBS('pdf:/');"/>
+                    <input type="button" id="downloadPDF" onclick="print()" value="下载PDF"/>
                 </p>
             </div>
 
@@ -710,7 +711,7 @@
                 <input id="chosen1-value" value="000000"/>
                 <!-- <input id="colorselect" type="color" style="height:24px;line-height:30px" /> -->
             </div>
-            <input type="button" id="downloadPDF" onclick="print()" value="下载PDF"/>
+            <%--<input type="button" id="downloadPDF" onclick="print()" value="下载PDF"/>--%>
             <%--<button onclick="checkTest()">test</button>--%>
         </div>
 
