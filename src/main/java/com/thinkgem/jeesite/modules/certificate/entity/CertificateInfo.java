@@ -15,11 +15,12 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 /**
  * 证照元数据Entity
  * @author xucaikai
- * @version 2017-09-18
+ * @version 2017-09-28
  */
 public class CertificateInfo extends DataEntity<CertificateInfo> {
 	
 	private static final long serialVersionUID = 1L;
+	private String procInsId;		// 流程实例ID
 	private String certificateTypeId;		// 证照类型
 	private String certificateCode;		// 证照编号
 	private String certificateName;		// 证照名称
@@ -55,6 +56,15 @@ public class CertificateInfo extends DataEntity<CertificateInfo> {
 		super(id);
 	}
 
+	@Length(min=0, max=64, message="流程实例ID长度必须介于 0 和 64 之间")
+	public String getProcInsId() {
+		return procInsId;
+	}
+
+	public void setProcInsId(String procInsId) {
+		this.procInsId = procInsId;
+	}
+	
 	@Length(min=0, max=64, message="证照类型长度必须介于 0 和 64 之间")
 	public String getCertificateTypeId() {
 		return certificateTypeId;
@@ -64,7 +74,7 @@ public class CertificateInfo extends DataEntity<CertificateInfo> {
 		this.certificateTypeId = certificateTypeId;
 	}
 	
-	@Length(min=1, max=100, message="证照编号长度必须介于 1 和 100 之间")
+	@Length(min=0, max=100, message="证照编号长度必须介于 0 和 100 之间")
 	public String getCertificateCode() {
 		return certificateCode;
 	}
@@ -120,7 +130,7 @@ public class CertificateInfo extends DataEntity<CertificateInfo> {
 		this.effectiveDateEnd = effectiveDateEnd;
 	}
 	
-	@Length(min=1, max=64, message="注册公司类型长度必须介于 1 和 64 之间")
+	@Length(min=0, max=64, message="注册公司类型长度必须介于 0 和 64 之间")
 	public String getRegisteredType() {
 		return registeredType;
 	}
@@ -129,7 +139,7 @@ public class CertificateInfo extends DataEntity<CertificateInfo> {
 		this.registeredType = registeredType;
 	}
 	
-	@Length(min=1, max=20, message="注册资本长度必须介于 1 和 20 之间")
+	@Length(min=0, max=20, message="注册资本长度必须介于 0 和 20 之间")
 	public String getRegisteredCapital() {
 		return registeredCapital;
 	}
@@ -147,7 +157,7 @@ public class CertificateInfo extends DataEntity<CertificateInfo> {
 		this.address = address;
 	}
 	
-	@Length(min=1, max=20, message="法人姓名长度必须介于 1 和 20 之间")
+	@Length(min=0, max=20, message="法人姓名长度必须介于 0 和 20 之间")
 	public String getPersionName() {
 		return persionName;
 	}
@@ -156,7 +166,7 @@ public class CertificateInfo extends DataEntity<CertificateInfo> {
 		this.persionName = persionName;
 	}
 	
-	@Length(min=1, max=20, message="法人身份证件类型长度必须介于 1 和 20 之间")
+	@Length(min=0, max=20, message="法人身份证件类型长度必须介于 0 和 20 之间")
 	public String getPersionIdType() {
 		return persionIdType;
 	}
@@ -165,7 +175,7 @@ public class CertificateInfo extends DataEntity<CertificateInfo> {
 		this.persionIdType = persionIdType;
 	}
 	
-	@Length(min=1, max=64, message="法人身份证件号码长度必须介于 1 和 64 之间")
+	@Length(min=0, max=64, message="法人身份证件号码长度必须介于 0 和 64 之间")
 	public String getPersonId() {
 		return personId;
 	}

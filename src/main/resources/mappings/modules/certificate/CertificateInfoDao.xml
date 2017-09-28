@@ -4,6 +4,7 @@
     
 	<sql id="certificateInfoColumns">
 		a.id AS "id",
+		a.proc_ins_id AS "procInsId",
 		a.certificate_type_id AS "certificateTypeId",
 		a.certificate_code AS "certificateCode",
 		a.certificate_name AS "certificateName",
@@ -36,13 +37,13 @@
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
-		o5.name AS "office.name",
-		a27.name AS "area.name"
+		o6.name AS "office.name",
+		a28.name AS "area.name"
 	</sql>
 	
 	<sql id="certificateInfoJoins">
-		LEFT JOIN sys_office o5 ON o5.id = a.office_id
-		LEFT JOIN sys_area a27 ON a27.id = a.area_id
+		LEFT JOIN sys_office o6 ON o6.id = a.office_id
+		LEFT JOIN sys_area a28 ON a28.id = a.area_id
 	</sql>
     
 	<select id="get" resultType="CertificateInfo">
@@ -66,14 +67,17 @@
 					<if test="dbName == 'mssql'">'%'+#{certificateCode}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{certificateCode},'%')</if>
 			</if>
-			<if test="certificateName != null and certificateName != ''">
-				AND a.certificate_name LIKE 
-					<if test="dbName == 'oracle'">'%'||#{certificateName}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{certificateName}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{certificateName},'%')</if>
-			</if>
 			<if test="office != null and office.id != null and office.id != ''">
-				AND a.office_id = #{office.id}
+				AND a.office_id LIKE 
+					<if test="dbName == 'oracle'">'%'||#{office.id}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{office.id}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{office.id},'%')</if>
+			</if>
+			<if test="area != null and area.id != null and area.id != ''">
+				AND a.area_id LIKE 
+					<if test="dbName == 'oracle'">'%'||#{area.id}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{area.id}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{area.id},'%')</if>
 			</if>
 		</where>
 		<choose>
@@ -107,6 +111,7 @@
 	<insert id="insert">
 		INSERT INTO certificate_info(
 			id,
+			proc_ins_id,
 			certificate_type_id,
 			certificate_code,
 			certificate_name,
@@ -141,6 +146,7 @@
 			del_flag
 		) VALUES (
 			#{id},
+			#{procInsId},
 			#{certificateTypeId},
 			#{certificateCode},
 			#{certificateName},

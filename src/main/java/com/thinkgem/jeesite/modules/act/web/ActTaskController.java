@@ -4,12 +4,21 @@
 package com.thinkgem.jeesite.modules.act.web;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.activiti.engine.RepositoryService;
+import org.activiti.engine.RuntimeService;
+import org.activiti.engine.impl.RepositoryServiceImpl;
+import org.activiti.engine.impl.context.Context;
+import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
+import org.activiti.engine.impl.pvm.process.ActivityImpl;
+import org.activiti.engine.impl.pvm.process.ProcessDefinitionImpl;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -174,7 +183,7 @@ public class ActTaskController extends BaseController {
 	@RequestMapping(value = "trace/photo/{procDefId}/{execId}")
 	public void tracePhoto(@PathVariable("procDefId") String procDefId, @PathVariable("execId") String execId, HttpServletResponse response) throws Exception {
 		InputStream imageStream = actTaskService.tracePhoto(procDefId, execId);
-		
+
 		// 输出资源内容到相应对象
 		byte[] b = new byte[1024];
 		int len;
@@ -197,11 +206,12 @@ public class ActTaskController extends BaseController {
 		return activityInfos;
 	}
 
-	/**
-	 * 显示流程图
+// 显示流程图
 	 
 	@RequestMapping(value = "processPic")
 	public void processPic(String procDefId, HttpServletResponse response) throws Exception {
+		RepositoryService repositoryService = Context.getProcessEngineConfiguration()
+				.getRepositoryService();
 		ProcessDefinition procDef = repositoryService.createProcessDefinitionQuery().processDefinitionId(procDefId).singleResult();
 		String diagramResourceName = procDef.getDiagramResourceName();
 		InputStream imageStream = repositoryService.getResourceAsStream(procDef.getDeploymentId(), diagramResourceName);
@@ -210,14 +220,16 @@ public class ActTaskController extends BaseController {
 		while ((len = imageStream.read(b, 0, 1024)) != -1) {
 			response.getOutputStream().write(b, 0, len);
 		}
-	}*/
+	}
 	
-	/**
-	 * 获取跟踪信息
+	// 获取跟踪信息
 	 
 	@RequestMapping(value = "processMap")
 	public String processMap(String procDefId, String proInstId, Model model)
 			throws Exception {
+		RepositoryService repositoryService = Context.getProcessEngineConfiguration()
+				.getRepositoryService();
+		RuntimeService runtimeService=Context.getProcessEngineConfiguration().getRuntimeService();
 		List<ActivityImpl> actImpls = new ArrayList<ActivityImpl>();
 		ProcessDefinition processDefinition = repositoryService
 				.createProcessDefinitionQuery().processDefinitionId(procDefId)
@@ -255,7 +267,7 @@ public class ActTaskController extends BaseController {
 		model.addAttribute("proInstId", proInstId);
 		model.addAttribute("actImpls", actImpls);
 		return "modules/act/actTaskMap";
-	}*/
+	}
 	
 	/**
 	 * 删除任务

@@ -36,8 +36,7 @@
 		<div class="control-group">
 			<label class="control-label">证照编号：</label>
 			<div class="controls">
-				<form:input path="certificateCode" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+				<form:input path="certificateCode" htmlEscape="false" maxlength="100" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -84,15 +83,13 @@
 		<div class="control-group">
 			<label class="control-label">注册公司类型：</label>
 			<div class="controls">
-				<form:input path="registeredType" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+				<form:input path="registeredType" htmlEscape="false" maxlength="64" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">注册资本：</label>
 			<div class="controls">
-				<form:input path="registeredCapital" htmlEscape="false" maxlength="20" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+				<form:input path="registeredCapital" htmlEscape="false" maxlength="20" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -104,22 +101,19 @@
 		<div class="control-group">
 			<label class="control-label">法人姓名：</label>
 			<div class="controls">
-				<form:input path="persionName" htmlEscape="false" maxlength="20" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+				<form:input path="persionName" htmlEscape="false" maxlength="20" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">法人身份证件类型：</label>
 			<div class="controls">
-				<form:input path="persionIdType" htmlEscape="false" maxlength="20" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+				<form:input path="persionIdType" htmlEscape="false" maxlength="20" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">法人身份证件号码：</label>
 			<div class="controls">
-				<form:input path="personId" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+				<form:input path="personId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">

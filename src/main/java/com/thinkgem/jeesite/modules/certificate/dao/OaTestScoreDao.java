@@ -5,14 +5,14 @@ package com.thinkgem.jeesite.modules.certificate.dao;
 
 import com.thinkgem.jeesite.common.persistence.CrudDao;
 import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
-import com.thinkgem.jeesite.modules.certificate.entity.CertificateInfo;
+import com.thinkgem.jeesite.modules.certificate.entity.OaTestScore;
 
 /**
- * 证照元数据DAO接口
+ * 学生分数修改申请审批DAO接口
  * @author xucaikai
- * @version 2017-09-28
+ * @version 2017-09-26
  */
 @MyBatisDao
-public interface CertificateInfoDao extends CrudDao<CertificateInfo> {
+public interface OaTestScoreDao extends CrudDao<OaTestScore> {
 	
 }
