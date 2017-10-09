@@ -3,9 +3,12 @@
  */
 package com.thinkgem.jeesite.modules.certificate.web;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.thinkgem.jeesite.common.config.Global;
+import com.thinkgem.jeesite.common.persistence.Page;
+import com.thinkgem.jeesite.common.utils.StringUtils;
+import com.thinkgem.jeesite.common.web.BaseController;
+import com.thinkgem.jeesite.modules.certificate.entity.CertificateInfo;
+import com.thinkgem.jeesite.modules.certificate.service.CertificateInfoService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,12 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.thinkgem.jeesite.common.config.Global;
-import com.thinkgem.jeesite.common.persistence.Page;
-import com.thinkgem.jeesite.common.web.BaseController;
-import com.thinkgem.jeesite.common.utils.StringUtils;
-import com.thinkgem.jeesite.modules.certificate.entity.CertificateInfo;
-import com.thinkgem.jeesite.modules.certificate.service.CertificateInfoService;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 证照元数据Controller
@@ -45,7 +44,8 @@ public class CertificateInfoController extends BaseController {
 		}
 		return entity;
 	}
-	
+
+
 	@RequiresPermissions("certificate:certificateInfo:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(CertificateInfo certificateInfo, HttpServletRequest request, HttpServletResponse response, Model model) {
@@ -58,7 +58,50 @@ public class CertificateInfoController extends BaseController {
 	@RequestMapping(value = "form")
 	public String form(CertificateInfo certificateInfo, Model model) {
 		model.addAttribute("certificateInfo", certificateInfo);
-		return "modules/certificate/certificateInfoForm";
+
+		String view = "certificateInfoForm";
+
+		// 查看审批申请单
+		if (org.apache.commons.lang3.StringUtils.isNotBlank(certificateInfo.getId())){//.getAct().getProcInsId())){
+
+			// 环节编号
+			String taskDefKey = certificateInfo.getAct().getTaskDefKey();
+
+			// 查看工单
+			if(certificateInfo.getAct().isFinishTask()){
+				view = "testAuditView";
+			}
+			// 修改环节
+			else if ("modify".equals(taskDefKey)){
+				view = "testAuditForm";
+			}
+			// 审核环节
+			else if ("audit".equals(taskDefKey)){
+				view = "testAuditAudit";
+//				String formKey = "/oa/testAudit";
+//				return "redirect:" + ActUtils.getFormUrl(formKey, testAudit.getAct());
+			}
+			// 审核环节2
+			else if ("audit2".equals(taskDefKey)){
+				view = "testAuditAudit";
+			}
+			// 审核环节3
+			else if ("audit3".equals(taskDefKey)){
+				view = "testAuditAudit";
+			}
+			// 审核环节4
+			else if ("audit4".equals(taskDefKey)){
+				view = "testAuditAudit";
+			}
+			// 兑现环节
+			else if ("apply_end".equals(taskDefKey)){
+				view = "testAuditAudit";
+			}
+		}
+
+		return "modules/oa/" + view;
+
+		return "modules/certificate/" + view ;
 	}
 
 	@RequiresPermissions("certificate:certificateInfo:edit")
