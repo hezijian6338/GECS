@@ -1,28 +1,26 @@
 /**
  * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
-package com.thinkgem.jeesite.modules.certificate.entity;
+package com.thinkgem.jeesite.modules.license.entity;
 
-import com.thinkgem.jeesite.common.persistence.ActEntity;
-import com.thinkgem.jeesite.modules.oa.entity.TestAudit;
 import org.hibernate.validator.constraints.Length;
 import com.thinkgem.jeesite.modules.sys.entity.Office;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import javax.validation.constraints.NotNull;
 import com.thinkgem.jeesite.modules.sys.entity.Area;
 
 import com.thinkgem.jeesite.common.persistence.DataEntity;
 
 /**
- * 证照元数据Entity
+ * 营业执照Entity
  * @author xucaikai
- * @version 2017-09-28
+ * @version 2017-10-09
  */
-public class CertificateInfo extends ActEntity<CertificateInfo> {
+public class BusinessLicense extends DataEntity<BusinessLicense> {
 	
 	private static final long serialVersionUID = 1L;
-	//private String procInsId;		// 流程实例ID
+	private String procInsId;		// 流程实例ID
 	private String certificateTypeId;		// 证照类型
 	private String certificateCode;		// 证照编号
 	private String certificateName;		// 证照名称
@@ -50,14 +48,14 @@ public class CertificateInfo extends ActEntity<CertificateInfo> {
 	private String postcode;		// 邮政编码
 	private Area area;		// 所属区域
 	
-	public CertificateInfo() {
+	public BusinessLicense() {
 		super();
 	}
 
-	public CertificateInfo(String id){
+	public BusinessLicense(String id){
 		super(id);
 	}
-/*
+
 	@Length(min=0, max=64, message="流程实例ID长度必须介于 0 和 64 之间")
 	public String getProcInsId() {
 		return procInsId;
@@ -65,9 +63,9 @@ public class CertificateInfo extends ActEntity<CertificateInfo> {
 
 	public void setProcInsId(String procInsId) {
 		this.procInsId = procInsId;
-	}*/
+	}
 	
-	@Length(min=0, max=64, message="证照类型长度必须介于 0 和 64 之间")
+	@Length(min=1, max=64, message="证照类型长度必须介于 1 和 64 之间")
 	public String getCertificateTypeId() {
 		return certificateTypeId;
 	}
@@ -94,6 +92,7 @@ public class CertificateInfo extends ActEntity<CertificateInfo> {
 		this.certificateName = certificateName;
 	}
 	
+	@NotNull(message="颁发机构id不能为空")
 	public Office getOffice() {
 		return office;
 	}
@@ -132,7 +131,7 @@ public class CertificateInfo extends ActEntity<CertificateInfo> {
 		this.effectiveDateEnd = effectiveDateEnd;
 	}
 	
-	@Length(min=0, max=64, message="注册公司类型长度必须介于 0 和 64 之间")
+	@Length(min=1, max=64, message="注册公司类型长度必须介于 1 和 64 之间")
 	public String getRegisteredType() {
 		return registeredType;
 	}
@@ -141,7 +140,7 @@ public class CertificateInfo extends ActEntity<CertificateInfo> {
 		this.registeredType = registeredType;
 	}
 	
-	@Length(min=0, max=20, message="注册资本长度必须介于 0 和 20 之间")
+	@Length(min=1, max=20, message="注册资本长度必须介于 1 和 20 之间")
 	public String getRegisteredCapital() {
 		return registeredCapital;
 	}
@@ -159,7 +158,7 @@ public class CertificateInfo extends ActEntity<CertificateInfo> {
 		this.address = address;
 	}
 	
-	@Length(min=0, max=20, message="法人姓名长度必须介于 0 和 20 之间")
+	@Length(min=1, max=20, message="法人姓名长度必须介于 1 和 20 之间")
 	public String getPersionName() {
 		return persionName;
 	}
@@ -168,7 +167,7 @@ public class CertificateInfo extends ActEntity<CertificateInfo> {
 		this.persionName = persionName;
 	}
 	
-	@Length(min=0, max=20, message="法人身份证件类型长度必须介于 0 和 20 之间")
+	@Length(min=1, max=20, message="法人身份证件类型长度必须介于 1 和 20 之间")
 	public String getPersionIdType() {
 		return persionIdType;
 	}
@@ -177,7 +176,7 @@ public class CertificateInfo extends ActEntity<CertificateInfo> {
 		this.persionIdType = persionIdType;
 	}
 	
-	@Length(min=0, max=64, message="法人身份证件号码长度必须介于 0 和 64 之间")
+	@Length(min=1, max=64, message="法人身份证件号码长度必须介于 1 和 64 之间")
 	public String getPersonId() {
 		return personId;
 	}
@@ -186,7 +185,7 @@ public class CertificateInfo extends ActEntity<CertificateInfo> {
 		this.personId = personId;
 	}
 	
-	@Length(min=0, max=20, message="法人联系方式长度必须介于 0 和 20 之间")
+	@Length(min=1, max=20, message="法人联系方式长度必须介于 1 和 20 之间")
 	public String getPersionPhone() {
 		return persionPhone;
 	}
@@ -231,7 +230,7 @@ public class CertificateInfo extends ActEntity<CertificateInfo> {
 		this.handlerPhone = handlerPhone;
 	}
 	
-	@Length(min=0, max=200, message="经营/业务/许可范围长度必须介于 0 和 200 之间")
+	@Length(min=1, max=200, message="经营/业务/许可范围长度必须介于 1 和 200 之间")
 	public String getScope() {
 		return scope;
 	}

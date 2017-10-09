@@ -1,18 +1,18 @@
 /**
  * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
-package com.thinkgem.jeesite.modules.certificate.dao;
+package com.thinkgem.jeesite.modules.license.dao;
 
 import com.thinkgem.jeesite.common.persistence.CrudDao;
 import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
-import com.thinkgem.jeesite.modules.certificate.entity.OaTestScore;
+import com.thinkgem.jeesite.modules.license.entity.BusinessLicense;
 
 /**
- * 学生分数修改申请审批DAO接口
+ * 营业执照DAO接口
  * @author xucaikai
- * @version 2017-09-26
+ * @version 2017-10-09
  */
 @MyBatisDao
-public interface OaTestScoreDao extends CrudDao<OaTestScore> {
+public interface BusinessLicenseDao extends CrudDao<BusinessLicense> {
 	
 }
