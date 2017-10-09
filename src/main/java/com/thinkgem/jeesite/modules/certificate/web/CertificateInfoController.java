@@ -58,50 +58,7 @@ public class CertificateInfoController extends BaseController {
 	@RequestMapping(value = "form")
 	public String form(CertificateInfo certificateInfo, Model model) {
 		model.addAttribute("certificateInfo", certificateInfo);
-
-		String view = "certificateInfoForm";
-
-		// 查看审批申请单
-		if (org.apache.commons.lang3.StringUtils.isNotBlank(certificateInfo.getId())){//.getAct().getProcInsId())){
-
-			// 环节编号
-			String taskDefKey = certificateInfo.getAct().getTaskDefKey();
-
-			// 查看工单
-			if(certificateInfo.getAct().isFinishTask()){
-				view = "testAuditView";
-			}
-			// 修改环节
-			else if ("modify".equals(taskDefKey)){
-				view = "testAuditForm";
-			}
-			// 审核环节
-			else if ("audit".equals(taskDefKey)){
-				view = "testAuditAudit";
-//				String formKey = "/oa/testAudit";
-//				return "redirect:" + ActUtils.getFormUrl(formKey, testAudit.getAct());
-			}
-			// 审核环节2
-			else if ("audit2".equals(taskDefKey)){
-				view = "testAuditAudit";
-			}
-			// 审核环节3
-			else if ("audit3".equals(taskDefKey)){
-				view = "testAuditAudit";
-			}
-			// 审核环节4
-			else if ("audit4".equals(taskDefKey)){
-				view = "testAuditAudit";
-			}
-			// 兑现环节
-			else if ("apply_end".equals(taskDefKey)){
-				view = "testAuditAudit";
-			}
-		}
-
-		return "modules/oa/" + view;
-
-		return "modules/certificate/" + view ;
+		return "modules/certificate/certificateInfoForm";
 	}
 
 	@RequiresPermissions("certificate:certificateInfo:edit")
