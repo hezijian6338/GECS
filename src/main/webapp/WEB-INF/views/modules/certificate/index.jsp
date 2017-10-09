@@ -428,24 +428,36 @@
                 <div class="components Elements" id="EngName">名(英)</div>
                 <div class="components Elements" id="Sex">性别</div>
                 <div class="components Elements" id="EngSex">性别(英)</div>
-                <div class="components Elements" id="GraYear">毕业年份</div>
-                <div class="components Elements" id="GraMonth">毕业月份</div>
-                <div class="components Elements" id="StuYear">入学年份</div>
-                <div class="components Elements" id="StuMonth">入学月份</div>
-                <div class="components Elements" id="BirthYear">出生年份</div>
-                <div class="components Elements" id="BirthMonth">出生月份</div>
-                <div class="components Elements" id="BirthDay">出生日</div>
-                <div class="components Elements" id="MakeYear">制作年份</div>
-                <div class="components Elements" id="MakeMonth">制作月份</div>
-                <div class="components Elements" id="MakeDay">制作日</div>
-                <div class="components Elements" id="EngBirthYear">出生年份(英)</div>
-                <div class="components Elements" id="EngBirthDay">出生月日(英)</div>
-                <div class="components Elements" id="Major">专业名称</div>
-                <div class="components Elements" id="Major1">专业名称(1)</div>
-                <div class="components Elements" id="EngMajor">专业名称(英)</div>
-                <div class="components Elements" id="EngMajor1">专业名称(英 1)</div>
-                <div class="components Elements" id="GraNo">毕业证号</div>
-                <div class="components Elements" id="DgeNo">学位证号</div>
+
+
+                <div class="components Elements" id="certificateTypeId">证照类型</div>
+                <div class="components Elements" id="certificateCode">证照编号</div>
+                <div class="components Elements" id="certificateName">证照名称</div>
+                <div class="components Elements" id="office">颁发机构id</div>
+                <div class="components Elements" id="establishDate">成立日期</div>
+                <div class="components Elements" id="effectiveDateStar">证照有效期（起始）</div>
+                <div class="components Elements" id="effectiveDateEnd">证照有效期（截至）</div>
+                <div class="components Elements" id="registeredType">注册公司类型</div>
+                <div class="components Elements" id="registeredCapital">注册资本</div>
+                <div class="components Elements" id="address">地址</div>
+                <div class="components Elements" id="persionName">法人姓名</div>
+                <div class="components Elements" id="persionIdType">法人身份证件类型</div>
+                <div class="components Elements" id="personId">法人身份证件号码</div>
+                <div class="components Elements" id="persionPhone">法人联系方式</div>
+                <div class="components Elements" id="handlerName">经办人姓名</div>
+                <div class="components Elements" id="handlerIdType">经办人身份证件类型</div>
+                <div class="components Elements" id="handlerId">经办人身份证件号码</div>
+                <div class="components Elements" id="handlerPhone">经办人联系方式</div>
+
+                <div class="components Elements" id="scope">经营/业务/许可范围</div>
+                <div class="components Elements" id="buildingName">建筑名称</div>
+                <div class="components Elements" id="floorNumber">层数</div>
+                <div class="components Elements" id="useArea">使用面积</div>
+                <div class="components Elements" id="usage1">使用情况</div>
+                <div class="components Elements" id="dealfireFacilities">现有消防设施</div>
+                <div class="components Elements" id="postcode">邮政编码</div>
+                <div class="components Elements" id="area">所属区域</div>
+
 
             </ul>
         </div>
