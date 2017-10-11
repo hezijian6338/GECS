@@ -34,9 +34,9 @@ public class TestAuditController extends BaseController {
 
 	@Autowired
 	private TestAuditService testAuditService;
-	
+
 	@ModelAttribute
-	public TestAudit get(@RequestParam(required=false) String id){//, 
+	public TestAudit get(@RequestParam(required=false) String id){//,
 //			@RequestParam(value="act.procInsId", required=false) String procInsId) {
 		TestAudit testAudit = null;
 		if (StringUtils.isNotBlank(id)){
@@ -49,7 +49,7 @@ public class TestAuditController extends BaseController {
 		}
 		return testAudit;
 	}
-	
+
 	@RequiresPermissions("oa:testAudit:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(TestAudit testAudit, HttpServletRequest request, HttpServletResponse response, Model model) {
@@ -57,11 +57,11 @@ public class TestAuditController extends BaseController {
 		if (!user.isAdmin()){
 			testAudit.setCreateBy(user);
 		}
-        Page<TestAudit> page = testAuditService.findPage(new Page<TestAudit>(request, response), testAudit); 
-        model.addAttribute("page", page);
+		Page<TestAudit> page = testAuditService.findPage(new Page<TestAudit>(request, response), testAudit);
+		model.addAttribute("page", page);
 		return "modules/oa/testAuditList";
 	}
-	
+
 	/**
 	 * 申请单填写
 	 * @param testAudit
@@ -71,15 +71,15 @@ public class TestAuditController extends BaseController {
 	@RequiresPermissions("oa:testAudit:view")
 	@RequestMapping(value = "form")
 	public String form(TestAudit testAudit, Model model) {
-		
+
 		String view = "testAuditForm";
-		
+
 		// 查看审批申请单
 		if (StringUtils.isNotBlank(testAudit.getId())){//.getAct().getProcInsId())){
 
 			// 环节编号
 			String taskDefKey = testAudit.getAct().getTaskDefKey();
-			
+
 			// 查看工单
 			if(testAudit.getAct().isFinishTask()){
 				view = "testAuditView";
@@ -115,7 +115,7 @@ public class TestAuditController extends BaseController {
 		model.addAttribute("testAudit", testAudit);
 		return "modules/oa/" + view;
 	}
-	
+
 	/**
 	 * 申请单保存/修改
 	 * @param testAudit
@@ -151,7 +151,7 @@ public class TestAuditController extends BaseController {
 		testAuditService.auditSave(testAudit);
 		return "redirect:" + adminPath + "/act/task/todo/";
 	}
-	
+
 	/**
 	 * 删除工单
 	 * @param id
