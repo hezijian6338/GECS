@@ -21,11 +21,11 @@ import javax.servlet.http.HttpServletRequest;
 public class CKFinderConfig extends Configuration {
 
 	public CKFinderConfig(ServletConfig servletConfig) {
-        super(servletConfig);  
-    }
-	
+		super(servletConfig);
+	}
+
 	@Override
-    protected Configuration createConfigurationInstance() {
+	protected Configuration createConfigurationInstance() {
 		Principal principal = (Principal) UserUtils.getPrincipal();
 		if (principal == null){
 			return new CKFinderConfig(this.servletConf);
@@ -54,22 +54,33 @@ public class CKFinderConfig extends Configuration {
 
 
 			//this.baseURL = FileUtils.path(Servlets.getRequest().getContextPath() + Global.USERFILES_BASE_URL + principal + "/");
-			this.baseURL = FileUtils.path("\\upload\\"+ principal + "/");
+
+			//Windows文件配置
+			//this.baseURL = FileUtils.path("\\upload\\"+ principal + "/");
+
+			//Mac文件配置
+			this.baseURL = FileUtils.path("/upload/"+ principal + "/");
+
 			//this.baseURL = FileUtils.path("/");
 
 			//this.baseDir = FileUtils.path(Global.getUserfilesBaseDir() + Global.USERFILES_BASE_URL + principal + "/");
-			this.baseDir = FileUtils.path("E:\\photo\\upload\\"+ principal + "/");
+
+			//Windows文件配置
+			//this.baseDir = FileUtils.path("E:\\photo\\upload\\"+ principal + "/");
+
+			//Mac文件配置
+			this.baseDir = FileUtils.path("/Users/Macx/github/RC_Work/GECS/upload/"+ principal + "/");
 
 
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 		return new CKFinderConfig(this.servletConf);
-    }
+	}
 
-    @Override  
-    public boolean checkAuthentication(final HttpServletRequest request) {
-        return UserUtils.getPrincipal()!=null;
-    }
+	@Override
+	public boolean checkAuthentication(final HttpServletRequest request) {
+		return UserUtils.getPrincipal()!=null;
+	}
 
 }

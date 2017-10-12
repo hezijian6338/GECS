@@ -175,6 +175,7 @@
 				<shiro:hasPermission name="license:businessLicense:edit"><td>
     				<a href="${ctx}/license/businessLicense/form?id=${businessLicense.id}">修改</a>
 					<a href="${ctx}/license/businessLicense/delete?id=${businessLicense.id}" onclick="return confirmx('确认要删除该营业执照吗？', this.href)">删除</a>
+					<a onclick="getdetail('${businessLicense}')">详情</a>
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>

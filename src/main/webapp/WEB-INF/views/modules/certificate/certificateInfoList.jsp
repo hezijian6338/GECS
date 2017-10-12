@@ -5,7 +5,8 @@
 	<title>证照元数据管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
-		$(document).ready(function() {
+
+    $(document).ready(function() {
 			
 		});
 		function page(n,s){
@@ -14,6 +15,7 @@
 			$("#searchForm").submit();
         	return false;
         }
+
 	</script>
 </head>
 <body>
@@ -163,6 +165,7 @@
 					${certificateInfo.remarks}
 				</td>
 				<shiro:hasPermission name="certificate:certificateInfo:edit"><td>
+					<a onclick="getDetail('${certificateInfo}')">详情</a>
     				<a href="${ctx}/certificate/certificateInfo/form?id=${certificateInfo.id}">修改</a>
 					<a href="${ctx}/certificate/certificateInfo/delete?id=${certificateInfo.id}" onclick="return confirmx('确认要删除该证照元数据吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
@@ -171,5 +174,15 @@
 		</tbody>
 	</table>
 	<div class="pagination">${page}</div>
+	<div id="dateModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width: 900px;left: 40%;">
+		<div class="modal-header" style="background-color: #0D8BBD;">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="font-size: 20px;color: #000000;">×</button>
+			<h3 id="myModalLabel" style="color: #000000;">详情</h3>
+		</div>
+		<div class="modal-body" style="background-color: #0bbbee;">
+
+		</div>
+	</div>
+
 </body>
 </html>

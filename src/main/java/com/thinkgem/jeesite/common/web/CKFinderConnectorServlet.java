@@ -56,7 +56,13 @@ public class CKFinderConnectorServlet extends ConnectorServlet {
                 if (ss.length == 2) {
 //                    String realPath = Global.getUserfilesBaseDir() + Global.USERFILES_BASE_URL
 //                            + principal + "/" + ss[0] + ss[1];
-                    String realPath = "E:\\photo\\upload\\"
+
+                    //Windows文件配置
+//                    String realPath = "E:\\photo\\upload\\"
+//                            + principal + "/" + ss[0] + ss[1];
+
+                    //Mac文件配置
+                    String realPath = "/Users/Macx/github/RC_Work/GECS/upload/"
                             + principal + "/" + ss[0] + ss[1];
 
                     System.out.println("realPath:" + realPath);
