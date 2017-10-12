@@ -6,6 +6,9 @@ package com.thinkgem.jeesite.modules.license.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
+import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,14 +21,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.web.BaseController;
-import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.license.entity.BusinessLicense;
 import com.thinkgem.jeesite.modules.license.service.BusinessLicenseService;
 
 /**
  * 营业执照Controller
  * @author xucaikai
- * @version 2017-10-09
+ * @version 2017-10-11
  */
 @Controller
 @RequestMapping(value = "${adminPath}/license/businessLicense")
@@ -49,6 +51,10 @@ public class BusinessLicenseController extends BaseController {
 	@RequiresPermissions("license:businessLicense:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(BusinessLicense businessLicense, HttpServletRequest request, HttpServletResponse response, Model model) {
+		User user = UserUtils.getUser();
+		if (!user.isAdmin()){
+			businessLicense.setCreateBy(user);
+		}
 		Page<BusinessLicense> page = businessLicenseService.findPage(new Page<BusinessLicense>(request, response), businessLicense); 
 		model.addAttribute("page", page);
 		return "modules/license/businessLicenseList";
@@ -57,8 +63,46 @@ public class BusinessLicenseController extends BaseController {
 	@RequiresPermissions("license:businessLicense:view")
 	@RequestMapping(value = "form")
 	public String form(BusinessLicense businessLicense, Model model) {
+
+		String view = "businessLicenseForm";
+
+		//查看审批申请单
+		if(StringUtils.isNotBlank(businessLicense.getId())){
+			//环节编号
+			String taskDefKey = businessLicense.getAct().getTaskDefKey();
+
+			//查看工单
+			if(businessLicense.getAct().isFinishTask()){
+				view = "businessLicenseView";
+			}
+			//修改环节
+			else if("modify".equals(taskDefKey)){
+				view = "businessLicenseForm";
+			}
+			// 审核环节
+			else if ("audit".equals(taskDefKey)){
+				view = "businessLicenseAudit";
+			}
+			// 审核环节2
+			else if ("audit1".equals(taskDefKey)){
+				view = "businessLicenseAudit";
+			}
+			// 审核环节3
+			else if ("audit2".equals(taskDefKey)){
+				view = "businessLicenseAudit";
+			}
+			//审核环节4
+			else if ("audit3".equals(taskDefKey)){
+				view = "businessLicenseAudit";
+			}
+			// 兑现环节
+			else if ("apply_end".equals(taskDefKey)){
+				view = "businessLicenseAudit";
+			}
+			System.out.println("进入if语句===========fsdf黄金时代恢复快结束了恢复历史符号");
+		}
 		model.addAttribute("businessLicense", businessLicense);
-		return "modules/license/businessLicenseForm";
+		return "modules/license/"+view;
 	}
 
 	@RequiresPermissions("license:businessLicense:edit")
@@ -69,9 +113,29 @@ public class BusinessLicenseController extends BaseController {
 		}
 		businessLicenseService.save(businessLicense);
 		addMessage(redirectAttributes, "保存营业执照成功");
-		return "redirect:"+Global.getAdminPath()+"/license/businessLicense/?repage";
+		return "redirect:" + adminPath + "/act/task/todo/";
 	}
-	
+
+
+	/**
+	 * 工单执行（完成任务）
+	 * @param businessLicense
+	 * @param model
+	 * @return
+	 */
+	@RequiresPermissions("license:businessLicense:edit")
+	@RequestMapping(value = "saveAudit")
+	public String saveAudit(BusinessLicense businessLicense, Model model) {
+		if (StringUtils.isBlank(businessLicense.getAct().getFlag())
+				|| StringUtils.isBlank(businessLicense.getAct().getComment())){
+			addMessage(model, "请填写审核意见。");
+			return form(businessLicense, model);
+		}
+		businessLicenseService.auditSave(businessLicense);
+		return "redirect:" + adminPath + "/act/task/todo/";
+	}
+
+
 	@RequiresPermissions("license:businessLicense:edit")
 	@RequestMapping(value = "delete")
 	public String delete(BusinessLicense businessLicense, RedirectAttributes redirectAttributes) {
