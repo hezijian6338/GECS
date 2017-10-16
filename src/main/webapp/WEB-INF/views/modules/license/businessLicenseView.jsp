@@ -217,6 +217,8 @@
             </tr>
         </table>
     </fieldset>
+
+
     <act:histoicFlow procInsId="${businessLicense.act.procInsId}" />
     <div class="form-actions">
         <input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>

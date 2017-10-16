@@ -228,10 +228,6 @@
                     <form:textarea path="act.comment" class="required" rows="5" maxlength="20" cssStyle="width:500px"/>
                 </td>
             </tr>
-                <%--<div class="form-actions">
-                    <shiro:hasPermission name="license:businessLicense:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
-                    <input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
-                </div>--%>
         </table>
     </fieldset>
 

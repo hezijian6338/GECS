@@ -186,7 +186,6 @@
 						<form:input path="scope" htmlEscape="false" maxlength="200" class="input-xlarge required"/>
 						<span class="help-inline"><font color="red">*</font> </span>
 
-
 						<div class="demo" style="padding: 2em 0;">
 							<div class="container">
 								<div class="row">
@@ -266,7 +265,6 @@
 								</div>
 							</div>
 						</div>
-
 
 					</td>
 				</tr>
