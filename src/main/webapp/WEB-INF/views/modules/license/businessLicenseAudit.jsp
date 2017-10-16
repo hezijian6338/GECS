@@ -40,6 +40,7 @@
     <form:hidden id="flag" path="act.flag"/>
     <sys:message content="${message}"/>
     <fieldset>
+        <legend>审核人员：${businessLicense.act.taskName}</legend>
         <h1 align="center">营业执照审批申请</h1>
         <table class="table-form">
             <tr>
@@ -82,7 +83,7 @@
                 </td>
             </tr>
             <tr>
-                <td class="tit">证照有效期（起始）：</td>
+                <td class="tit">证照有效期（起始）</td>
                 <td>
                     <input name="effectiveDateStar" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
                            value="<fmt:formatDate value="${businessLicense.effectiveDateStar}" pattern="yyyy-MM-dd HH:mm:ss"/>"
@@ -96,7 +97,7 @@
                 </td>
             </tr>
             <tr>
-                <td class="tit">证照有效期（截至）：</td>
+                <td class="tit">证照有效期（截至）</td>
                 <td>
                     <input name="effectiveDateEnd" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
                            value="<fmt:formatDate value="${businessLicense.effectiveDateEnd}" pattern="yyyy-MM-dd HH:mm:ss"/>"
@@ -128,23 +129,23 @@
                 </td>
             </tr>
             <tr>
-                <td class="tit">法人身份证件类型</td>
+                <td class="tit">法人证件类型</td>
                 <td>
                     <form:input path="persionIdType" htmlEscape="false" maxlength="20" class="input-xlarge required"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
-                <td class="tit">经办人身份证件类型</td>
+                <td class="tit">经办人证件类型</td>
                 <td>
                     <form:input path="handlerIdType" htmlEscape="false" maxlength="20" class="input-xlarge "/>
                 </td>
             </tr>
             <tr>
-                <td class="tit">法人身份证件号码</td>
+                <td class="tit">法人证件号码</td>
                 <td>
                     <form:input path="personId" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
-                <td class="tit">经办人身份证件号码</td>
+                <td class="tit">经办人证件号码</td>
                 <td>
                     <form:input path="handlerId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
                 </td>
@@ -222,15 +223,11 @@
                 </td>
             </tr>
             <tr>
-                <td class="tit">备注信息</td>
+                <td class="tit">您的意见</td>
                 <td colspan="5">
-                    <form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="255" class="input-xxlarge "/>
+                    <form:textarea path="act.comment" class="required" rows="5" maxlength="20" cssStyle="width:500px"/>
                 </td>
             </tr>
-                <%--<div class="form-actions">
-                    <shiro:hasPermission name="license:businessLicense:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
-                    <input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
-                </div>--%>
         </table>
     </fieldset>
 
