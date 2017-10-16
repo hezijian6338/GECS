@@ -6,7 +6,7 @@ package com.thinkgem.jeesite.common.utils;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 
-import com.thinkgem.jeesite.modules.certificate.entity.CertificateInfo;
+import com.thinkgem.jeesite.modules.license.entity.BusinessLicense;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -161,12 +161,12 @@ public class PDFUtil {
         }
     }
 
-    public static void fillTemplate(CertificateInfo certificateInfo, String path, String outputFileName)
+    public static void fillTemplate(BusinessLicense businessLicense, String path, String outputFileName)
             throws IOException, DocumentException {
 
         PdfReader reader = new PdfReader(path); // 模版文件目录
 
-        //String outputFileName = "E:\\pdf\\" + certificateInfo.getStuNo() + certificateInfo.getStuName() + ".pdf" ;
+        //String outputFileName = "E:\\pdf\\" + BusinessLicense.getStuNo() + BusinessLicense.getStuName() + ".pdf" ;
         PdfStamper ps = new PdfStamper(reader, new FileOutputStream(
                 outputFileName)); // 生成的输出流
 
@@ -189,7 +189,7 @@ public class PDFUtil {
 
 //        // 图片路径获取
 //        String imagePath = "E:/";
-////        String imagePath = "E:/"+certificateInfo.getStuImg();
+////        String imagePath = "E:/"+BusinessLicense.getStuImg();
 //
 //        // 通过域名获取所在页和坐标，左下角为起点
 //        int pageNo = s.getFieldPositions("idPhoto").get(0).page;
@@ -387,67 +387,67 @@ public class PDFUtil {
         s.setFieldProperty("area", "textsize", new Float(15), null);
 
         //向相关的文本域注入根据名字
-//                s.setField("Name", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"Name")));
+//                s.setField("Name", fillSpace(BusinessLicense.getStuName() ,15 , isNull(s,"Name")));
 
-//                s.setField("EngFamilyName", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"EngFamilyName")));
+//                s.setField("EngFamilyName", fillSpace(BusinessLicense.getStuName() ,15 , isNull(s,"EngFamilyName")));
 //
-//                s.setField("EngName", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"EngName")));
+//                s.setField("EngName", fillSpace(BusinessLicense.getStuName() ,15 , isNull(s,"EngName")));
 //
-//                s.setField("Sex", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"Sex")));
+//                s.setField("Sex", fillSpace(BusinessLicense.getStuName() ,15 , isNull(s,"Sex")));
 //
-//                s.setField("EngSex", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"EngSex")));
+//                s.setField("EngSex", fillSpace(BusinessLicense.getStuName() ,15 , isNull(s,"EngSex")));
 
-        s.setField("certificateTypeId", fillSpace(certificateInfo.getCertificateTypeId() ,15 , isNull(s,"certificateTypeId")));
+        s.setField("certificateTypeId", fillSpace(businessLicense.getCertificateTypeId() ,15 , isNull(s,"certificateTypeId")));
 
-        s.setField("certificateCode", fillSpace(certificateInfo.getCertificateCode() ,15 , isNull(s,"certificateCode")));
+        s.setField("certificateCode", fillSpace(businessLicense.getCertificateCode() ,15 , isNull(s,"certificateCode")));
 
-        s.setField("certificateName", fillSpace(certificateInfo.getCertificateName() ,15 , isNull(s,"certificateName")));
+        s.setField("certificateName", fillSpace(businessLicense.getCertificateName() ,15 , isNull(s,"certificateName")));
 
-        s.setField("office", fillSpace(String.valueOf(certificateInfo.getOffice()),15 , isNull(s,"office")));
+        s.setField("office", fillSpace(String.valueOf(businessLicense.getOffice()),15 , isNull(s,"office")));
 
-        s.setField("establishDate", fillSpace(String.valueOf(certificateInfo.getEstablishDate()) ,15 , isNull(s,"establishDate")));
+        s.setField("establishDate", fillSpace(String.valueOf(businessLicense.getEstablishDate()) ,15 , isNull(s,"establishDate")));
 
-        s.setField("effectiveDateStar", fillSpace(String.valueOf(certificateInfo.getEffectiveDateStar()) ,15 , isNull(s,"effectiveDateStar")));
+        s.setField("effectiveDateStar", fillSpace(String.valueOf(businessLicense.getEffectiveDateStar()) ,15 , isNull(s,"effectiveDateStar")));
 
-        s.setField("effectiveDateEnd", fillSpace(String.valueOf(certificateInfo.getEstablishDate() ),15 , isNull(s,"effectiveDateEnd")));
+        s.setField("effectiveDateEnd", fillSpace(String.valueOf(businessLicense.getEstablishDate() ),15 , isNull(s,"effectiveDateEnd")));
 
-        s.setField("registeredType", fillSpace(certificateInfo.getRegisteredType() ,15 , isNull(s,"registeredType")));
+        s.setField("registeredType", fillSpace(businessLicense.getRegisteredType() ,15 , isNull(s,"registeredType")));
 
-        s.setField("registeredCapital", fillSpace(certificateInfo.getRegisteredCapital() ,15 , isNull(s,"registeredCapital")));
+        s.setField("registeredCapital", fillSpace(businessLicense.getRegisteredCapital() ,15 , isNull(s,"registeredCapital")));
 
-        s.setField("address", fillSpace(certificateInfo.getAddress() ,15 , isNull(s,"address")));
+        s.setField("address", fillSpace(businessLicense.getAddress() ,15 , isNull(s,"address")));
 
-        s.setField("persionName", fillSpace(certificateInfo.getPersionIdType() ,15 , isNull(s,"persionName")));
+        s.setField("persionName", fillSpace(businessLicense.getPersionIdType() ,15 , isNull(s,"persionName")));
 
-        s.setField("persionIdType", fillSpace(certificateInfo.getPersionIdType() ,15 , isNull(s,"persionIdType")));
+        s.setField("persionIdType", fillSpace(businessLicense.getPersionIdType() ,15 , isNull(s,"persionIdType")));
 
-        s.setField("personId", fillSpace(certificateInfo.getPersonId() ,15 , isNull(s,"personId")));
+        s.setField("personId", fillSpace(businessLicense.getPersonId() ,15 , isNull(s,"personId")));
 
-        s.setField("persionPhone", fillSpace(certificateInfo.getPersionPhone() ,15 , isNull(s,"persionPhone")));
+        s.setField("persionPhone", fillSpace(businessLicense.getPersionPhone() ,15 , isNull(s,"persionPhone")));
 
-        s.setField("handlerName", fillSpace(certificateInfo.getHandlerName() ,15 , isNull(s,"handlerName")));
+        s.setField("handlerName", fillSpace(businessLicense.getHandlerName() ,15 , isNull(s,"handlerName")));
 
-        s.setField("handlerIdType", fillSpace(certificateInfo.getHandlerId() ,15 , isNull(s,"handlerIdType")));
+        s.setField("handlerIdType", fillSpace(businessLicense.getHandlerId() ,15 , isNull(s,"handlerIdType")));
 
-        s.setField("handlerId", fillSpace(certificateInfo.getHandlerId() ,15 , isNull(s,"handlerId")));
+        s.setField("handlerId", fillSpace(businessLicense.getHandlerId() ,15 , isNull(s,"handlerId")));
 
-        s.setField("handlerPhone", fillSpace(certificateInfo.getHandlerPhone() ,15 , isNull(s,"handlerPhone")));
+        s.setField("handlerPhone", fillSpace(businessLicense.getHandlerPhone() ,15 , isNull(s,"handlerPhone")));
 
-        s.setField("scope", fillSpace(certificateInfo.getScope() ,15 , isNull(s,"scope")));
+        s.setField("scope", fillSpace(businessLicense.getScope() ,15 , isNull(s,"scope")));
 
-        s.setField("buildingName", fillSpace(certificateInfo.getBuildingName() ,15 , isNull(s,"buildingName")));
+        s.setField("buildingName", fillSpace(businessLicense.getBuildingName() ,15 , isNull(s,"buildingName")));
 
-        s.setField("floorNumber", fillSpace(certificateInfo.getFloorNumber() ,15 , isNull(s,"floorNumber")));
+        s.setField("floorNumber", fillSpace(businessLicense.getFloorNumber() ,15 , isNull(s,"floorNumber")));
 
-        s.setField("useArea", fillSpace(certificateInfo.getUseArea() ,15 , isNull(s,"useArea")));
+        s.setField("useArea", fillSpace(businessLicense.getUseArea() ,15 , isNull(s,"useArea")));
 
-        s.setField("usage1", fillSpace(certificateInfo.getUsage1() ,15 , isNull(s,"usage1")));
+        s.setField("usage1", fillSpace(businessLicense.getUsage1() ,15 , isNull(s,"usage1")));
 
-        s.setField("dealfireFacilities", fillSpace(certificateInfo.getDealfireFacilities() ,15 , isNull(s,"dealfireFacilities")));
+        s.setField("dealfireFacilities", fillSpace(businessLicense.getDealfireFacilities() ,15 , isNull(s,"dealfireFacilities")));
 
-        s.setField("postcode", fillSpace(certificateInfo.getPostcode(),15 , isNull(s,"postcode")));
+        s.setField("postcode", fillSpace(businessLicense.getPostcode(),15 , isNull(s,"postcode")));
 
-        s.setField("area", fillSpace(String.valueOf(certificateInfo.getArea()),15 , isNull(s,"area")));
+        s.setField("area", fillSpace(String.valueOf(businessLicense.getArea()),15 , isNull(s,"area")));
 
         ps.setFormFlattening(true); // 这句不能少
         ps.close();
