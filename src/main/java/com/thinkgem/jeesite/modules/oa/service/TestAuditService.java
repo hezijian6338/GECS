@@ -90,15 +90,15 @@ public class TestAuditService extends CrudService<TestAuditDao, TestAudit> {
 		if ("audit".equals(taskDefKey)){
 			
 		}
-		else if ("audit2".equals(taskDefKey)){
+		else if ("audit1".equals(taskDefKey)){
 			testAudit.setHrText(testAudit.getAct().getComment());
 			dao.updateHrText(testAudit);
 		}
-		else if ("audit3".equals(taskDefKey)){
+		else if ("audit2".equals(taskDefKey)){
 			testAudit.setLeadText(testAudit.getAct().getComment());
 			dao.updateLeadText(testAudit);
 		}
-		else if ("audit4".equals(taskDefKey)){
+		else if ("audit3".equals(taskDefKey)){
 			testAudit.setMainLeadText(testAudit.getAct().getComment());
 			dao.updateMainLeadText(testAudit);
 		}

@@ -32,9 +32,13 @@
 		a.postcode AS "postcode",
 		a.area_id AS "area.id",
 		a.create_by AS "createBy.id",
+		a.opinion1 AS "opinion1",
+		a.opinion2 AS "opinion2",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
+		a.opinion3 AS "opinion3",
 		a.update_date AS "updateDate",
+		a.opinion4 AS "opinion4",
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
 		o6.name AS "office.name",
@@ -145,9 +149,13 @@
 			postcode,
 			area_id,
 			create_by,
+			opinion1,
+			opinion2,
 			create_date,
 			update_by,
+			opinion3,
 			update_date,
+			opinion4,
 			remarks,
 			del_flag
 		) VALUES (
@@ -180,9 +188,13 @@
 			#{postcode},
 			#{area.id},
 			#{createBy.id},
+			#{opinion1},
+			#{opinion2},
 			#{createDate},
 			#{updateBy.id},
+			#{opinion3},
 			#{updateDate},
+			#{opinion4},
 			#{remarks},
 			#{delFlag}
 		)
@@ -216,8 +228,12 @@
 			dealfire_facilities = #{dealfireFacilities},
 			postcode = #{postcode},
 			area_id = #{area.id},
+			opinion1 = #{opinion1},
+			opinion2 = #{opinion2},
 			update_by = #{updateBy.id},
+			opinion3 = #{opinion3},
 			update_date = #{updateDate},
+			opinion4 = #{opinion4},
 			remarks = #{remarks}
 		WHERE id = #{id}
 	</update>
@@ -227,5 +243,38 @@
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
-	
+
+
+
+
+	<update id="updateOpinion1">
+		UPDATE business_license SET
+		opinion1 = #{opinion1},
+		update_by = #{updateBy.id},
+		update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+
+	<update id="updateOpinion2">
+		UPDATE business_license SET
+		opinion2 = #{opinion2},
+		update_by = #{updateBy.id},
+		update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+
+	<update id="updateOpinion3">
+		UPDATE business_license SET
+		opinion3 = #{opinion3},
+		update_by = #{updateBy.id},
+		update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	<update id="updateOpinion4">
+		UPDATE business_license SET
+		opinion4 = #{opinion4},
+		update_by = #{updateBy.id},
+		update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
 </mapper>

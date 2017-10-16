@@ -3,6 +3,8 @@
  */
 package com.thinkgem.jeesite.modules.license.entity;
 
+import com.thinkgem.jeesite.common.persistence.ActEntity;
+import com.thinkgem.jeesite.modules.act.entity.Act;
 import org.hibernate.validator.constraints.Length;
 import com.thinkgem.jeesite.modules.sys.entity.Office;
 import javax.validation.constraints.NotNull;
@@ -15,12 +17,12 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 /**
  * 营业执照Entity
  * @author xucaikai
- * @version 2017-10-09
+ * @version 2017-10-11
  */
-public class BusinessLicense extends DataEntity<BusinessLicense> {
+public class BusinessLicense extends ActEntity<BusinessLicense> {
 	
 	private static final long serialVersionUID = 1L;
-	private String procInsId;		// 流程实例ID
+	//private String procInsId;		// 流程实例ID
 	private String certificateTypeId;		// 证照类型
 	private String certificateCode;		// 证照编号
 	private String certificateName;		// 证照名称
@@ -47,6 +49,10 @@ public class BusinessLicense extends DataEntity<BusinessLicense> {
 	private String dealfireFacilities;		// 现有消防设施
 	private String postcode;		// 邮政编码
 	private Area area;		// 所属区域
+	private String opinion1;		// 审批人1的意见
+	private String opinion2;		// 审批人2的意见
+	private String opinion3;		// 审批人3的意见
+	private String opinion4;		// 审批人4的意见
 	
 	public BusinessLicense() {
 		super();
@@ -56,14 +62,14 @@ public class BusinessLicense extends DataEntity<BusinessLicense> {
 		super(id);
 	}
 
-	@Length(min=0, max=64, message="流程实例ID长度必须介于 0 和 64 之间")
+/*	@Length(min=0, max=64, message="流程实例ID长度必须介于 0 和 64 之间")
 	public String getProcInsId() {
 		return procInsId;
 	}
 
 	public void setProcInsId(String procInsId) {
 		this.procInsId = procInsId;
-	}
+	}*/
 	
 	@Length(min=1, max=64, message="证照类型长度必须介于 1 和 64 之间")
 	public String getCertificateTypeId() {
@@ -299,6 +305,42 @@ public class BusinessLicense extends DataEntity<BusinessLicense> {
 
 	public void setArea(Area area) {
 		this.area = area;
+	}
+	
+	@Length(min=0, max=255, message="审批人1的意见长度必须介于 0 和 255 之间")
+	public String getOpinion1() {
+		return opinion1;
+	}
+
+	public void setOpinion1(String opinion1) {
+		this.opinion1 = opinion1;
+	}
+	
+	@Length(min=0, max=255, message="审批人2的意见长度必须介于 0 和 255 之间")
+	public String getOpinion2() {
+		return opinion2;
+	}
+
+	public void setOpinion2(String opinion2) {
+		this.opinion2 = opinion2;
+	}
+	
+	@Length(min=0, max=255, message="审批人3的意见长度必须介于 0 和 255 之间")
+	public String getOpinion3() {
+		return opinion3;
+	}
+
+	public void setOpinion3(String opinion3) {
+		this.opinion3 = opinion3;
+	}
+	
+	@Length(min=0, max=255, message="审批人4的意见长度必须介于 0 和 255 之间")
+	public String getOpinion4() {
+		return opinion4;
+	}
+
+	public void setOpinion4(String opinion4) {
+		this.opinion4 = opinion4;
 	}
 	
 }

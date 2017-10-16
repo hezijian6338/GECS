@@ -10,9 +10,16 @@ import com.thinkgem.jeesite.modules.license.entity.BusinessLicense;
 /**
  * 营业执照DAO接口
  * @author xucaikai
- * @version 2017-10-09
+ * @version 2017-10-11
  */
 @MyBatisDao
 public interface BusinessLicenseDao extends CrudDao<BusinessLicense> {
-	
+
+    public int updateOpinion1(BusinessLicense businessLicense);
+
+    public int updateOpinion2(BusinessLicense businessLicense);
+
+    public int updateOpinion3(BusinessLicense businessLicense);
+
+    public int updateOpinion4(BusinessLicense businessLicense);
 }

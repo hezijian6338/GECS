@@ -19,7 +19,7 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/license/businessLicense/">营业执照列表</a></li>
-		<shiro:hasPermission name="license:businessLicense:edit"><li><a href="${ctx}/license/businessLicense/form">营业执照添加</a></li></shiro:hasPermission>
+		<shiro:hasPermission name="license:businessLicense:edit"><li><a href="${ctx}/license/businessLicense/form">营业执照申请流程</a></li></shiro:hasPermission>
 	</ul>
 	<form:form id="searchForm" modelAttribute="businessLicense" action="${ctx}/license/businessLicense/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
@@ -57,12 +57,12 @@
 				<th>注册资本</th>
 				<th>地址</th>
 				<th>法人姓名</th>
-				<th>法人身份证件类型</th>
-				<th>法人身份证件号码</th>
+				<th>法人证件类型</th>
+				<th>法人证件号码</th>
 				<th>法人联系方式</th>
 				<th>经办人姓名</th>
-				<th>经办人身份证件类型</th>
-				<th>经办人身份证件号码</th>
+				<th>经办人证件类型</th>
+				<th>经办人证件号码</th>
 				<th>经办人联系方式</th>
 				<th>经营/业务/许可范围</th>
 				<th>建筑名称</th>
