@@ -69,7 +69,7 @@
         });
 
         $("#textarea").blur(function () {
-            alert("cao ni ma ");
+            //alert("cao ni ma ");
         });
 
         $("#printf").droppable({
@@ -274,7 +274,7 @@
                     if (document.getElementById("id" + ui.helper.attr("id"))) {
                         alert("此组件只能拖拉一次！");
                     } else if (ui.helper.attr("id") == "Photo") {
-                        alert("画布宽度：" + document.getElementById("printf").offsetWidth + "   " + "画布长度：" + document.getElementById("printf").offsetHeight);
+                        //alert("画布宽度：" + document.getElementById("printf").offsetWidth + "   " + "画布长度：" + document.getElementById("printf").offsetHeight);
 
                         var el = $("<div class='printComponents specialElements Photo' onclick='checkClick(this)' tabindex='0' onmousedown='setIndex(event,this)' style='border:1px solid #000000;'></div>");
                         var id = "id" + ui.helper.attr("id");
@@ -349,7 +349,7 @@
 
                     <!--第七个组件的生成 图片的拖拉-->
 
-                    var fileName = "/picFile/upload/1/modelPhoto/" + ui.helper.attr("id") ;
+                    var fileName = "/picFile/upload/1/modelPhoto/" + ui.helper.attr("id");
                     //alert(fileName);
                     var el = $("<div class='printComponents' onclick='checkClick(this)' tabindex='0' onmousedown='setIndex(event,this)'></div>");
                     el.append("<img src=" + fileName + " class='img' style='width:98%;height: auto'>");
@@ -427,7 +427,6 @@
                 <div class="components Elements" id="EngName">名(英)</div>
                 <div class="components Elements" id="Sex">性别</div>
                 <div class="components Elements" id="EngSex">性别(英)</div>
-
 
                 <div class="components Elements" id="certificateTypeId">证照类型</div>
                 <div class="components Elements" id="certificateCode">证照编号</div>
@@ -553,7 +552,7 @@
                 var finder = new CKFinder();
                 finder.basePath = '../';	// The path for the installation of CKFinder (default = "/ckfinder/").
                 //Startup path in a form: "Type:/path/to/directory/"
-                finder.readOnly = true ;
+                finder.readOnly = true;
                 finder.resourceType = "pdf";
                 finder.startupPath = startupPath;
                 finder.selectActionFunction = viewSFF;
@@ -626,10 +625,45 @@
                     <input type="button" value="Browse Server" onclick="BrowseServer('modelPhoto:/','xFilePath');"/>
                     <input type="button" value="confirm" onclick="createNewElements();"/>
                     <input type="button" value="查看历史模板" onclick="viewBS('pdf:/');"/>
-                    <input type="button" id="downloadPDF" onclick="print()" value="下载PDF"/>
                 </p>
             </div>
+        </div>
 
+        <div id="setPdf_makeup" class="_util">
+            PDF布局形式:
+            <select id="LorP">
+                <option value=" " selected="selected">选择形式</option>
+                <option value="l">横版</option>
+                <option value="p">竖版</option>
+            </select>
+            PDF大小:
+            <select id="pdfSize">
+                <option value=" " selected="selected">选择大小</option>
+                <option value="a10">A10</option>
+                <option value="a9">A9</option>
+                <option value="a8">A8</option>
+                <option value="a7">A7</option>
+                <option value="a6">A6</option>
+                <option value="a5">A5</option>
+                <option value="a4">A4</option>
+                <option value="a3">A3</option>
+                <option value="a2">A2</option>
+                <option value="a1">A1</option>
+                <option value="a0">A0</option>
+                <option value="b10">B10</option>
+                <option value="b9">B9</option>
+                <option value="b8">B8</option>
+                <option value="b7">B7</option>
+                <option value="b6">B6</option>
+                <option value="b5">B5</option>
+                <option value="b4">B4</option>
+                <option value="b3">B3</option>
+                <option value="b2">B2</option>
+                <option value="b1">B1</option>
+                <option value="b0">B0</option>
+            </select>
+            <input type="button" id="downloadPDF" onclick="print()" value="下载PDF"/>
+            <input type="button" id="saveTxt" onclick="saveTxt()" value="下载图片"/>
         </div>
 
 
@@ -738,6 +772,51 @@
 
 
 <script>
+
+    var pageFormats = { // Size in pt of various paper formats
+        'a0': [2383.94, 3370.39],
+        'a1': [1683.78, 2383.94],
+        'a2': [1190.55, 1683.78],
+        'a3': [841.89, 1190.55],
+        'a4': [595.28, 841.89],
+        'a5': [419.53, 595.28],
+        'a6': [297.64, 419.53],
+        'a7': [209.76, 297.64],
+        'a8': [147.40, 209.76],
+        'a9': [104.88, 147.40],
+        'a10': [73.70, 104.88],
+        'b0': [2834.65, 4008.19],
+        'b1': [2004.09, 2834.65],
+        'b2': [1417.32, 2004.09],
+        'b3': [1000.63, 1417.32],
+        'b4': [708.66, 1000.63],
+        'b5': [498.90, 708.66],
+        'b6': [354.33, 498.90],
+        'b7': [249.45, 354.33],
+        'b8': [175.75, 249.45],
+        'b9': [124.72, 175.75],
+        'b10': [87.87, 124.72],
+        'c0': [2599.37, 3676.54],
+        'c1': [1836.85, 2599.37],
+        'c2': [1298.27, 1836.85],
+        'c3': [918.43, 1298.27],
+        'c4': [649.13, 918.43],
+        'c5': [459.21, 649.13],
+        'c6': [323.15, 459.21],
+        'c7': [229.61, 323.15],
+        'c8': [161.57, 229.61],
+        'c9': [113.39, 161.57],
+        'c10': [79.37, 113.39],
+        'dl': [311.81, 623.62],
+        'letter': [612, 792],
+        'government-letter': [576, 756],
+        'legal': [612, 1008],
+        'junior-legal': [576, 360],
+        'ledger': [1224, 792],
+        'tabloid': [792, 1224],
+        'credit-card': [153, 243]
+    };
+
     var realPrintfContent;
     var i;	//加粗的变量
     var j;	//加斜的变量
@@ -765,7 +844,7 @@
 
 
     function wirteText(e) {			//为每一个文本框输入后自动生成相对应的Html
-        alert(e.value);
+        //alert(e.value);
         e.innerHTML = e.value;
 
     }
@@ -960,6 +1039,9 @@
         var family = document.getElementById("fontfamily");
         var setFontsize = document.getElementById("fontsize");
         var setFontfamily = document.getElementById("fontfamily");
+        var pdfsize = document.getElementById("pdfSize");
+        var lorp = document.getElementById("LorP");
+        var printf = document.getElementById("printf");
 
         //获取当前元素的颜色 字体 大小属性并显示在分别显示在三个选择框 如果为空显示默认的
         if ($(thisID).hasClass("textComponents")) {
@@ -1007,6 +1089,42 @@
             $(thisID).find('textarea').css('font-family', fontfamily);
             $(thisID).find('label').css('font-family', fontfamily);
         }
+
+        pdfsize.onchange = function () {
+            alert("自动修改画布为你当前所选的格式,并且清楚画布内容,请重新排版！");
+            printf.innerHTML = "" ;
+            var size = pdfsize.value;
+            var format = size.toLowerCase();
+            if (pageFormats.hasOwnProperty(format)) {
+                printf.style.width = pageFormats[format][0];
+                printf.style.height = pageFormats[format][1];
+                //alert("宽" +pdfWidth + "高" + pdfHeight + "1");
+            }
+        };
+
+        lorp.onchange = function () {
+            alert("自动修改画布为你当前所选的格式,并且清楚画布内容,请重新排版！");
+            printf.innerHTML = "" ;
+            var or = lorp.value ;
+            var orientation = or ;
+            if (orientation) {
+                switch (orientation.substr(0, 1)) {
+                    case 'l':
+                        if (printf.style.height > printf.style.width) orientation = 's';
+                        break;
+                    case 'p':
+                        if (printf.style.width > printf.style.height) orientation = 's';
+                        break;
+                }
+                if (orientation === 's') {
+                    var tmp = printf.style.width;
+                    printf.style.width = printf.style.height;
+                    printf.style.height = tmp;
+                    //alert("宽" + pdfWidth + "宽" + pdfHeight + "2");
+                }
+            }
+        };
+
 
         //alert(e.getAttribute("id")+""+fontsize+""+fontfamily);		//是否成功获取属性值
 
@@ -1077,6 +1195,40 @@
     function print() {
         var printfWidth = document.getElementById("printfWidth").value;
         var printfHeight = document.getElementById("printfHeight").value;
+
+        var LorP = document.getElementById("LorP");
+        var pdfSize = document.getElementById("pdfSize");
+
+        if (LorP.value == " " || LorP.value == 0 || LorP.value == undefined) {
+            alert("必须选择PDF布局形式！" + LorP.value);
+        } else if (pdfSize.value == " " || pdfSize.value == 0 || pdfSize.value == undefined) {
+            alert("必须选择PDF大小！" + pdfSize.value);
+        } else {
+            var format = pdfSize.value.toLowerCase();
+            if (pageFormats.hasOwnProperty(format)) {
+                pdfWidth = pageFormats[format][0];
+                pdfHeight = pageFormats[format][1];
+                //alert("宽" +pdfWidth + "高" + pdfHeight + "1");
+            }
+        }
+        var orientation = LorP.value;
+        if (orientation) {
+            switch (orientation.substr(0, 1)) {
+                case 'l':
+                    if (pdfHeight > pdfWidth) orientation = 's';
+                    break;
+                case 'p':
+                    if (pdfWidth > pdfHeight) orientation = 's';
+                    break;
+            }
+            if (orientation === 's') {
+                var tmp = pdfWidth;
+                pdfWidth = pdfHeight;
+                pdfHeight = tmp;
+                //alert("宽" + pdfWidth + "宽" + pdfHeight + "2");
+            }
+        }
+
         if (printfWidth == 0 || printfWidth == "" || printfWidth == undefined) {
             printfWidth = 1500;
         }
@@ -1085,7 +1237,7 @@
         }
 
         //更改了排版方式为竖版（p--竖版；l--横版）
-        var pdf = new jsPDF('p', 'pt', 'a4');
+        var pdf = new jsPDF(LorP.value, 'pt', pdfSize.value);
         $.each($('.specialElements'), function () {
             var TF_T = $(this).text();
             var TF_Id = $(this).attr("id");
@@ -1110,10 +1262,10 @@
             //alert(printfWidth);
 
             //参数修改 长宽交换
-            posX = ( 595.28 * posX ) / printfWidth;
-            posY = ( 841.89 * posY ) / printfHeight;
-            posW = ( 595.28 * posW ) / printfWidth;
-            posH = ( 841.89 * posH ) / printfHeight;
+            posX = ( pdfWidth * posX ) / printfWidth;
+            posY = ( pdfHeight * posY ) / printfHeight;
+            posW = ( pdfWidth * posW ) / printfWidth;
+            posH = ( pdfHeight * posH ) / printfHeight;
             createTextField(pdf, TF_Id, TF_Name, posX, posY, posW, posH, TF_T);
             $(this).remove();
         });
@@ -1122,7 +1274,7 @@
 
         html2canvas($("#printf"), {
             onrendered: function (canvas) {
-                pdf.addImage(canvas.toDataURL("image/png", 1.0), 'PNG', 0, 0, 595.28, 841.89);
+                pdf.addImage(canvas.toDataURL("image/png", 1.0), 'PNG', 0, 0, pdfWidth, pdfHeight);
                 pdf.save('content.pdf');
 
             }
@@ -1132,7 +1284,7 @@
 
     function createNewElements() {
         var inputContent = document.getElementById("xFilePath").value;
-        document.getElementById("xFilePath").value = "" ;
+        document.getElementById("xFilePath").value = "";
         var splitPoint = inputContent.lastIndexOf(".");
         var split = inputContent.lastIndexOf("/");
         var id_el = inputContent.substring(split + 1, splitPoint);
