@@ -5,7 +5,6 @@
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <meta charset="utf-8">
@@ -404,13 +403,13 @@
                     <input class="FormAcount" id="FormLineAcount"
                            onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
                            onafterpaste=
-                    "if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
+                                   "if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
                     <br/>
                     <small>列:</small>
                     <input class="FormAcount" id="FormColumnAcount"
                            onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
                            onafterpaste=
-                    "if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
+                                   "if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
                 </div>
                 <div class="components" id="line">直线</div>
                 <select id="lineStylechoice">
@@ -432,9 +431,13 @@
 
                 <div class="components Elements" id="certificateTypeId">证照类型</div>
                 <div class="components Elements" id="certificateCode">证照编号</div>
-                <div class="components Elements" id="certificateName">证照名称</div>
+                <div class="components Elements" id="certificateName">公司名称</div>
                 <div class="components Elements" id="office">颁发机构id</div>
+                <div class="components Elements" id="tyshxydm">统一社会信用代码</div>
                 <div class="components Elements" id="establishDate">成立日期</div>
+                <div class="components Elements" id="establishDateYear">成立日期(年)</div>
+                <div class="components Elements" id="establishDateMonth">成立日期(月)</div>
+                <div class="components Elements" id="establishDateDay">成立日期(日)</div>
                 <div class="components Elements" id="effectiveDateStar">证照有效期（起始）</div>
                 <div class="components Elements" id="effectiveDateEnd">证照有效期（截至）</div>
                 <div class="components Elements" id="registeredType">注册公司类型</div>
@@ -472,7 +475,7 @@
                 <input id="radioAcount" style="width: 80%"
                        onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
                        onafterpaste=
-                "if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
+                               "if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
 
                 <div class="components" id="check box"> 多选按钮</div>
                 <select id="CheckBoxstyleChoice">
@@ -490,7 +493,8 @@
         <div>
             <ul id="othersElements">
                 <%
-                    String realpath = "E:\\photo\\upload\\1\\modelPhoto\\";
+                    //String realpath = "E:\\photo\\upload\\1\\modelPhoto\\";
+                    String realpath = "/Users/Macx/github/RC_Work/manager/upload/1/modelPhoto/";
                     System.out.println(realpath);
                     File d = new File(realpath);
                     if (d.exists()) {
@@ -793,7 +797,7 @@
     function setPrintfSize() {
         var printf = document.getElementById("printf");
         if (!($(printf).children().length == 0)) {
-            alert("有东西啊！！！！！！" + $(printf).children().length);
+            //alert("有东西啊！！！！！！" + $(printf).children().length);
         } else {
             var printfWidth = document.getElementById("printfWidth").value;
             var printfHeight = document.getElementById("printfHeight").value;
@@ -1079,7 +1083,9 @@
         if (printfHeight == 0 || printfHeight == "" || printfHeight == undefined) {
             printfHeight = 920;
         }
-        var pdf = new jsPDF('l', 'pt', 'a4');
+
+        //更改了排版方式为竖版（p--竖版；l--横版）
+        var pdf = new jsPDF('p', 'pt', 'a4');
         $.each($('.specialElements'), function () {
             var TF_T = $(this).text();
             var TF_Id = $(this).attr("id");
@@ -1102,10 +1108,12 @@
             var printfWidth = parseInt($(pw).css("width"));
             var printfHeight = parseInt($(pw).css("height"));
             //alert(printfWidth);
-            posX = ( 841.89 * posX ) / printfWidth;
-            posY = ( 595.28 * posY ) / printfHeight;
-            posW = ( 841.89 * posW ) / printfWidth;
-            posH = ( 595.28 * posH ) / printfHeight;
+
+            //参数修改 长宽交换
+            posX = ( 595.28 * posX ) / printfWidth;
+            posY = ( 841.89 * posY ) / printfHeight;
+            posW = ( 595.28 * posW ) / printfWidth;
+            posH = ( 841.89 * posH ) / printfHeight;
             createTextField(pdf, TF_Id, TF_Name, posX, posY, posW, posH, TF_T);
             $(this).remove();
         });
@@ -1114,7 +1122,7 @@
 
         html2canvas($("#printf"), {
             onrendered: function (canvas) {
-                pdf.addImage(canvas.toDataURL("image/png", 1.0), 'PNG', 0, 0, 841.89, 595.28);
+                pdf.addImage(canvas.toDataURL("image/png", 1.0), 'PNG', 0, 0, 595.28, 841.89);
                 pdf.save('content.pdf');
 
             }

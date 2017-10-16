@@ -256,10 +256,30 @@ public class PDFUtil {
         s.setFieldProperty("office", "textfont", bfChinese, null);
         s.setFieldProperty("office", "textsize", new Float(15), null);
 
+        //统一社会信用代码 注入
+        s.setFieldProperty("tyshxydm", "clrflags", 1, null);
+        s.setFieldProperty("tyshxydm", "textfont", bfChinese, null);
+        s.setFieldProperty("tyshxydm", "textsize", new Float(15), null);
+
         //成立日期 注入
         s.setFieldProperty("establishDate", "clrflags", 1, null);
         s.setFieldProperty("establishDate", "textfont", bfChinese, null);
         s.setFieldProperty("establishDate", "textsize", new Float(15), null);
+
+        //成立日期（年） 注入
+        s.setFieldProperty("establishDateYear", "clrflags", 1, null);
+        s.setFieldProperty("establishDateYear", "textfont", bfChinese, null);
+        s.setFieldProperty("establishDateYear", "textsize", new Float(15), null);
+
+        //成立日期（月） 注入
+        s.setFieldProperty("establishDateMonth", "clrflags", 1, null);
+        s.setFieldProperty("establishDateMonth", "textfont", bfChinese, null);
+        s.setFieldProperty("establishDateMonth", "textsize", new Float(15), null);
+
+        //成立日期（日） 注入
+        s.setFieldProperty("establishDateDay", "clrflags", 1, null);
+        s.setFieldProperty("establishDateDay", "textfont", bfChinese, null);
+        s.setFieldProperty("establishDateDay", "textsize", new Float(15), null);
 
         //证照有效期（起始） 注入
         s.setFieldProperty("effectiveDateStar", "clrflags", 1, null);
