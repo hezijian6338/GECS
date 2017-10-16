@@ -166,7 +166,7 @@ public class PDFUtil {
 
         PdfReader reader = new PdfReader(path); // 模版文件目录
 
-        // String outputFileName = "E:\\pdf\\" + certificateInfo.getStuNo() + certificateInfo.getStuName() + ".pdf" ;
+        //String outputFileName = "E:\\pdf\\" + certificateInfo.getStuNo() + certificateInfo.getStuName() + ".pdf" ;
         PdfStamper ps = new PdfStamper(reader, new FileOutputStream(
                 outputFileName)); // 生成的输出流
 
@@ -187,25 +187,25 @@ public class PDFUtil {
 
         BaseFont bfChinese = BaseFont.createFont(CHARACTOR_FONT_CH_FILE, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 
-        // 图片路径获取
-        String imagePath = "E:/";
-//        String imagePath = "E:/"+certificateInfo.getStuImg();
-
-        // 通过域名获取所在页和坐标，左下角为起点
-        int pageNo = s.getFieldPositions("idPhoto").get(0).page;
-        Rectangle signRect = s.getFieldPositions("idPhoto").get(0).position;
-        s.setField("idPhoto", " ");
-        float x = signRect.getLeft();
-        float y = signRect.getBottom();
-        // 读图片
-        Image image = Image.getInstance(imagePath);
-        // 获取操作的页面
-        PdfContentByte under = ps.getOverContent(pageNo);
-        // 根据域的大小缩放图片
-        image.scaleToFit(signRect.getWidth(), signRect.getHeight());
-        // 添加图片
-        image.setAbsolutePosition(x, y);
-        under.addImage(image);
+//        // 图片路径获取
+//        String imagePath = "E:/";
+////        String imagePath = "E:/"+certificateInfo.getStuImg();
+//
+//        // 通过域名获取所在页和坐标，左下角为起点
+//        int pageNo = s.getFieldPositions("idPhoto").get(0).page;
+//        Rectangle signRect = s.getFieldPositions("idPhoto").get(0).position;
+//        s.setField("idPhoto", " ");
+//        float x = signRect.getLeft();
+//        float y = signRect.getBottom();
+//        // 读图片
+//        Image image = Image.getInstance(imagePath);
+//        // 获取操作的页面
+//        PdfContentByte under = ps.getOverContent(pageNo);
+//        // 根据域的大小缩放图片
+//        image.scaleToFit(signRect.getWidth(), signRect.getHeight());
+//        // 添加图片
+//        image.setAbsolutePosition(x, y);
+//        under.addImage(image);
 
 
         s.addSubstitutionFont(bfChinese);
@@ -367,67 +367,67 @@ public class PDFUtil {
         s.setFieldProperty("area", "textsize", new Float(15), null);
 
         //向相关的文本域注入根据名字
-        //        s.setField("Name", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"Name")));
+//                s.setField("Name", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"Name")));
 
-        //        s.setField("EngFamilyName", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"EngFamilyName")));
+//                s.setField("EngFamilyName", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"EngFamilyName")));
+//
+//                s.setField("EngName", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"EngName")));
+//
+//                s.setField("Sex", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"Sex")));
+//
+//                s.setField("EngSex", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"EngSex")));
 
-        //        s.setField("EngName", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"EngName")));
+        s.setField("certificateTypeId", fillSpace(certificateInfo.getCertificateTypeId() ,15 , isNull(s,"certificateTypeId")));
 
-        //        s.setField("Sex", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"Sex")));
+        s.setField("certificateCode", fillSpace(certificateInfo.getCertificateCode() ,15 , isNull(s,"certificateCode")));
 
-        //        s.setField("EngSex", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"EngSex")));
+        s.setField("certificateName", fillSpace(certificateInfo.getCertificateName() ,15 , isNull(s,"certificateName")));
 
-        //        s.setField("certificateTypeId", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"certificateTypeId")));
+        s.setField("office", fillSpace(String.valueOf(certificateInfo.getOffice()),15 , isNull(s,"office")));
 
-        //        s.setField("certificateCode", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"certificateCode")));
+        s.setField("establishDate", fillSpace(String.valueOf(certificateInfo.getEstablishDate()) ,15 , isNull(s,"establishDate")));
 
-        //        s.setField("certificateName", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"certificateName")));
+        s.setField("effectiveDateStar", fillSpace(String.valueOf(certificateInfo.getEffectiveDateStar()) ,15 , isNull(s,"effectiveDateStar")));
 
-        //        s.setField("office", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"office")));
+        s.setField("effectiveDateEnd", fillSpace(String.valueOf(certificateInfo.getEstablishDate() ),15 , isNull(s,"effectiveDateEnd")));
 
-        //        s.setField("establishDate", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"establishDate")));
+        s.setField("registeredType", fillSpace(certificateInfo.getRegisteredType() ,15 , isNull(s,"registeredType")));
 
-        //        s.setField("effectiveDateStar", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"effectiveDateStar")));
+        s.setField("registeredCapital", fillSpace(certificateInfo.getRegisteredCapital() ,15 , isNull(s,"registeredCapital")));
 
-        //        s.setField("effectiveDateEnd", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"effectiveDateEnd")));
+        s.setField("address", fillSpace(certificateInfo.getAddress() ,15 , isNull(s,"address")));
 
-        //        s.setField("registeredType", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"registeredType")));
+        s.setField("persionName", fillSpace(certificateInfo.getPersionIdType() ,15 , isNull(s,"persionName")));
 
-        //        s.setField("registeredCapital", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"registeredCapital")));
+        s.setField("persionIdType", fillSpace(certificateInfo.getPersionIdType() ,15 , isNull(s,"persionIdType")));
 
-        //        s.setField("address", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"address")));
+        s.setField("personId", fillSpace(certificateInfo.getPersonId() ,15 , isNull(s,"personId")));
 
-        //        s.setField("persionName", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"persionName")));
+        s.setField("persionPhone", fillSpace(certificateInfo.getPersionPhone() ,15 , isNull(s,"persionPhone")));
 
-        //        s.setField("persionIdType", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"persionIdType")));
+        s.setField("handlerName", fillSpace(certificateInfo.getHandlerName() ,15 , isNull(s,"handlerName")));
 
-        //        s.setField("personId", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"personId")));
+        s.setField("handlerIdType", fillSpace(certificateInfo.getHandlerId() ,15 , isNull(s,"handlerIdType")));
 
-        //        s.setField("persionPhone", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"persionPhone")));
+        s.setField("handlerId", fillSpace(certificateInfo.getHandlerId() ,15 , isNull(s,"handlerId")));
 
-        //        s.setField("handlerName", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"handlerName")));
+        s.setField("handlerPhone", fillSpace(certificateInfo.getHandlerPhone() ,15 , isNull(s,"handlerPhone")));
 
-        //        s.setField("handlerIdType", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"handlerIdType")));
+        s.setField("scope", fillSpace(certificateInfo.getScope() ,15 , isNull(s,"scope")));
 
-        //        s.setField("handlerId", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"handlerId")));
+        s.setField("buildingName", fillSpace(certificateInfo.getBuildingName() ,15 , isNull(s,"buildingName")));
 
-        //        s.setField("handlerPhone", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"handlerPhone")));
+        s.setField("floorNumber", fillSpace(certificateInfo.getFloorNumber() ,15 , isNull(s,"floorNumber")));
 
-        //        s.setField("scope", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"scope")));
+        s.setField("useArea", fillSpace(certificateInfo.getUseArea() ,15 , isNull(s,"useArea")));
 
-        //        s.setField("buildingName", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"buildingName")));
+        s.setField("usage1", fillSpace(certificateInfo.getUsage1() ,15 , isNull(s,"usage1")));
 
-        //        s.setField("floorNumber", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"floorNumber")));
+        s.setField("dealfireFacilities", fillSpace(certificateInfo.getDealfireFacilities() ,15 , isNull(s,"dealfireFacilities")));
 
-        //        s.setField("useArea", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"useArea")));
+        s.setField("postcode", fillSpace(certificateInfo.getPostcode(),15 , isNull(s,"postcode")));
 
-        //        s.setField("usage1", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"usage1")));
-
-        //        s.setField("dealfireFacilities", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"dealfireFacilities")));
-
-        //        s.setField("postcode", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"postcode")));
-
-        //        s.setField("area", fillSpace(certificateInfo.getStuName() ,15 , isNull(s,"area")));
+        s.setField("area", fillSpace(String.valueOf(certificateInfo.getArea()),15 , isNull(s,"area")));
 
         ps.setFormFlattening(true); // 这句不能少
         ps.close();

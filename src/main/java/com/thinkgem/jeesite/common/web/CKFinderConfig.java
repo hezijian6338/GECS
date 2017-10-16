@@ -69,7 +69,7 @@ public class CKFinderConfig extends Configuration {
 			//this.baseDir = FileUtils.path("E:\\photo\\upload\\"+ principal + "/");
 
 			//Mac文件配置
-			this.baseDir = FileUtils.path("/Users/Macx/github/RC_Work/GECS/upload/"+ principal + "/");
+			this.baseDir = FileUtils.path("/Users/Macx/github/RC_Work/GECS/manager/upload/"+ principal + "/");
 
 
 		} catch (Exception e) {

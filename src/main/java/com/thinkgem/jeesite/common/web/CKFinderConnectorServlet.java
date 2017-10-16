@@ -62,7 +62,7 @@ public class CKFinderConnectorServlet extends ConnectorServlet {
 //                            + principal + "/" + ss[0] + ss[1];
 
                     //Mac文件配置
-                    String realPath = "/Users/Macx/github/RC_Work/GECS/upload/"
+                    String realPath = "/Users/Macx/github/RC_Work/GECS/manager/upload/"
                             + principal + "/" + ss[0] + ss[1];
 
                     System.out.println("realPath:" + realPath);

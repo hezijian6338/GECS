@@ -9,7 +9,7 @@
 	<imgQuality>80</imgQuality>
 	<uriEncoding>UTF-8</uriEncoding>
 	<forceASCII>false</forceASCII>
-    <disallowUnsafeCharacters>false</disallowUnsafeCharacters>
+	<disallowUnsafeCharacters>false</disallowUnsafeCharacters>
 	<userRoleSessionVar>CKFinder_UserRole</userRoleSessionVar>
 	<checkDoubleExtension>true</checkDoubleExtension>
 	<checkSizeAfterScaling>true</checkSizeAfterScaling>
@@ -57,6 +57,13 @@
 			<directory>%BASE_DIR%flash</directory>
 			<maxSize>2M</maxSize>
 			<allowedExtensions>swf,flv</allowedExtensions>
+			<deniedExtensions></deniedExtensions>
+		</type>
+		<type name="modelManager">
+			<url>%BASE_URL%modelManager/</url>
+			<directory>%BASE_DIR%modelManager</directory>
+			<maxSize>30M</maxSize>
+			<allowedExtensions>pdf</allowedExtensions>
 			<deniedExtensions></deniedExtensions>
 		</type>
 	</types>
