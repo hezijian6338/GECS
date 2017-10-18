@@ -79,10 +79,10 @@ public class BusinessLicenseController extends BaseController {
 			else if("modify".equals(taskDefKey)){
 				view = "businessLicenseForm";
 			}
-			// 审核环节
+			/*// 审核环节
 			else if ("audit".equals(taskDefKey)){
 				view = "businessLicenseAudit";
-			}
+			}*/
 			// 审核环节2
 			else if ("audit1".equals(taskDefKey)){
 				view = "businessLicenseAudit";

@@ -433,7 +433,7 @@ public class PDFUtil {
 
         s.setField("handlerPhone", fillSpace(businessLicense.getHandlerPhone() ,15 , isNull(s,"handlerPhone")));
 
-        s.setField("scope", fillSpace(businessLicense.getScope() ,15 , isNull(s,"scope")));
+        s.setField("scope", fillSpace(String.valueOf(businessLicense.getScope()) ,15 , isNull(s,"scope")));
 
         s.setField("buildingName", fillSpace(businessLicense.getBuildingName() ,15 , isNull(s,"buildingName")));
 

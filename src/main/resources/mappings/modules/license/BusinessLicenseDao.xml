@@ -23,7 +23,7 @@
 		a.handler_id_type AS "handlerIdType",
 		a.handler_id AS "handlerId",
 		a.handler_phone AS "handlerPhone",
-		a.scope AS "scope",
+		a.scope AS "scope.id",
 		a.building_name AS "buildingName",
 		a.floor_number AS "floorNumber",
 		a.use_area AS "useArea",
@@ -42,12 +42,14 @@
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
 		o6.name AS "office.name",
-		a28.name AS "area.name"
+		a28.name AS "area.name",
+		a27.name AS "scope.name"
 	</sql>
 	
 	<sql id="businessLicenseJoins">
 		LEFT JOIN sys_office o6 ON o6.id = a.office_id
 		LEFT JOIN sys_area a28 ON a28.id = a.area_id
+		LEFT JOIN business_scope a27 ON a27.id = a.scope
 	</sql>
     
 	<select id="get" resultType="BusinessLicense">
@@ -179,7 +181,7 @@
 			#{handlerIdType},
 			#{handlerId},
 			#{handlerPhone},
-			#{scope},
+			#{scope.id},
 			#{buildingName},
 			#{floorNumber},
 			#{useArea},
@@ -220,7 +222,7 @@
 			handler_id_type = #{handlerIdType},
 			handler_id = #{handlerId},
 			handler_phone = #{handlerPhone},
-			scope = #{scope},
+			scope = #{scope.id},
 			building_name = #{buildingName},
 			floor_number = #{floorNumber},
 			use_area = #{useArea},
