@@ -112,7 +112,8 @@
             </tr>
             <tr><td class="tit">经营/业务/许可范围</td>
                 <td colspan="5">
-                    <form:input path="scope" htmlEscape="false" maxlength="200" class="input-xlarge required"/>
+                    <sys:treeselect id="scope" name="scope.id" value="${businessLicense.scope.id}" labelName="scope.name" labelValue="${businessLicense.scope.name}"
+                                    title="经营范围" url="/scope/businessScope/treeData" cssClass="required" allowClear="true" notAllowSelectParent="true" expandOnLoad="false"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
             </tr>

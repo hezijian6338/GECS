@@ -93,7 +93,7 @@
 					<td colspan="5">
 						
 						<sys:treeselect id="scope" name="scope.id" value="${businessLicense.scope.id}" labelName="scope.name" labelValue="${businessLicense.scope.name}"
-										title="许可范围" url="/scope/businessScope/treeData" cssClass="required" allowClear="true" notAllowSelectParent="true"/>
+										title="经营范围" url="/scope/businessScope/treeData" cssClass="required" allowClear="true" notAllowSelectParent="true" expandOnLoad="false"/>
 						<span class="help-inline"><font color="red">*</font> </span>
 					</td>
 				</tr>

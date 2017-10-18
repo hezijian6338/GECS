@@ -41,7 +41,7 @@ public class BusinessScope extends TreeEntity<BusinessScope> {
 		this.parent = parent;
 	}
 	
-	@Length(min=1, max=2000, message="所有父级编号长度必须介于 1 和 2000 之间")
+/*	@Length(min=1, max=2000, message="所有父级编号长度必须介于 1 和 2000 之间")
 	public String getParentIds() {
 		return parentIds;
 	}
@@ -58,7 +58,7 @@ public class BusinessScope extends TreeEntity<BusinessScope> {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+	*/
 /*	public String getSort() {
 		return sort;
 	}
@@ -76,7 +76,7 @@ public class BusinessScope extends TreeEntity<BusinessScope> {
 		this.code = code;
 	}
 	
-	public String getParentId() {
+/*	public String getParentId() {
 		return parent != null && parent.getId() != null ? parent.getId() : "0";
-	}
+	}*/
 }
