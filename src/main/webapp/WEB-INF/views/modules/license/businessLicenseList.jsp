@@ -137,7 +137,7 @@
 					${businessLicense.handlerPhone}
 				</td>
 				<td>
-					${businessLicense.scope}
+					${businessLicense.scope.name}
 				</td>
 				<td>
 					${businessLicense.buildingName}

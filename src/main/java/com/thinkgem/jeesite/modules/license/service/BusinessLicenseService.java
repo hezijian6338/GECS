@@ -3,6 +3,8 @@
  */
 package com.thinkgem.jeesite.modules.license.service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +13,7 @@ import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.act.service.ActTaskService;
 import com.thinkgem.jeesite.modules.act.utils.ActUtils;
 import com.thinkgem.jeesite.modules.oa.entity.TestAudit;
+import javafx.scene.input.DataFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,13 +55,14 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 
 	@Transactional(readOnly = false)
 	public void save(BusinessLicense businessLicense) {
+		DateFormat df = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
 		//申请发起
 		if(StringUtils.isBlank(businessLicense.getId())){
 			businessLicense.preInsert();
 			dao.insert(businessLicense);
 
 			//启动流程
-			actTaskService.startProcess(ActUtils.PD_BUSINESS_LICENSE[0],ActUtils.PD_BUSINESS_LICENSE[1],businessLicense.getId(),"原因的填写（暂未实现）");
+			actTaskService.startProcess(ActUtils.PD_BUSINESS_LICENSE[0],ActUtils.PD_BUSINESS_LICENSE[1],businessLicense.getId(),businessLicense.getCertificateName()+"-"+df.format(businessLicense.getCreateDate()));
 		}
 
 		//重新编辑申请
@@ -70,7 +74,8 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 			// 完成流程任务
 			Map<String, Object> vars = Maps.newHashMap();
 			vars.put("pass", "yes".equals(businessLicense.getAct().getFlag())? "1" : "0");
-			actTaskService.complete(businessLicense.getAct().getTaskId(), businessLicense.getAct().getProcInsId(), businessLicense.getAct().getComment(), "原因的填写（暂未实现）", vars);
+
+			actTaskService.complete(businessLicense.getAct().getTaskId(), businessLicense.getAct().getProcInsId(), businessLicense.getAct().getComment(), businessLicense.getCertificateName()+"-"+df.format(businessLicense.getCreateDate()), vars);
 		}
 	}
 

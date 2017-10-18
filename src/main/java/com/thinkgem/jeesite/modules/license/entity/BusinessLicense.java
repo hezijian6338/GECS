@@ -27,7 +27,7 @@ public class BusinessLicense extends ActEntity<BusinessLicense> {
 	//private String procInsId;		// 流程实例ID
 	private String certificateTypeId;		// 证照类型
 	private String certificateCode;		// 证照编号
-	private String certificateName;		// 证照名称
+	private String certificateName;		// 公司名称
 	private Office office;		// 颁发机构id
 	private Date establishDate;		// 成立日期
 	private Date effectiveDateStar;		// 证照有效期（起始
@@ -139,7 +139,7 @@ public class BusinessLicense extends ActEntity<BusinessLicense> {
 		this.effectiveDateEnd = effectiveDateEnd;
 	}
 	
-	@Length(min=1, max=64, message="注册公司类型长度必须介于 1 和 64 之间")
+/*	@Length(min=1, max=64, message="注册公司类型长度必须介于 1 和 64 之间")*/
 	public String getRegisteredType() {
 		return registeredType;
 	}
