@@ -4,99 +4,6 @@
 <head>
 	<title>营业执照管理</title>
 	<meta name="decorator" content="default"/>
-
-	<link href="./static/css/fold/bootstrap.min.css" rel="stylesheet">
-	<link href="./static/css/fold/font-awesome.min.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="./static/css/fold/demo.css">
-	<link rel="stylesheet" type="text/css" href="./static/css/fold/bootsnav.css">
-
-	<script type="text/javascript" src="./js/bootsnav.js"></script>
-
-	<script type="text/javascript">
-		$(document).ready(function() {
-			//$("#name").focus();
-			$("#inputForm").validate({
-				submitHandler: function(form){
-					loading('正在提交，请稍等...');
-					form.submit();
-				},
-				errorContainer: "#messageBox",
-				errorPlacement: function(error, element) {
-					$("#messageBox").text("输入有误，请先更正。");
-					if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
-						error.appendTo(element.parent().parent());
-					} else {
-						error.insertAfter(element);
-					}
-				}
-			});
-		});
-	</script>
-
-	<style type="text/css">
-		.navbar-brand{
-			padding: 29px 15px;
-			height: auto;
-		}
-		nav.navbar.bootsnav{
-			border: none;
-			margin-bottom: 150px;
-		}
-		.navbar-nav{
-			float: left;
-		}
-		nav.navbar.bootsnav ul.nav > li > a{
-			color: #474747;
-			text-transform: uppercase;
-			padding: 30px;
-		}
-		nav.navbar.bootsnav ul.nav > li:hover{
-			background: #f4f4f4;
-		}
-		.nav > li:after{
-			content: "";
-			width: 0;
-			height: 5px;
-			background: #34c9dd;
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			transition: all 0.5s ease 0s;
-		}
-		.nav > li:hover:after{
-			width: 100%;
-		}
-		nav.navbar.bootsnav ul.nav > li.dropdown > a.dropdown-toggle:after{
-			content: "+";
-			font-family: 'FontAwesome';
-			font-size: 16px;
-			font-weight: 500;
-			position: absolute;
-			top: 35%;
-			right: 10%;
-			transition: all 0.4s ease 0s;
-		}
-		nav.navbar.bootsnav ul.nav > li.dropdown.on > a.dropdown-toggle:after{
-			content: "\f105";
-			transform: rotate(90deg);
-		}
-		.dropdown-menu.multi-dropdown{
-			position: absolute;
-			left: -100% !important;
-		}
-		nav.navbar.bootsnav li.dropdown ul.dropdown-menu{
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-			border: none;
-		}
-		@media only screen and (max-width:990px){
-			nav.navbar.bootsnav ul.nav > li.dropdown > a.dropdown-toggle:after,
-			nav.navbar.bootsnav ul.nav > li.dropdown.on > a.dropdown-toggle:after{ content: " "; }
-			.dropdown-menu.multi-dropdown{ left: 0 !important; }
-			nav.navbar.bootsnav ul.nav > li:hover{ background: transparent; }
-			nav.navbar.bootsnav ul.nav > li > a{ margin: 0; }
-		}
-	</style>
-
 </head>
 <body>
 	<ul class="nav nav-tabs">
@@ -125,17 +32,17 @@
 					<td>
 						<form:input path="certificateCode" htmlEscape="false" maxlength="100" class="input-xlarge "/>
 					</td>
-					<td class="tit">证照名称</td>
+					<td class="tit">颁发机构</td>
 					<td>
-						<form:input path="certificateName" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
+						<sys:treeselect id="office" name="office.id" value="${businessLicense.office.id}" labelName="office.name" labelValue="${businessLicense.office.name}"
+										title="部门" url="/sys/office/treeData?type=2" cssClass="required" allowClear="true" notAllowSelectParent="true"/>
 						<span class="help-inline"><font color="red">*</font> </span>
 					</td>
 				</tr>
-				<tr><td class="tit">颁发机构</td>
+				<tr>
+					<td class="tit">地址</td>
 					<td colspan="5">
-					<sys:treeselect id="office" name="office.id" value="${businessLicense.office.id}" labelName="office.name" labelValue="${businessLicense.office.name}"
-						title="部门" url="/sys/office/treeData?type=2" cssClass="required" allowClear="true" notAllowSelectParent="true"/>
-					<span class="help-inline"><font color="red">*</font> </span>
+						<form:input path="address" htmlEscape="false" maxlength="100" class="input-xlarge "/>
 					</td>
 				</tr>
 				<tr>
@@ -162,9 +69,9 @@
 							onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 						<span class="help-inline"><font color="red">*</font> </span>
 					</td>
-					<td class="tit">注册资本</td>
+					<td class="tit">公司名称</td>
 					<td>
-						<form:input path="registeredCapital" htmlEscape="false" maxlength="20" class="input-xlarge required"/>
+						<form:input path="certificateName" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
 						<span class="help-inline"><font color="red">*</font> </span>
 					</td>
 				</tr>
@@ -176,96 +83,47 @@
 							   onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 						<span class="help-inline"><font color="red">*</font> </span>
 					</td>
-					<td class="tit">地址</td>
+					<td class="tit">注册资本</td>
 					<td>
-						<form:input path="address" htmlEscape="false" maxlength="100" class="input-xlarge "/>
+						<form:input path="registeredCapital" htmlEscape="false" maxlength="20" class="input-xlarge required"/>
+						<span class="help-inline"><font color="red">*</font> </span>
 					</td>
 				</tr>
 				<tr><td class="tit">经营/业务/许可范围</td>
 					<td colspan="5">
 						<form:input path="scope" htmlEscape="false" maxlength="200" class="input-xlarge required"/>
 						<span class="help-inline"><font color="red">*</font> </span>
+						
 
-						<div class="demo" style="padding: 2em 0;">
-							<div class="container">
-								<div class="row">
-									<div class="col-md-12">
-										<nav class="navbar navbar-default navbar-mobile bootsnav">
-											<div class="navbar-header">
-												<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
-													<i class="fa fa-bars"></i>
-												</button>
-											</div>
-											<div class="collapse navbar-collapse" id="navbar-menu">
-												<ul class="nav navbar-nav" data-in="fadeInDown" data-out="fadeOutUp">
-													<li><a href="#">首页</a></li>
-													<li><a href="#">关于我们</a></li>
-													<li class="dropdown">
-														<a href="#" class="dropdown-toggle" data-toggle="dropdown">短代码</a>
-														<ul class="dropdown-menu">
-															<li><a href="#">自定义菜单</a></li>
-															<li><a href="#">自定义菜单</a></li>
-															<li class="dropdown">
-																<a href="#" class="dropdown-toggle" data-toggle="dropdown" >子菜单</a>
-																<ul class="dropdown-menu">
-																	<li><a href="#">自定义菜单</a></li>
-																	<li><a href="#">自定义菜单</a></li>
-																	<li class="dropdown">
-																		<a href="#" class="dropdown-toggle" data-toggle="dropdown" >子菜单</a>
-																		<ul class="dropdown-menu multi-dropdown">
-																			<li><a href="#">自定义菜单</a></li>
-																			<li><a href="#">自定义菜单</a></li>
-																			<li><a href="#">自定义菜单</a></li>
-																			<li><a href="#">自定义菜单</a></li>
-																		</ul>
-																	</li>
-																	<li><a href="#">自定义菜单</a></li>
-																</ul>
-															</li>
-															<li><a href="#">自定义菜单</a></li>
-															<li><a href="#">自定义菜单</a></li>
-															<li><a href="#">自定义菜单</a></li>
-															<li><a href="#">自定义菜单</a></li>
-														</ul>
-													</li>
-													<li class="dropdown">
-														<a href="#" class="dropdown-toggle" data-toggle="dropdown">页面</a>
-														<ul class="dropdown-menu">
-															<li><a href="#">自定义菜单</a></li>
-															<li><a href="#">自定义菜单</a></li>
-															<li class="dropdown">
-																<a href="#" class="dropdown-toggle" data-toggle="dropdown">子菜单</a>
-																<ul class="dropdown-menu">
-																	<li><a href="#">自定义菜单</a></li>
-																	<li><a href="#">自定义菜单</a></li>
-																	<li class="dropdown">
-																		<a href="#" class="dropdown-toggle" data-toggle="dropdown">子菜单</a>
-																		<ul class="dropdown-menu multi-dropdown">
-																			<li><a href="#">自定义菜单</a></li>
-																			<li><a href="#">自定义菜单</a></li>
-																			<li><a href="#">自定义菜单</a></li>
-																			<li><a href="#">自定义菜单</a></li>
-																		</ul>
-																	</li>
-																	<li><a href="#">自定义菜单</a></li>
-																</ul>
-															</li>
-															<li><a href="#">自定义菜单</a></li>
-															<li><a href="#">自定义菜单</a></li>
-															<li><a href="#">自定义菜单</a></li>
-															<li><a href="#">自定义菜单</a></li>
-														</ul>
-													</li>
-													<li><a href="#">投资组合</a></li>
-													<li><a href="#">联系我们</a></li>
-												</ul>
-											</div>
-										</nav>
-									</div>
-								</div>
+
+							<div class="dropdown">
+								<button type="button" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">主题
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+									<li role="presentation">
+										<a role="menuitem" tabindex="-1" href="#">Java</a>
+									</li>
+									<li role="presentation">
+										<a role="menuitem" tabindex="-1" href="#">数据挖掘</a>
+									</li>
+									<li role="presentation">
+										<a role="menuitem" tabindex="-1" href="#">数据通信/网络</a>
+									</li>
+									<li role="presentation" class="divider"></li>
+									<li role="presentation">
+										<a role="menuitem" tabindex="-1" href="#">分离的链接</a>
+									</li>
+									<li class="dropdown-submenu"> <a href="#">gao3</a>
+										<ul class="dropdown-menu pull-right">
+											<li><a href="#">${fns:getDictList('certificate_type')}</a></li>
+											<li><a href="#">qiao2</a></li>
+											<li><a href="#">qiao3</a></li>
+										</ul>
+									</li>
+								</ul>
 							</div>
-						</div>
-
+						
 					</td>
 				</tr>
 				<tr>

@@ -28,10 +28,9 @@
 <body>
 <ul class="nav nav-tabs">
     <li><a href="${ctx}/license/businessLicense/">营业执照列表</a></li>
-    <li class="active"><a href="${ctx}/license/businessLicense/form?id=${businessLicense.id}">营业执照审批详情</a></li>
+    <li class="active"><a href="${ctx}/license/businessLicense/form?id=${businessLicense.procInsId}">营业执照审批详情</a></li>
 </ul><br/>
 <form:form id="inputForm" modelAttribute="businessLicense" action="${ctx}/license/businessLicense/save" method="post" class="form-horizontal">
-    <form:hidden path="id"/>
     <sys:message content="${message}"/>
     <fieldset>
         <h1 align="center">营业执照审批详情</h1>
@@ -46,17 +45,17 @@
                 <td>
                     <form:input path="certificateCode" htmlEscape="false" maxlength="100" class="input-xlarge "/>
                 </td>
-                <td class="tit">证照名称</td>
+                <td class="tit">颁发机构</td>
                 <td>
-                    <form:input path="certificateName" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
-                    <span class="help-inline"><font color="red">*</font> </span>
-                </td>
-            </tr>
-            <tr><td class="tit">颁发机构</td>
-                <td colspan="5">
                     <sys:treeselect id="office" name="office.id" value="${businessLicense.office.id}" labelName="office.name" labelValue="${businessLicense.office.name}"
                                     title="部门" url="/sys/office/treeData?type=2" cssClass="required" allowClear="true" notAllowSelectParent="true"/>
                     <span class="help-inline"><font color="red">*</font> </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tit">地址</td>
+                <td colspan="5">
+                    <form:input path="address" htmlEscape="false" maxlength="100" class="input-xlarge "/>
                 </td>
             </tr>
             <tr>
@@ -83,9 +82,9 @@
                            onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
-                <td class="tit">注册资本</td>
+                <td class="tit">公司名称</td>
                 <td>
-                    <form:input path="registeredCapital" htmlEscape="false" maxlength="20" class="input-xlarge required"/>
+                    <form:input path="certificateName" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
             </tr>
@@ -97,9 +96,10 @@
                            onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
-                <td class="tit">地址</td>
+                <td class="tit">注册资本</td>
                 <td>
-                    <form:input path="address" htmlEscape="false" maxlength="100" class="input-xlarge "/>
+                    <form:input path="registeredCapital" htmlEscape="false" maxlength="20" class="input-xlarge required"/>
+                    <span class="help-inline"><font color="red">*</font> </span>
                 </td>
             </tr>
             <tr><td class="tit">经营/业务/许可范围</td>
