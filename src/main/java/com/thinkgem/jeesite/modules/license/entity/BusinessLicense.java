@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.thinkgem.jeesite.modules.sys.entity.Area;
 
 import com.thinkgem.jeesite.common.persistence.DataEntity;
+import sun.reflect.generics.scope.Scope;
 
 /**
  * 营业执照Entity
@@ -41,7 +42,7 @@ public class BusinessLicense extends ActEntity<BusinessLicense> {
 	private String handlerIdType;		// 经办人身份证件类型
 	private String handlerId;		// 经办人身份证件号码
 	private String handlerPhone;		// 经办人联系方式
-	private String scope;		// 经营/业务/许可范围
+	private Scope scope;		// 经营/业务/许可范围
 	private String buildingName;		// 建筑名称
 	private String floorNumber;		// 层数
 	private String useArea;		// 使用面积
@@ -237,11 +238,11 @@ public class BusinessLicense extends ActEntity<BusinessLicense> {
 	}
 	
 	@Length(min=1, max=200, message="经营/业务/许可范围长度必须介于 1 和 200 之间")
-	public String getScope() {
+	public Scope getScope() {
 		return scope;
 	}
 
-	public void setScope(String scope) {
+	public void setScope(Scope scope) {
 		this.scope = scope;
 	}
 	

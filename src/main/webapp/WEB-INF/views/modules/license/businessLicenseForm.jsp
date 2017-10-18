@@ -91,39 +91,10 @@
 				</tr>
 				<tr><td class="tit">经营/业务/许可范围</td>
 					<td colspan="5">
-						<form:input path="scope" htmlEscape="false" maxlength="200" class="input-xlarge required"/>
+						
+						<sys:treeselect id="scope" name="scope.id" value="${businessLicense.scope.id}" labelName="scope.name" labelValue="${businessLicense.scope.name}"
+										title="许可范围" url="/scope/businessScope/treeData" cssClass="required" allowClear="true" notAllowSelectParent="true"/>
 						<span class="help-inline"><font color="red">*</font> </span>
-						
-
-
-							<div class="dropdown">
-								<button type="button" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">主题
-									<span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-									<li role="presentation">
-										<a role="menuitem" tabindex="-1" href="#">Java</a>
-									</li>
-									<li role="presentation">
-										<a role="menuitem" tabindex="-1" href="#">数据挖掘</a>
-									</li>
-									<li role="presentation">
-										<a role="menuitem" tabindex="-1" href="#">数据通信/网络</a>
-									</li>
-									<li role="presentation" class="divider"></li>
-									<li role="presentation">
-										<a role="menuitem" tabindex="-1" href="#">分离的链接</a>
-									</li>
-									<li class="dropdown-submenu"> <a href="#">gao3</a>
-										<ul class="dropdown-menu pull-right">
-											<li><a href="#">${fns:getDictList('certificate_type')}</a></li>
-											<li><a href="#">qiao2</a></li>
-											<li><a href="#">qiao3</a></li>
-										</ul>
-									</li>
-								</ul>
-							</div>
-						
 					</td>
 				</tr>
 				<tr>

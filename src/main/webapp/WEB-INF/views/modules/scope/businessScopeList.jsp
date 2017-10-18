@@ -45,19 +45,24 @@
 		<shiro:hasPermission name="scope:businessScope:edit"><li><a href="${ctx}/scope/businessScope/form">经营范围添加</a></li></shiro:hasPermission>
 	</ul>
 	<form:form id="searchForm" modelAttribute="businessScope" action="${ctx}/scope/businessScope/" method="post" class="breadcrumb form-search">
-		<ul class="ul-form">
-			<li><label>归属类型:</label>
+		<table>
+			<tr><td class="tit">归属类型:</td>
+				<td>
 				<div>
 					<sys:treeselect id="parent" name="parent.id" value="${businessScope.parent.id}" labelName="parent.name" labelValue="${businessScope.parent.name}"
 									title="归属类型(上级)" url="/scope/businessScope/treeData" extId="${businessScope.id}" cssClass="" allowClear="true"/>
 				</div>
-			</li>
-			<li><label>类别名称:</label>
+				</td>
+				<td>&nbsp</td>
+				<td class="tit">类别名称:</td>
+				<td>
 				<form:input path="name" htmlEscape="false" maxlength="100" class="input-medium"/>
-			</li>
-			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
-			<li class="clearfix"></li>
-		</ul>
+				</td>
+			<td class="tit"><ul class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></ul>
+			</td>
+			<td><ul class="clearfix"></ul></td>
+			</tr>
+		</table>
 	</form:form>
 	<sys:message content="${message}"/>
 	<table id="treeTable" class="table table-striped table-bordered table-condensed">
