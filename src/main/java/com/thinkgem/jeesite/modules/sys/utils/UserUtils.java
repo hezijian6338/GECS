@@ -25,6 +25,7 @@ import com.thinkgem.jeesite.modules.sys.entity.Office;
 import com.thinkgem.jeesite.modules.sys.entity.Role;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.security.SystemAuthorizingRealm.Principal;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 用户工具类
@@ -151,6 +152,20 @@ public class UserUtils {
 			putCache(CACHE_ROLE_LIST, roleList);
 		}
 		return roleList;
+	}
+	/**
+	 * @author YuXiaoXi
+	 * @TODO (注：判断当前用户是否是群众)
+
+	 * @DATE: 2017/10/18 11:50
+	 */
+	@ResponseBody
+	public static String isPopulace(){
+		User user = getUser();
+		if(user.getRoleNames().equals("群众")&&user.getUserType().equals("3")){
+			return "true";
+		}
+		return "false";
 	}
 	
 	/**

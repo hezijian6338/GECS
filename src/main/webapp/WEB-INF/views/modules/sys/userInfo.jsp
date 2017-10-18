@@ -6,7 +6,28 @@
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
+
+            jQuery.validator.addMethod("isMobile", function(value, element) {
+                var length = value.length;
+                var mobile = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/;
+                return this.optional(element) || (length == 11 && mobile.test(value));
+            }, "请正确填写您的手机号码");
+
 			$("#inputForm").validate({
+                rules: {
+                    mobile : {
+                        required : true,
+                        minlength : 11,
+                        isMobile : true
+                    },
+                },
+                messages: {
+                    mobile : {
+                        required : "请输入手机号",
+                        minlength : "确认手机不能小于11个字符",
+                        isMobile : "请正确填写您的手机号码"
+                    },
+                },
 				submitHandler: function(form){
 					loading('正在提交，请稍等...');
 					form.submit();
@@ -33,25 +54,35 @@
 		<form:hidden path="email" htmlEscape="false" maxlength="255" class="input-xlarge"/>
 		<sys:ckfinder input="email" type="files" uploadPath="/mytask" selectMultiple="false"/> --%>
 		<sys:message content="${message}"/>
-		<div class="control-group">
-			<label class="control-label">头像:</label>
-			<div class="controls">
-				<form:hidden id="nameImage" path="photo" htmlEscape="false" maxlength="255" class="input-xlarge"/>
-				<sys:ckfinder input="nameImage" type="images" uploadPath="/photo" selectMultiple="false" maxWidth="100" maxHeight="100"/>
+		<c:if test="${!fns:isPopulace()}">
+			<div class="control-group">
+				<label class="control-label">头像:</label>
+				<div class="controls">
+					<form:hidden id="nameImage" path="photo" htmlEscape="false" maxlength="255" class="input-xlarge"/>
+					<sys:ckfinder input="nameImage" type="images" uploadPath="/photo" selectMultiple="false" maxWidth="100" maxHeight="100"/>
+				</div>
 			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">归属公司:</label>
-			<div class="controls">
-				<label class="lbl">${user.company.name}</label>
+			<div class="control-group">
+				<label class="control-label">归属公司:</label>
+				<div class="controls">
+					<label class="lbl">${user.company.name}</label>
+				</div>
 			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">归属部门:</label>
-			<div class="controls">
-				<label class="lbl">${user.office.name}</label>
+			<div class="control-group">
+				<label class="control-label">归属部门:</label>
+				<div class="controls">
+					<label class="lbl">${user.office.name}</label>
+				</div>
 			</div>
-		</div>
+		</c:if>
+		<c:if test="${fns:isPopulace()}">
+			<div class="control-group">
+				<label class="control-label">登录名:</label>
+				<div class="controls">
+					<label class="lbl">${user.loginName}</label>
+				</div>
+			</div>
+		</c:if>
 		<div class="control-group">
 			<label class="control-label">姓名:</label>
 			<div class="controls">

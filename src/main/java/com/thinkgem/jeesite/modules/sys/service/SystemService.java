@@ -126,7 +126,25 @@ public class SystemService extends BaseService implements InitializingBean {
 		}
 		return list;
 	}
-	
+
+	@Transactional(readOnly = false)
+	public void saveRegister(User user){
+		if (StringUtils.isBlank(user.getId())){
+			user.preInsertRegiste();
+			userDao.insert(user);
+		}
+		if (user.getRoleList() != null && user.getRoleList().size() > 0){
+			userDao.insertUserRole(user);
+		}else{
+			throw new ServiceException(user.getLoginName() + "没有设置角色！");
+		}
+		// 将当前用户同步到Activiti
+		saveActivitiUser(user);
+		// 清除用户缓存
+		UserUtils.clearCache(user);
+
+	}
+
 	@Transactional(readOnly = false)
 	public void saveUser(User user) {
 		if (StringUtils.isBlank(user.getId())){

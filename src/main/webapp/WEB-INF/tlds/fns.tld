@@ -103,6 +103,14 @@
     <function-signature>java.lang.Object getCache(java.lang.String, java.lang.Object)</function-signature>
     <example>${fns:getCache(cacheName, defaultValue)}</example>  
   </function>
+
+  <function>
+    <description>判断当前用户是否是群众</description>
+    <name>isPopulace</name>
+    <function-class>com.thinkgem.jeesite.modules.sys.utils.UserUtils</function-class>
+    <function-signature>java.lang.String isPopulace()</function-signature>
+    <example>${fns:isPopulace()}</example>
+  </function>
 	
   <!-- DictUtils -->
   <function>

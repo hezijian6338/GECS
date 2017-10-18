@@ -322,7 +322,7 @@ public class UserController extends BaseController {
 			}
 			if (SystemService.validatePassword(oldPassword, user.getPassword())){
 				systemService.updatePasswordById(user.getId(), user.getLoginName(), newPassword);
-				model.addAttribute("message", "修改密码成功");
+				model.addAttribute("message", "修改密码成功，请重新登录");
 			}else{
 				model.addAttribute("message", "修改密码失败，旧密码错误");
 			}

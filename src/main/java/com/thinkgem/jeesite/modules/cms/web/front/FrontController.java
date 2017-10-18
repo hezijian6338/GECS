@@ -3,12 +3,20 @@
  */
 package com.thinkgem.jeesite.modules.cms.web.front;
 
+import java.net.InetAddress;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.thinkgem.jeesite.common.utils.SpringContextHolder;
+import com.thinkgem.jeesite.modules.sys.dao.RoleDao;
+import com.thinkgem.jeesite.modules.sys.entity.Office;
+import com.thinkgem.jeesite.modules.sys.entity.Role;
+import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.modules.sys.service.OfficeService;
+import com.thinkgem.jeesite.modules.sys.service.SystemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +44,7 @@ import com.thinkgem.jeesite.modules.cms.service.CommentService;
 import com.thinkgem.jeesite.modules.cms.service.LinkService;
 import com.thinkgem.jeesite.modules.cms.service.SiteService;
 import com.thinkgem.jeesite.modules.cms.utils.CmsUtils;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * 网站Controller
@@ -58,7 +67,153 @@ public class FrontController extends BaseController{
 	private CategoryService categoryService;
 	@Autowired
 	private SiteService siteService;
-	
+
+	@Autowired
+	private SystemService systemService;
+
+
+	/**
+	 * @author YuXiaoXi
+	 * @TODO (注：用户注册页面)
+	 * @DATE: 2017/10/11 14:16
+	 */
+	@RequestMapping(value = "userRegiste")
+	public String Registe(User user, Model model) {
+		model.addAttribute("user", user);
+		return "modules/sys/userRegiste";
+	}
+
+	/**
+	 * @author YuXiaoXi
+	 * @TODO (注：用户忘记密码页面)
+	 * @DATE: 2017/10/11 14:16
+	 */
+	@RequestMapping(value = "forgetPassword")
+	public String forgetPwd(HttpServletResponse response, Model model) {
+		return "modules/sys/forgetPassword";
+	}
+
+	/**
+	 * 验证登录名是否有效
+	 * @param loginName
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "checkLoginName")
+	public String checkLoginName(String oldLoginName, String loginName) {
+		System.out.println(loginName);
+		if (loginName !=null && loginName.equals(oldLoginName)) {
+			return "true";
+
+		} else if (loginName !=null && systemService.getUserByLoginName(loginName) == null) {
+			return "true";
+		}
+		System.out.println("找到");
+		return "false";
+	}
+
+	/**
+	 * @author YuXiaoXi
+	 * @TODO (注：保存注册用户信息)
+
+	 * @DATE: 2017/10/17 19:26
+	 */
+	@RequestMapping(value = "save")
+	public String save(User user, HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
+		//获取登录ip地址
+		String localip=null;
+		InetAddress local=null;
+		try {
+			local=local.getLocalHost();
+			localip=local.getHostAddress();
+			System.out.println("本机的ip是 ："+localip);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		user.setCompany(new Office("1"));
+		user.setOffice(new Office("1"));
+		if (!beanValidator(model, user)){
+			return Registe(user, model);
+		}
+		if (!"true".equals(checkLoginName(user.getOldLoginName(), user.getLoginName()))){
+			addMessage(model, "保存用户'" + user.getLoginName() + "'失败，登录名已存在");
+			return Registe(user, model);
+		}
+		user.setCompany(new Office("0"));
+		user.setOffice(new Office("0"));
+		user.setNo("00000");
+		user.setUserType("3");
+		user.setPassword(systemService.entryptPassword(user.getPassword()));
+		user.setLoginIp(localip);
+		user.setLoginDate(new Date());
+		System.out.println(user.getLoginIp());
+		// 设置注册用户的角色数据
+		Role role=systemService.getRoleByEnname("populace");
+		List<Role> roleList = Lists.newArrayList();
+		roleList.add(role);
+		user.setRoleList(roleList);
+		// 保存用户信息
+		systemService.saveRegister(user);
+		addMessage(redirectAttributes, "保存用户'" + user.getLoginName() + "'成功");
+		return "modules/sys/forgetPassword";
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	/**
 	 * 网站首页
 	 */
