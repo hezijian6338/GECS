@@ -7,10 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.itextpdf.text.DocumentException;
+import com.thinkgem.jeesite.common.persistence.Msg;
 import com.thinkgem.jeesite.common.utils.PDFUtil;
 import com.thinkgem.jeesite.common.utils.SendMailUtil;
 import com.thinkgem.jeesite.modules.certificate.entity.CertificateLibrary;
+import com.thinkgem.jeesite.modules.certificate.entity.CertificateType;
 import com.thinkgem.jeesite.modules.certificate.service.CertificateLibraryService;
+import com.thinkgem.jeesite.modules.certificate.service.CertificateTypeService;
 import com.thinkgem.jeesite.modules.sys.service.SystemService;
 import org.apache.commons.lang3.StringUtils;
 import com.thinkgem.jeesite.modules.sys.entity.User;
@@ -19,9 +22,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.thinkgem.jeesite.common.config.Global;
@@ -51,6 +52,9 @@ public class BusinessLicenseController extends BaseController {
 
 	@Autowired
 	private CertificateLibraryService certificateLibraryService;
+
+	@Autowired
+	private CertificateTypeService certificateTypeService;
 	
 	@ModelAttribute
 	public BusinessLicense get(@RequestParam(required=false) String id) {
@@ -83,7 +87,7 @@ public class BusinessLicenseController extends BaseController {
 
 		String path = "E:\\certificate\\BusinessModel\\BusinessModel.pdf";
 		String savaPath = "E:\\certificate\\Business\\"+businessLicense.getPersionName()+businessLicense.getPersonId()+".pdf";
-		String realativePath = "\\pic\\certificate\\Business\\"+businessLicense.getPersionName()+businessLicense.getPersonId()+".pdf";
+		String realativePath = "//pic//certificate//Business//"+businessLicense.getPersionName()+businessLicense.getPersonId()+".pdf";
 		String view = "businessLicenseForm";
 		CertificateLibrary certificateLibrary = new CertificateLibrary();
 
@@ -185,4 +189,10 @@ public class BusinessLicenseController extends BaseController {
 		return "redirect:"+Global.getAdminPath()+"/license/businessLicense/?repage";
 	}
 
+	@ResponseBody
+	@RequestMapping(value="/getPath/{certificateCode}",method= RequestMethod.GET)
+	public Msg getPath(@PathVariable String certificateCode){
+		CertificateLibrary certificateLibrary = certificateLibraryService.getByCertificateCode(certificateCode);
+		return Msg.success().add("certificateLibrary",certificateLibrary);
+	}
 }
