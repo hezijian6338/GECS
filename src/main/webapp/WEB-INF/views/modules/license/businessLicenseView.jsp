@@ -38,24 +38,25 @@
             <tr>
                 <td class="tit">证照类型</td>
                 <td>
-                    <form:input path="certificateTypeId" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
+                    <form:input path="certificateTypeId" htmlEscape="false" maxlength="64" class="input-xlarge required" readonly="true"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
                 <td class="tit">证照编号</td>
                 <td>
-                    <form:input path="certificateCode" htmlEscape="false" maxlength="100" class="input-xlarge "/>
+                    <form:input path="certificateCode" htmlEscape="false" maxlength="100" class="input-xlarge " readonly="true"/>
                 </td>
                 <td class="tit">颁发机构</td>
                 <td>
-                    <sys:treeselect id="office" name="office.id" value="${businessLicense.office.id}" labelName="office.name" labelValue="${businessLicense.office.name}"
-                                    title="部门" url="/sys/office/treeData?type=2" cssClass="required" allowClear="true" notAllowSelectParent="true"/>
-                    <span class="help-inline"><font color="red">*</font> </span>
+<%--                     <sys:treeselect id="office" name="office.id" value="${businessLicense.office.id}" labelName="office.name" labelValue="${businessLicense.office.name}"
+                                    title="部门" url="/sys/office/treeData?type=2" cssClass="required" allowClear="true" notAllowSelectParent="true" disabled="false"/>
+                    <span class="help-inline"><font color="red">*</font> </span> --%>
+                    ${businessLicense.office.name}
                 </td>
             </tr>
             <tr>
                 <td class="tit">地址</td>
                 <td colspan="5">
-                    <form:input path="address" htmlEscape="false" maxlength="100" class="input-xlarge "/>
+                    <form:input path="address" htmlEscape="false" maxlength="100" class="input-xlarge " readonly="true"/>
                 </td>
             </tr>
             <tr>
@@ -64,13 +65,13 @@
                 <td>
                     <input name="establishDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
                            value="<fmt:formatDate value="${businessLicense.establishDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+                           />
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
                 <td class="tit" rowspan="3">公司信息</td>
                 <td class="tit">注册公司类型</td>
                 <td>
-                    <form:input path="registeredType" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
+                    <form:input path="registeredType" htmlEscape="false" maxlength="64" class="input-xlarge required" readonly="true"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
             </tr>
@@ -79,12 +80,12 @@
                 <td>
                     <input name="effectiveDateStar" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
                            value="<fmt:formatDate value="${businessLicense.effectiveDateStar}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+                            />
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
                 <td class="tit">公司名称</td>
                 <td>
-                    <form:input path="certificateName" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
+                    <form:input path="certificateName" htmlEscape="false" maxlength="100" class="input-xlarge required" readonly="true"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
             </tr>
@@ -93,66 +94,67 @@
                 <td>
                     <input name="effectiveDateEnd" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
                            value="<fmt:formatDate value="${businessLicense.effectiveDateEnd}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+                          />
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
                 <td class="tit">注册资本</td>
                 <td>
-                    <form:input path="registeredCapital" htmlEscape="false" maxlength="20" class="input-xlarge required"/>
+                    <form:input path="registeredCapital" htmlEscape="false" maxlength="20" class="input-xlarge required" readonly="true"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
             </tr>
             <tr><td class="tit">经营/业务/许可范围</td>
                 <td colspan="5">
-                    <sys:treeselect id="scope" name="scope.id" value="${businessLicense.scope.id}" labelName="scope.name" labelValue="${businessLicense.scope.name}"
-                                    title="经营范围" url="/scope/businessScope/treeData" cssClass="required" allowClear="true" notAllowSelectParent="true" expandOnLoad="false"/>
-                    <span class="help-inline"><font color="red">*</font> </span>
+             <%--        <sys:treeselect id="scope" name="scope.id" value="${businessLicense.scope.id}" labelName="scope.name" labelValue="${businessLicense.scope.name}"
+                                    title="经营范围" url="/scope/businessScope/treeData" cssClass="required" allowClear="true" notAllowSelectParent="true"/>
+                    <span class="help-inline"><font color="red">*</font> </span> --%>
+                    ${businessLicense.scope.name}
                 </td>
             </tr>
             <tr>
                 <td class="tit" rowspan="4">法人信息</td>
                 <td class="tit">法人姓名</td>
                 <td>
-                    <form:input path="persionName" htmlEscape="false" maxlength="20" class="input-xlarge required"/>
+                    <form:input path="persionName" htmlEscape="false" maxlength="20" class="input-xlarge required" readonly="true"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
                 <td class="tit" rowspan="4">经办人信息</td>
                 <td class="tit">经办人姓名</td>
                 <td>
-                    <form:input path="handlerName" htmlEscape="false" maxlength="20" class="input-xlarge "/>
+                    <form:input path="handlerName" htmlEscape="false" maxlength="20" class="input-xlarge " readonly="true"/>
                 </td>
             </tr>
             <tr>
                 <td class="tit">法人证件类型</td>
                 <td>
-                    <form:input path="persionIdType" htmlEscape="false" maxlength="20" class="input-xlarge required"/>
+                    <form:input path="persionIdType" htmlEscape="false" maxlength="20" class="input-xlarge required" readonly="true"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
                 <td class="tit">经办人证件类型</td>
                 <td>
-                    <form:input path="handlerIdType" htmlEscape="false" maxlength="20" class="input-xlarge "/>
+                    <form:input path="handlerIdType" htmlEscape="false" maxlength="20" class="input-xlarge " readonly="true"/>
                 </td>
             </tr>
             <tr>
                 <td class="tit">法人证件号码</td>
                 <td>
-                    <form:input path="personId" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
+                    <form:input path="personId" htmlEscape="false" maxlength="64" class="input-xlarge required" readonly="true"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
                 <td class="tit">经办人证件号码</td>
                 <td>
-                    <form:input path="handlerId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+                    <form:input path="handlerId" htmlEscape="false" maxlength="64" class="input-xlarge " readonly="true"/>
                 </td>
             </tr>
             <tr>
                 <td class="tit">法人联系方式</td>
                 <td>
-                    <form:input path="persionPhone" htmlEscape="false" maxlength="20" class="input-xlarge required"/>
+                    <form:input path="persionPhone" htmlEscape="false" maxlength="20" class="input-xlarge required" readonly="true"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
                 <td class="tit">经办人联系方式</td>
                 <td>
-                    <form:input path="handlerPhone" htmlEscape="false" maxlength="20" class="input-xlarge "/>
+                    <form:input path="handlerPhone" htmlEscape="false" maxlength="20" class="input-xlarge " readonly="true"/>
                 </td>
             </tr>
             <tr>
@@ -161,35 +163,35 @@
             <tr>
                 <td class="tit">建筑名称</td>
                 <td>
-                    <form:input path="buildingName" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+                    <form:input path="buildingName" htmlEscape="false" maxlength="64" class="input-xlarge " readonly="true"/>
                 </td>
                 <td class="tit">层数</td>
                 <td>
-                    <form:input path="floorNumber" htmlEscape="false" maxlength="10" class="input-xlarge "/>
+                    <form:input path="floorNumber" htmlEscape="false" maxlength="10" class="input-xlarge " readonly="true"/>
                 </td>
                 <td class="tit">使用面积</td>
                 <td>
-                    <form:input path="useArea" htmlEscape="false" maxlength="20" class="input-xlarge "/>
+                    <form:input path="useArea" htmlEscape="false" maxlength="20" class="input-xlarge " readonly="true"/>
                 </td>
             </tr>
             <tr>
                 <td class="tit">使用情况</td>
                 <td colspan="">
-                    <form:input path="usage1" htmlEscape="false" maxlength="100" class="input-xlarge "/>
+                    <form:input path="usage1" htmlEscape="false" maxlength="100" class="input-xlarge " readonly="true"/>
                 </td>
                 <td class="tit">现有消防措施</td>
                 <td colspan="3">
-                    <form:input path="dealfireFacilities" htmlEscape="false" maxlength="100" class="input-xlarge "/>
+                    <form:input path="dealfireFacilities" htmlEscape="false" maxlength="100" class="input-xlarge " readonly="true"/>
                 </td>
             </tr>
             <tr>
                 <td class="tit">邮政编码</td>
                 <td>
-                    <form:input path="postcode" htmlEscape="false" maxlength="10" class="input-xlarge "/>
+                    <form:input path="postcode" htmlEscape="false" maxlength="10" class="input-xlarge " readonly="true"/>
                 </td>
                 <td class="tit">所属区域</td>
                 <td colspan="3">
-                    <sys:treeselect id="area" name="area.id" value="${businessLicense.area.id}" labelName="area.name" labelValue="${businessLicense.area.name}" title="区域" url="/sys/area/treeData" cssClass="" allowClear="true" notAllowSelectParent="true"/>
+					${businessLicense.area.name}
                 </td>
             </tr>
             <tr>
