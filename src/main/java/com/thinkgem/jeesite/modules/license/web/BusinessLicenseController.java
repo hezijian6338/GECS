@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.itextpdf.text.DocumentException;
 import com.thinkgem.jeesite.common.utils.PDFUtil;
 import com.thinkgem.jeesite.common.utils.SendMailUtil;
+import com.thinkgem.jeesite.modules.certificate.entity.CertificateLibrary;
+import com.thinkgem.jeesite.modules.certificate.service.CertificateLibraryService;
 import com.thinkgem.jeesite.modules.sys.service.SystemService;
 import org.apache.commons.lang3.StringUtils;
 import com.thinkgem.jeesite.modules.sys.entity.User;
@@ -29,6 +31,8 @@ import com.thinkgem.jeesite.modules.license.entity.BusinessLicense;
 import com.thinkgem.jeesite.modules.license.service.BusinessLicenseService;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * 营业执照Controller
@@ -44,6 +48,9 @@ public class BusinessLicenseController extends BaseController {
 
 	@Autowired
 	private SystemService systemService;
+
+	@Autowired
+	private CertificateLibraryService certificateLibraryService;
 	
 	@ModelAttribute
 	public BusinessLicense get(@RequestParam(required=false) String id) {
@@ -63,6 +70,7 @@ public class BusinessLicenseController extends BaseController {
 		User user = UserUtils.getUser();
 		if (!user.isAdmin()){
 			businessLicense.setCreateBy(user);
+
 		}
 		Page<BusinessLicense> page = businessLicenseService.findPage(new Page<BusinessLicense>(request, response), businessLicense); 
 		model.addAttribute("page", page);
@@ -71,11 +79,13 @@ public class BusinessLicenseController extends BaseController {
 
 	@RequiresPermissions("license:businessLicense:view")
 	@RequestMapping(value = "form")
-	public String form(BusinessLicense businessLicense, Model model, RedirectAttributes redirectAttributes) throws IOException, DocumentException {
+	public String form(BusinessLicense businessLicense, Model model) throws IOException, DocumentException {
 
 		String path = "E:\\certificate\\BusinessModel\\BusinessModel.pdf";
-		String savaPath = "E:\\certificate\\Business\\"+businessLicense.getPersonId()+".pdf";
+		String savaPath = "E:\\certificate\\Business\\"+businessLicense.getPersionName()+businessLicense.getPersonId()+".pdf";
+		String realativePath = "\\pic\\certificate\\Business\\"+businessLicense.getPersionName()+businessLicense.getPersonId()+".pdf";
 		String view = "businessLicenseForm";
+		CertificateLibrary certificateLibrary = new CertificateLibrary();
 
 		//查看审批申请单
 		if(StringUtils.isNotBlank(businessLicense.getId())){
@@ -108,15 +118,16 @@ public class BusinessLicenseController extends BaseController {
 			}
 			// 兑现环节
 			else if ("apply_end".equals(taskDefKey)){
-				PDFUtil.fillTemplate(businessLicense,path,savaPath);
-				User user = systemService.getUser(businessLicense.getPersonId());
+
+//				User user = systemService.getUser(businessLicense.getPersonId());
 //				addMessage(redirectAttributes,"成功生成营业执照");
-				String sendMessage="亲爱的"+businessLicense.getPersionName()+"!您申请的营业执照已通过审核并生成，请到www.runcheng.com查阅";
-				String emailAddr = businessLicense.getPersionPhone();
-				SendMailUtil.sendCommonMail(emailAddr,"执照生成通知",sendMessage);
+//				String sendMessage="亲爱的"+businessLicense.getPersionName()+"!您申请的营业执照已通过审核并生成，请到www.runcheng.com查阅";
+//				String emailAddr = businessLicense.getPersionPhone();
+//				SendMailUtil.sendCommonMail(emailAddr,"执照生成通知",sendMessage);
 
-				view = "businessLicenseAudit";
-
+			PDFUtil.fillTemplate(businessLicense,path,savaPath);
+			view = "businessLicenseAudit";
+//			certificateLibrary.set
 			}
 		}
 		model.addAttribute("businessLicense", businessLicense);
@@ -127,7 +138,7 @@ public class BusinessLicenseController extends BaseController {
 	@RequestMapping(value = "save")
 	public String save(BusinessLicense businessLicense, Model model, RedirectAttributes redirectAttributes) throws IOException, DocumentException {
 		if (!beanValidator(model, businessLicense)){
-			return form(businessLicense, model, redirectAttributes);
+			return form(businessLicense, model);
 		}
 		businessLicenseService.save(businessLicense);
 		addMessage(redirectAttributes, "保存营业执照成功");
@@ -143,11 +154,11 @@ public class BusinessLicenseController extends BaseController {
 	 */
 	@RequiresPermissions("license:businessLicense:edit")
 	@RequestMapping(value = "saveAudit")
-	public String saveAudit(BusinessLicense businessLicense, Model model,RedirectAttributes redirectAttributes) throws IOException, DocumentException {
+	public String saveAudit(BusinessLicense businessLicense, Model model) throws IOException, DocumentException {
 		if (StringUtils.isBlank(businessLicense.getAct().getFlag())
 				|| StringUtils.isBlank(businessLicense.getAct().getComment())){
 			addMessage(model, "请填写审核意见。");
-			return form(businessLicense, model, redirectAttributes);
+			return form(businessLicense, model);
 		}
 		businessLicenseService.auditSave(businessLicense);
 		return "redirect:" + adminPath + "/act/task/todo/";

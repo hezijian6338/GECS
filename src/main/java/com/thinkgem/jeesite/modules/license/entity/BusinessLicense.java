@@ -26,7 +26,7 @@ public class BusinessLicense extends ActEntity<BusinessLicense> {
 	private static final long serialVersionUID = 1L;
 	//private String procInsId;		// 流程实例ID
 	private String certificateTypeId;		// 证照类型
-	private String certificateCode;		// 证照编号
+	private String certificateCode;		// 统一社会信用代码
 	private String certificateName;		// 公司名称
 	private Office office;		// 颁发机构id
 	private Date establishDate;		// 成立日期
@@ -82,7 +82,7 @@ public class BusinessLicense extends ActEntity<BusinessLicense> {
 		this.certificateTypeId = certificateTypeId;
 	}
 	
-	@Length(min=0, max=100, message="证照编号长度必须介于 0 和 100 之间")
+	@Length(min=0, max=100, message="统一社会信用代码长度必须介于 0 和 100 之间")
 	public String getCertificateCode() {
 		return certificateCode;
 	}

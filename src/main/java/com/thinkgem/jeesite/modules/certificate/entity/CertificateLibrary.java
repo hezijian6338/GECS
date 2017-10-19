@@ -21,6 +21,7 @@ public class CertificateLibrary extends DataEntity<CertificateLibrary> {
 	private static final long serialVersionUID = 1L;
 	private String certificateName;		// 证照名称
 	private String certificateTypeId;		// 证照类型id
+	private String certificateCode;     //统一社会信用代码
 	private String description;		// 证照描述
 	private Office office;		// 颁发机构id
 	private String ownerType;		// 持证者类型
@@ -58,7 +59,16 @@ public class CertificateLibrary extends DataEntity<CertificateLibrary> {
 	public void setCertificateTypeId(String certificateTypeId) {
 		this.certificateTypeId = certificateTypeId;
 	}
-	
+
+	@Length(min=0, max=100, message="统一社会信用代码长度必须介于 0 和 100 之间")
+	public String getCertificateCode() {
+		return certificateCode;
+	}
+
+	public void setCertificateCode(String certificateCode) {
+		this.certificateCode = certificateCode;
+	}
+
 	@Length(min=0, max=100, message="证照描述长度必须介于 0 和 100 之间")
 	public String getDescription() {
 		return description;

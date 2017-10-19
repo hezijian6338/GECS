@@ -58,7 +58,7 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>证照类型</th>
+				<th>证照类型 </th>
 				<th>证照编号</th>
 				<th>公司名称</th>
 				<th>颁发机构id</th>

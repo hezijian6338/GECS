@@ -426,7 +426,7 @@ public class PDFUtil {
 
         s.setField("idaddress", fillSpace(businessLicense.getAddress() ,15 , isNull(s,"idaddress")));
 
-        s.setField("idpersionName", fillSpace(businessLicense.getPersionIdType() ,15 , isNull(s,"idpersionName")));
+        s.setField("idpersionName", fillSpace(businessLicense.getPersionName() ,15 , isNull(s,"idpersionName")));
 
         s.setField("idpersionIdType", fillSpace(businessLicense.getPersionIdType() ,15 , isNull(s,"idpersionIdType")));
 
