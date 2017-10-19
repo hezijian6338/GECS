@@ -13,7 +13,7 @@
 <script type="text/javascript" src="${ctxStatic}/js/jquery-v1.min.js"></script>
 <script type="text/javascript" src="${ctxStatic}/js/jquery-v1-ui.js"></script>
 
-ckfinder相关的css&js
+<%--ckfinder相关的css&js--%>
 <link rel="stylesheet" type="text/css" href="${ctxStatic}/ckfinder/_samples/sample.css"/>
 <script type="text/javascript" src="${ctxStatic}/ckfinder/ckfinder.js"></script>
 <%--pdf的IE预览插件--%>

@@ -23,7 +23,7 @@ import java.util.List;
  * @version 2015-3-16
  */
 public class FileUtils extends org.apache.commons.io.FileUtils {
-	
+
 	private static Logger logger = LoggerFactory.getLogger(FileUtils.class);
 
 	/**
@@ -44,7 +44,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	 * @return 如果复制成功，则返回true，否则返回false
 	 */
 	public static boolean copyFileCover(String srcFileName,
-			String descFileName, boolean coverlay) {
+										String descFileName, boolean coverlay) {
 		File srcFile = new File(srcFileName);
 		// 判断源文件是否存在
 		if (!srcFile.exists()) {
@@ -142,7 +142,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	 * @return 如果复制成功返回true，否则返回false
 	 */
 	public static boolean copyDirectoryCover(String srcDirName,
-			String descDirName, boolean coverlay) {
+											 String descDirName, boolean coverlay) {
 		File srcDir = new File(srcDirName);
 		// 判断源目录是否存在
 		if (!srcDir.exists()) {
@@ -217,14 +217,14 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	}
 
 	/**
-	 * 
+	 *
 	 * 删除文件，可以删除单个文件或文件夹
-	 * 
+	 *
 	 * @param fileName 被删除的文件名
 	 * @return 如果删除成功，则返回true，否是返回false
 	 */
 	public static boolean delFile(String fileName) {
- 		File file = new File(fileName);
+		File file = new File(fileName);
 		if (!file.exists()) {
 			logger.debug(fileName + " 文件不存在!");
 			return true;
@@ -238,9 +238,9 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	}
 
 	/**
-	 * 
+	 *
 	 * 删除单个文件
-	 * 
+	 *
 	 * @param fileName 被删除的文件名
 	 * @return 如果删除成功，则返回true，否则返回false
 	 */
@@ -261,9 +261,9 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	}
 
 	/**
-	 * 
+	 *
 	 * 删除目录及目录下的文件
-	 * 
+	 *
 	 * @param dirName 被删除的目录所在的文件路径
 	 * @return 如果目录删除成功，则返回true，否则返回false
 	 */
@@ -406,7 +406,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 			logger.debug("文件 " + fileName + " 写入失败! " + e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * 压缩文件或目录
 	 * @param srcDirName 压缩的根目录
@@ -414,7 +414,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	 * @param descFileName 目标zip文件
 	 */
 	public static void zipFiles(String srcDirName, String fileName,
-			String descFileName) {
+								String descFileName) {
 		// 判断目录是否存在
 		if (srcDirName == null) {
 			logger.debug("文件压缩失败，目录 " + srcDirName + " 不存在!");
@@ -460,8 +460,8 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 		String descFileNames = descFileName;
 		if (!descFileNames.endsWith(File.separator)) {
 			descFileNames = descFileNames + File.separator;
-		}		
-        try {
+		}
+		try {
 			// 根据ZIP文件创建ZipFile对象
 			ZipFile zipFile = new ZipFile(zipFileName);
 			ZipEntry entry = null;
@@ -490,7 +490,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 				// 打开文件输出流
 				OutputStream os = new FileOutputStream(file);
 				// 从ZipFile对象中打开entry的输入流
-		        InputStream is = zipFile.getInputStream(entry);
+				InputStream is = zipFile.getInputStream(entry);
 				while ((readByte = is.read(buf)) != -1) {
 					os.write(buf, 0, readByte);
 				}
@@ -658,7 +658,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 			contentType = "image/x-ms-bmp";
 		} else if (returnFileName.equals("svg")) {
 			contentType = "image/svg+xml";
-		} else if (returnFileName.equals("jar") || returnFileName.equals("var") 
+		} else if (returnFileName.equals("jar") || returnFileName.equals("var")
 				|| returnFileName.equals("ear")) {
 			contentType = "application/java-archive";
 		} else if (returnFileName.equals("doc")) {
@@ -686,7 +686,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 			contentType = "application/xhtml+xml";
 		} else if (returnFileName.equals("zip")) {
 			contentType = "application/zip";
-		} else if (returnFileName.equals("mid") || returnFileName.equals("midi") 
+		} else if (returnFileName.equals("mid") || returnFileName.equals("midi")
 				|| returnFileName.equals("kar")) {
 			contentType = "audio/midi";
 		} else if (returnFileName.equals("mp3")) {
@@ -722,7 +722,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 		}
 		return contentType;
 	}
-	
+
 	/**
 	 * 向浏览器发送文件下载，支持断点续传
 	 * @param file 要下载的文件
@@ -731,9 +731,9 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	 * @return 返回错误信息，无错误信息返回null
 	 */
 	public static String downFile(File file, HttpServletRequest request, HttpServletResponse response){
-		 return downFile(file, request, response, null);
+		return downFile(file, request, response, null);
 	}
-	
+
 	/**
 	 * 向浏览器发送文件下载，支持断点续传
 	 * @param file 要下载的文件
@@ -825,7 +825,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 		}
 
 		try {
-			response.addHeader("Content-Disposition", "attachment; filename=\"" + 
+			response.addHeader("Content-Disposition", "attachment; filename=\"" +
 					Encodes.urlEncode(StringUtils.isBlank(fileName) ? file.getName() : fileName) + "\"");
 			response.setContentType(getContentType(file.getName())); // set the MIME type.
 			response.addHeader("Content-Length", String.valueOf(contentLength));
@@ -911,12 +911,12 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 		if (!StringUtils.endsWithAny(p, "/") && StringUtils.endsWithAny(path, "\\", "/")){
 			p = p + "/";
 		}
-/*		if (path != null && path.startsWith("/")){
+		if (path != null && path.startsWith("/")){
 			p = "/" + p; // linux下路径
-		}*/
+		}
 		return p;
 	}
-	
+
 	/**
 	 * 获目录下的文件列表
 	 * @param dir 搜索目录

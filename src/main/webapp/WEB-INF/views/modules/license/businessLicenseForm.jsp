@@ -57,7 +57,10 @@
 					<td class="tit" rowspan="3">公司信息</td>
 					<td class="tit">注册公司类型</td>
 					<td>
-						<form:input path="registeredType" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
+						<form:select path="registeredType" class="input-medium required">
+							<form:option readonly="true" value="" label="请选择公司类型"/>
+							<form:options items="${fns:getDictList('company_type')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+						</form:select>
 						<span class="help-inline"><font color="red">*</font> </span>
 					</td>
 				</tr>
