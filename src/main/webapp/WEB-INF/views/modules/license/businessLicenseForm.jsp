@@ -8,6 +8,12 @@
 	<script type="text/javascript">
 
         $(document).ready(function() {
+            //验证手机号码格式
+            jQuery.validator.addMethod("isMobile", function(value, element) {
+                var length = value.length;
+                var mobile = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/;
+                return this.optional(element) || (length == 11 && mobile.test(value));
+            }, "请正确填写您的手机号码");
 
             //验证手身份证号码格式格式
             jQuery.validator.addMethod("isIdCardNo", function (value, element) {
@@ -24,6 +30,20 @@
                     handlerId:{
                         isIdCardNo:true,
 					},
+
+                    persionPhone : {
+                        required : true,
+                        minlength : 11,
+                        // remote: "/f/checkmobile?mobile=" + encodeURIComponent('${user.mobile}')
+                        isMobile : true
+                    },
+
+                    handlerPhone : {
+                        required : true,
+                        minlength : 11,
+                        // remote: "/f/checkmobile?mobile=" + encodeURIComponent('${user.mobile}')
+                        isMobile : true
+                    },
                 },
                 messages: {
                     personId: {
@@ -33,6 +53,16 @@
                     handlerId:{
                         isIdCardNo:"请正确输入您的身份证号码",
 					},
+                    persionPhone : {
+                        required : "请输入手机号",
+                        minlength : "确认手机不能小于11个字符",
+                        isMobile : "请正确填写您的手机号码"
+                    },
+                    handlerPhone : {
+                        required : "请输入手机号",
+                        minlength : "确认手机不能小于11个字符",
+                        isMobile : "请正确填写您的手机号码"
+                    },
                 },
                 submitHandler: function(form){
                     loading('正在提交，请稍等...');
@@ -202,7 +232,7 @@
 					</td>
 					<td class="tit">证照编号</td>
 					<td>
-						<form:input path="certificateCode" htmlEscape="false" maxlength="100" class="input-xlarge "/>
+						<form:input path="certificateCode" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
 					</td>
 					<td class="tit">颁发机构</td>
 					<td>
@@ -214,7 +244,7 @@
 				<tr>
 					<td class="tit">地址</td>
 					<td colspan="5">
-						<form:input path="address" htmlEscape="false" maxlength="100" class="input-xlarge "/>
+						<form:input path="address" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
 					</td>
 				</tr>
 				<tr>
@@ -282,13 +312,13 @@
 					<td class="tit" rowspan="4">经办人信息</td>
 					<td class="tit">经办人姓名</td>
 					<td>
-						<form:input path="handlerName" htmlEscape="false" maxlength="20" class="input-xlarge "/>
+						<form:input path="handlerName" htmlEscape="false" maxlength="20" class="input-xlarge  required"/>
 					</td>
 				</tr>
 				<tr>
 					<td class="tit">法人证件类型</td>
 					<td>
-						<form:select path="persionIdType" class="input-medium">
+						<form:select path="persionIdType" class="input-medium required">
 							<form:option readonly="true" value="" label="请选择证件类型"/>
 							<form:options items="${fns:getDictList('certificate_type')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 						</form:select>
@@ -296,7 +326,7 @@
 					</td>
 					<td class="tit">经办人证件类型</td>
 					<td>
-						<form:select path="handlerIdType" class="input-medium">
+						<form:select path="handlerIdType" class="input-medium required">
 							<form:option readonly="true" value="" label="请选择证件类型"/>
 							<form:options items="${fns:getDictList('certificate_type')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 						</form:select>
@@ -310,7 +340,7 @@
 					</td>
 					<td class="tit">经办人证件号码</td>
 					<td>
-						<form:input path="handlerId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+						<form:input path="handlerId" htmlEscape="false" maxlength="64" class="input-xlarge  required"/>
 					</td>
 				</tr>
 				<tr>
@@ -321,7 +351,7 @@
 					</td>
 					<td class="tit">经办人联系方式</td>
 					<td>
-						<form:input path="handlerPhone" htmlEscape="false" maxlength="20" class="input-xlarge "/>
+						<form:input path="handlerPhone" htmlEscape="false" maxlength="20" class="input-xlarge required"/>
 					</td>
 				</tr>
 				<tr>
@@ -330,35 +360,35 @@
 				<tr>
 					<td class="tit">建筑名称</td>
 					<td>
-						<form:input path="buildingName" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+						<form:input path="buildingName" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
 					</td>
 					<td class="tit">层数</td>
 					<td>
-						<form:input path="floorNumber" htmlEscape="false" maxlength="10" class="input-xlarge "/>
+						<form:input path="floorNumber" htmlEscape="false" maxlength="10" class="input-xlarge required"/>
 					</td>
 					<td class="tit">使用面积</td>
 					<td>
-						<form:input path="useArea" htmlEscape="false" maxlength="20" class="input-xlarge "/>
+						<form:input path="useArea" htmlEscape="false" maxlength="20" class="input-xlarge required"/>
 					</td>
 				</tr>
 				<tr>
 					<td class="tit">使用情况</td>
 					<td colspan="">
-						<form:input path="usage1" htmlEscape="false" maxlength="100" class="input-xlarge "/>
+						<form:input path="usage1" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
 					</td>
 					<td class="tit">现有消防措施</td>
 					<td colspan="3">
-						<form:input path="dealfireFacilities" htmlEscape="false" maxlength="100" class="input-xlarge "/>
+						<form:input path="dealfireFacilities" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
 					</td>
 				</tr>
 				<tr>
 					<td class="tit">邮政编码</td>
 					<td>
-						<form:input path="postcode" htmlEscape="false" maxlength="10" class="input-xlarge "/>
+						<form:input path="postcode" htmlEscape="false" maxlength="10" class="input-xlarge required"/>
 					</td>
 					<td class="tit">所属区域</td>
 					<td colspan="3">
-						<sys:treeselect id="area" name="area.id" value="${businessLicense.area.id}" labelName="area.name" labelValue="${businessLicense.area.name}" title="区域" url="/sys/area/treeData" cssClass="" allowClear="true" notAllowSelectParent="true"/>
+						<sys:treeselect id="area" name="area.id" value="${businessLicense.area.id}" labelName="area.name" labelValue="${businessLicense.area.name}" title="区域" url="/sys/area/treeData" cssClass="required" allowClear="true" notAllowSelectParent="true"/>
 					</td>
 				</tr>
 				<tr>
