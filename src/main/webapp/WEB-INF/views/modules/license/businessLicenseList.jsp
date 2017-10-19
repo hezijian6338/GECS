@@ -5,7 +5,8 @@
 	<title>营业执照管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
-		$(document).ready(function() {
+
+    $(document).ready(function() {
 			
 		});
 		function page(n,s){
@@ -14,6 +15,16 @@
 			$("#searchForm").submit();
         	return false;
         }
+    	function getdetail1(s,id1) {
+			console.log(id1);
+            $.ajax({
+                url:"${ctx}/license/businessLicense/detail/"+id1,
+                type:"GET",
+                success:function(result){
+                    console.log(result);
+    		}});
+		};
+
 	</script>
 </head>
 <body>
@@ -22,6 +33,7 @@
 		<shiro:hasPermission name="license:businessLicense:edit"><li><a href="${ctx}/license/businessLicense/form">营业执照申请流程</a></li></shiro:hasPermission>
 	</ul>
 	<form:form id="searchForm" modelAttribute="businessLicense" action="${ctx}/license/businessLicense/" method="post" class="breadcrumb form-search">
+
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
@@ -175,7 +187,7 @@
 				<shiro:hasPermission name="license:businessLicense:edit"><td>
     				<a href="${ctx}/license/businessLicense/form?id=${businessLicense.id}">修改</a>
 					<a href="${ctx}/license/businessLicense/delete?id=${businessLicense.id}" onclick="return confirmx('确认要删除该营业执照吗？', this.href)">删除</a>
-					<a onclick="getdetail('${businessLicense}')">详情</a>
+					<a onclick="getdetail1(this,'${businessLicense.id}')">详情</a>
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>

@@ -31,6 +31,7 @@
     <li class="active"><a href="#"><shiro:hasPermission name="license:businessLicense:edit">${businessLicense.act.taskName}</shiro:hasPermission><shiro:lacksPermission name="license:businessLicense:edit">查看</shiro:lacksPermission></a></li>
 </ul><br/>
 <form:form id="inputForm" modelAttribute="businessLicense" action="${ctx}/license/businessLicense/saveAudit" method="post" class="form-horizontal">
+    <sys:message content="${message}"/>
     <form:hidden path="id"/>
     <form:hidden path="act.taskId"/>
     <form:hidden path="act.taskName"/>
@@ -240,7 +241,7 @@
     <div class="form-actions">
         <shiro:hasPermission name="license:businessLicense:edit">
             <c:if test="${businessLicense.act.taskDefKey eq 'apply_end'}">
-                <input id="btnSubmit" class="btn btn-primary" type="submit" value="兑 现" onclick="$('#flag').val('yes')"/>&nbsp;
+                <input id="btnSubmit" class="btn btn-primary" type="submit" value="生成执照" onclick="$('#flag').val('yes')"/>&nbsp;
             </c:if>
             <c:if test="${businessLicense.act.taskDefKey ne 'apply_end'}">
                 <input id="btnSubmit" class="btn btn-primary" type="submit" value="同 意" onclick="$('#flag').val('yes')"/>&nbsp;

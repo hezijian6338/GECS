@@ -95,6 +95,7 @@ public class TestAuditController extends BaseController {
 //				return "redirect:" + ActUtils.getFormUrl(formKey, testAudit.getAct());
 			}
 			// 审核环节2
+
 			else if ("audit2".equals(taskDefKey)){
 				view = "testAuditAudit";
 			}
@@ -108,6 +109,7 @@ public class TestAuditController extends BaseController {
 			}
 			// 兑现环节
 			else if ("apply_end".equals(taskDefKey)){
+
 				view = "testAuditAudit";
 			}
 			System.out.println("进入if语句===========审批测试");
