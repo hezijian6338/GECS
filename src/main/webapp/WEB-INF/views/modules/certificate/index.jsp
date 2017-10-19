@@ -37,6 +37,9 @@
 <script type="text/javascript" src="${ctxStatic}/js/jspdf.debug.js"></script>
 <%--工具栏自适应位置--%>
 <script type="text/javascript" src="${ctxStatic}/js/jquery.vgrid.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="${ctxStatic}/css/jquery.contextmenu.css"/>
+<script type="text/javascript" src="${ctxStatic}/js/jquery.contextmenu.js"></script>
 <script>
     $(function () {
         $("#util").vgrid({
@@ -81,7 +84,7 @@
                 <!--第一个拖拉组件文本框的生成-->
 
                 if (ui.helper.attr("id") == "Text") {
-                    var el = $("<div class='printComponents textComponents ' onclick='checkClick(this)'  tabindex='0' onmousedown='setIndex(event,this)' ></div>");
+                    var el = $("<div class='printComponents textComponents ' onclick='checkClick(this)'  tabindex='0' ></div>");
                     //el.append("<ul><li style='list-style: none;'><textarea class='textarea' id='textarea' style='' onchange='wirteText(this)'></textarea></li></ul>");
                     el.append("<textarea class='textarea' id='textarea' style='' onchange='wirteText(this)'></textarea>");
                     var id = (new Date()).getMilliseconds();
@@ -108,7 +111,7 @@
 
                     var RadiostyleChoice = document.getElementById("RadiostyleChoice").value;
                     var radioAcount = document.getElementById("radioAcount").value;
-                    var el = $("<div class='printComponents' onclick='checkClick(this)' tabindex='0' onmousedown='setIndex(event,this)'></div>");
+                    var el = $("<div class='printComponents' onclick='checkClick(this)' tabindex='0'></div>");
                     var id = (new Date()).getMilliseconds();
                     el.attr("id", "new" + id);
                     var radio = Math.random();
@@ -177,7 +180,7 @@
 
                     var CheckBoxstyleChoice = document.getElementById("CheckBoxstyleChoice").value;
                     var checkAcount = document.getElementById("checkAcount").value;
-                    var el = $("<div class='printComponents' onclick='checkClick(this)' tabindex='0' onmousedown='setIndex(event,this)'></div>");
+                    var el = $("<div class='printComponents' onclick='checkClick(this)' tabindex='0'></div>");
                     var id = (new Date()).getMilliseconds();
                     el.attr("id", "new" + id);
 
@@ -245,7 +248,7 @@
 
                     var lineStylechoice = document.getElementById("lineStylechoice").value;
                     if (lineStylechoice == 1) {
-                        var el = $("<div class='verticallineStyle' onclick='checkClick(this)' tabindex='0' onmousedown='setIndex(event,this)'></div>");
+                        var el = $("<div class='verticallineStyle' onclick='checkClick(this)' tabindex='0'></div>");
                         var id = (new Date()).getMilliseconds();
                         el.attr("id", "new" + id);
                         el.resizable({
@@ -255,7 +258,7 @@
                             containment: "#printf"
                         }).appendTo("#printf");
                     } else {
-                        var el = $("<div class='horizontallineStyle' onclick='checkClick(this)' tabindex='0' onmousedown='setIndex(event,this)'></div>");
+                        var el = $("<div class='horizontallineStyle' onclick='checkClick(this)' tabindex='0'></div>");
                         var id = (new Date()).getMilliseconds();
                         el.attr("id", "new" + id);
                         el.resizable({
@@ -275,8 +278,8 @@
                         alert("此组件只能拖拉一次！");
                     } else if (ui.helper.attr("id") == "Photo") {
                         //alert("画布宽度：" + document.getElementById("printf").offsetWidth + "   " + "画布长度：" + document.getElementById("printf").offsetHeight);
-
-                        var el = $("<div class='printComponents specialElements Photo' onclick='checkClick(this)' tabindex='0' onmousedown='setIndex(event,this)' style='border:1px solid #000000;'></div>");
+                        document.getElementById(ui.helper.attr("id")).style.backgroundColor = "#B8E834";
+                        var el = $("<div class='printComponents specialElements Photo' onclick='checkClick(this)' tabindex='0' style='border:1px solid #000000;'></div>");
                         var id = "id" + ui.helper.attr("id");
                         el.attr("id", id);
                         el.attr("name", id);
@@ -296,7 +299,8 @@
                             containment: "#printf"
                         }).appendTo("#printf");
                     } else {
-                        var el = $("<div class='printComponents specialElements' onclick='checkClick(this)' tabindex='0' onmousedown='setIndex(event,this)' style='border:1px solid #000000;'></div>");
+                        document.getElementById(ui.helper.attr("id")).style.backgroundColor = "#B8E834";
+                        var el = $("<div class='printComponents specialElements' onclick='checkClick(this)' tabindex='0' style='border:1px solid #000000;'></div>");
                         var id = "id" + ui.helper.attr("id");
                         el.attr("id", id);
                         el.attr("name", id);
@@ -323,7 +327,7 @@
                     }
                     //alert(lineAcount +" "+ columnAcount);			//确认是否能取得值
                     var textareaWidth = 500 / columnAcount;
-                    var el = $("<div class='printComponents textComponents' onclick='checkClick(this)' tabindex='0' onmousedown='setIndex(event,this)'></div>");
+                    var el = $("<div class='printComponents textComponents' onclick='checkClick(this)' tabindex='0'></div>");
                     var id = "id" + ui.helper.attr("id");
                     el.attr("id", id);
                     for (var x = 0; x < lineAcount; x++) {
@@ -351,7 +355,7 @@
 
                     var fileName = "/picFile/upload/1/modelPhoto/" + ui.helper.attr("id");
                     //alert(fileName);
-                    var el = $("<div class='printComponents' onclick='checkClick(this)' tabindex='0' onmousedown='setIndex(event,this)'></div>");
+                    var el = $("<div class='printComponents' onclick='setIndex(this)' tabindex='0'></div>");
                     el.append("<img src=" + fileName + " class='img' style='width:98%;height: auto'>");
                     var id = (new Date()).getMilliseconds();
                     el.attr("id", "new" + id);
@@ -371,7 +375,7 @@
                 } else {
                     <!--第八个组件的生成 一些其他组件的生成-->
 
-                    var el = $("<div class='printComponents' onclick='checkClick(this)' tabindex='0' onmousedown='setIndex(event,this)'></div>");
+                    var el = $("<div class='printComponents' onclick='checkClick(this)' tabindex='0' ></div>");
                     var id = (new Date()).getMilliseconds();
                     el.attr("id", "new" + id);
                     el.text("ID=new" + id);
@@ -540,7 +544,7 @@
                 var finder = new CKFinder();
                 finder.basePath = '../';	// The path for the installation of CKFinder (default = "/ckfinder/").
                 finder.startupPath = startupPath;
-                finder.resourceType = "modelPhoto";
+                finder.resourceType = "元素图片文件夹";
                 finder.selectActionFunction = SetFileField;
                 finder.selectActionData = selectAD;
                 finder.popup();
@@ -564,7 +568,7 @@
                 finder.basePath = '../';	// The path for the installation of CKFinder (default = "/ckfinder/").
                 //Startup path in a form: "Type:/path/to/directory/"
                 finder.readOnly = true;
-                finder.resourceType = "pdf";
+                finder.resourceType = "证照模板文件夹";
                 finder.startupPath = startupPath;
                 finder.selectActionFunction = viewSFF;
                 finder.popup();
@@ -573,6 +577,7 @@
             // This is a sample function which is called when a file is selected in CKFinder.
             function SetFileField(fileUrl, data) {
                 document.getElementById(data["selectActionData"]).value = fileUrl;
+                createNewElements();
             }
 
             function closeWindow() {
@@ -633,24 +638,24 @@
             <div>
                 <p>
                     <input id="xFilePath" name="FilePath" type="text" size="60"/>
-                    <input type="button" value="Browse Server" onclick="BrowseServer('modelPhoto:/','xFilePath');"/>
-                    <input type="button" value="confirm" onclick="createNewElements();"/>
-                    <input type="button" value="查看历史模板" onclick="viewBS('pdf:/');"/>
+                    <input type="button" value="浏览文件夹" onclick="BrowseServer('元素图片文件夹:/','xFilePath');"/>
+                    <%--<input type="button" value="confirm" onclick="createNewElements();"/>--%>
+                    <input type="button" value="查看历史模板" onclick="viewBS('证照模板文件夹:/');"/>
                 </p>
             </div>
         </div>
 
         <%--<div id="editPdf_txt" class="_util">--%>
-            <%--<div>--%>
-                <%--<p>--%>
-                <%--<form action="${ctx}/certificate/certificateTemplate/makeModel" method="post" id="txtAction">--%>
-                    <%--<input id="txtPath" name="FilePath" type="text" size="60"/>--%>
-                    <%--<input type="button" value="Browse Server" onclick="BrowseServer_txt('modelTxt:/','txtPath');"/>--%>
-                    <%--<input type="button" value="confirm" onclick="editPdf_txt();"/>--%>
-                    <%--<input type="submit" value="submit"/>--%>
-                <%--</form>--%>
-                <%--</p>--%>
-            <%--</div>--%>
+        <%--<div>--%>
+        <%--<p>--%>
+        <%--<form action="${ctx}/certificate/certificateTemplate/makeModel" method="post" id="txtAction">--%>
+        <%--<input id="txtPath" name="FilePath" type="text" size="60"/>--%>
+        <%--<input type="button" value="Browse Server" onclick="BrowseServer_txt('modelTxt:/','txtPath');"/>--%>
+        <%--<input type="button" value="confirm" onclick="editPdf_txt();"/>--%>
+        <%--<input type="submit" value="submit"/>--%>
+        <%--</form>--%>
+        <%--</p>--%>
+        <%--</div>--%>
         <%--</div>--%>
 
         <%--PDF生成格式设置--%>
@@ -851,6 +856,45 @@
     var index = 2;	//控制每个元素的Z-Index
     var inputSubmit = document.getElementById("inputSubmit");
 
+    var pdfsize = document.getElementById("pdfSize");
+    var lorp = document.getElementById("LorP");
+    var printf = document.getElementById("printf");
+
+
+    pdfsize.onchange = function () {
+        alert("自动修改画布为你当前所选的格式,并且清楚画布内容,请重新排版！");
+        printf.innerHTML = "";
+        var size = pdfsize.value;
+        var format = size.toLowerCase();
+        if (pageFormats.hasOwnProperty(format)) {
+            printf.style.width = pageFormats[format][0];
+            printf.style.height = pageFormats[format][1];
+            //alert("宽" +pdfWidth + "高" + pdfHeight + "1");
+        }
+    };
+
+    lorp.onchange = function () {
+        alert("自动修改画布为你当前所选的格式,并且清楚画布内容,请重新排版！");
+        printf.innerHTML = "";
+        var or = lorp.value;
+        var orientation = or;
+        if (orientation) {
+            switch (orientation.substr(0, 1)) {
+                case 'l':
+                    if (printf.style.height > printf.style.width) orientation = 's';
+                    break;
+                case 'p':
+                    if (printf.style.width > printf.style.height) orientation = 's';
+                    break;
+            }
+            if (orientation === 's') {
+                var tmp = printf.style.width;
+                printf.style.width = printf.style.height;
+                printf.style.height = tmp;
+                //alert("宽" + pdfWidth + "宽" + pdfHeight + "2");
+            }
+        }
+    };
 
     window.onload = function () {					//禁止鼠标右键事件
         document.oncontextmenu = function (e) {
@@ -863,15 +907,14 @@
         }
     };
 
-    function jump() {				//跳转到第二个页面查看历史模板
-        window.open("CheckModel.jsp");
-    }
+    //    function jump() {				//跳转到第二个页面查看历史模板
+    //        window.open("CheckModel.jsp");
+    //    }
 
 
     function wirteText(e) {			//为每一个文本框输入后自动生成相对应的Html
         //alert(e.value);
         e.innerHTML = e.value;
-
     }
 
     function writeTxtAndPng() {
@@ -955,36 +998,87 @@
     }
 
 
-    function setIndex(event, e) {					//使选中的元素永远在图层的最上面
-        var btnNum = event.button;
+    function setIndex(e) {					//使选中的元素永远在图层的最上面
+//        var btnNum = event.button;
         //alert(e.button);
         if (e.style.zIndex != 1) {				//不是背景的元素
             index = index + 1;
             e.style.zIndex = index;
         }
-        if (btnNum == 1) {
-            //alert("点击鼠标中键");
-            if (e.style.zIndex == 1) {
-                if (confirm("是否解除当前组件背景？")) {
-                    index = index + 1;
-                    e.style.zIndex = index;
-                }
-            } else {								//设置选中元素的zIndex
-
-            }
-        } else if (btnNum == 0) {
-            //alert("点击鼠标左键");
-        } else if (btnNum == 2) {
-            //alert("点击鼠标右键");
-            if (backGroundUnique == 0) {			//还没有设置背景
-                if (confirm("确认此图作为背景？")) {
-                    e.style.zIndex = 1;
-                    backGroundUnique = 1; //背景已经设置了
-                }
-            } else {
-                alert("你已设置过背景！背景只能有一个！");
-            }
+//        if (btnNum == 1) {
+//            //alert("点击鼠标中键");
+//            if (e.style.zIndex == 1) {
+//                if (confirm("是否解除当前组件背景？")) {
+//                    index = index + 1;
+//                    e.style.zIndex = index;
+//                }
+//            } else {								//设置选中元素的zIndex
+//
+//            }
+//        } else if (btnNum == 0) {
+//            //alert("点击鼠标左键");
+//        } else
+//        if (btnNum == 2) {
+        //alert("点击鼠标右键");
+        var showLabel = "设置背景图片";
+        if (backGroundUnique != 0) {
+            showLabel = "取消背景图片"
         }
+        $(e).contextPopup({
+
+            title: $(e).attr("id") + "元素",
+
+            items: [
+
+                {
+                    label: showLabel, action: function () {
+                    if (backGroundUnique == 0) {			//还没有设置背景
+//                            if (confirm("确认此图作为背景？")) {
+                        e.style.padding = "0 auto";
+                        e.style.margin = "0 auto";
+                        e.style.width = printf.style.width;
+                        e.style.height = printf.style.height;
+                        e.style.zIndex = 1;
+                        backGroundUnique = 1; //背景已经设置了
+//                            }
+                    }
+                    else {
+//                            if (confirm("是否取消原有图片为背景？")) {
+                        e.style.padding = "0 auto";
+                        e.style.margin = "0 auto";
+                        e.style.width = printf.style.width/2;
+                        e.style.height = printf.style.height/2;
+                        e.style.zIndex = index;
+                        backGroundUnique = 0; //背景没设置了
+//                            }
+                    }
+                }
+                },
+
+                {
+                    label: '删除元素', action: function () {
+//                        if (confirm("是否删除该元素？")) {
+                    backGroundUnique = 0; //背景没设置了
+                    $(e).remove();
+//                        }
+                }
+                }
+            ]
+
+        });
+//
+//                if (backGroundUnique == 0) {			//还没有设置背景
+//                if (confirm("确认此图作为背景？")) {
+//                    e.style.zIndex = 1;
+//                    backGroundUnique = 1; //背景已经设置了
+//                }
+//            } else {
+//                if (confirm("是否取消原有图片为背景？")) {
+//                    e.style.zIndex = 999;
+//                    backGroundUnique = 0; //背景已经设置了
+//                }
+//            }
+//        }
 
         //让保存的元素重新到画布上后能重新拖拽伸缩编辑功能
         if ($(e).hasClass("printComponents")) {
@@ -999,6 +1093,8 @@
     function checkClick(e) {
         //alert(e.getAttribute("id"));
         var thisID = document.getElementById(e.getAttribute("id"));
+        var tempId = e.getAttribute("id");
+        var originId = tempId.substring(2, tempId.length);
         document.onkeydown = function () {
             var oEvent = window.event;
             if (oEvent.keyCode == 46) {
@@ -1064,9 +1160,6 @@
         var family = document.getElementById("fontfamily");
         var setFontsize = document.getElementById("fontsize");
         var setFontfamily = document.getElementById("fontfamily");
-        var pdfsize = document.getElementById("pdfSize");
-        var lorp = document.getElementById("LorP");
-        var printf = document.getElementById("printf");
 
         //获取当前元素的颜色 字体 大小属性并显示在分别显示在三个选择框 如果为空显示默认的
         if ($(thisID).hasClass("textComponents")) {
@@ -1115,40 +1208,22 @@
             $(thisID).find('label').css('font-family', fontfamily);
         }
 
-        pdfsize.onchange = function () {
-            alert("自动修改画布为你当前所选的格式,并且清楚画布内容,请重新排版！");
-            printf.innerHTML = "";
-            var size = pdfsize.value;
-            var format = size.toLowerCase();
-            if (pageFormats.hasOwnProperty(format)) {
-                printf.style.width = pageFormats[format][0];
-                printf.style.height = pageFormats[format][1];
-                //alert("宽" +pdfWidth + "高" + pdfHeight + "1");
-            }
-        };
+        $(thisID).contextPopup({
 
-        lorp.onchange = function () {
-            alert("自动修改画布为你当前所选的格式,并且清楚画布内容,请重新排版！");
-            printf.innerHTML = "";
-            var or = lorp.value;
-            var orientation = or;
-            if (orientation) {
-                switch (orientation.substr(0, 1)) {
-                    case 'l':
-                        if (printf.style.height > printf.style.width) orientation = 's';
-                        break;
-                    case 'p':
-                        if (printf.style.width > printf.style.height) orientation = 's';
-                        break;
+            title: '元素属性操作',
+
+            items: [
+                {
+                    label: '删除元素', action: function () {
+                    if (confirm("是否删除该元素？")) {
+//                        alert(originId);
+                        document.getElementById(originId).style.backgroundColor = "";
+                        $(thisID).remove();
+                    }
                 }
-                if (orientation === 's') {
-                    var tmp = printf.style.width;
-                    printf.style.width = printf.style.height;
-                    printf.style.height = tmp;
-                    //alert("宽" + pdfWidth + "宽" + pdfHeight + "2");
                 }
-            }
-        };
+            ]
+        });
 
 
         //alert(e.getAttribute("id")+""+fontsize+""+fontfamily);		//是否成功获取属性值

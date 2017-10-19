@@ -21,7 +21,7 @@
 <body>
 <div id="pdf" style="position: absolute;top: 2%;left: 25%"></div>
 <h1 class="samples">
-    CKFinder
+    模板（文件）管理
 </h1>
 
 <!-- Button trigger modal -->
@@ -57,11 +57,11 @@
         var url = "/picFile" + fileUrl;
         var sFileName = this.getSelectedFile().name;
         document.getElementById('pdf').innerHTML =
-            '<button type="button" class="close" onclick="closeWindow()" style="float: right">'
+            '<button type="button" class="close" onclick="closeWindow()" >'
             + '&times;' +
             ' </button>' +
         '<a class="media" href="' + url + '">' +
-        '</a>' + '<div class="caption">' +
+        '</a>' + '<div class="caption" style="padding-top: 0.8em">' +
         '<a href="' + data["fileUrl"] + '" target="_blank">' + sFileName + '</a> (' + data["fileSize"] + 'KB)' +
         '</div>';
 

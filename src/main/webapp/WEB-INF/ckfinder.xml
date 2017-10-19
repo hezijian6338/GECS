@@ -24,42 +24,28 @@
 	</hideFiles>
 	<defaultResourceTypes></defaultResourceTypes>
 	<types>
-		<type name="files">
-			<url>%BASE_URL%files/</url>
-			<directory>%BASE_DIR%files</directory>
-			<maxSize>5M</maxSize>
-			<allowedExtensions>7z,aiff,asf,avi,bmp,csv,doc,docx,fla,flv,gif,gz,gzip,jpeg,jpg,mid,mov,mp3,mp4,mpc,mpeg,mpg,ods,odt,pdf,png,ppt,pptx,pxd,qt,ram,rar,rm,rmi,rmvb,rtf,sdc,sitd,swf,sxc,sxw,tar,tgz,tif,tiff,txt,vsd,wav,wma,wmv,xls,xlsx,zip</allowedExtensions>
-			<deniedExtensions></deniedExtensions>
-		</type>
-		<type name="images">
+		<type name="图片文件夹">
 			<url>%BASE_URL%images/</url>
 			<directory>%BASE_DIR%images</directory>
 			<maxSize>10M</maxSize>
 			<allowedExtensions>jpg,png,jpeg,JPEG,bmp</allowedExtensions>
 			<deniedExtensions></deniedExtensions>
 		</type>
-		<type name="modelPhoto">
+		<type name="元素图片文件夹">
 			<url>%BASE_URL%modelPhoto/</url>
 			<directory>%BASE_DIR%modelPhoto</directory>
 			<maxSize>10M</maxSize>
 			<allowedExtensions>jpg,png,jpeg,JPEG,bmp</allowedExtensions>
 			<deniedExtensions></deniedExtensions>
 		</type>
-		<type name="pdf">
+		<type name="共享模板文件夹">
 			<url>%BASE_URL%pdf/</url>
 			<directory>%BASE_DIR%pdf</directory>
 			<maxSize>10M</maxSize>
 			<allowedExtensions>pdf</allowedExtensions>
 			<deniedExtensions></deniedExtensions>
 		</type>
-		<type name="flash">
-			<url>%BASE_URL%flash/</url>
-			<directory>%BASE_DIR%flash</directory>
-			<maxSize>2M</maxSize>
-			<allowedExtensions>swf,flv</allowedExtensions>
-			<deniedExtensions></deniedExtensions>
-		</type>
-		<type name="modelManager">
+		<type name="证照模板文件夹">
 			<url>%BASE_URL%modelManager/</url>
 			<directory>%BASE_DIR%modelManager</directory>
 			<maxSize>30M</maxSize>
