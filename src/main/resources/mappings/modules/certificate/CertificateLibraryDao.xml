@@ -41,9 +41,11 @@
 		WHERE a.id = #{id}
 	</select>
 
-	<select id="getByCertificateCode" resultType="CertificateLibrary">
+	<select id="getByCertificateCode" parameterType="string" resultType="CertificateLibrary">
 		Select <include refid="certificateLibraryColumns"/>
-		FROM certificate_library a WHERE a.certificateCode=#{certificateCode}
+		FROM certificate_library a <include refid="certificateLibraryJoins"/>
+		WHERE
+		a.certificate_code=#{certificateCode}
 	</select>
 	
 	<select id="findList" resultType="CertificateLibrary">

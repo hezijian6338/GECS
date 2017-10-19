@@ -14,5 +14,5 @@ import com.thinkgem.jeesite.modules.certificate.entity.CertificateLibrary;
  */
 @MyBatisDao
 public interface CertificateLibraryDao extends CrudDao<CertificateLibrary> {
-	
+	public CertificateLibrary getByCertificateCode(String CertificateCode);
 }

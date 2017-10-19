@@ -167,7 +167,7 @@ public class PDFUtil {
 
     public static void fillTemplate(BusinessLicense businessLicense, String path, String outputFileName)
             throws IOException, DocumentException {
-        System.out.println("=========="+businessLicense.getEstablishDate());
+//        System.out.println("=========="+businessLicense.getEstablishDate());
         PdfReader reader = new PdfReader(path); // 模版文件目录
 
         //String outputFileName = "E:\\pdf\\" + BusinessLicense.getStuNo() + BusinessLicense.getStuName() + ".pdf" ;

@@ -247,6 +247,7 @@
 						<form:input path="address" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
 					</td>
 				</tr>
+
 				<tr>
 					<td class="tit" rowspan="3">日期填写</td>
 					<td class="tit">成立日期</td>

@@ -106,6 +106,7 @@ public class BusinessLicenseController extends BaseController {
 			}*/
 			// 审核环节2
 			else if ("audit1".equals(taskDefKey)){
+				System.out.println("+++++++"+certificateLibrary);
 				view = "businessLicenseAudit";
 			}
 			// 审核环节3
@@ -127,7 +128,18 @@ public class BusinessLicenseController extends BaseController {
 
 			PDFUtil.fillTemplate(businessLicense,path,savaPath);
 			view = "businessLicenseAudit";
-//			certificateLibrary.set
+
+			certificateLibrary.setCertificateCode(businessLicense.getCertificateCode());
+			certificateLibrary.setCertificateTypeId(businessLicense.getCertificateTypeId());
+			certificateLibrary.setCertificateName(businessLicense.getCertificateName());
+			certificateLibrary.setArea(businessLicense.getArea());
+			certificateLibrary.setDownloadsNum("0");
+			certificateLibrary.setEffectiveDateEnd(businessLicense.getEffectiveDateEnd());
+			certificateLibrary.setEffectiveDateStart(businessLicense.getEffectiveDateStar());
+			certificateLibrary.setOffice(businessLicense.getOffice());
+			certificateLibrary.setPath(realativePath);
+			certificateLibraryService.save(certificateLibrary);
+
 			}
 		}
 		model.addAttribute("businessLicense", businessLicense);

@@ -5,6 +5,7 @@ package com.thinkgem.jeesite.modules.certificate.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,11 +22,17 @@ import com.thinkgem.jeesite.modules.certificate.dao.CertificateLibraryDao;
 @Service
 @Transactional(readOnly = true)
 public class CertificateLibraryService extends CrudService<CertificateLibraryDao, CertificateLibrary> {
+	@Autowired
+	CertificateLibraryDao certificateLibraryDao;
 
 	public CertificateLibrary get(String id) {
 		return super.get(id);
 	}
-	
+
+	public CertificateLibrary getByCertificateCode(String certificateCode){
+		return certificateLibraryDao.getByCertificateCode(certificateCode);
+	}
+
 	public List<CertificateLibrary> findList(CertificateLibrary certificateLibrary) {
 		return super.findList(certificateLibrary);
 	}
