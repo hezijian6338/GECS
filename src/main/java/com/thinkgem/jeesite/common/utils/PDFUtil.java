@@ -7,9 +7,11 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 
 import com.thinkgem.jeesite.modules.license.entity.BusinessLicense;
+import com.thinkgem.jeesite.modules.sys.service.SystemService;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
@@ -113,33 +115,35 @@ public class PDFUtil {
         String chinese = "[\u4e00-\u9fa5]";
         String number = "^[0-9]*$";
         // 获取字段值的长度，如果含中文字符，则每个中文字符长度为2，否则为1
-        for (int i = 0; i < s.length(); i++) {
-            // 获取一个字符
-            String temp = s.substring(i, i + 1);
-            // 判断是否为中文字符
-            if (temp.matches(chinese)) {
-                // 中文字符长度为1
-                valueLength += 1.56;
-                //System.out.println("中文:" + valueLength);
-            } else if (temp.matches(number)) {
-                // 数字字符长度为0.5
-                valueLength += 0.45;
-                //System.out.println("英文::" + valueLength);
-            } else {
-                //英文字符长度
-                valueLength += 0.45;
+        if (s.length()!=0)
+            for (int i = 0; i < s.length(); i++) {
+                // 获取一个字符
+                String temp = s.substring(i, i + 1);
+                // 判断是否为中文字符
+                if (temp.matches(chinese)) {
+                    // 中文字符长度为1
+                    valueLength += 1.56;
+                    //System.out.println("中文:" + valueLength);
+                } else if (temp.matches(number)) {
+                    // 数字字符长度为0.5
+                    valueLength += 0.45;
+                    //System.out.println("英文::" + valueLength);
+                } else {
+                    //英文字符长度
+                    valueLength += 0.45;
+                }
+                if (temp.matches(" ")) {
+                    valueLength += 1.56;
+                    //System.out.println("空格:" + valueLength);
+                }
             }
-            if (temp.matches(" ")) {
-                valueLength += 1.56;
-                //System.out.println("空格:" + valueLength);
-            }
-        }
 
         return valueLength * fontSize;
     }
 
     public static String fillSpace(String value, int fontSize, double tfWidth) {
         // System.out.println("宽:" + tfWidth);
+
         if (getLength(value, fontSize) <= tfWidth) {
             double fill = tfWidth - getLength(value, fontSize);
             double fillSpace = fill / 2 * 1.56 / fontSize;
@@ -163,7 +167,7 @@ public class PDFUtil {
 
     public static void fillTemplate(BusinessLicense businessLicense, String path, String outputFileName)
             throws IOException, DocumentException {
-
+        System.out.println("=========="+businessLicense.getEstablishDate());
         PdfReader reader = new PdfReader(path); // 模版文件目录
 
         //String outputFileName = "E:\\pdf\\" + BusinessLicense.getStuNo() + BusinessLicense.getStuName() + ".pdf" ;
@@ -207,184 +211,185 @@ public class PDFUtil {
 //        image.setAbsolutePosition(x, y);
 //        under.addImage(image);
 
+        DateFormat df = new SimpleDateFormat("yyyy年MM月dd日");
 
         s.addSubstitutionFont(bfChinese);
 
 
         //中文姓名 注入
-        s.setFieldProperty("Name", "clrflags", 1, null);
-        s.setFieldProperty("Name", "textfont", bfChinese, null);
-        s.setFieldProperty("Name", "textsize", new Float(15), null);
+        s.setFieldProperty("idName", "clrflags", 1, null);
+        s.setFieldProperty("idName", "textfont", bfChinese, null);
+        s.setFieldProperty("idName", "textsize", new Float(15), null);
 
         //姓(英) 注入
-        s.setFieldProperty("EngFamilyName", "clrflags", 1, null);
-        s.setFieldProperty("EngFamilyName", "textfont", bfChinese, null);
-        s.setFieldProperty("EngFamilyName", "textsize", new Float(15), null);
+        s.setFieldProperty("idEngFamilyName", "clrflags", 1, null);
+        s.setFieldProperty("idEngFamilyName", "textfont", bfChinese, null);
+        s.setFieldProperty("idEngFamilyName", "textsize", new Float(15), null);
 
         //名(英) 注入
-        s.setFieldProperty("EngName", "clrflags", 1, null);
-        s.setFieldProperty("EngName", "textfont", bfChinese, null);
-        s.setFieldProperty("EngName", "textsize", new Float(15), null);
+        s.setFieldProperty("idEngName", "clrflags", 1, null);
+        s.setFieldProperty("idEngName", "textfont", bfChinese, null);
+        s.setFieldProperty("idEngName", "textsize", new Float(15), null);
 
         //性别 注入
-        s.setFieldProperty("Sex", "clrflags", 1, null);
-        s.setFieldProperty("Sex", "textfont", bfChinese, null);
-        s.setFieldProperty("Sex", "textsize", new Float(15), null);
+        s.setFieldProperty("idSex", "clrflags", 1, null);
+        s.setFieldProperty("idSex", "textfont", bfChinese, null);
+        s.setFieldProperty("idSex", "textsize", new Float(15), null);
 
         //性别(英) 注入
-        s.setFieldProperty("EngSex", "clrflags", 1, null);
-        s.setFieldProperty("EngSex", "textfont", bfChinese, null);
-        s.setFieldProperty("EngSex", "textsize", new Float(15), null);
+        s.setFieldProperty("idEngSex", "clrflags", 1, null);
+        s.setFieldProperty("idEngSex", "textfont", bfChinese, null);
+        s.setFieldProperty("idEngSex", "textsize", new Float(15), null);
 
         //证照类型 注入
-        s.setFieldProperty("certificateTypeId", "clrflags", 1, null);
-        s.setFieldProperty("certificateTypeId", "textfont", bfChinese, null);
-        s.setFieldProperty("certificateTypeId", "textsize", new Float(15), null);
+        s.setFieldProperty("idcertificateTypeId", "clrflags", 1, null);
+        s.setFieldProperty("idcertificateTypeId", "textfont", bfChinese, null);
+        s.setFieldProperty("idcertificateTypeId", "textsize", new Float(15), null);
 
         //证照编号 注入
-        s.setFieldProperty("certificateCode", "clrflags", 1, null);
-        s.setFieldProperty("certificateCode", "textfont", bfChinese, null);
-        s.setFieldProperty("certificateCode", "textsize", new Float(15), null);
+        s.setFieldProperty("idcertificateCode", "clrflags", 1, null);
+        s.setFieldProperty("idcertificateCode", "textfont", bfChinese, null);
+        s.setFieldProperty("idcertificateCode", "textsize", new Float(15), null);
 
         //证照名称 注入
-        s.setFieldProperty("certificateName", "clrflags", 1, null);
-        s.setFieldProperty("certificateName", "textfont", bfChinese, null);
-        s.setFieldProperty("certificateName", "textsize", new Float(15), null);
+        s.setFieldProperty("idcertificateName", "clrflags", 1, null);
+        s.setFieldProperty("idcertificateName", "textfont", bfChinese, null);
+        s.setFieldProperty("idcertificateName", "textsize", new Float(15), null);
 
         //颁发机构id 注入
-        s.setFieldProperty("office", "clrflags", 1, null);
-        s.setFieldProperty("office", "textfont", bfChinese, null);
-        s.setFieldProperty("office", "textsize", new Float(15), null);
+        s.setFieldProperty("idoffice", "clrflags", 1, null);
+        s.setFieldProperty("idoffice", "textfont", bfChinese, null);
+        s.setFieldProperty("idoffice", "textsize", new Float(15), null);
 
         //统一社会信用代码 注入
-        s.setFieldProperty("tyshxydm", "clrflags", 1, null);
-        s.setFieldProperty("tyshxydm", "textfont", bfChinese, null);
-        s.setFieldProperty("tyshxydm", "textsize", new Float(15), null);
+        s.setFieldProperty("idtyshxydm", "clrflags", 1, null);
+        s.setFieldProperty("idtyshxydm", "textfont", bfChinese, null);
+        s.setFieldProperty("idtyshxydm", "textsize", new Float(15), null);
 
         //成立日期 注入
-        s.setFieldProperty("establishDate", "clrflags", 1, null);
-        s.setFieldProperty("establishDate", "textfont", bfChinese, null);
-        s.setFieldProperty("establishDate", "textsize", new Float(15), null);
+        s.setFieldProperty("idestablishDate", "clrflags", 1, null);
+        s.setFieldProperty("idestablishDate", "textfont", bfChinese, null);
+        s.setFieldProperty("idestablishDate", "textsize", new Float(15), null);
 
         //成立日期（年） 注入
-        s.setFieldProperty("establishDateYear", "clrflags", 1, null);
-        s.setFieldProperty("establishDateYear", "textfont", bfChinese, null);
-        s.setFieldProperty("establishDateYear", "textsize", new Float(15), null);
+        s.setFieldProperty("idestablishDateYear", "clrflags", 1, null);
+        s.setFieldProperty("idestablishDateYear", "textfont", bfChinese, null);
+        s.setFieldProperty("idestablishDateYear", "textsize", new Float(15), null);
 
         //成立日期（月） 注入
-        s.setFieldProperty("establishDateMonth", "clrflags", 1, null);
-        s.setFieldProperty("establishDateMonth", "textfont", bfChinese, null);
-        s.setFieldProperty("establishDateMonth", "textsize", new Float(15), null);
+        s.setFieldProperty("idestablishDateMonth", "clrflags", 1, null);
+        s.setFieldProperty("idestablishDateMonth", "textfont", bfChinese, null);
+        s.setFieldProperty("idestablishDateMonth", "textsize", new Float(15), null);
 
         //成立日期（日） 注入
-        s.setFieldProperty("establishDateDay", "clrflags", 1, null);
-        s.setFieldProperty("establishDateDay", "textfont", bfChinese, null);
-        s.setFieldProperty("establishDateDay", "textsize", new Float(15), null);
+        s.setFieldProperty("idestablishDateDay", "clrflags", 1, null);
+        s.setFieldProperty("idestablishDateDay", "textfont", bfChinese, null);
+        s.setFieldProperty("idestablishDateDay", "textsize", new Float(15), null);
 
         //证照有效期（起始） 注入
-        s.setFieldProperty("effectiveDateStar", "clrflags", 1, null);
-        s.setFieldProperty("effectiveDateStar", "textfont", bfChinese, null);
-        s.setFieldProperty("effectiveDateStar", "textsize", new Float(15), null);
+        s.setFieldProperty("ideffectiveDateStar", "clrflags", 1, null);
+        s.setFieldProperty("ideffectiveDateStar", "textfont", bfChinese, null);
+        s.setFieldProperty("ideffectiveDateStar", "textsize", new Float(15), null);
 
         //证照有效期（截至） 注入
-        s.setFieldProperty("effectiveDateEnd", "clrflags", 1, null);
-        s.setFieldProperty("effectiveDateEnd", "textfont", bfChinese, null);
-        s.setFieldProperty("effectiveDateEnd", "textsize", new Float(15), null);
+        s.setFieldProperty("ideffectiveDateEnd", "clrflags", 1, null);
+        s.setFieldProperty("ideffectiveDateEnd", "textfont", bfChinese, null);
+        s.setFieldProperty("ideffectiveDateEnd", "textsize", new Float(15), null);
 
         //注册公司类型  注入
-        s.setFieldProperty("registeredType", "clrflags", 1, null);
-        s.setFieldProperty("registeredType", "textfont", bfChinese, null);
-        s.setFieldProperty("registeredType", "textsize", new Float(15), null);
+        s.setFieldProperty("idregisteredType", "clrflags", 1, null);
+        s.setFieldProperty("idregisteredType", "textfont", bfChinese, null);
+        s.setFieldProperty("idregisteredType", "textsize", new Float(15), null);
 
         //注册资本  注入
-        s.setFieldProperty("registeredCapital", "clrflags", 1, null);
-        s.setFieldProperty("registeredCapital", "textfont", bfChinese, null);
-        s.setFieldProperty("registeredCapital", "textsize", new Float(15), null);
+        s.setFieldProperty("idregisteredCapital", "clrflags", 1, null);
+        s.setFieldProperty("idregisteredCapital", "textfont", bfChinese, null);
+        s.setFieldProperty("idregisteredCapital", "textsize", new Float(15), null);
 
         //地址  注入
-        s.setFieldProperty("address", "clrflags", 1, null);
-        s.setFieldProperty("address", "textfont", bfChinese, null);
-        s.setFieldProperty("address", "textsize", new Float(15), null);
+        s.setFieldProperty("idaddress", "clrflags", 1, null);
+        s.setFieldProperty("idaddress", "textfont", bfChinese, null);
+        s.setFieldProperty("idaddress", "textsize", new Float(15), null);
 
         //法人姓名  注入
-        s.setFieldProperty("persionName", "clrflags", 1, null);
-        s.setFieldProperty("persionName", "textfont", bfChinese, null);
-        s.setFieldProperty("persionName", "textsize", new Float(15), null);
+        s.setFieldProperty("idpersionName", "clrflags", 1, null);
+        s.setFieldProperty("idpersionName", "textfont", bfChinese, null);
+        s.setFieldProperty("idpersionName", "textsize", new Float(15), null);
 
         //法人身份证件类型  注入
-        s.setFieldProperty("persionIdType", "clrflags", 1, null);
-        s.setFieldProperty("persionIdType", "textfont", bfChinese, null);
-        s.setFieldProperty("persionIdType", "textsize", new Float(15), null);
+        s.setFieldProperty("idpersionIdType", "clrflags", 1, null);
+        s.setFieldProperty("idpersionIdType", "textfont", bfChinese, null);
+        s.setFieldProperty("idpersionIdType", "textsize", new Float(15), null);
 
         //法人身份证件号码  注入
-        s.setFieldProperty("personId", "clrflags", 1, null);
-        s.setFieldProperty("personId", "textfont", bfChinese, null);
-        s.setFieldProperty("personId", "textsize", new Float(15), null);
+        s.setFieldProperty("idpersonId", "clrflags", 1, null);
+        s.setFieldProperty("idpersonId", "textfont", bfChinese, null);
+        s.setFieldProperty("idpersonId", "textsize", new Float(15), null);
 
         //法人联系方式  注入
-        s.setFieldProperty("persionPhone", "clrflags", 1, null);
-        s.setFieldProperty("persionPhone", "textfont", bfChinese, null);
-        s.setFieldProperty("persionPhone", "textsize", new Float(15), null);
+        s.setFieldProperty("idpersionPhone", "clrflags", 1, null);
+        s.setFieldProperty("idpersionPhone", "textfont", bfChinese, null);
+        s.setFieldProperty("idpersionPhone", "textsize", new Float(15), null);
 
         //经办人姓名  注入
-        s.setFieldProperty("handlerName", "clrflags", 1, null);
-        s.setFieldProperty("handlerName", "textfont", bfChinese, null);
-        s.setFieldProperty("handlerName", "textsize", new Float(15), null);
+        s.setFieldProperty("idhandlerName", "clrflags", 1, null);
+        s.setFieldProperty("idhandlerName", "textfont", bfChinese, null);
+        s.setFieldProperty("idhandlerName", "textsize", new Float(15), null);
 
         //经办人身份证件类型  注入
-        s.setFieldProperty("handlerIdType", "clrflags", 1, null);
-        s.setFieldProperty("handlerIdType", "textfont", bfChinese, null);
-        s.setFieldProperty("handlerIdType", "textsize", new Float(15), null);
+        s.setFieldProperty("idhandlerIdType", "clrflags", 1, null);
+        s.setFieldProperty("idhandlerIdType", "textfont", bfChinese, null);
+        s.setFieldProperty("idhandlerIdType", "textsize", new Float(15), null);
 
         //经办人身份证件号码  注入
-        s.setFieldProperty("handlerId", "clrflags", 1, null);
-        s.setFieldProperty("handlerId", "textfont", bfChinese, null);
-        s.setFieldProperty("handlerId", "textsize", new Float(15), null);
+        s.setFieldProperty("idhandlerId", "clrflags", 1, null);
+        s.setFieldProperty("idhandlerId", "textfont", bfChinese, null);
+        s.setFieldProperty("idhandlerId", "textsize", new Float(15), null);
 
         //经办人联系方式  注入
-        s.setFieldProperty("handlerPhone", "clrflags", 1, null);
-        s.setFieldProperty("handlerPhone", "textfont", bfChinese, null);
-        s.setFieldProperty("handlerPhone", "textsize", new Float(15), null);
+        s.setFieldProperty("idhandlerPhone", "clrflags", 1, null);
+        s.setFieldProperty("idhandlerPhone", "textfont", bfChinese, null);
+        s.setFieldProperty("idhandlerPhone", "textsize", new Float(15), null);
 
         //经营/业务/许可范围   注入
-        s.setFieldProperty("scope", "clrflags", 1, null);
-        s.setFieldProperty("scope", "textfont", bfChinese, null);
-        s.setFieldProperty("scope", "textsize", new Float(15), null);
+        s.setFieldProperty("idscope", "clrflags", 1, null);
+        s.setFieldProperty("idscope", "textfont", bfChinese, null);
+        s.setFieldProperty("idscope", "textsize", new Float(15), null);
 
         //建筑名称  注入
-        s.setFieldProperty("buildingName", "clrflags", 1, null);
-        s.setFieldProperty("buildingName", "textfont", bfChinese, null);
-        s.setFieldProperty("buildingName", "textsize", new Float(15), null);
+        s.setFieldProperty("idbuildingName", "clrflags", 1, null);
+        s.setFieldProperty("idbuildingName", "textfont", bfChinese, null);
+        s.setFieldProperty("idbuildingName", "textsize", new Float(15), null);
 
         //层数  注入
-        s.setFieldProperty("floorNumber", "clrflags", 1, null);
-        s.setFieldProperty("floorNumber", "textfont", bfChinese, null);
-        s.setFieldProperty("floorNumber", "textsize", new Float(15), null);
+        s.setFieldProperty("idfloorNumber", "clrflags", 1, null);
+        s.setFieldProperty("idfloorNumber", "textfont", bfChinese, null);
+        s.setFieldProperty("idfloorNumber", "textsize", new Float(15), null);
 
         //使用面积  注入
-        s.setFieldProperty("useArea", "clrflags", 1, null);
-        s.setFieldProperty("useArea", "textfont", bfChinese, null);
-        s.setFieldProperty("useArea", "textsize", new Float(15), null);
+        s.setFieldProperty("iduseArea", "clrflags", 1, null);
+        s.setFieldProperty("iduseArea", "textfont", bfChinese, null);
+        s.setFieldProperty("iduseArea", "textsize", new Float(15), null);
 
         //使用情况  注入
-        s.setFieldProperty("usage1", "clrflags", 1, null);
-        s.setFieldProperty("usage1", "textfont", bfChinese, null);
-        s.setFieldProperty("usage1", "textsize", new Float(15), null);
+        s.setFieldProperty("idusage1", "clrflags", 1, null);
+        s.setFieldProperty("idusage1", "textfont", bfChinese, null);
+        s.setFieldProperty("idusage1", "textsize", new Float(15), null);
 
         //现有消防设施  注入
-        s.setFieldProperty("dealfireFacilities", "clrflags", 1, null);
-        s.setFieldProperty("dealfireFacilities", "textfont", bfChinese, null);
-        s.setFieldProperty("dealfireFacilities", "textsize", new Float(15), null);
+        s.setFieldProperty("iddealfireFacilities", "clrflags", 1, null);
+        s.setFieldProperty("iddealfireFacilities", "textfont", bfChinese, null);
+        s.setFieldProperty("iddealfireFacilities", "textsize", new Float(15), null);
 
         //邮政编码  注入
-        s.setFieldProperty("postcode", "clrflags", 1, null);
-        s.setFieldProperty("postcode", "textfont", bfChinese, null);
-        s.setFieldProperty("postcode", "textsize", new Float(15), null);
+        s.setFieldProperty("idpostcode", "clrflags", 1, null);
+        s.setFieldProperty("idpostcode", "textfont", bfChinese, null);
+        s.setFieldProperty("idpostcode", "textsize", new Float(15), null);
 
         //所属区域  注入
-        s.setFieldProperty("area", "clrflags", 1, null);
-        s.setFieldProperty("area", "textfont", bfChinese, null);
-        s.setFieldProperty("area", "textsize", new Float(15), null);
+        s.setFieldProperty("idarea", "clrflags", 1, null);
+        s.setFieldProperty("idarea", "textfont", bfChinese, null);
+        s.setFieldProperty("id0area", "textsize", new Float(15), null);
 
         //向相关的文本域注入根据名字
 //                s.setField("Name", fillSpace(BusinessLicense.getStuName() ,15 , isNull(s,"Name")));
@@ -397,57 +402,61 @@ public class PDFUtil {
 //
 //                s.setField("EngSex", fillSpace(BusinessLicense.getStuName() ,15 , isNull(s,"EngSex")));
 
-        s.setField("certificateTypeId", fillSpace(businessLicense.getCertificateTypeId() ,15 , isNull(s,"certificateTypeId")));
+        s.setField("idcertificateTypeId", fillSpace(businessLicense.getCertificateTypeId() ,15 , isNull(s,"idcertificateTypeId")));
 
-        s.setField("certificateCode", fillSpace(businessLicense.getCertificateCode() ,15 , isNull(s,"certificateCode")));
+        s.setField("idcertificateCode", fillSpace(businessLicense.getCertificateCode() ,15 , isNull(s,"idcertificateCode")));
 
-        s.setField("certificateName", fillSpace(businessLicense.getCertificateName() ,15 , isNull(s,"certificateName")));
+        s.setField("idcertificateName", fillSpace(businessLicense.getCertificateName() ,15 , isNull(s,"idcertificateName")));
 
-        s.setField("office", fillSpace(String.valueOf(businessLicense.getOffice()),15 , isNull(s,"office")));
+        s.setField("idoffice", fillSpace(String.valueOf(businessLicense.getOffice()),15 , isNull(s,"idoffice")));
+        System.out.println("++++++++"+businessLicense.getScope().getName()+"====="+String.valueOf(businessLicense.getScope().getName()));
 
-        s.setField("establishDate", fillSpace(String.valueOf(businessLicense.getEstablishDate()) ,15 , isNull(s,"establishDate")));
+        String EstablishDate1 = df.format(businessLicense.getEstablishDate());
+        s.setField("idestablishDate", fillSpace(EstablishDate1 ,15 , isNull(s,"idestablishDate")));
 
-        s.setField("effectiveDateStar", fillSpace(String.valueOf(businessLicense.getEffectiveDateStar()) ,15 , isNull(s,"effectiveDateStar")));
+        String effectiveDateStar1 = df.format(businessLicense.getEffectiveDateStar());
+        s.setField("ideffectiveDateStar", fillSpace(effectiveDateStar1,15 , isNull(s,"ideffectiveDateStar")));
 
-        s.setField("effectiveDateEnd", fillSpace(String.valueOf(businessLicense.getEstablishDate() ),15 , isNull(s,"effectiveDateEnd")));
+        String effectiveDateEnd1 = df.format(businessLicense.getEffectiveDateEnd());
+        s.setField("ideffectiveDateEnd", fillSpace(effectiveDateEnd1,15 , isNull(s,"ideffectiveDateEnd")));
 
-        s.setField("registeredType", fillSpace(businessLicense.getRegisteredType() ,15 , isNull(s,"registeredType")));
+        s.setField("idregisteredType", fillSpace(businessLicense.getRegisteredType() ,15 , isNull(s,"idregisteredType")));
 
-        s.setField("registeredCapital", fillSpace(businessLicense.getRegisteredCapital() ,15 , isNull(s,"registeredCapital")));
+        s.setField("idregisteredCapital", fillSpace(businessLicense.getRegisteredCapital() ,15 , isNull(s,"idregisteredCapital")));
 
-        s.setField("address", fillSpace(businessLicense.getAddress() ,15 , isNull(s,"address")));
+        s.setField("idaddress", fillSpace(businessLicense.getAddress() ,15 , isNull(s,"idaddress")));
 
-        s.setField("persionName", fillSpace(businessLicense.getPersionIdType() ,15 , isNull(s,"persionName")));
+        s.setField("idpersionName", fillSpace(businessLicense.getPersionIdType() ,15 , isNull(s,"idpersionName")));
 
-        s.setField("persionIdType", fillSpace(businessLicense.getPersionIdType() ,15 , isNull(s,"persionIdType")));
+        s.setField("idpersionIdType", fillSpace(businessLicense.getPersionIdType() ,15 , isNull(s,"idpersionIdType")));
 
-        s.setField("personId", fillSpace(businessLicense.getPersonId() ,15 , isNull(s,"personId")));
+        s.setField("idpersonId", fillSpace(businessLicense.getPersonId() ,15 , isNull(s,"idpersonId")));
 
-        s.setField("persionPhone", fillSpace(businessLicense.getPersionPhone() ,15 , isNull(s,"persionPhone")));
+        s.setField("idpersionPhone", fillSpace(businessLicense.getPersionPhone() ,15 , isNull(s,"idpersionPhone")));
 
-        s.setField("handlerName", fillSpace(businessLicense.getHandlerName() ,15 , isNull(s,"handlerName")));
+        s.setField("idhandlerName", fillSpace(businessLicense.getHandlerName() ,15 , isNull(s,"idhandlerName")));
 
-        s.setField("handlerIdType", fillSpace(businessLicense.getHandlerId() ,15 , isNull(s,"handlerIdType")));
+        s.setField("idhandlerIdType", fillSpace(businessLicense.getHandlerId() ,15 , isNull(s,"idhandlerIdType")));
 
-        s.setField("handlerId", fillSpace(businessLicense.getHandlerId() ,15 , isNull(s,"handlerId")));
+        s.setField("idhandlerId", fillSpace(businessLicense.getHandlerId() ,15 , isNull(s,"idhandlerId")));
 
-        s.setField("handlerPhone", fillSpace(businessLicense.getHandlerPhone() ,15 , isNull(s,"handlerPhone")));
+        s.setField("idhandlerPhone", fillSpace(businessLicense.getHandlerPhone() ,15 , isNull(s,"idhandlerPhone")));
 
-        s.setField("scope", fillSpace(String.valueOf(businessLicense.getScope()) ,15 , isNull(s,"scope")));
+        s.setField("idscope", fillSpace(String.valueOf(businessLicense.getScope().getName()),15 , isNull(s,"idscope")));
 
-        s.setField("buildingName", fillSpace(businessLicense.getBuildingName() ,15 , isNull(s,"buildingName")));
+        s.setField("idbuildingName", fillSpace(businessLicense.getBuildingName() ,15 , isNull(s,"idbuildingName")));
 
-        s.setField("floorNumber", fillSpace(businessLicense.getFloorNumber() ,15 , isNull(s,"floorNumber")));
+        s.setField("idfloorNumber", fillSpace(businessLicense.getFloorNumber() ,15 , isNull(s,"idfloorNumber")));
 
-        s.setField("useArea", fillSpace(businessLicense.getUseArea() ,15 , isNull(s,"useArea")));
+        s.setField("iduseArea", fillSpace(businessLicense.getUseArea() ,15 , isNull(s,"iduseArea")));
 
-        s.setField("usage1", fillSpace(businessLicense.getUsage1() ,15 , isNull(s,"usage1")));
+        s.setField("idusage1", fillSpace(businessLicense.getUsage1() ,15 , isNull(s,"idusage1")));
 
-        s.setField("dealfireFacilities", fillSpace(businessLicense.getDealfireFacilities() ,15 , isNull(s,"dealfireFacilities")));
+        s.setField("iddealfireFacilities", fillSpace(businessLicense.getDealfireFacilities() ,15 , isNull(s,"iddealfireFacilities")));
 
-        s.setField("postcode", fillSpace(businessLicense.getPostcode(),15 , isNull(s,"postcode")));
+        s.setField("idpostcode", fillSpace(businessLicense.getPostcode(),15 , isNull(s,"idpostcode")));
 
-        s.setField("area", fillSpace(String.valueOf(businessLicense.getArea()),15 , isNull(s,"area")));
+        s.setField("idarea", fillSpace(String.valueOf(businessLicense.getArea()),15 , isNull(s,"idarea")));
 
         ps.setFormFlattening(true); // 这句不能少
         ps.close();
