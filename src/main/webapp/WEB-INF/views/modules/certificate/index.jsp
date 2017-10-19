@@ -493,7 +493,7 @@
             <ul id="othersElements">
                 <%
                     //String realpath = "E:\\photo\\upload\\1\\modelPhoto\\";
-                    String realpath = "/Users/Macx/github/RC_Work/manager/upload/1/modelPhoto/";
+                    String realpath = "/Users/Macx/github/RC_Work/GECS/manager/upload/1/modelPhoto/";
                     System.out.println(realpath);
                     File d = new File(realpath);
                     if (d.exists()) {
@@ -541,6 +541,17 @@
                 finder.basePath = '../';	// The path for the installation of CKFinder (default = "/ckfinder/").
                 finder.startupPath = startupPath;
                 finder.resourceType = "modelPhoto";
+                finder.selectActionFunction = SetFileField;
+                finder.selectActionData = selectAD;
+                finder.popup();
+            }
+
+            function BrowseServer_txt(startupPath, selectAD) {
+                // You can use the "CKFinder" class to render CKFinder in a page:
+                var finder = new CKFinder();
+                finder.basePath = '../';	// The path for the installation of CKFinder (default = "/ckfinder/").
+                finder.startupPath = startupPath;
+                finder.resourceType = "modelTxt";
                 finder.selectActionFunction = SetFileField;
                 finder.selectActionData = selectAD;
                 finder.popup();
@@ -629,6 +640,20 @@
             </div>
         </div>
 
+        <%--<div id="editPdf_txt" class="_util">--%>
+            <%--<div>--%>
+                <%--<p>--%>
+                <%--<form action="${ctx}/certificate/certificateTemplate/makeModel" method="post" id="txtAction">--%>
+                    <%--<input id="txtPath" name="FilePath" type="text" size="60"/>--%>
+                    <%--<input type="button" value="Browse Server" onclick="BrowseServer_txt('modelTxt:/','txtPath');"/>--%>
+                    <%--<input type="button" value="confirm" onclick="editPdf_txt();"/>--%>
+                    <%--<input type="submit" value="submit"/>--%>
+                <%--</form>--%>
+                <%--</p>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+
+        <%--PDF生成格式设置--%>
         <div id="setPdf_makeup" class="_util">
             PDF布局形式:
             <select id="LorP">
@@ -1092,7 +1117,7 @@
 
         pdfsize.onchange = function () {
             alert("自动修改画布为你当前所选的格式,并且清楚画布内容,请重新排版！");
-            printf.innerHTML = "" ;
+            printf.innerHTML = "";
             var size = pdfsize.value;
             var format = size.toLowerCase();
             if (pageFormats.hasOwnProperty(format)) {
@@ -1104,9 +1129,9 @@
 
         lorp.onchange = function () {
             alert("自动修改画布为你当前所选的格式,并且清楚画布内容,请重新排版！");
-            printf.innerHTML = "" ;
-            var or = lorp.value ;
-            var orientation = or ;
+            printf.innerHTML = "";
+            var or = lorp.value;
+            var orientation = or;
             if (orientation) {
                 switch (orientation.substr(0, 1)) {
                     case 'l':
@@ -1304,6 +1329,15 @@
             });
             openUl.appendChild(openDiv);
         }
+    }
+
+    function editPdf_txt() {
+        <%
+                //String realpath = "E:\\photo\\upload\\1\\modelPhoto\\";
+                System.out.println("test");
+                String txtPath = "picFile/" + request.getParameter("txtPath") ;
+                System.out.println(txtPath);
+        %>
     }
 
 </script>

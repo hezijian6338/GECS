@@ -67,6 +67,13 @@ public class CertificateTemplateController extends BaseController {
 		return "modules/certificate/index";
 	}
 
+	@RequiresPermissions("certificate:certificateTemplate:view")
+	@RequestMapping(value = "managerModel")
+	public String managerModel(CertificateTemplate certificateTemplate, Model model) {
+		model.addAttribute("certificateTemplate", certificateTemplate);
+		return "modules/certificate/managerModel";
+	}
+
 	@RequiresPermissions("certificate:certificateTemplate:edit")
 	@RequestMapping(value = "save")
 	public String save(CertificateTemplate certificateTemplate, Model model, RedirectAttributes redirectAttributes) {
