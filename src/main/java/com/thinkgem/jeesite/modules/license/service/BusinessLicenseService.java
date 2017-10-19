@@ -96,23 +96,21 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 		String taskDefKey = businessLicense.getAct().getTaskDefKey();
 
 		// 审核环节
-		if ("audit".equals(taskDefKey)){
-
-		}
-		else if ("audit1".equals(taskDefKey)){
+		if ("audit1".equals(taskDefKey)){
 			businessLicense.setOpinion1(businessLicense.getAct().getComment());
 			dao.updateOpinion1(businessLicense);
 		}
 		else if ("audit2".equals(taskDefKey)){
-			businessLicense.setOpinion1(businessLicense.getAct().getComment());
+			businessLicense.setOpinion2(businessLicense.getAct().getComment());
 			dao.updateOpinion2(businessLicense);
 		}
 		else if ("audit3".equals(taskDefKey)){
-			businessLicense.setOpinion1(businessLicense.getAct().getComment());
+			businessLicense.setOpinion3(businessLicense.getAct().getComment());
 			dao.updateOpinion3(businessLicense);
 		}
 		else if ("apply_end".equals(taskDefKey)){
-
+			businessLicense.setOpinion4(businessLicense.getAct().getComment());
+			dao.updateOpinion4(businessLicense);
 		}
 
 		// 未知环节，直接返回
