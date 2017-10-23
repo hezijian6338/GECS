@@ -44,13 +44,15 @@
 		a.del_flag AS "delFlag",
 		o6.name AS "office.name",
 		a28.name AS "area.name",
-		a27.name AS "scope.name"
+		a27.name AS "scope.name",
+		u.name AS "createBy.name"
 	</sql>
 	
 	<sql id="businessLicenseJoins">
 		LEFT JOIN sys_office o6 ON o6.id = a.office_id
 		LEFT JOIN sys_area a28 ON a28.id = a.area_id
 		LEFT JOIN business_scope a27 ON a27.id = a.scope
+		LEFT JOIN sys_user u ON u.id = a.create_by
 	</sql>
     
 	<select id="get" resultType="BusinessLicense">

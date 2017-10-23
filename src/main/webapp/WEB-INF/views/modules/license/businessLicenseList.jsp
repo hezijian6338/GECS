@@ -112,7 +112,7 @@
 				<th>经办人姓名</th>
 				<th>经营/业务/许可范围</th>
 				<th>所属区域</th>
-				<th>更新者</th>
+				<th>创建者</th>
 				<th>更新时间</th>
 				<shiro:hasPermission name="license:businessLicense:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
@@ -154,7 +154,7 @@
 					${businessLicense.area.name}
 				</td>
 				<td>
-					${businessLicense.updateBy.id}
+					${businessLicense.createBy.name}
 				</td>
 				<td>
 					<fmt:formatDate value="${businessLicense.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>

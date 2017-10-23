@@ -19,6 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.codehaus.groovy.runtime.powerassert.SourceText;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -77,10 +78,8 @@ public class BusinessLicenseController extends BaseController {
 		if (!user.isAdmin()){
 			businessLicense.setCreateBy(user);
 		}
-
         Page<BusinessLicense> page = businessLicenseService.findPage(new Page<BusinessLicense>(request, response), businessLicense);
-        System.out.println("用户：======"+page.getList().get(0).getCreateBy().getName()+"dsghsjhjk计划开工=="+page.getList().get(0).getCreateBy().getId());
-		model.addAttribute("page", page);
+        model.addAttribute("page", page);
 		return "modules/license/businessLicenseList";
 	}
 
