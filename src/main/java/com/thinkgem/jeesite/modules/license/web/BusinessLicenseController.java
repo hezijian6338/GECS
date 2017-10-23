@@ -76,9 +76,10 @@ public class BusinessLicenseController extends BaseController {
 		User user = UserUtils.getUser();
 		if (!user.isAdmin()){
 			businessLicense.setCreateBy(user);
-
 		}
-		Page<BusinessLicense> page = businessLicenseService.findPage(new Page<BusinessLicense>(request, response), businessLicense); 
+
+        Page<BusinessLicense> page = businessLicenseService.findPage(new Page<BusinessLicense>(request, response), businessLicense);
+        System.out.println("用户：======"+page.getList().get(0).getCreateBy().getName()+"dsghsjhjk计划开工=="+page.getList().get(0).getCreateBy().getId());
 		model.addAttribute("page", page);
 		return "modules/license/businessLicenseList";
 	}
@@ -89,7 +90,7 @@ public class BusinessLicenseController extends BaseController {
 
 		String path = "E:\\certificate\\BusinessModel\\BusinessModel.pdf";
 		String savaPath = "E:\\certificate\\Business\\"+businessLicense.getPersionName()+businessLicense.getPersonId()+".pdf";
-		String realativePath = "//pic//certificate//Business//"+businessLicense.getPersionName()+businessLicense.getPersonId()+".pdf";
+		String realativePath = "/pic/certificate/Business/"+businessLicense.getPersionName()+businessLicense.getPersonId()+".pdf";
 		String view = "businessLicenseForm";
 		CertificateLibrary certificateLibrary = new CertificateLibrary();
 
@@ -217,9 +218,9 @@ public class BusinessLicenseController extends BaseController {
 	public String testJump(String typeName,Model model) {
 		BusinessLicense businessLicense = new BusinessLicense();
 		CertificateType certificateType = certificateTypeService.getTypeByName(typeName);
-		System.out.println("ss未建立工会及时的抗旱=============="+certificateType);
 
 		businessLicense.setCertificateCode((int)((Math.random()*9+1)*10000000)+businessLicenseService.getCharAndNumr(9)+(int)((Math.random()*9+1)*1));
+
 		businessLicense.setCertificateTypeName(certificateType.getCertificateTypeName());
 		businessLicense.setCertificateTypeId(certificateType.getId());
 		businessLicense.setOffice(certificateType.getOffice());

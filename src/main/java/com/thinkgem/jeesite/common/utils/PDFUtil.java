@@ -115,7 +115,6 @@ public class PDFUtil {
         String chinese = "[\u4e00-\u9fa5]";
         String number = "^[0-9]*$";
         // 获取字段值的长度，如果含中文字符，则每个中文字符长度为2，否则为1
-        if (s.length()!=0)
             for (int i = 0; i < s.length(); i++) {
                 // 获取一个字符
                 String temp = s.substring(i, i + 1);
@@ -402,7 +401,7 @@ public class PDFUtil {
 //
 //                s.setField("EngSex", fillSpace(BusinessLicense.getStuName() ,15 , isNull(s,"EngSex")));
 
-        s.setField("idcertificateTypeId", fillSpace(businessLicense.getCertificateTypeId() ,15 , isNull(s,"idcertificateTypeId")));
+        s.setField("idcertificateTypeId", fillSpace(businessLicense.getCertificateTypeName() ,15 , isNull(s,"idcertificateTypeId")));
 
         s.setField("idcertificateCode", fillSpace(businessLicense.getCertificateCode() ,15 , isNull(s,"idcertificateCode")));
 

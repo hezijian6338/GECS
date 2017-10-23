@@ -214,6 +214,7 @@
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="businessLicense" action="${ctx}/license/businessLicense/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
+
 		<form:hidden path="act.taskId"/>
 		<form:hidden path="act.taskName"/>
 		<form:hidden path="act.taskDefKey"/>
@@ -224,6 +225,7 @@
 		<fieldset>
 			<h1 align="center">营业执照审批申请</h1>
 			<table class="table-form">
+				<form:hidden path="certificateTypeId"/>
 				<tr>
 					<td class="tit">证照类型</td>
 					<td>

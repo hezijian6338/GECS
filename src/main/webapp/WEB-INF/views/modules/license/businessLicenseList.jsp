@@ -81,7 +81,7 @@
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
 			<li><label>证照类型：</label>
-				<form:input path="certificateTypeId" htmlEscape="false" maxlength="64" class="input-medium"/>
+				<form:input path="certificateTypeName" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<li><label>证照名称：</label>
 				<form:input path="certificateName" htmlEscape="false" maxlength="100" class="input-medium"/>
@@ -90,10 +90,10 @@
 				<sys:treeselect id="office" name="office.id" value="${businessLicense.office.id}" labelName="office.name" labelValue="${businessLicense.office.name}"
 					title="部门" url="/sys/office/treeData?type=2" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/>
 			</li>
-			<li><label>注册公司类型：</label>
+			<li><label class="">注册公司类型：</label>
 				<form:input path="registeredType" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
-			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
+			<li class="btns"><input id="btnSubmit" class="btn btn-primary input-medium" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
 		</ul>
 	</form:form>
@@ -104,33 +104,16 @@
 				<th>证照类型 </th>
 				<th>统一社会信用代码</th>
 				<th>公司名称</th>
-				<th>颁发机构id</th>
-				<th>成立日期</th>
-				<th>证照有效期（起始</th>
+				<th>颁发机构</th>
+				<th>证照有效期（起始)</th>
 				<th>证照有效期（截至）</th>
 				<th>注册公司类型</th>
-				<th>注册资本</th>
-				<th>地址</th>
 				<th>法人姓名</th>
-				<th>法人证件类型</th>
-				<th>法人证件号码</th>
-				<th>法人联系方式</th>
 				<th>经办人姓名</th>
-				<th>经办人证件类型</th>
-				<th>经办人证件号码</th>
-				<th>经办人联系方式</th>
 				<th>经营/业务/许可范围</th>
-				<th>建筑名称</th>
-				<th>层数</th>
-				<th>使用面积</th>
-				<th>使用情况</th>
-				<th>现有消防设施</th>
-				<th>邮政编码</th>
 				<th>所属区域</th>
-				<th>创建者</th>
 				<th>更新者</th>
 				<th>更新时间</th>
-				<th>备注信息</th>
 				<shiro:hasPermission name="license:businessLicense:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
@@ -138,7 +121,7 @@
 		<c:forEach items="${page.list}" var="businessLicense">
 			<tr>
 				<td><a href="${ctx}/license/businessLicense/form?id=${businessLicense.id}">
-					${businessLicense.certificateTypeId}
+					${businessLicense.certificateTypeName}
 				</a></td>
 				<td>
 					${businessLicense.certificateCode}
@@ -150,82 +133,31 @@
 					${businessLicense.office.name}
 				</td>
 				<td>
-					<fmt:formatDate value="${businessLicense.establishDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:formatDate value="${businessLicense.effectiveDateStar}" pattern="yyyy-MM-dd "/>
 				</td>
 				<td>
-					<fmt:formatDate value="${businessLicense.effectiveDateStar}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				</td>
-				<td>
-					<fmt:formatDate value="${businessLicense.effectiveDateEnd}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:formatDate value="${businessLicense.effectiveDateEnd}" pattern="yyyy-MM-dd "/>
 				</td>
 				<td>
 					${businessLicense.registeredType}
 				</td>
 				<td>
-					${businessLicense.registeredCapital}
-				</td>
-				<td>
-					${businessLicense.address}
-				</td>
-				<td>
 					${businessLicense.persionName}
-				</td>
-				<td>
-					${businessLicense.persionIdType}
-				</td>
-				<td>
-					${businessLicense.personId}
-				</td>
-				<td>
-					${businessLicense.persionPhone}
 				</td>
 				<td>
 					${businessLicense.handlerName}
 				</td>
 				<td>
-					${businessLicense.handlerIdType}
-				</td>
-				<td>
-					${businessLicense.handlerId}
-				</td>
-				<td>
-					${businessLicense.handlerPhone}
-				</td>
-				<td>
 					${businessLicense.scope.name}
 				</td>
 				<td>
-					${businessLicense.buildingName}
-				</td>
-				<td>
-					${businessLicense.floorNumber}
-				</td>
-				<td>
-					${businessLicense.useArea}
-				</td>
-				<td>
-					${businessLicense.usage1}
-				</td>
-				<td>
-					${businessLicense.dealfireFacilities}
-				</td>
-				<td>
-					${businessLicense.postcode}
-				</td>
-				<td>
 					${businessLicense.area.name}
-				</td>
-				<td>
-					${businessLicense.createBy.id}
 				</td>
 				<td>
 					${businessLicense.updateBy.id}
 				</td>
 				<td>
 					<fmt:formatDate value="${businessLicense.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				</td>
-				<td>
-					${businessLicense.remarks}
 				</td>
 				<shiro:hasPermission name="license:businessLicense:edit"><td>
     				<a href="${ctx}/license/businessLicense/form?id=${businessLicense.id}">详情</a>
