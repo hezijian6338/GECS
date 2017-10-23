@@ -6,6 +6,7 @@
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 
+
     $(document).ready(function() {
 			
 		});
@@ -24,8 +25,50 @@
                     console.log(result);
     		}});
 		};
+		function graInfo(s) {
+			var rand = Math.random();
+			$.ajax({
+				type:"GET",
+				url:"${ctx}/license/businessLicense/getPath/"+s,
+				success:function (result) {
+				    console.log(result);
+				    var path = result.extend.certificateLibrary.path;
+				    console.log(path+"?"+rand);
 
+                    if(path!=""&&path!=null){
+					    $('#btn_browse').modal({});
+//					    url1=path+"?"+rand;
+					    $('#displayPdfIframe').attr("src",'${ctxStatic}/pdfjs/web/viewer.html?file='+encodeURIComponent(path));
+                    }else {
+                        alert("执照还未生成！");
+					}
+                }
+			});
+		}
 	</script>
+	<style type="text/css">
+		.bg-primary {
+			color: #fff;
+			background-color: #337ab7;
+		}
+		a.bg-primary:hover,
+		a.bg-primary:focus {
+			background-color: #286090;
+		}
+
+		.bg-info {
+			background-color: #d9edf7;
+		}
+		.modal {
+			width:900px;
+			margin-left:-450px;
+		}
+		@media (min-width: 992px) {
+			.modal-lg {
+				width: 900px;
+			}
+		}
+	</style>
 </head>
 <body>
 	<ul class="nav nav-tabs">
@@ -186,6 +229,7 @@
 				</td>
 				<shiro:hasPermission name="license:businessLicense:edit"><td>
     				<a href="${ctx}/license/businessLicense/form?id=${businessLicense.id}">详情</a>
+					<a data-toggle="modal" onclick="graInfo('${businessLicense.certificateCode}')">预览</a>
 					<a href="${ctx}/license/businessLicense/delete?id=${businessLicense.id}" onclick="return confirmx('确认要删除该营业执照吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>
@@ -193,5 +237,19 @@
 		</tbody>
 	</table>
 	<div class="pagination">${page}</div>
+
+	<!--预览模态框-->
+	<div id="btn_browse" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+		 style="width: 100%;height: 100%;left: 450px; top:0px;">
+		<div class="modal-header" style="background-color: rgb(0,0,0); filter: alpha(opacity=10);">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:white;">×</button>
+			<h3 id="myModalLabel">预览</h3>
+		</div>
+		<div class="modal-body" style="width: 100%;max-height: 800px; padding: 0px;">
+
+			<iframe id="displayPdfIframe" width="100%" height="780px"></iframe>
+
+		</div>
+	</div>
 </body>
 </html>

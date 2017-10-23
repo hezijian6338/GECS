@@ -30,7 +30,7 @@
 		<include refid="certificateTypeJoins"/>
 		WHERE a.id = #{id}
 	</select>
-	
+
 	<select id="findList" resultType="CertificateType">
 		SELECT 
 			<include refid="certificateTypeColumns"/>
