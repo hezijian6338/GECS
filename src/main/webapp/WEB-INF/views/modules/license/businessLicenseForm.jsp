@@ -227,7 +227,7 @@
 				<tr>
 					<td class="tit">证照类型</td>
 					<td>
-						<form:input path="certificateTypeId" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
+						<form:input path="certificateTypeName" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
 						<span class="help-inline"><font color="red">*</font> </span>
 					</td>
 					<td class="tit">证照编号</td>

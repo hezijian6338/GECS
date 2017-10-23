@@ -50,9 +50,6 @@ public class BusinessLicenseController extends BaseController {
 	@Autowired
 	private CertificateTypeService certificateTypeService;
 
-
-
-
 	@Autowired
 	private SystemService systemService;
 
@@ -209,12 +206,22 @@ public class BusinessLicenseController extends BaseController {
 		return "modules/license/testJump";
 	}
 
+	/**
+	 * @author 练浩文
+	 * @TODO (注：)
+
+	 * @DATE: 2017/10/23 11:03
+	 */
 	@RequiresPermissions("license:businessLicense:edit")
 	@RequestMapping(value = "jumpForm")
-	public String testJump(BusinessLicense businessLicense, RedirectAttributes redirectAttributes ,String ss) {
-		businessLicenseService.delete(businessLicense);
-		addMessage(redirectAttributes, "删除营业执照成功");
-		System.out.println("ss未建立工会及时的抗旱=============="+ss);
+	public String testJump(String typeName,Model model) {
+		BusinessLicense businessLicense = new BusinessLicense();
+		CertificateType certificateType = certificateTypeService.getTypeByName(typeName);
+		System.out.println("ss未建立工会及时的抗旱=============="+certificateType);
+		businessLicense.setCertificateTypeName(certificateType.getCertificateTypeName());
+		businessLicense.setCertificateTypeId(certificateType.getId());
+		businessLicense.setOffice(certificateType.getOffice());
+		model.addAttribute("businessLicense", businessLicense);
 		return "modules/license/businessLicenseForm";
 	}
 

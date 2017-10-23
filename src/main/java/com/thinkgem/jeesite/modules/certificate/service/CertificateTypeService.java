@@ -47,6 +47,15 @@ public class CertificateTypeService extends CrudService<CertificateTypeDao, Cert
 	public void delete(CertificateType certificateType) {
 		super.delete(certificateType);
 	}
+/**
+ * @author 练浩文
+ * @TODO (注：)
+ * @param typeName
+ * @DATE: 2017/10/23 11:12
+ *
+ * */
+	public CertificateType getTypeByName(String typeName) {
 
-
+ 		return certificateTypeDao.getTypeByName(typeName);
+	}
 }

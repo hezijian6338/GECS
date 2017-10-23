@@ -37,8 +37,8 @@
 
                     if(path!=""&&path!=null){
 					    $('#btn_browse').modal({});
-//					    url1=path+"?"+rand;
-					    $('#displayPdfIframe').attr("src",'${ctxStatic}/pdfjs/web/viewer.html?file='+encodeURIComponent(path));
+					    url1=path+"?"+rand;
+					    $('#displayPdfIframe').attr("src",'${ctxStatic}/pdfjs/web/viewer.html?file='+encodeURIComponent(url1));
                     }else {
                         alert("执照还未生成！");
 					}

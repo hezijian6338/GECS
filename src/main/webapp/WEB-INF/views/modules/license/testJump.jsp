@@ -6,6 +6,6 @@
     <meta name="decorator" content="default"/>
 </head>
 <body>
-<a href="${ctx}/license/businessLicense/jumpForm?ss=营业执照">营业执照</a>
+<a href="${ctx}/license/businessLicense/jumpForm?typeName=营业执照">营业执照</a>
 </body>
 </html>
