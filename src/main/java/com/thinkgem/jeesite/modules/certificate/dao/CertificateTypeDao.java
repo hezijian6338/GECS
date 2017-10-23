@@ -14,5 +14,5 @@ import com.thinkgem.jeesite.modules.certificate.entity.CertificateType;
  */
 @MyBatisDao
 public interface CertificateTypeDao extends CrudDao<CertificateType> {
-	
+
 }

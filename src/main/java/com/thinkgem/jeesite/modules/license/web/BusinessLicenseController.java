@@ -10,7 +10,9 @@ import com.itextpdf.text.DocumentException;
 import com.thinkgem.jeesite.common.utils.PDFUtil;
 import com.thinkgem.jeesite.common.utils.SendMailUtil;
 import com.thinkgem.jeesite.modules.certificate.entity.CertificateLibrary;
+import com.thinkgem.jeesite.modules.certificate.entity.CertificateType;
 import com.thinkgem.jeesite.modules.certificate.service.CertificateLibraryService;
+import com.thinkgem.jeesite.modules.certificate.service.CertificateTypeService;
 import com.thinkgem.jeesite.modules.sys.service.SystemService;
 import org.apache.commons.lang3.StringUtils;
 import com.thinkgem.jeesite.modules.sys.entity.User;
@@ -45,6 +47,12 @@ public class BusinessLicenseController extends BaseController {
 
 	@Autowired
 	private BusinessLicenseService businessLicenseService;
+
+	@Autowired
+	private CertificateTypeService certificateTypeService;
+
+
+
 
 	@Autowired
 	private SystemService systemService;
@@ -184,5 +192,7 @@ public class BusinessLicenseController extends BaseController {
 		addMessage(redirectAttributes, "删除营业执照成功");
 		return "redirect:"+Global.getAdminPath()+"/license/businessLicense/?repage";
 	}
+
+
 
 }
