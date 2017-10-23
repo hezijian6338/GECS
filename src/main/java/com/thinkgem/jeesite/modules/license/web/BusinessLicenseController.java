@@ -89,7 +89,7 @@ public class BusinessLicenseController extends BaseController {
 
 		String path = "E:\\certificate\\BusinessModel\\BusinessModel.pdf";
 		String savaPath = "E:\\certificate\\Business\\"+businessLicense.getPersionName()+businessLicense.getPersonId()+".pdf";
-		String realativePath = "//pic//certificate//Business//"+businessLicense.getPersionName()+businessLicense.getPersonId()+".pdf";
+		String realativePath = "/pic/certificate/Business/"+businessLicense.getPersionName()+businessLicense.getPersonId()+".pdf";
 		String view = "businessLicenseForm";
 		CertificateLibrary certificateLibrary = new CertificateLibrary();
 
@@ -217,7 +217,7 @@ public class BusinessLicenseController extends BaseController {
 	public String testJump(String typeName,Model model) {
 		BusinessLicense businessLicense = new BusinessLicense();
 		CertificateType certificateType = certificateTypeService.getTypeByName(typeName);
-		System.out.println("ss未建立工会及时的抗旱=============="+certificateType);
+		System.out.println("ss未建立工会及时的抗旱=============="+certificateType.getId());
 		businessLicense.setCertificateTypeName(certificateType.getCertificateTypeName());
 		businessLicense.setCertificateTypeId(certificateType.getId());
 		businessLicense.setOffice(certificateType.getOffice());

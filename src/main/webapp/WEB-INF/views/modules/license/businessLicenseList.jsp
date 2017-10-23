@@ -81,7 +81,7 @@
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
 			<li><label>证照类型：</label>
-				<form:input path="certificateTypeId" htmlEscape="false" maxlength="64" class="input-medium"/>
+				<form:input path="certificateTypeName" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<li><label>证照名称：</label>
 				<form:input path="certificateName" htmlEscape="false" maxlength="100" class="input-medium"/>
@@ -138,7 +138,7 @@
 		<c:forEach items="${page.list}" var="businessLicense">
 			<tr>
 				<td><a href="${ctx}/license/businessLicense/form?id=${businessLicense.id}">
-					${businessLicense.certificateTypeId}
+					${businessLicense.certificateTypeName}
 				</a></td>
 				<td>
 					${businessLicense.certificateCode}
