@@ -25,7 +25,7 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>证照名称：</label>
+			<li><label>公司名称：</label>
 				<form:input path="certificateName" htmlEscape="false" maxlength="100" class="input-medium"/>
 			</li>
 			<li><label>颁发机构id：</label>
@@ -35,6 +35,9 @@
 			<li><label>状态：</label>
 				<form:input path="status" htmlEscape="false" maxlength="2" class="input-medium"/>
 			</li>
+			<li><label>下载次数：</label>
+				<form:input path="downloadsNum" htmlEscape="false" maxlength="2" class="input-medium"/>
+			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
 		</ul>
@@ -43,7 +46,7 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>证照名称</th>
+				<th>公司名称</th>
 				<th>证照描述</th>
 				<th>颁发机构id</th>
 				<th>持证者类型</th>
