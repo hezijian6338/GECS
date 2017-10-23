@@ -218,6 +218,8 @@ public class BusinessLicenseController extends BaseController {
 		BusinessLicense businessLicense = new BusinessLicense();
 		CertificateType certificateType = certificateTypeService.getTypeByName(typeName);
 		System.out.println("ss未建立工会及时的抗旱=============="+certificateType);
+
+		businessLicense.setCertificateCode((int)((Math.random()*9+1)*10000000)+businessLicenseService.getCharAndNumr(9)+(int)((Math.random()*9+1)*1));
 		businessLicense.setCertificateTypeName(certificateType.getCertificateTypeName());
 		businessLicense.setCertificateTypeId(certificateType.getId());
 		businessLicense.setOffice(certificateType.getOffice());

@@ -230,7 +230,7 @@
 						<form:input path="certificateTypeName" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
 						<span class="help-inline"><font color="red">*</font> </span>
 					</td>
-					<td class="tit">证照编号</td>
+					<td class="tit">统一社会信用代码</td>
 					<td>
 						<form:input path="certificateCode" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
 					</td>

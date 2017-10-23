@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import com.google.common.collect.Maps;
 import com.thinkgem.jeesite.common.utils.StringUtils;
@@ -128,5 +129,37 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 	public void delete(BusinessLicense businessLicense) {
 		super.delete(businessLicense);
 	}
-	
+
+
+
+/**
+ * @author 许彩开
+ * @TODO (注：随机产生字母+数字组合)
+  * @param length
+ * @DATE: 2017\10\23 0023 14:40
+ */
+
+	public String getCharAndNumr(int length)
+	{
+		String val = "";
+
+		Random random = new Random();
+		for(int i = 0; i < length; i++)
+		{
+			String charOrNum = random.nextInt(2) % 2 == 0 ? "char" : "num"; // 输出字母还是数字
+
+			if("char".equalsIgnoreCase(charOrNum)) // 字符串
+			{
+				int choice =65 /*random.nextInt(2) % 2 == 0 ? 65 : 97*/; //取得大写字母还是小写字母
+				val += (char) (choice + random.nextInt(26));
+			}
+			else if("num".equalsIgnoreCase(charOrNum)) // 数字
+			{
+				val += String.valueOf(random.nextInt(10));
+			}
+		}
+
+		return val;
+	}
+
 }

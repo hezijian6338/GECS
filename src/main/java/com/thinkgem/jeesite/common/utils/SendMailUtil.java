@@ -285,8 +285,9 @@ public class SendMailUtil {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("subject", "测试标题");
 		map.put("content", "测试 内容");
-		String templatePath = "mailtemplate/test.ftl";
-		sendFtlMail("test@163.com", "sendemail test!", templatePath, map);
+		String templatePath = "mailtemplate/120205021009.ftl";
+		//sendFtlMail("1121836563@qq.com", "sendemail test!", templatePath, map);
+		sendCommonMail("1121836563@qq.com","测试发邮件","您好！尊敬的用户，您的证照已申请成功！");
 
 		// System.out.println(getFileName("mailtemplate/test.ftl"));
 	}
