@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
+<!DOCTYPE html>
 <html>
 <head>
     <title>用户注册</title>
@@ -24,7 +25,7 @@
                 rules: {
                     loginName: {
                         isIdCardNo: true,
-                        remote: "/f/checkLoginName?oldLoginName=" + encodeURIComponent('${user.loginName}')
+                        remote: "${ctxFront}/checkLoginName?oldLoginName=" + encodeURIComponent('${user.loginName}')
                     },
                     email:{
                         required: true,
@@ -191,6 +192,23 @@
         .fixed a .box p {
             margin: 5px 0 0 0;
         }
+        .fixed .tel {
+            background-image: url(/static/images/tel.png);
+        }
+        .fixed .tel .box {
+            left: -120px;
+            top: 0;
+        }
+        .fixed .tel .box p:first-child {
+            margin-top: 0;
+        }
+        .fixed .wechat {
+            background-image: url(/static/images/wechat.png);
+        }
+        .fixed .wechat .box img {
+            width: 150px;
+        }
+        /* fixed */
     </style>
 </head>
 <body>
@@ -203,7 +221,7 @@
 <div class="container register">
     <div class="box register-box">
         <div class="box-title">用户注册</div>
-        <form:form id="inputForm" modelAttribute="user" action="/f/save" method="post" class="form-horizontal register-form">
+        <form:form id="inputForm" modelAttribute="user" action="${ctxFront}/save" method="post" class="form-horizontal register-form">
             <form:hidden path="id"/>
             <sys:message content="${message}"/>
             <div class="control-group">
@@ -270,6 +288,21 @@
 
         </form:form>
     </div>
+</div>
+
+<div class="fixed">
+    <a href="javascript:;" class="tel">
+        <div class="box">
+            <p>客服电话：</p>
+            <p>140202011026</p>
+        </div>
+    </a>
+    <a href="javascript:;" class="wechat">
+        <div class="box">
+            <img src="/static/images/2.jpg">
+            <p>关注微信</p>
+        </div>
+    </a>
 </div>
 </body>
 </html>
