@@ -25,10 +25,12 @@ public class BusinessLicense extends ActEntity<BusinessLicense> {
 	
 	private static final long serialVersionUID = 1L;
 	//private String procInsId;		// 流程实例ID
-	private String certificateTypeId;		// 证照类型
-	private String certificateCode;		// 证照编号
+	private String certificateTypeId;		// 证照类型ID
+	private String certificateTypeName;     //证照类型
+	private String certificateCode;		// 统一社会信用代码
 	private String certificateName;		// 公司名称
 	private Office office;		// 颁发机构id
+//	private String officeName;      //颁发机构名称
 	private Date establishDate;		// 成立日期
 	private Date effectiveDateStar;		// 证照有效期（起始
 	private Date effectiveDateEnd;		// 证照有效期（截至）
@@ -73,7 +75,7 @@ public class BusinessLicense extends ActEntity<BusinessLicense> {
 		this.procInsId = procInsId;
 	}*/
 	
-	@Length(min=1, max=64, message="证照类型长度必须介于 1 和 64 之间")
+	@Length(min=1, max=64, message="证照类型ID长度必须介于 1 和 64 之间")
 	public String getCertificateTypeId() {
 		return certificateTypeId;
 	}
@@ -81,8 +83,17 @@ public class BusinessLicense extends ActEntity<BusinessLicense> {
 	public void setCertificateTypeId(String certificateTypeId) {
 		this.certificateTypeId = certificateTypeId;
 	}
-	
-	@Length(min=0, max=100, message="证照编号长度必须介于 0 和 100 之间")
+
+	@Length(min=1, max=18, message="证照类型长度必须介于 1 和 18 之间")
+	public String getCertificateTypeName() {
+		return certificateTypeName;
+	}
+
+	public void setCertificateTypeName(String certificateTypeName) {
+		this.certificateTypeName = certificateTypeName;
+	}
+
+	@Length(min=0, max=100, message="统一社会信用代码长度必须介于 0 和 100 之间")
 	public String getCertificateCode() {
 		return certificateCode;
 	}
@@ -108,6 +119,15 @@ public class BusinessLicense extends ActEntity<BusinessLicense> {
 	public void setOffice(Office office) {
 		this.office = office;
 	}
+
+//	@Length(min=1, max=100, message="颁发机构名称长度必须介于 1 和 100 之间")
+//	public String getOfficeName() {
+//		return officeName;
+//	}
+//
+//	public void setOfficeName(String officeName) {
+//		this.officeName = officeName;
+//	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@NotNull(message="成立日期不能为空")
@@ -344,5 +364,6 @@ public class BusinessLicense extends ActEntity<BusinessLicense> {
 	public void setOpinion4(String opinion4) {
 		this.opinion4 = opinion4;
 	}
-	
+
+
 }

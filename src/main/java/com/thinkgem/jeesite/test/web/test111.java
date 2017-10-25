@@ -1,5 +1,7 @@
 package com.thinkgem.jeesite.test.web;
 
+import java.util.Random;
+
 /**
  * 全国组织机构代码校验码生成程序
  * 00251805 7 中共温州市委办公室
@@ -46,7 +48,20 @@ public class test111 {
         }
 
     }
-	 public static void main(String[] args){
+
+    public void test(){
+        System.out.println((int)((Math.random()*9+1)*1000000000));
+    }
+
+
+
+
+
+
+
+
+
+    public static void main(String[] args){
 
 	  System.out.println("请输入长8位的本体代码！");
 
@@ -65,6 +80,7 @@ public class test111 {
 
          test111 G=new test111();
 	     G.jy(a);
+         G.test();
 
 	  }
 }

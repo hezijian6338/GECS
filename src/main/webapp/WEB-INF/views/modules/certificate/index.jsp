@@ -37,6 +37,14 @@
 <script type="text/javascript" src="${ctxStatic}/js/jspdf.debug.js"></script>
 <%--工具栏自适应位置--%>
 <script type="text/javascript" src="${ctxStatic}/js/jquery.vgrid.min.js"></script>
+<%--右键菜单插件--%>
+<link rel="stylesheet" type="text/css" href="${ctxStatic}/css/jquery.contextmenu.css"/>
+<script type="text/javascript" src="${ctxStatic}/js/jquery.contextmenu.js"></script>
+<%--按钮UI插件--%>
+<link rel="stylesheet" type="text/css" href="${ctxStatic}/css/bttn.min.css"/>
+<%--开关按钮插件--%>
+<link rel="stylesheet" type="text/css" href="${ctxStatic}/css/honeySwitch.css">
+<script type="text/javascript" src="${ctxStatic}/js/honeySwitch.js"></script>
 <script>
     $(function () {
         $("#util").vgrid({
@@ -81,7 +89,7 @@
                 <!--第一个拖拉组件文本框的生成-->
 
                 if (ui.helper.attr("id") == "Text") {
-                    var el = $("<div class='printComponents textComponents ' onclick='checkClick(this)'  tabindex='0' onmousedown='setIndex(event,this)' ></div>");
+                    var el = $("<div class='printComponents textComponents ' onclick='checkClick(this)'  tabindex='0' ></div>");
                     //el.append("<ul><li style='list-style: none;'><textarea class='textarea' id='textarea' style='' onchange='wirteText(this)'></textarea></li></ul>");
                     el.append("<textarea class='textarea' id='textarea' style='' onchange='wirteText(this)'></textarea>");
                     var id = (new Date()).getMilliseconds();
@@ -108,7 +116,7 @@
 
                     var RadiostyleChoice = document.getElementById("RadiostyleChoice").value;
                     var radioAcount = document.getElementById("radioAcount").value;
-                    var el = $("<div class='printComponents' onclick='checkClick(this)' tabindex='0' onmousedown='setIndex(event,this)'></div>");
+                    var el = $("<div class='printComponents' onclick='checkClick(this)' tabindex='0'></div>");
                     var id = (new Date()).getMilliseconds();
                     el.attr("id", "new" + id);
                     var radio = Math.random();
@@ -177,7 +185,7 @@
 
                     var CheckBoxstyleChoice = document.getElementById("CheckBoxstyleChoice").value;
                     var checkAcount = document.getElementById("checkAcount").value;
-                    var el = $("<div class='printComponents' onclick='checkClick(this)' tabindex='0' onmousedown='setIndex(event,this)'></div>");
+                    var el = $("<div class='printComponents' onclick='checkClick(this)' tabindex='0'></div>");
                     var id = (new Date()).getMilliseconds();
                     el.attr("id", "new" + id);
 
@@ -245,7 +253,7 @@
 
                     var lineStylechoice = document.getElementById("lineStylechoice").value;
                     if (lineStylechoice == 1) {
-                        var el = $("<div class='verticallineStyle' onclick='checkClick(this)' tabindex='0' onmousedown='setIndex(event,this)'></div>");
+                        var el = $("<div class='verticallineStyle' onclick='checkClick(this)' tabindex='0'></div>");
                         var id = (new Date()).getMilliseconds();
                         el.attr("id", "new" + id);
                         el.resizable({
@@ -255,7 +263,7 @@
                             containment: "#printf"
                         }).appendTo("#printf");
                     } else {
-                        var el = $("<div class='horizontallineStyle' onclick='checkClick(this)' tabindex='0' onmousedown='setIndex(event,this)'></div>");
+                        var el = $("<div class='horizontallineStyle' onclick='checkClick(this)' tabindex='0'></div>");
                         var id = (new Date()).getMilliseconds();
                         el.attr("id", "new" + id);
                         el.resizable({
@@ -275,8 +283,8 @@
                         alert("此组件只能拖拉一次！");
                     } else if (ui.helper.attr("id") == "Photo") {
                         //alert("画布宽度：" + document.getElementById("printf").offsetWidth + "   " + "画布长度：" + document.getElementById("printf").offsetHeight);
-
-                        var el = $("<div class='printComponents specialElements Photo' onclick='checkClick(this)' tabindex='0' onmousedown='setIndex(event,this)' style='border:1px solid #000000;'></div>");
+                        document.getElementById(ui.helper.attr("id")).style.backgroundColor = "#B8E834";
+                        var el = $("<div class='printComponents specialElements Photo' onclick='checkClick(this)' tabindex='0' style='border:1px solid #000000;'></div>");
                         var id = "id" + ui.helper.attr("id");
                         el.attr("id", id);
                         el.attr("name", id);
@@ -296,7 +304,8 @@
                             containment: "#printf"
                         }).appendTo("#printf");
                     } else {
-                        var el = $("<div class='printComponents specialElements' onclick='checkClick(this)' tabindex='0' onmousedown='setIndex(event,this)' style='border:1px solid #000000;'></div>");
+                        document.getElementById(ui.helper.attr("id")).style.backgroundColor = "#B8E834";
+                        var el = $("<div class='printComponents specialElements' onclick='checkClick(this)' tabindex='0' style='border:1px solid #000000;'></div>");
                         var id = "id" + ui.helper.attr("id");
                         el.attr("id", id);
                         el.attr("name", id);
@@ -323,7 +332,7 @@
                     }
                     //alert(lineAcount +" "+ columnAcount);			//确认是否能取得值
                     var textareaWidth = 500 / columnAcount;
-                    var el = $("<div class='printComponents textComponents' onclick='checkClick(this)' tabindex='0' onmousedown='setIndex(event,this)'></div>");
+                    var el = $("<div class='printComponents textComponents' onclick='checkClick(this)' tabindex='0'></div>");
                     var id = "id" + ui.helper.attr("id");
                     el.attr("id", id);
                     for (var x = 0; x < lineAcount; x++) {
@@ -351,7 +360,8 @@
 
                     var fileName = "/picFile/upload/1/modelPhoto/" + ui.helper.attr("id");
                     //alert(fileName);
-                    var el = $("<div class='printComponents' onclick='checkClick(this)' tabindex='0' onmousedown='setIndex(event,this)'></div>");
+                    var el = $("<div class='printComponents picComponents' onclick='setIndex(this)' tabindex='0'></div>");
+
                     el.append("<img src=" + fileName + " class='img' style='width:98%;height: auto'>");
                     var id = (new Date()).getMilliseconds();
                     el.attr("id", "new" + id);
@@ -371,7 +381,7 @@
                 } else {
                     <!--第八个组件的生成 一些其他组件的生成-->
 
-                    var el = $("<div class='printComponents' onclick='checkClick(this)' tabindex='0' onmousedown='setIndex(event,this)'></div>");
+                    var el = $("<div class='printComponents' onclick='checkClick(this)' tabindex='0' ></div>");
                     var id = (new Date()).getMilliseconds();
                     el.attr("id", "new" + id);
                     el.text("ID=new" + id);
@@ -385,9 +395,6 @@
             }
         });
     });
-</script>
-<script>
-
 </script>
 <body>
 <div id="products">
@@ -514,22 +521,23 @@
 
 
 <div class="pageRight" id="pageRight">
-    <div id="pdf"></div>
+    <div id="pdf" class="pdf"></div>
     <div class="util" id="util">
-        <!-- 设置画布大小 -->
         <div id="setDraw_size" class="_util" style="float:left;clear: both">
-            <form>
-                设置画布大小:
-                宽:<input id="printfWidth" size="10" placeholder="width"
-                         onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
-                         onafterpaste=
-                                 "if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"/>
-                高:<input id="printfHeight" size="10" placeholder="height"
-                         onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
-                         onafterpaste=
-                                 "if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"/>
-                <input id="submitPrintf" type="button" value="确认画布大小" onclick="setPrintfSize()"/>
-            </form>
+            <!-- 设置画布大小 -->
+            <%--<form>--%>
+            画布大小:
+            宽:<input id="printfWidth" size="10" placeholder="width"
+                     onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                     onafterpaste=
+                             "if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"/>
+            高:<input id="printfHeight" size="10" placeholder="height"
+                     onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                     onafterpaste=
+                             "if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"/>
+            <%--<input id="submitPrintf"   type="button" value="确认画布大小" onclick="setPrintfSize()"/>--%>
+            <%--</form>--%>
+            <button id="submitPrintf" class="bttn-unite bttn-xs bttn-primary" onclick="setPrintfSize()">确认</button>
         </div>
 
         <%--ckfinder相关代码--%>
@@ -540,7 +548,7 @@
                 var finder = new CKFinder();
                 finder.basePath = '../';	// The path for the installation of CKFinder (default = "/ckfinder/").
                 finder.startupPath = startupPath;
-                finder.resourceType = "modelPhoto";
+                finder.resourceType = "元素图片文件夹";
                 finder.selectActionFunction = SetFileField;
                 finder.selectActionData = selectAD;
                 finder.popup();
@@ -564,7 +572,7 @@
                 finder.basePath = '../';	// The path for the installation of CKFinder (default = "/ckfinder/").
                 //Startup path in a form: "Type:/path/to/directory/"
                 finder.readOnly = true;
-                finder.resourceType = "pdf";
+                finder.resourceType = "证照模板文件夹";
                 finder.startupPath = startupPath;
                 finder.selectActionFunction = viewSFF;
                 finder.popup();
@@ -573,6 +581,7 @@
             // This is a sample function which is called when a file is selected in CKFinder.
             function SetFileField(fileUrl, data) {
                 document.getElementById(data["selectActionData"]).value = fileUrl;
+                createNewElements();
             }
 
             function closeWindow() {
@@ -603,54 +612,43 @@
 
 
         <!--背景颜色设置透明-->
-        <div id="setBG_color" class="_util" style="float:left;clear: both">
-            <form>
-                设置背景颜色 : 设置透明
-                <select id="backgroundTransparent">
-                    <option value="1" selected="selected">是</option>
-                    <option value="0">否</option>
-                </select>
-                <div style="float:right;" style="width:100px;">
-                    <button id="backgroundColorSelect"
-                            class="jscolor {valueElement:'chosen-value', onFineChange:''}"
-                            disabled>背景颜色
-                    </button>
-                    <input id="chosen-value" value="000000" disabled/>
-                    <!-- <input id="backgroundColorSelect" type="color" style="height:24px;line-height:20px" disabled /> -->
-                </div>
-                <input id="submitColorSelect" onclick="changeBackgroundColor()" type="button" value="确认背景">
-            </form>
-        </div>
-
-
-        <!--提供上传文件-->
-        <div id="setFile_upload" class="_util" style="float:left;">
-            <%--<form action="smartUploaddemo.jsp" enctype="multipart/form-data" method="post" target="_blank">--%>
-            <%--输入图片ID<input name="id" size="10" id="imgid" onkeyup="checkUnique()" placeholder="输入唯一的ID" required>--%>
-            <%--<input name="image" type="file" id="imagefile" required>--%>
-            <%--<input id="inputSubmit" type="submit" value="上传文件" onclick="createNewElements()">--%>
-            <%--</form>--%>
-            <div>
-                <p>
-                    <input id="xFilePath" name="FilePath" type="text" size="60"/>
-                    <input type="button" value="Browse Server" onclick="BrowseServer('modelPhoto:/','xFilePath');"/>
-                    <input type="button" value="confirm" onclick="createNewElements();"/>
-                    <input type="button" value="查看历史模板" onclick="viewBS('pdf:/');"/>
-                </p>
+        <div id="setBG_color" class="_util" style="float:left;clear: both;width: 35%">
+            <%--<form>--%>
+            背景颜色：是否透明
+            <%--<select id="backgroundTransparent" style="margin-right: 0.2em">--%>
+            <%--<option value="1" selected="selected">是</option>--%>
+            <%--<option value="0">否</option>--%>
+            <%--</select>--%>
+            <span class="switch-off" id="backgroundTransparent" themeColor="#1d89ff" offText="透明" onText="不透明" style="zoom: 0.8">on</span>
+            <div id="bgcolorPicker" style="float:right;display: none;width: auto">
+                <button id="backgroundColorSelect"
+                        class="jscolor {valueElement:'chosen-value', onFineChange:''}"
+                        disabled>背景颜色
+                </button>
+                <input id="chosen-value" value="000000" disabled hidden=""/>
+                <button id="submitColorSelect" class="bttn-unite bttn-xs bttn-primary"
+                        onclick="changeBackgroundColor()">
+                    确认背景
+                </button>
+                <!-- <input id="backgroundColorSelect" type="color" style="height:24px;line-height:20px" disabled /> -->
             </div>
+
+            <%--<input id="submitColorSelect"  class="bttn-unite bttn-xs bttn-primary" onclick="changeBackgroundColor()" type="button" value="确认背景">--%>
+            <%--</form>--%>
         </div>
+
 
         <%--<div id="editPdf_txt" class="_util">--%>
-            <%--<div>--%>
-                <%--<p>--%>
-                <%--<form action="${ctx}/certificate/certificateTemplate/makeModel" method="post" id="txtAction">--%>
-                    <%--<input id="txtPath" name="FilePath" type="text" size="60"/>--%>
-                    <%--<input type="button" value="Browse Server" onclick="BrowseServer_txt('modelTxt:/','txtPath');"/>--%>
-                    <%--<input type="button" value="confirm" onclick="editPdf_txt();"/>--%>
-                    <%--<input type="submit" value="submit"/>--%>
-                <%--</form>--%>
-                <%--</p>--%>
-            <%--</div>--%>
+        <%--<div>--%>
+        <%--<p>--%>
+        <%--<form action="${ctx}/certificate/certificateTemplate/makeModel" method="post" id="txtAction">--%>
+        <%--<input id="txtPath" name="FilePath" type="text" size="60"/>--%>
+        <%--<input type="button" value="Browse Server" onclick="BrowseServer_txt('modelTxt:/','txtPath');"/>--%>
+        <%--<input type="button" value="confirm" onclick="editPdf_txt();"/>--%>
+        <%--<input type="submit" value="submit"/>--%>
+        <%--</form>--%>
+        <%--</p>--%>
+        <%--</div>--%>
         <%--</div>--%>
 
         <%--PDF生成格式设置--%>
@@ -687,8 +685,36 @@
                 <option value="b1">B1</option>
                 <option value="b0">B0</option>
             </select>
-            <input type="button" id="downloadPDF" onclick="print()" value="下载PDF"/>
-            <input type="button" id="saveTxt" onclick="saveTxt()" value="下载图片"/>
+            <button id="downloadPDF" class="bttn-unite bttn-xs bttn-primary" onclick="print()">下载PDF</button>
+            <button id="saveTxt" class="bttn-unite bttn-xs bttn-primary" onclick="saveTxt()">下载图片</button>
+            <input id="xFilePath" name="FilePath" type="text" size="60" hidden=""/>
+            <%--ui风格按钮--%>
+            <button class="bttn-unite bttn-xs bttn-primary" onclick="BrowseServer('元素图片文件夹:/','xFilePath');">浏览文件夹
+            </button>
+            <button class="bttn-unite bttn-xs bttn-primary" onclick="viewBS('证照模板文件夹:/');">查看历史模板</button>
+            <%--<input type="button" id="downloadPDF" onclick="print()" value="下载PDF"/>--%>
+            <%--<input type="button" id="saveTxt" onclick="saveTxt()" value="下载图片"/>--%>
+        </div>
+
+        <!--提供上传文件-->
+        <div id="setFile_upload" class="_util">
+            <%--<form action="smartUploaddemo.jsp" enctype="multipart/form-data" method="post" target="_blank">--%>
+            <%--输入图片ID<input name="id" size="10" id="imgid" onkeyup="checkUnique()" placeholder="输入唯一的ID" required>--%>
+            <%--<input name="image" type="file" id="imagefile" required>--%>
+            <%--<input id="inputSubmit" type="submit" value="上传文件" onclick="createNewElements()">--%>
+            <%--</form>--%>
+            <%--<div>--%>
+            <%--<p>--%>
+            <%--<input id="xFilePath" name="FilePath" type="text" size="60" hidden=""/>--%>
+            <%--ui风格按钮--%>
+            <%--<button  class="bttn-unite bttn-xs bttn-primary" onclick="BrowseServer('元素图片文件夹:/','xFilePath');">浏览文件夹</button>--%>
+            <%--<button  class="bttn-unite bttn-xs bttn-primary" onclick="viewBS('证照模板文件夹:/');">查看历史模板</button>--%>
+            <%--非ui风格按钮--%>
+            <%--<input type="button" value="浏览文件夹" onclick="BrowseServer('元素图片文件夹:/','xFilePath');"/>--%>
+            <%--<input type="button" value="confirm" onclick="createNewElements();"/>--%>
+            <%--<input type="button" value="查看历史模板" onclick="viewBS('证照模板文件夹:/');"/>--%>
+            <%--</p>--%>
+            <%--</div>--%>
         </div>
 
 
@@ -715,10 +741,14 @@
 
         <div id="setFont_option" class="_util" style="float:left;">
             <!--字体设置工具栏-->
-            <input id="bold" type="button" value="加粗" style="height:24px;line-height:20px"/>
-            <input id="italic" type="button" value="加斜" style="height:24px;line-height:20px"/>
-            <input id="underline" type="button" value="下划线" style="height:24px;line-height:20px"/>
-            <input id="textareaBorder" type="button" value="边框" style="height:24px;line-height:20px"/>
+            <button id="bold" class="bttn-pill bttn-xs bttn-primary">加粗</button>
+            <button id="italic" class="bttn-pill bttn-xs bttn-primary">加斜</button>
+            <button id="underline" class="bttn-pill bttn-xs bttn-primary">下划线</button>
+            <button id="textareaBorder" class="bttn-pill bttn-xs bttn-primary">边框</button>
+            <%--<input id="bold" type="button" value="加粗" style="height:24px;line-height:20px"/>--%>
+            <%--<input id="italic" type="button" value="加斜" style="height:24px;line-height:20px"/>--%>
+            <%--<input id="underline" type="button" value="下划线" style="height:24px;line-height:20px"/>--%>
+            <%--<input id="textareaBorder" type="button" value="边框" style="height:24px;line-height:20px"/>--%>
             <select id="fontfamily">
                 <option value="" selected="selected">字体属性</option>
                 <option value="宋体,simsun">宋体</option>
@@ -781,7 +811,7 @@
                 <option value="47px">47px</option>
                 <option value="48px">48px</option>
             </select>
-            <div id="setFont_color" style="float:left;width:auto;">
+            <div id="setFont_color" style="float:left;width:auto;padding-right: 0.4em">
                 <button class="jscolor {valueElement:'chosen1-value'}">字体颜色</button>
                 <input id="chosen1-value" value="000000"/>
                 <!-- <input id="colorselect" type="color" style="height:24px;line-height:30px" /> -->
@@ -789,14 +819,25 @@
             <%--<input type="button" id="downloadPDF" onclick="print()" value="下载PDF"/>--%>
             <%--<button onclick="checkTest()">test</button>--%>
         </div>
-
-
     </div>
     <div id="printf"></div>
 </div>
 
 
 <script>
+
+    $(function () {
+        var backgroundColorSelect = document.getElementById("backgroundColorSelect");
+        var printf = document.getElementById("printf");
+        switchEvent("#backgroundTransparent", function () {
+            document.getElementById("bgcolorPicker").style.display = ""
+            $(backgroundColorSelect).removeAttr("disabled");
+        }, function () {
+            backgroundColorSelect.setAttribute("disabled", true);
+            document.getElementById("bgcolorPicker").style.display = "none"
+            printf.style.backgroundColor = "transparent";
+        });
+    });
 
     var pageFormats = { // Size in pt of various paper formats
         'a0': [2383.94, 3370.39],
@@ -842,6 +883,7 @@
         'credit-card': [153, 243]
     };
 
+
     var realPrintfContent;
     var i;	//加粗的变量
     var j;	//加斜的变量
@@ -851,6 +893,61 @@
     var index = 2;	//控制每个元素的Z-Index
     var inputSubmit = document.getElementById("inputSubmit");
 
+
+    var pdfsize = document.getElementById("pdfSize");
+    var lorp = document.getElementById("LorP");
+    var printf = document.getElementById("printf");
+
+    pdfsize.onchange = function () {
+        alert("自动修改画布为你当前所选的格式,并且清楚画布内容,请重新排版！");
+        printf.innerHTML = "";
+        var size = pdfsize.value;
+        var format = size.toLowerCase();
+        if (pageFormats.hasOwnProperty(format)) {
+            printf.style.width = pageFormats[format][0];
+            printf.style.height = pageFormats[format][1];
+            //alert("宽" +pdfWidth + "高" + pdfHeight + "1");
+        }
+    };
+
+    lorp.onchange = function () {
+        alert("自动修改画布为你当前所选的格式,并且清楚画布内容,请重新排版！");
+        printf.innerHTML = "";
+        var or = lorp.value;
+        var orientation = or;
+        if (orientation) {
+            switch (orientation.substr(0, 1)) {
+                case 'l':
+                    if (printf.style.height > printf.style.width) orientation = 's';
+                    break;
+                case 'p':
+                    if (printf.style.width > printf.style.height) orientation = 's';
+                    break;
+            }
+            if (orientation === 's') {
+                var tmp = printf.style.width;
+                printf.style.width = printf.style.height;
+                printf.style.height = tmp;
+                //alert("宽" + pdfWidth + "宽" + pdfHeight + "2");
+            }
+        }
+    };
+
+    $("#printf").contextPopup({
+
+        title: '画布操作',
+
+        items: [
+            {
+                label: '清空画布', action: function () {
+                if (confirm("是否清空画布？")) {
+//                        alert(originId);
+                    document.getElementById("printf").innerHTML = "";
+                }
+            }
+            }
+        ]
+    });
 
     window.onload = function () {					//禁止鼠标右键事件
         document.oncontextmenu = function (e) {
@@ -863,15 +960,14 @@
         }
     };
 
-    function jump() {				//跳转到第二个页面查看历史模板
-        window.open("CheckModel.jsp");
-    }
+    //    function jump() {				//跳转到第二个页面查看历史模板
+    //        window.open("CheckModel.jsp");
+    //    }
 
 
     function wirteText(e) {			//为每一个文本框输入后自动生成相对应的Html
         //alert(e.value);
         e.innerHTML = e.value;
-
     }
 
     function writeTxtAndPng() {
@@ -924,30 +1020,14 @@
         }
     }
 
-    var backgroundColorSelect = document.getElementById("backgroundColorSelect");
-    var backgroundTransparent = document.getElementById("backgroundTransparent");
-    backgroundTransparent.onclick = function () {
-        var setColorSelect = backgroundTransparent.value;
-        if (setColorSelect == "0") {
-            $(backgroundColorSelect).removeAttr("disabled");
-        } else {
-            backgroundColorSelect.setAttribute("disabled", true);
-        }
-    }
 
     function changeBackgroundColor() {
         var printf = document.getElementById("printf");
         var backgroundColorSelect = document.getElementById("chosen-value");
-        var setColorSelect = backgroundTransparent.value;
         alert(backgroundColorSelect.value);
-        if (setColorSelect == "0") {
-            //提取颜色的选择 设置背景为该颜色
-            var getbackgroundColor = backgroundColorSelect.value;
-            printf.style.backgroundColor = getbackgroundColor;
-        } else {
-            //背景被设置为透明
-            printf.style.backgroundColor = "transparent";
-        }
+        //提取颜色的选择 设置背景为该颜色
+        var getbackgroundColor = backgroundColorSelect.value;
+        printf.style.backgroundColor = getbackgroundColor;
     }
 
     function checkTest() {		//检测画布里的代码
@@ -955,36 +1035,88 @@
     }
 
 
-    function setIndex(event, e) {					//使选中的元素永远在图层的最上面
-        var btnNum = event.button;
+    function setIndex(e) {					//使选中的元素永远在图层的最上面
+//        var btnNum = event.button;
         //alert(e.button);
+        var thisId = document.getElementById(e.getAttribute("id"));
         if (e.style.zIndex != 1) {				//不是背景的元素
             index = index + 1;
             e.style.zIndex = index;
         }
-        if (btnNum == 1) {
-            //alert("点击鼠标中键");
-            if (e.style.zIndex == 1) {
-                if (confirm("是否解除当前组件背景？")) {
-                    index = index + 1;
-                    e.style.zIndex = index;
-                }
-            } else {								//设置选中元素的zIndex
-
-            }
-        } else if (btnNum == 0) {
-            //alert("点击鼠标左键");
-        } else if (btnNum == 2) {
-            //alert("点击鼠标右键");
-            if (backGroundUnique == 0) {			//还没有设置背景
-                if (confirm("确认此图作为背景？")) {
-                    e.style.zIndex = 1;
-                    backGroundUnique = 1; //背景已经设置了
-                }
-            } else {
-                alert("你已设置过背景！背景只能有一个！");
-            }
+//        if (btnNum == 1) {
+//            //alert("点击鼠标中键");
+//            if (e.style.zIndex == 1) {
+//                if (confirm("是否解除当前组件背景？")) {
+//                    index = index + 1;
+//                    e.style.zIndex = index;
+//                }
+//            } else {								//设置选中元素的zIndex
+//
+//            }
+//        } else if (btnNum == 0) {
+//            //alert("点击鼠标左键");
+//        } else
+//        if (btnNum == 2) {
+        //alert("点击鼠标右键");
+        var showLabel = "设置背景图片";
+        if (backGroundUnique != 0) {
+            showLabel = "取消背景图片"
         }
+        $(thisId).contextPopup({
+
+            title: $(e).attr("id") + "元素",
+
+            items: [
+
+                {
+                    label: showLabel, action: function () {
+                    if (backGroundUnique == 0) {			//还没有设置背景
+//                            if (confirm("确认此图作为背景？")) {
+                        e.style.padding = "0 auto";
+                        e.style.margin = "0 auto";
+                        e.style.width = printf.style.width;
+                        e.style.height = printf.style.height;
+                        e.style.zIndex = 1;
+                        backGroundUnique = 1; //背景已经设置了
+//                            }
+                    }
+                    else {
+//                            if (confirm("是否取消原有图片为背景？")) {
+                        e.style.padding = "0 auto";
+                        e.style.margin = "0 auto";
+                        e.style.width = printf.style.width / 2;
+                        e.style.height = printf.style.height / 2;
+                        e.style.zIndex = index;
+                        backGroundUnique = 0; //背景没设置了
+//                            }
+                    }
+                }
+                },
+
+                {
+                    label: '删除元素', action: function () {
+//                        if (confirm("是否删除该元素？")) {
+                    backGroundUnique = 0; //背景没设置了
+                    $(thisId).remove();
+//                        }
+                }
+                }
+            ]
+
+        });
+//
+//                if (backGroundUnique == 0) {			//还没有设置背景
+//                if (confirm("确认此图作为背景？")) {
+//                    e.style.zIndex = 1;
+//                    backGroundUnique = 1; //背景已经设置了
+//                }
+//            } else {
+//                if (confirm("是否取消原有图片为背景？")) {
+//                    e.style.zIndex = 999;
+//                    backGroundUnique = 0; //背景已经设置了
+//                }
+//            }
+//        }
 
         //让保存的元素重新到画布上后能重新拖拽伸缩编辑功能
         if ($(e).hasClass("printComponents")) {
@@ -999,12 +1131,15 @@
     function checkClick(e) {
         //alert(e.getAttribute("id"));
         var thisID = document.getElementById(e.getAttribute("id"));
+        var tempId = e.getAttribute("id");
+        var originId = tempId.substring(2, tempId.length);
         document.onkeydown = function () {
             var oEvent = window.event;
             if (oEvent.keyCode == 46) {
                 $(e).remove();
             }
         }
+
 
         var bold = document.getElementById("bold");
         bold.onclick = function () {
@@ -1064,9 +1199,6 @@
         var family = document.getElementById("fontfamily");
         var setFontsize = document.getElementById("fontsize");
         var setFontfamily = document.getElementById("fontfamily");
-        var pdfsize = document.getElementById("pdfSize");
-        var lorp = document.getElementById("LorP");
-        var printf = document.getElementById("printf");
 
         //获取当前元素的颜色 字体 大小属性并显示在分别显示在三个选择框 如果为空显示默认的
         if ($(thisID).hasClass("textComponents")) {
@@ -1115,40 +1247,22 @@
             $(thisID).find('label').css('font-family', fontfamily);
         }
 
-        pdfsize.onchange = function () {
-            alert("自动修改画布为你当前所选的格式,并且清楚画布内容,请重新排版！");
-            printf.innerHTML = "";
-            var size = pdfsize.value;
-            var format = size.toLowerCase();
-            if (pageFormats.hasOwnProperty(format)) {
-                printf.style.width = pageFormats[format][0];
-                printf.style.height = pageFormats[format][1];
-                //alert("宽" +pdfWidth + "高" + pdfHeight + "1");
-            }
-        };
+        $(thisID).contextPopup({
 
-        lorp.onchange = function () {
-            alert("自动修改画布为你当前所选的格式,并且清楚画布内容,请重新排版！");
-            printf.innerHTML = "";
-            var or = lorp.value;
-            var orientation = or;
-            if (orientation) {
-                switch (orientation.substr(0, 1)) {
-                    case 'l':
-                        if (printf.style.height > printf.style.width) orientation = 's';
-                        break;
-                    case 'p':
-                        if (printf.style.width > printf.style.height) orientation = 's';
-                        break;
+            title: '元素属性操作',
+
+            items: [
+                {
+                    label: '删除元素', action: function () {
+                    if (confirm("是否删除该元素？")) {
+//                        alert(originId);
+                        document.getElementById(originId).style.backgroundColor = "";
+                        $(thisID).remove();
+                    }
                 }
-                if (orientation === 's') {
-                    var tmp = printf.style.width;
-                    printf.style.width = printf.style.height;
-                    printf.style.height = tmp;
-                    //alert("宽" + pdfWidth + "宽" + pdfHeight + "2");
                 }
-            }
-        };
+            ]
+        });
 
 
         //alert(e.getAttribute("id")+""+fontsize+""+fontfamily);		//是否成功获取属性值

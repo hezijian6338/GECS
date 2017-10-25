@@ -17,6 +17,7 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 public class CertificateType extends DataEntity<CertificateType> {
 	
 	private static final long serialVersionUID = 1L;
+	private String id;                      // 证照id
 	private String certificateTypeCode;		// 证照类型编号
 	private String certificateTypeName;		// 证照类型名称
 	private Office office;		// 颁发机构id
@@ -30,6 +31,15 @@ public class CertificateType extends DataEntity<CertificateType> {
 
 	public CertificateType(String id){
 		super(id);
+	}
+
+	@Length(min=1, max=64, message="证照类型编号长度必须介于 1 和 64 之间")
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	@Length(min=1, max=64, message="证照类型编号长度必须介于 1 和 64 之间")
@@ -85,5 +95,6 @@ public class CertificateType extends DataEntity<CertificateType> {
 	public void setOwnerType(String ownerType) {
 		this.ownerType = ownerType;
 	}
-	
+
+
 }

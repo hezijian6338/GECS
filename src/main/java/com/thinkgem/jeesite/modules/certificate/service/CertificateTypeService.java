@@ -5,6 +5,7 @@ package com.thinkgem.jeesite.modules.certificate.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,9 @@ import com.thinkgem.jeesite.modules.certificate.dao.CertificateTypeDao;
 @Service
 @Transactional(readOnly = true)
 public class CertificateTypeService extends CrudService<CertificateTypeDao, CertificateType> {
+
+	@Autowired
+	CertificateTypeDao certificateTypeDao;
 
 	public CertificateType get(String id) {
 		return super.get(id);
@@ -43,5 +47,15 @@ public class CertificateTypeService extends CrudService<CertificateTypeDao, Cert
 	public void delete(CertificateType certificateType) {
 		super.delete(certificateType);
 	}
-	
+/**
+ * @author 练浩文
+ * @TODO (注：)
+ * @param typeName
+ * @DATE: 2017/10/23 11:12
+ *
+ * */
+	public CertificateType getTypeByName(String typeName) {
+
+ 		return certificateTypeDao.getTypeByName(typeName);
+	}
 }

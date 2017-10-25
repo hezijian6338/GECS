@@ -5,6 +5,7 @@
 	<sql id="certificateLibraryColumns">
 		a.id AS "id",
 		a.certificate_name AS "certificateName",
+		a.certificate_code AS "certificateCode",
 		a.certificate_type_id AS "certificateTypeId",
 		a.description AS "description",
 		a.office_id AS "office.id",
@@ -38,6 +39,13 @@
 		FROM certificate_library a
 		<include refid="certificateLibraryJoins"/>
 		WHERE a.id = #{id}
+	</select>
+
+	<select id="getByCertificateCode" parameterType="string" resultType="CertificateLibrary">
+		Select <include refid="certificateLibraryColumns"/>
+		FROM certificate_library a <include refid="certificateLibraryJoins"/>
+		WHERE
+		a.certificate_code=#{certificateCode}
 	</select>
 	
 	<select id="findList" resultType="CertificateLibrary">
@@ -95,6 +103,7 @@
 		INSERT INTO certificate_library(
 			id,
 			certificate_name,
+			certificate_Code,
 			certificate_type_id,
 			description,
 			office_id,
@@ -116,6 +125,7 @@
 		) VALUES (
 			#{id},
 			#{certificateName},
+			#{certificateCode},
 			#{certificateTypeId},
 			#{description},
 			#{office.id},

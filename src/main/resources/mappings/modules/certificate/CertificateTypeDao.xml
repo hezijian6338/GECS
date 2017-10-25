@@ -30,7 +30,7 @@
 		<include refid="certificateTypeJoins"/>
 		WHERE a.id = #{id}
 	</select>
-	
+
 	<select id="findList" resultType="CertificateType">
 		SELECT 
 			<include refid="certificateTypeColumns"/>
@@ -136,5 +136,12 @@
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
-	
+
+	<select id="getTypeByName" parameterType="string" resultType="CertificateType">
+		SELECT
+		<include refid="certificateTypeColumns"/>
+		FROM certificate_type a
+		<include refid="certificateTypeJoins"/>
+		WHERE a.certificate_type_name= #{certificateTypeName}
+	</select>
 </mapper>

@@ -78,10 +78,11 @@
 /* The Close Button */
 .close {
     position: absolute;
-    top: 2%;
-    right: 10%;
-    font-size: 35px;
+    top: 1em;
+    right: 1em;
+    font-size: 10em;
     font-weight: bold;
+    color:#B8E834;
 }
 
 .close:hover,

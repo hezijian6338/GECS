@@ -59,7 +59,7 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">证照有效期（起始：</label>
+			<label class="control-label">证照有效期（起始）：</label>
 			<div class="controls">
 				<input name="effectiveDateStart" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
 					value="<fmt:formatDate value="${certificateLibrary.effectiveDateStart}" pattern="yyyy-MM-dd HH:mm:ss"/>"
