@@ -58,8 +58,8 @@
 		</div></c:if><%--
 		<label for="mobile" title="手机登录"><input type="checkbox" id="mobileLogin" name="mobileLogin" ${mobileLogin ? 'checked' : ''}/></label> --%>
 		<input class="btn btn-large btn-primary" type="submit" value="登 录"/>&nbsp;&nbsp;
-		<a class="btn-line" href="/f/userRegiste">注册帐号</a>
-		<a class="btn-line" href="/f/forgetPassword">忘记密码</a>
+		<a class="btn-line" href="${ctxFront}/userRegiste">注册帐号</a>
+		<a class="btn-line" href="${ctxFront}/forgetPassword">忘记密码</a>
 		<div id="themeSwitch" class="dropdown">
 			<a class="dropdown-toggle" data-toggle="dropdown" href="#">${fns:getDictLabel(cookie.theme.value,'theme','默认主题')}<b class="caret"></b></a>
 			<ul class="dropdown-menu">

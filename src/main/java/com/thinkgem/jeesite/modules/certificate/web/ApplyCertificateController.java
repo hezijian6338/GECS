@@ -26,17 +26,23 @@ import javax.servlet.http.HttpServletResponse;
  * @DATE: 2017/10/18 16:19
  */
 @Controller
-@RequestMapping(value = "${adminPath}/certificate/ApplyCertificate")
+@RequestMapping(value = "${adminPath}/certificate/applyCertificate")
 public class ApplyCertificateController extends BaseController{
 
     /**
      * @author YuXiaoXi
-     * @TODO (注：用户申请证照界面)
+     * @TODO (注：跳转用户申请证照界面)
 
      * @DATE: 2017/10/18 16:21
      */
     @RequestMapping(value = "apply")
     public String apply(User user, BusinessLicense businessLicense, Model model) {
+        return "modules/license/qpplyCertificate";
+    }
+
+    @RequestMapping(value = "applyBusinessLicense")
+    public String apply1(User user, BusinessLicense businessLicense, Model model) {
+        
         model.addAttribute("businessLicense", businessLicense);
         model.addAttribute("user", user);
         return "modules/license/businessLicenseForm";
