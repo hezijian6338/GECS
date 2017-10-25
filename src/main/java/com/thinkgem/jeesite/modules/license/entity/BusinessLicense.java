@@ -129,7 +129,7 @@ public class BusinessLicense extends ActEntity<BusinessLicense> {
 //		this.officeName = officeName;
 //	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd ")
 	@NotNull(message="成立日期不能为空")
 	public Date getEstablishDate() {
 		return establishDate;
@@ -139,7 +139,7 @@ public class BusinessLicense extends ActEntity<BusinessLicense> {
 		this.establishDate = establishDate;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd ")
 	@NotNull(message="证照有效期（起始不能为空")
 	public Date getEffectiveDateStar() {
 		return effectiveDateStar;
@@ -149,7 +149,7 @@ public class BusinessLicense extends ActEntity<BusinessLicense> {
 		this.effectiveDateStar = effectiveDateStar;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd ")
 	@NotNull(message="证照有效期（截至）不能为空")
 	public Date getEffectiveDateEnd() {
 		return effectiveDateEnd;

@@ -83,7 +83,7 @@
 			<li><label>证照类型：</label>
 				<form:input path="certificateTypeName" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
-			<li><label>证照名称：</label>
+			<li><label>公司名称：</label>
 				<form:input path="certificateName" htmlEscape="false" maxlength="100" class="input-medium"/>
 			</li>
 			<li><label>颁发机构id：</label>

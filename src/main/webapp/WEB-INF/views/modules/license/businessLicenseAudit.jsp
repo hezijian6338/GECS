@@ -73,7 +73,7 @@
                 <td class="tit">成立日期</td>
                 <td>
                     <input name="establishDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
-                           value="<fmt:formatDate value="${businessLicense.establishDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+                           value="<fmt:formatDate value="${businessLicense.establishDate}" pattern="yyyy-MM-dd"/>"
                           />
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
@@ -88,7 +88,7 @@
                 <td class="tit">证照有效期（起始）</td>
                 <td>
                     <input name="effectiveDateStar" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
-                           value="<fmt:formatDate value="${businessLicense.effectiveDateStar}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+                           value="<fmt:formatDate value="${businessLicense.effectiveDateStar}" pattern="yyyy-MM-dd"/>"
                           />
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
@@ -102,7 +102,7 @@
                 <td class="tit">证照有效期（截至）</td>
                 <td>
                     <input name="effectiveDateEnd" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
-                           value="<fmt:formatDate value="${businessLicense.effectiveDateEnd}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+                           value="<fmt:formatDate value="${businessLicense.effectiveDateEnd}" pattern="yyyy-MM-dd"/>"
                            />
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
@@ -114,9 +114,8 @@
             </tr>
             <tr><td class="tit">经营/业务/许可范围</td>
                 <td colspan="5">
-   <%--                  <sys:treeselect id="scope" name="scope.id" value="${businessLicense.scope.id}" labelName="scope.name" labelValue="${businessLicense.scope.name}"
-                                    title="经营范围" url="/scope/businessScope/treeData" cssClass="required" allowClear="true" notAllowSelectParent="true" expandOnLoad="false"/>
-                    <span class="help-inline"><font color="red">*</font> </span> --%>
+<%--                                    title="经营范围" url="/scope/businessScope/treeData" cssClass="required" allowClear="true" notAllowSelectParent="true" expandOnLoad="false" checked="true"/>
+                        <span class="help-inline"><font color="red">*</font> </span> --%>
                     ${businessLicense.scope.name}
                 </td>
             </tr>
@@ -152,7 +151,7 @@
                 </td>
                 <td class="tit">经办人证件号码</td>
                 <td>
-                    <form:input path="handlerId" htmlEscape="false" maxlength="64" class="input-xlarge " readonly="true"/>
+                    <form:input path="handlerId" htmlEscape="false" maxlength="64" class="input-xlarge " readonly="true" />
                 </td>
             </tr>
             <tr>
