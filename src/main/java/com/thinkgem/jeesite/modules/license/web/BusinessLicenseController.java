@@ -19,7 +19,6 @@ import org.apache.commons.lang3.StringUtils;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.codehaus.groovy.runtime.powerassert.SourceText;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,8 +32,14 @@ import com.thinkgem.jeesite.modules.license.entity.BusinessLicense;
 import com.thinkgem.jeesite.modules.license.service.BusinessLicenseService;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import static oracle.net.aso.C05.b;
 
 /**
  * 营业执照Controller
@@ -99,8 +104,8 @@ public class BusinessLicenseController extends BaseController {
 	public String form(BusinessLicense businessLicense, Model model) throws IOException, DocumentException {
 
 		String path = "E:\\certificate\\BusinessModel\\BusinessModel.pdf";
-		String savaPath = "E:\\certificate\\Business\\"+businessLicense.getPersionName()+businessLicense.getPersonId()+".pdf";
-		String realativePath = "/pic/certificate/Business/"+businessLicense.getPersionName()+businessLicense.getPersonId()+".pdf";
+		String savaPath = "E:\\certificate\\Business\\"+businessLicense.getCertificateName()+businessLicense.getPersonId()+".pdf";
+		String realativePath = "/pic/certificate/Business/"+businessLicense.getCertificateName()+businessLicense.getPersonId()+".pdf";
 		String view = "businessLicenseForm";
 		CertificateLibrary certificateLibrary = new CertificateLibrary();
 
@@ -165,10 +170,12 @@ public class BusinessLicenseController extends BaseController {
 
 	@RequiresPermissions("license:businessLicense:edit")
 	@RequestMapping(value = "save")
-	public String save(BusinessLicense businessLicense, Model model, RedirectAttributes redirectAttributes) throws IOException, DocumentException {
+	public String save(BusinessLicense businessLicense, Model model, RedirectAttributes redirectAttributes,HttpServletRequest request) throws IOException, DocumentException {
 		if (!beanValidator(model, businessLicense)){
 			return form(businessLicense, model);
 		}
+		String radio=request.getParameter("bt1");
+		businessLicense.setRegisteredCapital(businessLicense.getRegisteredCapital()+radio);
 		businessLicenseService.save(businessLicense);
 		addMessage(redirectAttributes, "保存营业执照成功");
 		return "redirect:" + adminPath + "/act/task/todo/";
@@ -230,6 +237,21 @@ public class BusinessLicenseController extends BaseController {
 		CertificateType certificateType = certificateTypeService.getTypeByName(typeName);
 		businessLicense.setCertificateCode((int)((Math.random()*9+1)*10000000)+businessLicenseService.getCharAndNumr(9)+(int)((Math.random()*9+1)*1));
 		businessLicense.setCertificateTypeName(certificateType.getCertificateTypeName());
+        //设置证照成立日期、有效起始日期，有效截止日期
+        Date startDate = new Date();
+        Date endDate = new Date();
+        Calendar calendar=new GregorianCalendar();
+        calendar.setTime(startDate);
+        int yearAdd=Integer.parseInt(certificateType.getEffectiveDate());
+        calendar.add(calendar.YEAR,yearAdd);
+        endDate=calendar.getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        businessLicense.setEstablishDate(startDate);
+        businessLicense.setEffectiveDateStar(startDate);
+        businessLicense.setEffectiveDateEnd(endDate);
+        System.out.println(dateFormat.format(startDate));
+        System.out.println(dateFormat.format(endDate));
+        businessLicense.setCertificateTypeName(certificateType.getCertificateTypeName());
 		businessLicense.setCertificateTypeId(certificateType.getId());
 		businessLicense.setOffice(certificateType.getOffice());
 		model.addAttribute("businessLicense", businessLicense);

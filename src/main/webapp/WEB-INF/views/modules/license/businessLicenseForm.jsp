@@ -229,18 +229,19 @@
 				<tr>
 					<td class="tit">证照类型</td>
 					<td>
-						<form:input path="certificateTypeName" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
+						<form:input path="certificateTypeName" htmlEscape="false" maxlength="64" class="input-xlarge required" readonly="true"/>
 						<span class="help-inline"><font color="red">*</font> </span>
 					</td>
 					<td class="tit">统一社会信用代码</td>
 					<td>
-						<form:input path="certificateCode" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
+						<form:input path="certificateCode" htmlEscape="false" maxlength="100" class="input-xlarge required" readonly="true"/>
 					</td>
 					<td class="tit">颁发机构</td>
 					<td>
 						<sys:treeselect id="office" name="office.id" value="${businessLicense.office.id}" labelName="office.name" labelValue="${businessLicense.office.name}"
 										title="部门" url="/sys/office/treeData?type=2" cssClass="required" allowClear="true" notAllowSelectParent="true"/>
 						<span class="help-inline"><font color="red">*</font> </span>
+
 					</td>
 				</tr>
 				<tr>
@@ -255,8 +256,8 @@
 					<td class="tit">成立日期</td>
 					<td>
 					<input name="establishDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
-						value="<fmt:formatDate value="${businessLicense.establishDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-						onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+						value="<fmt:formatDate value="${businessLicense.establishDate}" pattern="yyyy-MM-dd"/>"
+						/>
 					<span class="help-inline"><font color="red">*</font> </span>
 					</td>
 					<td class="tit" rowspan="3">公司信息</td>
@@ -273,8 +274,8 @@
 					<td class="tit">证照有效期（起始）</td>
 					<td>
 						<input name="effectiveDateStar" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
-							value="<fmt:formatDate value="${businessLicense.effectiveDateStar}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-							onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+							value="<fmt:formatDate value="${businessLicense.effectiveDateStar}" pattern="yyyy-MM-dd"/>"
+							/>
 						<span class="help-inline"><font color="red">*</font> </span>
 					</td>
 					<td class="tit">公司名称</td>
@@ -287,13 +288,16 @@
 					<td class="tit">证照有效期（截至）</td>
 					<td>
 						<input name="effectiveDateEnd" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
-							   value="<fmt:formatDate value="${businessLicense.effectiveDateEnd}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-							   onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+							   value="<fmt:formatDate value="${businessLicense.effectiveDateEnd}" pattern="yyyy-MM-dd"/>"
+							 />
 						<span class="help-inline"><font color="red">*</font> </span>
 					</td>
 					<td class="tit">注册资本</td>
 					<td>
-						<form:input path="registeredCapital" htmlEscape="false" maxlength="20" class="input-xlarge required"/>
+						<form:input path="registeredCapital" placeholder="只能输入数字" htmlEscape="false" maxlength="20" class="input-xlarge required"
+									onKeyUp="value=value.replace(/[^\d]/g,'')"/>
+						<input type="radio" name="bt1" value="万" checked="true">万
+						<input type="radio" name="bt1" value="亿">亿
 						<span class="help-inline"><font color="red">*</font> </span>
 					</td>
 				</tr>
@@ -301,7 +305,7 @@
 					<td colspan="5">
 						
 						<sys:treeselect id="scope" name="scope.id" value="${businessLicense.scope.id}" labelName="scope.name" labelValue="${businessLicense.scope.name}"
-										title="经营范围" url="/scope/businessScope/treeData" cssClass="required" allowClear="true" notAllowSelectParent="true" expandOnLoad="false"/>
+										title="经营范围" url="/scope/businessScope/treeData" cssClass="required" allowClear="true" notAllowSelectParent="true" expandOnLoad="false" />
 						<span class="help-inline"><font color="red">*</font> </span>
 					</td>
 				</tr>
@@ -338,23 +342,23 @@
 				<tr>
 					<td class="tit">法人证件号码</td>
 					<td>
-						<form:input path="personId" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
+						<form:input path="personId" placeholder="请输入证件号码" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
 						<span class="help-inline"><font color="red">*</font> </span>
 					</td>
 					<td class="tit">经办人证件号码</td>
 					<td>
-						<form:input path="handlerId" htmlEscape="false" maxlength="64" class="input-xlarge  required"/>
+						<form:input path="handlerId" placeholder="请输入证件号码" htmlEscape="false" maxlength="64" class="input-xlarge  required"/>
 					</td>
 				</tr>
 				<tr>
 					<td class="tit">法人联系方式</td>
 					<td>
-						<form:input path="persionPhone" htmlEscape="false" maxlength="20" class="input-xlarge required"/>
+						<form:input path="persionPhone" placeholder="请输入手机号码" htmlEscape="false" maxlength="20" class="input-xlarge required"/>
 						<span class="help-inline"><font color="red">*</font> </span>
 					</td>
 					<td class="tit">经办人联系方式</td>
 					<td>
-						<form:input path="handlerPhone" htmlEscape="false" maxlength="20" class="input-xlarge required"/>
+						<form:input path="handlerPhone" placeholder="请输入手机号码" htmlEscape="false" maxlength="20" class="input-xlarge required"/>
 					</td>
 				</tr>
 				<tr>
@@ -387,7 +391,8 @@
 				<tr>
 					<td class="tit">邮政编码</td>
 					<td>
-						<form:input path="postcode" htmlEscape="false" maxlength="10" class="input-xlarge required"/>
+						<form:input path="postcode" placeholder="请输入邮政编码（只能输入数字）" htmlEscape="false" maxlength="10" class="input-xlarge required"
+									onKeyUp="value=value.replace(/[^\d]/g,'')"/>
 					</td>
 					<td class="tit">所属区域</td>
 					<td colspan="3">

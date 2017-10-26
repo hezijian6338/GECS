@@ -400,9 +400,9 @@ public class PDFUtil {
 //                s.setField("Sex", fillSpace(BusinessLicense.getStuName() ,15 , isNull(s,"Sex")));
 //
 //                s.setField("EngSex", fillSpace(BusinessLicense.getStuName() ,15 , isNull(s,"EngSex")));
-
-        s.setField("idcertificateTypeId", fillSpace(businessLicense.getCertificateTypeName() ,15 , isNull(s,"idcertificateTypeId")));
-
+        //注册公司类型 ：（如：责任有限公司）
+        s.setField("idcertificateTypeId", fillSpace(businessLicense.getRegisteredType() ,15 , isNull(s,"idcertificateTypeId")));
+        //统一社会信用代码
         s.setField("idcertificateCode", fillSpace(businessLicense.getCertificateCode() ,15 , isNull(s,"idcertificateCode")));
 
         s.setField("idcertificateName", fillSpace(businessLicense.getCertificateName() ,15 , isNull(s,"idcertificateName")));

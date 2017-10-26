@@ -14,8 +14,5 @@
 /src/main/webapp/WEB-INF/classes/*
 /src/main/webapp/userfiles/*
 /target/
-/db/
-/doc/
-/pom.xml
-/proguard.cfg
 /src/
+/db/

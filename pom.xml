@@ -81,7 +81,8 @@
 	
 	<!-- 依赖项定义 -->
 	<dependencies>
-	
+		<!-- 阿里大鱼 -->
+
 		<!-- SPRING begin -->
 		<dependency>
 			<groupId>org.springframework</groupId>
