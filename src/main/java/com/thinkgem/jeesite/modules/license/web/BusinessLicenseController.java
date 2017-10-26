@@ -93,8 +93,8 @@ public class BusinessLicenseController extends BaseController {
 	public String form(BusinessLicense businessLicense, Model model) throws IOException, DocumentException {
 
 		String path = "E:\\certificate\\BusinessModel\\BusinessModel.pdf";
-		String savaPath = "E:\\certificate\\Business\\"+businessLicense.getPersionName()+businessLicense.getPersonId()+".pdf";
-		String realativePath = "/pic/certificate/Business/"+businessLicense.getPersionName()+businessLicense.getPersonId()+".pdf";
+		String savaPath = "E:\\certificate\\Business\\"+businessLicense.getCertificateName()+businessLicense.getPersonId()+".pdf";
+		String realativePath = "/pic/certificate/Business/"+businessLicense.getCertificateName()+businessLicense.getPersonId()+".pdf";
 		String view = "businessLicenseForm";
 		CertificateLibrary certificateLibrary = new CertificateLibrary();
 
