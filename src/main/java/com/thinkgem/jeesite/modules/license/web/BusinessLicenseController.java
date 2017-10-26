@@ -19,7 +19,6 @@ import org.apache.commons.lang3.StringUtils;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.codehaus.groovy.runtime.powerassert.SourceText;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -225,7 +224,6 @@ public class BusinessLicenseController extends BaseController {
 	public String testJump(String typeName,Model model) {
 		BusinessLicense businessLicense = new BusinessLicense();
 		CertificateType certificateType = certificateTypeService.getTypeByName(typeName);
-
 		businessLicense.setCertificateCode((int)((Math.random()*9+1)*10000000)+businessLicenseService.getCharAndNumr(9)+(int)((Math.random()*9+1)*1));
 
         //设置证照成立日期、有效起始日期，有效截止日期
