@@ -89,27 +89,47 @@ public class FrontController extends BaseController{
 	 * @DATE: 2017/10/11 14:16
 	 */
 	@RequestMapping(value = "forgetPassword")
-	public String forgetPwd(HttpServletResponse response, Model model) {
+	public String forgetPwd(User user, Model model) {
+		model.addAttribute("user", user);
 		return "modules/sys/forgetPassword";
 	}
 
 	/**
-	 * 验证登录名是否有效
+	 * 验证登录名是否有效可用
 	 * @param loginName
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "checkLoginName")
 	public String checkLoginName(String oldLoginName, String loginName) {
-		System.out.println(loginName);
 		if (loginName !=null && loginName.equals(oldLoginName)) {
 			return "true";
 
 		} else if (loginName !=null && systemService.getUserByLoginName(loginName) == null) {
 			return "true";
 		}
-		System.out.println("找到");
 		return "false";
+	}
+
+	/**
+	 * 验证登录名是否存在
+	 * @param loginName
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "checkLoginNameExist")
+	public String checkLoginNameExist(String oldLoginName, String loginName,HttpServletRequest request) {
+		if (loginName !=null && loginName.equals(oldLoginName)) {
+			return "false";
+
+		} else if (loginName !=null && systemService.getUserByLoginName(loginName) == null) {
+			return "false";
+		}
+		User user=systemService.getUserByLoginName(loginName);
+		String mobile=user.getMobile();
+		mobile=mobile.substring(0,mobile.length()-(mobile.substring(3)).length())+"****"+mobile.substring(7);
+		request.setAttribute("mobile1",mobile);
+		return "true";
 	}
 
 	/**
@@ -155,8 +175,8 @@ public class FrontController extends BaseController{
 		user.setRoleList(roleList);
 		// 保存用户信息
 		systemService.saveRegister(user);
-		addMessage(redirectAttributes, "保存用户'" + user.getLoginName() + "'成功");
-		return "modules/sys/forgetPassword";
+		addMessage(redirectAttributes, "注册用户'" + user.getLoginName() + "'成功");
+		return "modules/sys/sysLogin";
 	}
 
 

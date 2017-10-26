@@ -70,6 +70,17 @@ public class BusinessLicenseController extends BaseController {
 		}
 		return entity;
 	}
+
+	/**
+	 * @author YuXiaoXi
+	 * @TODO (注：跳转用户申请证照界面)
+
+	 * @DATE: 2017/10/18 16:21
+	 */
+	@RequestMapping(value = "apply")
+	public String apply(User user, BusinessLicense businessLicense, Model model) {
+		return "modules/license/qpplyCertificate";
+	}
 	
 	@RequiresPermissions("license:businessLicense:view")
 	@RequestMapping(value = {"list", ""})
@@ -213,18 +224,18 @@ public class BusinessLicenseController extends BaseController {
 	 * @DATE: 2017/10/23 11:03
 	 */
 	@RequiresPermissions("license:businessLicense:edit")
-	@RequestMapping(value = "jumpForm")
+	@RequestMapping(value = "applyBusinessLicense")
 	public String testJump(String typeName,Model model) {
 		BusinessLicense businessLicense = new BusinessLicense();
 		CertificateType certificateType = certificateTypeService.getTypeByName(typeName);
-
 		businessLicense.setCertificateCode((int)((Math.random()*9+1)*10000000)+businessLicenseService.getCharAndNumr(9)+(int)((Math.random()*9+1)*1));
-
 		businessLicense.setCertificateTypeName(certificateType.getCertificateTypeName());
 		businessLicense.setCertificateTypeId(certificateType.getId());
 		businessLicense.setOffice(certificateType.getOffice());
 		model.addAttribute("businessLicense", businessLicense);
 		return "modules/license/businessLicenseForm";
 	}
+
+
 
 }
