@@ -46,6 +46,7 @@
 <link rel="stylesheet" type="text/css" href="${ctxStatic}/css/honeySwitch.css">
 <script type="text/javascript" src="${ctxStatic}/js/honeySwitch.js"></script>
 <script>
+    //自动填充工具栏（util）的div的排版位置
     $(function () {
         $("#util").vgrid({
             easing: "easeOutQuint",
@@ -57,10 +58,21 @@
             }
         });
     });
+
+    /*加载可拖拽的组件(Mickey)*/
     $(function () {
+        /*打开页面的时候使画布自动填充满屏幕可用区域（hezijian6338）*/
+
+        //调试代码
         //alert("pageRight:"+"width:"+document.getElementById("pageRight").offsetWidth+"height:"+document.getElementById("pageRight").offsetHeight);
+
+        //留出右边的边沿区域
         document.getElementById("printf").style.width = document.getElementById("pageRight").offsetWidth - 20;
+
+        //减去工具区域的位置
         document.getElementById("printf").style.height = document.getElementById("pageRight").offsetHeight - document.getElementById("util").offsetHeight + 100;
+
+        /*左边组件栏设置为可缩放（Mickey）*/
         $("#products").resizable({
             minHeight: 140,
             minWidth: 200,
@@ -80,13 +92,14 @@
             //alert("cao ni ma ");
         });
 
+        /*画布使用jauery拖拽插件（Miceky）*/
         $("#printf").droppable({
             activeClass: "ui-state-default",
             hoverClass: "ui-state-hover",
             accept: ".components",
             drop: function (event, ui) {
 
-                <!--第一个拖拉组件文本框的生成-->
+                <!--第一个拖拉组件文本框的生成(Mickey)-->
 
                 if (ui.helper.attr("id") == "Text") {
                     var el = $("<div class='printComponents textComponents ' onclick='checkClick(this)'  tabindex='0' ></div>");
@@ -112,7 +125,7 @@
 
                 } else if (ui.helper.attr("id") == "radiobutton") {
 
-                    <!--第二个拖拉组件单选按钮的生成-->
+                    <!--第二个拖拉组件单选按钮的生成(Mickey)-->
 
                     var RadiostyleChoice = document.getElementById("RadiostyleChoice").value;
                     var radioAcount = document.getElementById("radioAcount").value;
@@ -181,7 +194,7 @@
 
                 } else if (ui.helper.attr("id") == "check box") {
 
-                    <!--第三个拖拉组件 多选按钮的生成-->
+                    <!--第三个拖拉组件 多选按钮的生成(Mickey)-->
 
                     var CheckBoxstyleChoice = document.getElementById("CheckBoxstyleChoice").value;
                     var checkAcount = document.getElementById("checkAcount").value;
@@ -249,7 +262,7 @@
 
                 } else if (ui.helper.attr("id") == "line") {
 
-                    <!--第四个拖拉组件的生成 直线 有横竖供用户选择-->
+                    <!--第四个拖拉组件的生成 直线 有横竖供用户选择(Mickey)-->
 
                     var lineStylechoice = document.getElementById("lineStylechoice").value;
                     if (lineStylechoice == 1) {
@@ -276,7 +289,9 @@
 
                 } else if (ui.helper.hasClass("Elements")) {
 
-                    <!--第五个组件 生成只能拖拉一次的关键拖拉组件 供以后可以用java代码寻找到相应的位置 输入相关内容-->
+                    <!--第五个组件 生成只能拖拉一次的关键拖拉组件 供以后可以用java代码寻找到相应的位置 输入相关内容(hezijain6338)-->
+
+                    /*增加了控制头像框尺寸的代码*/
 
                     //alert("id" + ui.helper.attr("id"));(width*0.1)
                     if (document.getElementById("id" + ui.helper.attr("id"))) {
@@ -320,7 +335,7 @@
 
                 } else if (ui.helper.attr("id") == "Form") {
 
-                    <!--第六个组件 表格的生成-->
+                    <!--第六个组件 表格的生成（Mickey）-->
 
                     var lineAcount = document.getElementById("FormLineAcount").value;
                     var columnAcount = document.getElementById("FormColumnAcount").value;
@@ -356,15 +371,15 @@
 
                 } else if (ui.helper.hasClass("othersElement")) {
 
-                    <!--第七个组件的生成 图片的拖拉-->
+                    <!--第七个组件的生成 图片的拖拉(Mickey)-->
 
                     var fileName = "/picFile/upload/1/modelPhoto/" + ui.helper.attr("id");
                     //alert(fileName);
-                    var el = $("<div class='printComponents picComponents' onclick='setIndex(this)' tabindex='0'></div>");
+                    var el = $("<div class='printComponents picComponents'  onclick='setIndex(this)' tabindex='0'></div>");
 
-                    el.append("<img src=" + fileName + " class='img' style='width:98%;height: auto'>");
+                    el.append("<img src=" + fileName + " class='img' style='width:98%;height: auto'  />");
                     var id = (new Date()).getMilliseconds();
-                    el.attr("id", "new" + id);
+                    el.attr("id", "new" + id + "-" + ui.helper.attr("id"));
                     el.resizable({
                         stop: function () {
                             var hereDrag = this;
@@ -379,7 +394,7 @@
                     }).appendTo("#printf");
 
                 } else {
-                    <!--第八个组件的生成 一些其他组件的生成-->
+                    <!--第八个组件的生成 一些其他组件的生成(Mickey)-->
 
                     var el = $("<div class='printComponents' onclick='checkClick(this)' tabindex='0' ></div>");
                     var id = (new Date()).getMilliseconds();
@@ -397,6 +412,7 @@
     });
 </script>
 <body>
+<%--左侧栏目组件的div(Mickey)--%>
 <div id="products">
     <h1 class="ui-widget-header">组件</h1>
     <div id="catalog">
@@ -425,6 +441,7 @@
                 </select>
             </ul>
         </div>
+        <%--变换PDF文本域的主要可拖拽元素（Mickey）--%>
         <h2><a href="#">元素</a></h2>
         <div>
             <ul>
@@ -499,9 +516,15 @@
         <div>
             <ul id="othersElements">
                 <%
+                    /*读取模板文件目录要具体设置（hezijian6338&Mickey）*/
+
+                    //Windows的文件目录
                     //String realpath = "E:\\photo\\upload\\1\\modelPhoto\\";
+
+                    //Mac的文件目录
                     String realpath = "/Users/Macx/github/RC_Work/GECS/manager/upload/1/modelPhoto/";
-                    System.out.println(realpath);
+
+                    //System.out.println(realpath);
                     File d = new File(realpath);
                     if (d.exists()) {
                         File list[] = d.listFiles();
@@ -510,7 +533,7 @@
                             int end = filename.lastIndexOf(".");
                             String realName = filename.substring(0, end);
                             //System.out.println(realName);		//成功显示当前文件夹的文件名字
-                            out.println("<div class='components othersElement' id=" + filename + ">" + realName + "</div>");
+                            //out.println("<div class='components othersElement' id=" + filename + ">" + realName + "</div>");
                         }
                     }
                 %>
@@ -519,12 +542,15 @@
     </div>
 </div>
 
-
+<%--页面右侧div(Mickey)--%>
 <div class="pageRight" id="pageRight">
+    <%--页面中ckfinder预览div(hezijian6338)--%>
     <div id="pdf" class="pdf"></div>
+    <%--页面工具栏（hezijian6338）--%>
     <div class="util" id="util">
+
+        <!-- 设置画布大小(Mickey)-->
         <div id="setDraw_size" class="_util" style="float:left;clear: both">
-            <!-- 设置画布大小 -->
             <%--<form>--%>
             画布大小:
             宽:<input id="printfWidth" size="10" placeholder="width"
@@ -537,6 +563,8 @@
                              "if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"/>
             <%--<input id="submitPrintf"   type="button" value="确认画布大小" onclick="setPrintfSize()"/>--%>
             <%--</form>--%>
+
+            <%--加载的样式按钮--%>
             <button id="submitPrintf" class="bttn-unite bttn-xs bttn-primary" onclick="setPrintfSize()">确认</button>
         </div>
 
@@ -611,7 +639,7 @@
         </script>
 
 
-        <!--背景颜色设置透明-->
+        <!--背景颜色设置透明（Mickey&hezijian6338）-->
         <div id="setBG_color" class="_util" style="float:left;clear: both;width: 35%">
             <%--<form>--%>
             背景颜色：是否透明
@@ -619,7 +647,8 @@
             <%--<option value="1" selected="selected">是</option>--%>
             <%--<option value="0">否</option>--%>
             <%--</select>--%>
-            <span class="switch-off" id="backgroundTransparent" themeColor="#1d89ff" offText="透明" onText="不透明" style="zoom: 0.8">on</span>
+            <span class="switch-off" id="backgroundTransparent" themeColor="#1d89ff" offText="" onText=""
+                  style="zoom: 0.8"> 否</span>
             <div id="bgcolorPicker" style="float:right;display: none;width: auto">
                 <button id="backgroundColorSelect"
                         class="jscolor {valueElement:'chosen-value', onFineChange:''}"
@@ -651,7 +680,7 @@
         <%--</div>--%>
         <%--</div>--%>
 
-        <%--PDF生成格式设置--%>
+        <%--PDF生成格式设置(hezijian6338)--%>
         <div id="setPdf_makeup" class="_util">
             PDF布局形式:
             <select id="LorP">
@@ -696,7 +725,7 @@
             <%--<input type="button" id="saveTxt" onclick="saveTxt()" value="下载图片"/>--%>
         </div>
 
-        <!--提供上传文件-->
+        <!--提供上传文件(hezijian6338)暂时取消使用-->
         <div id="setFile_upload" class="_util">
             <%--<form action="smartUploaddemo.jsp" enctype="multipart/form-data" method="post" target="_blank">--%>
             <%--输入图片ID<input name="id" size="10" id="imgid" onkeyup="checkUnique()" placeholder="输入唯一的ID" required>--%>
@@ -738,13 +767,13 @@
             <%--</div>--%>
         </div>
 
-
+        <!--字体设置工具栏(Mickey)-->
         <div id="setFont_option" class="_util" style="float:left;">
-            <!--字体设置工具栏-->
             <button id="bold" class="bttn-pill bttn-xs bttn-primary">加粗</button>
             <button id="italic" class="bttn-pill bttn-xs bttn-primary">加斜</button>
             <button id="underline" class="bttn-pill bttn-xs bttn-primary">下划线</button>
             <button id="textareaBorder" class="bttn-pill bttn-xs bttn-primary">边框</button>
+            <%--<button id="setBackGround" class="bttn-unite bttn-xs bttn-primary">设置背景图片</button>--%>
             <%--<input id="bold" type="button" value="加粗" style="height:24px;line-height:20px"/>--%>
             <%--<input id="italic" type="button" value="加斜" style="height:24px;line-height:20px"/>--%>
             <%--<input id="underline" type="button" value="下划线" style="height:24px;line-height:20px"/>--%>
@@ -820,25 +849,30 @@
             <%--<button onclick="checkTest()">test</button>--%>
         </div>
     </div>
+
+    <%--画布--%>
     <div id="printf"></div>
 </div>
 
 
 <script>
 
+    /*加载开关按钮的控制选项*/
     $(function () {
-        var backgroundColorSelect = document.getElementById("backgroundColorSelect");
-        var printf = document.getElementById("printf");
-        switchEvent("#backgroundTransparent", function () {
-            document.getElementById("bgcolorPicker").style.display = ""
-            $(backgroundColorSelect).removeAttr("disabled");
-        }, function () {
-            backgroundColorSelect.setAttribute("disabled", true);
-            document.getElementById("bgcolorPicker").style.display = "none"
-            printf.style.backgroundColor = "transparent";
-        });
-    });
+            var backgroundColorSelect = document.getElementById("backgroundColorSelect");
+            var printf = document.getElementById("printf");
+            switchEvent("#backgroundTransparent", function () {
+                document.getElementById("bgcolorPicker").style.display = ""
+                $(backgroundColorSelect).removeAttr("disabled");
+            }, function () {
+                backgroundColorSelect.setAttribute("disabled", true);
+                document.getElementById("bgcolorPicker").style.display = "none"
+                printf.style.backgroundColor = "transparent";
+            });
+        }
+    );
 
+    /*设定PDF生成格式的大小*/
     var pageFormats = { // Size in pt of various paper formats
         'a0': [2383.94, 3370.39],
         'a1': [1683.78, 2383.94],
@@ -894,10 +928,12 @@
     var inputSubmit = document.getElementById("inputSubmit");
 
 
+    /*加载控制PDF格式变化的监测（hezijian6338）*/
     var pdfsize = document.getElementById("pdfSize");
     var lorp = document.getElementById("LorP");
     var printf = document.getElementById("printf");
 
+    //PDF大小控制
     pdfsize.onchange = function () {
         alert("自动修改画布为你当前所选的格式,并且清楚画布内容,请重新排版！");
         printf.innerHTML = "";
@@ -910,6 +946,7 @@
         }
     };
 
+    //PDF排版控制
     lorp.onchange = function () {
         alert("自动修改画布为你当前所选的格式,并且清楚画布内容,请重新排版！");
         printf.innerHTML = "";
@@ -933,6 +970,7 @@
         }
     };
 
+    /*加载画布的右键插件(hezijian6338)*/
     $("#printf").contextPopup({
 
         title: '画布操作',
@@ -949,6 +987,7 @@
         ]
     });
 
+    /*页面控制（Mickey）*/
     window.onload = function () {					//禁止鼠标右键事件
         document.oncontextmenu = function (e) {
             e.preventDefault();
@@ -959,10 +998,6 @@
             alert(realPrintfContent);
         }
     };
-
-    //    function jump() {				//跳转到第二个页面查看历史模板
-    //        window.open("CheckModel.jsp");
-    //    }
 
 
     function wirteText(e) {			//为每一个文本框输入后自动生成相对应的Html
@@ -981,7 +1016,7 @@
         });
     }
 
-    //把画布内容保存到txt和图片
+    /* 把画布内容保存到txt和图片(Mickey)*/
     function saveTxt() {
         var blob = new Blob([document.getElementById("printf").innerHTML], {type: "text/plain;charset=utf-8"});
         saveAs(blob, "printf.txt");
@@ -994,6 +1029,7 @@
         });
     }
 
+    /*手动修改画布大小(Mickey)*/
     function setPrintfSize() {
         var printf = document.getElementById("printf");
         if (!($(printf).children().length == 0)) {
@@ -1021,6 +1057,7 @@
     }
 
 
+    /*修改背景颜色（Mickey）*/
     function changeBackgroundColor() {
         var printf = document.getElementById("printf");
         var backgroundColorSelect = document.getElementById("chosen-value");
@@ -1035,88 +1072,32 @@
     }
 
 
-    function setIndex(e) {					//使选中的元素永远在图层的最上面
-//        var btnNum = event.button;
-        //alert(e.button);
-        var thisId = document.getElementById(e.getAttribute("id"));
-        if (e.style.zIndex != 1) {				//不是背景的元素
-            index = index + 1;
-            e.style.zIndex = index;
-        }
-//        if (btnNum == 1) {
-//            //alert("点击鼠标中键");
-//            if (e.style.zIndex == 1) {
-//                if (confirm("是否解除当前组件背景？")) {
-//                    index = index + 1;
-//                    e.style.zIndex = index;
-//                }
-//            } else {								//设置选中元素的zIndex
-//
-//            }
-//        } else if (btnNum == 0) {
-//            //alert("点击鼠标左键");
-//        } else
-//        if (btnNum == 2) {
-        //alert("点击鼠标右键");
-        var showLabel = "设置背景图片";
-        if (backGroundUnique != 0) {
-            showLabel = "取消背景图片"
-        }
-        $(thisId).contextPopup({
+    /*图片元素右键监测函数（Mickey&hezijian6338）*/
+    function setIndex(e) {//使选中的元素永远在图层的最上面
+        var xIndex = 2;
+        $(e).contextPopup({
 
-            title: $(e).attr("id") + "元素",
+            title: '图片元素操作',
 
             items: [
-
                 {
-                    label: showLabel, action: function () {
-                    if (backGroundUnique == 0) {			//还没有设置背景
-//                            if (confirm("确认此图作为背景？")) {
-                        e.style.padding = "0 auto";
-                        e.style.margin = "0 auto";
-                        e.style.width = printf.style.width;
-                        e.style.height = printf.style.height;
-                        e.style.zIndex = 1;
-                        backGroundUnique = 1; //背景已经设置了
-//                            }
-                    }
-                    else {
-//                            if (confirm("是否取消原有图片为背景？")) {
-                        e.style.padding = "0 auto";
-                        e.style.margin = "0 auto";
-                        e.style.width = printf.style.width / 2;
-                        e.style.height = printf.style.height / 2;
-                        e.style.zIndex = index;
-                        backGroundUnique = 0; //背景没设置了
-//                            }
+                    label: '设置背景', action: function () {
+                    if (backGroundUnique != 1) {			//还没有设置背景
+                        $(e).css("zIndex", "1");
+                        backGroundUnique = 1;
+                    } else {
+                        xIndex++;
+                        $(e).css("zIndex", xIndex);
+                        backGroundUnique = 0;
                     }
                 }
-                },
-
-                {
+                }, {
                     label: '删除元素', action: function () {
-//                        if (confirm("是否删除该元素？")) {
-                    backGroundUnique = 0; //背景没设置了
-                    $(thisId).remove();
-//                        }
-                }
+                        $(e).remove();
+                    }
                 }
             ]
-
         });
-//
-//                if (backGroundUnique == 0) {			//还没有设置背景
-//                if (confirm("确认此图作为背景？")) {
-//                    e.style.zIndex = 1;
-//                    backGroundUnique = 1; //背景已经设置了
-//                }
-//            } else {
-//                if (confirm("是否取消原有图片为背景？")) {
-//                    e.style.zIndex = 999;
-//                    backGroundUnique = 0; //背景已经设置了
-//                }
-//            }
-//        }
 
         //让保存的元素重新到画布上后能重新拖拽伸缩编辑功能
         if ($(e).hasClass("printComponents")) {
@@ -1128,6 +1109,7 @@
         }
     }
 
+    /*普通元素右键监测(Mickey&hezijian6338)*/
     function checkClick(e) {
         //alert(e.getAttribute("id"));
         var thisID = document.getElementById(e.getAttribute("id"));
@@ -1141,6 +1123,24 @@
         }
 
 
+        $(e).contextPopup({
+
+            title: '元素属性操作',
+
+            items: [
+                {
+                    label: '删除元素', action: function () {
+                    if (confirm("是否删除该元素？")) {
+//                        alert(originId);
+                        document.getElementById(originId).style.backgroundColor = "";
+                        $(e).remove();
+                    }
+                }
+                }
+            ]
+        });
+
+        /*字体样式监测（Mickey）*/
         var bold = document.getElementById("bold");
         bold.onclick = function () {
             if (i == 0 || i == "" || i == null || i == undefined) {
@@ -1155,6 +1155,7 @@
             }
         }
 
+        /*字体样式监测（Mickey）*/
         var italic = document.getElementById("italic");
         italic.onclick = function () {
             if (j == 0 || j == "" || j == undefined) {
@@ -1168,6 +1169,7 @@
             }
         }
 
+        /*字体样式监测（Mickey）*/
         var underline = document.getElementById("underline");
         underline.onclick = function () {
             if (k == 0 || k == "" || k == undefined) {
@@ -1181,6 +1183,7 @@
             }
         }
 
+        /*字体样式监测（Mickey）*/
         var textareaBorder = document.getElementById("textareaBorder");
         textareaBorder.onclick = function () {
             if ($(thisID).hasClass("textComponents")) {
@@ -1194,6 +1197,21 @@
             }
         }
 
+        /*字体样式监测（Mickey）*/
+        var setBackGround = document.getElementById("setBackGround");
+        setBackGround.onclick = function () {
+            if ($(thisID).hasClass("textComponents")) {
+                if (l == 0 || l == "" || l == undefined) {
+                    $(thisID).find('textarea').css('border', "1px solid #000");
+                    l = 1;
+                } else {
+                    $(thisID).find('textarea').css('border', "none");
+                    l = 0;
+                }
+            }
+        }
+
+        /*字体具体属性控制（Mickey）*/
         var colorselect = document.getElementById('chosen1-value');
         var size = document.getElementById("fontsize");
         var family = document.getElementById("fontfamily");
@@ -1246,23 +1264,6 @@
             $(thisID).find('textarea').css('font-family', fontfamily);
             $(thisID).find('label').css('font-family', fontfamily);
         }
-
-        $(thisID).contextPopup({
-
-            title: '元素属性操作',
-
-            items: [
-                {
-                    label: '删除元素', action: function () {
-                    if (confirm("是否删除该元素？")) {
-//                        alert(originId);
-                        document.getElementById(originId).style.backgroundColor = "";
-                        $(thisID).remove();
-                    }
-                }
-                }
-            ]
-        });
 
 
         //alert(e.getAttribute("id")+""+fontsize+""+fontfamily);		//是否成功获取属性值
@@ -1318,6 +1319,7 @@
         return first + second + third;
     }
 
+    /*创建PDF的文本域（Mickey&hezijian6338）*/
     function createTextField(pdf, TF_Id, TF_Name, posX, posY, posW, posH, TF_T) {
 
         //alert(TF_Id + "       " + TF_Name + "       " + posX + "       " + posY + "       " + posW + "       " + posH);
@@ -1330,7 +1332,7 @@
         pdf.addField(textField);
     }
 
-    //使当前页面变成图片 然后转换为pdf
+    /*使当前页面变成图片 然后转换为pdf(Mickey&hezijian6338)*/
     function print() {
         var printfWidth = document.getElementById("printfWidth").value;
         var printfHeight = document.getElementById("printfHeight").value;
@@ -1421,6 +1423,7 @@
     }
 
 
+    /*新建用户自插入图片（Mickey&hezijian6338）*/
     function createNewElements() {
         var inputContent = document.getElementById("xFilePath").value;
         document.getElementById("xFilePath").value = "";
