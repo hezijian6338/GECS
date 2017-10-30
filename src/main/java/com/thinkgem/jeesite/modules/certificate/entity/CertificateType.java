@@ -33,7 +33,7 @@ public class CertificateType extends DataEntity<CertificateType> {
 		super(id);
 	}
 
-	@Length(min=1, max=64, message="证照类型编号长度必须介于 1 和 64 之间")
+
 	public String getId() {
 		return id;
 	}
