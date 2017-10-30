@@ -533,7 +533,7 @@
                             int end = filename.lastIndexOf(".");
                             String realName = filename.substring(0, end);
                             //System.out.println(realName);		//成功显示当前文件夹的文件名字
-                            //out.println("<div class='components othersElement' id=" + filename + ">" + realName + "</div>");
+                            out.println("<div class='components othersElement' id=" + filename + ">" + realName + "</div>");
                         }
                     }
                 %>
