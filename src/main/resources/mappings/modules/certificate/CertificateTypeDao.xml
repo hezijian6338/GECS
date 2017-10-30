@@ -10,6 +10,7 @@
 		a.effective_date AS "effectiveDate",
 		a.description AS "description",
 		a.owner_type AS "ownerType",
+		a.certificate_path AS "certificatePath",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
@@ -94,6 +95,7 @@
 			effective_date,
 			description,
 			owner_type,
+			certificate_path,
 			create_by,
 			create_date,
 			update_by,
@@ -108,9 +110,10 @@
 			#{effectiveDate},
 			#{description},
 			#{ownerType},
+			#{certificatePath},
 			#{createBy.id},
 			#{createDate},
-			#{updateBy.id},
+			#{updateBy.id},``
 			#{updateDate},
 			#{remarks},
 			#{delFlag}
@@ -125,6 +128,7 @@
 			effective_date = #{effectiveDate},
 			description = #{description},
 			owner_type = #{ownerType},
+			certificate_path=#{certificatePath},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks}

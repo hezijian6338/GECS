@@ -24,7 +24,8 @@ public class CertificateType extends DataEntity<CertificateType> {
 	private String effectiveDate;		// 有效期限（年）
 	private String description;		// 证照描述
 	private String ownerType;		// 持证者类型
-	
+	private String certificatePath;		// 证照图片位置
+
 	public CertificateType() {
 		super();
 	}
@@ -94,6 +95,14 @@ public class CertificateType extends DataEntity<CertificateType> {
 
 	public void setOwnerType(String ownerType) {
 		this.ownerType = ownerType;
+	}
+
+	public String getCertificatePath() {
+		return certificatePath;
+	}
+
+	public void setCertificatePath(String certificatePath) {
+		this.certificatePath = certificatePath;
 	}
 
 

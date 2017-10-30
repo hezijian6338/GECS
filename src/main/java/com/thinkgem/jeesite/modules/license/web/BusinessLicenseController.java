@@ -75,6 +75,17 @@ public class BusinessLicenseController extends BaseController {
 		}
 		return entity;
 	}
+
+	/**
+	 * @author YuXiaoXi
+	 * @TODO (注：跳转用户申请证照界面)
+
+	 * @DATE: 2017/10/18 16:21
+	 */
+	@RequestMapping(value = "apply")
+	public String apply(User user, BusinessLicense businessLicense, Model model) {
+		return "modules/license/qpplyCertificate";
+	}
 	
 	@RequiresPermissions("license:businessLicense:view")
 	@RequestMapping(value = {"list", ""})
@@ -220,12 +231,12 @@ public class BusinessLicenseController extends BaseController {
 	 * @DATE: 2017/10/23 11:03
 	 */
 	@RequiresPermissions("license:businessLicense:edit")
-	@RequestMapping(value = "jumpForm")
+	@RequestMapping(value = "applyBusinessLicense")
 	public String testJump(String typeName,Model model) {
 		BusinessLicense businessLicense = new BusinessLicense();
 		CertificateType certificateType = certificateTypeService.getTypeByName(typeName);
 		businessLicense.setCertificateCode((int)((Math.random()*9+1)*10000000)+businessLicenseService.getCharAndNumr(9)+(int)((Math.random()*9+1)*1));
-
+		businessLicense.setCertificateTypeName(certificateType.getCertificateTypeName());
         //设置证照成立日期、有效起始日期，有效截止日期
         Date startDate = new Date();
         Date endDate = new Date();
@@ -234,21 +245,19 @@ public class BusinessLicenseController extends BaseController {
         int yearAdd=Integer.parseInt(certificateType.getEffectiveDate());
         calendar.add(calendar.YEAR,yearAdd);
         endDate=calendar.getTime();
-
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
         businessLicense.setEstablishDate(startDate);
         businessLicense.setEffectiveDateStar(startDate);
         businessLicense.setEffectiveDateEnd(endDate);
-
         System.out.println(dateFormat.format(startDate));
         System.out.println(dateFormat.format(endDate));
-
         businessLicense.setCertificateTypeName(certificateType.getCertificateTypeName());
 		businessLicense.setCertificateTypeId(certificateType.getId());
 		businessLicense.setOffice(certificateType.getOffice());
 		model.addAttribute("businessLicense", businessLicense);
 		return "modules/license/businessLicenseForm";
 	}
+
+
 
 }

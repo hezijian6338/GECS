@@ -87,7 +87,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 			return new SimpleAuthenticationInfo(new Principal(user, token.isMobileLogin()), 
 					user.getPassword().substring(16), ByteSource.Util.bytes(salt), getName());
 		} else {
-			return null;
+			throw new AuthenticationException("msg:用户不存在,请重试.");
 		}
 	}
 	

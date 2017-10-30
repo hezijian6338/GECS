@@ -1,29 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: RunCheng
-  Date: 2017/10/18
-  Time: 16:33
-  To change this template use File | Settings | File Templates.
---%>
-<%--<%@ page contentType="text/html;charset=UTF-8" %>--%>
-<%--<%@ include file="/WEB-INF/views/include/taglib.jsp"%>--%>
-<%--<html>--%>
-<%--<head>--%>
-    <%--<title>Title</title>--%>
-<%--</head>--%>
-<%--<body>--%>
-    <%--<table border="2px">--%>
-        <%--<tr>--%>
-            <%--<td>--%>
-                <%--<a href="${ctx}/certificate/applyCertificate/applyBusinessLicense" ><img src="${ctxStatic}/images/businessLicense,pdf">--%>
-            <%--</td>--%>
-            <%--<td>--%>
-                <%--<a href="" >666666666<img src="">--%>
-            <%--</td>--%>
-        <%--</tr>--%>
-
-<%--</body>--%>
-<%--</html>--%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <head>
@@ -72,7 +46,7 @@
                 <div>
                     <table  align="center" width="50%"   border="10"  bordercolor="#a0c6e5" cellspacing="20">
                         <tr>
-                            <td><a href="${ctx}/certificate/applyCertificate/applyBusinessLicense" onMouseOut="swapImage('Image12','/static/licenseImages/business.jpg')" onMouseOver="swapImage('Image12','/static/licenseImages/business1.jpg')"><img src="/static/licenseImages/businessLicense.jpg" name="Image12" width="180" height="270" border="0" id="Image12" /></a>
+                            <td><a href="${ctx}/license/businessLicense/applyBusinessLicense?typeName=营业执照" onMouseOut="swapImage('Image12','/static/licenseImages/business.jpg')" onMouseOver="swapImage('Image12','/static/licenseImages/business1.jpg')"><img src="/static/licenseImages/businessLicense.jpg" name="Image12" width="180" height="270" border="0" id="Image12" /></a>
                             <td><a href="xcb.html" onMouseOut="swapImage('Image13','/static/licenseImages/xc.jpg')" onMouseOver="swapImage('Image13','/static/licenseImages/xc2.jpg')"><img src="/static/licenseImages/xc.jpg" name="Image13" width="180" height="270" border="0" id="Image13" /></a></td>
                             <td><a href="zy.html" onMouseOut="swapImage('Image14','/static/licenseImages/zy.jpg')" onMouseOver="swapImage('Image14','/static/licenseImages/zy2.jpg')"><img src="/static/licenseImages/zy.jpg" name="Image14" width="180" height="270" border="0" id="Image14" /></a></td>
                         </tr>
@@ -88,7 +62,6 @@
                             <td> <a href="cm.html" onMouseOut="swapImage('Image18','/static/licenseImages/cm.jpg')" onMouseOver="swapImage('Image18','/static/licenseImages/cm2.jpg')"><img src="/static/licenseImages/cm.jpg" name="Image18" width="180" height="270" border="0" id="Image18" /></a></td>
                             <td> <a href="zc.html" onMouseOut="swapImage('Image19','/static/licenseImages/zc.jpg')" onMouseOver="swapImage('Image19','/static/licenseImages/zc2.jpg')"><img src="/static/licenseImages/zc.jpg" name="Image19" width="180" height="270" border="0" id="Image19" /></a></td>
                             <td> <a href="px.html" onMouseOut="swapImage('Image20','/static/licenseImages/px.jpg')" onMouseOver="swapImage('Image20','/static/licenseImages/px2.jpg')"><img src="/static/licenseImages/px.jpg" name="Image20" width="180" height="270" border="0" id="Image20" /></a></td>
-
                         </tr>
                     </table>
                     <br>
