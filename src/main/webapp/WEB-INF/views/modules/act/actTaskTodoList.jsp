@@ -27,7 +27,9 @@
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/act/task/todo/">待办任务</a></li>
 		<li><a href="${ctx}/act/task/historic/">已办任务</a></li>
+	<c:if test="${!fns:isPopulace()}">
 		<li><a href="${ctx}/act/task/process/">新建任务</a></li>
+	</c:if>
 	</ul>
 	<form:form id="searchForm" modelAttribute="act" action="${ctx}/act/task/todo/" method="get" class="breadcrumb form-search">
 		<div>
@@ -88,8 +90,10 @@
 							<a href="javascript:claim('${task.id}');">签收任务</a>
 						</c:if>
 						<c:if test="${not empty task.assignee}">
-							<a href="${ctx}${procExecUrl}/exec/${task.taskDefinitionKey}?procInsId=${task.processInstanceId}&act.taskId=${task.id}">办理</a>
+<%--							<a href="${ctx}${procExecUrl}/exec/${task.taskDefinitionKey}?procInsId=${task.processInstanceId}&act.taskId=${task.id}">办理</a>--%>
+						<c:if test="${!fns:isPopulace()}">
 							<a href="${ctx}/act/task/form?taskId=${task.id}&taskName=${fns:urlEncode(task.name)}&taskDefKey=${task.taskDefinitionKey}&procInsId=${task.processInstanceId}&procDefId=${task.processDefinitionId}&status=${status}">任务办理</a>
+						</c:if>
 						</c:if>
 						<shiro:hasPermission name="act:process:edit">
 							<c:if test="${empty task.executionId}">
@@ -98,7 +102,7 @@
 						</shiro:hasPermission>
 						<a target="_blank" href="${pageContext.request.contextPath}/act/diagram-viewer?processDefinitionId=${task.processDefinitionId}&processInstanceId=${task.processInstanceId}">跟踪</a>
 						<a target="_blank" href="${ctx}/act/task/trace/photo/${task.processDefinitionId}/${task.executionId}">跟踪2</a> 
-						<a target="_blank" href="${ctx}/act/task/trace/info/${task.processInstanceId}">跟踪信息</a>
+						<%--<a target="_blank" href="${ctx}/act/task/trace/info/${task.processInstanceId}">跟踪信息</a>--%>
 					</td>
 				</tr>
 			</c:forEach>
