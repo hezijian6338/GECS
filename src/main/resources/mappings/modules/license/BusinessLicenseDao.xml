@@ -168,7 +168,7 @@
 			#{id},
 			#{procInsId},
 			#{certificateTypeId},
-
+			#{certificateTypeName},
 			#{certificateCode},
 			#{certificateName},
 			#{office.id},
@@ -210,6 +210,7 @@
 	<update id="update">
 		UPDATE business_license SET 	
 			certificate_type_id = #{certificateTypeId},
+			certificate_type_id = #{certificateTypeName},
 			certificate_code = #{certificateCode},
 			certificate_name = #{certificateName},
 			office_id = #{office.id},

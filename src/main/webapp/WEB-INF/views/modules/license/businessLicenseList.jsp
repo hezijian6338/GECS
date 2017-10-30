@@ -154,7 +154,7 @@
 					${businessLicense.area.name}
 				</td>
 				<td>
-					${businessLicense.updateBy.id}
+					${businessLicense.createBy.name}
 				</td>
 				<td>
 					<fmt:formatDate value="${businessLicense.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
