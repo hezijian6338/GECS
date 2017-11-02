@@ -5,6 +5,7 @@ package com.thinkgem.jeesite.modules.oa.service;
 
 import java.util.Date;
 
+import com.thinkgem.jeesite.modules.sys.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -80,4 +81,10 @@ public class OaNotifyService extends CrudService<OaNotifyDao, OaNotify> {
 		oaNotifyRecord.setReadFlag("1");
 		oaNotifyRecordDao.update(oaNotifyRecord);
 	}
+
+    public OaNotifyRecord getByUserId(String userId1) {
+		OaNotifyRecord oaNotifyRecordId = oaNotifyRecordDao.getByUserId(userId1);
+		System.out.println("........" + oaNotifyRecordId);
+		return oaNotifyRecordId;
+    }
 }
