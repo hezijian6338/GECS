@@ -34,7 +34,12 @@ public class OaNotifyService extends CrudService<OaNotifyDao, OaNotify> {
 		OaNotify entity = dao.get(id);
 		return entity;
 	}
-	
+
+	public List<OaNotify> getByIds(List<String> ids){
+		List<OaNotify> oaNotifies = dao.getByIds(ids);
+		return oaNotifies;
+	}
+
 	/**
 	 * 获取通知发送记录
 	 * @param oaNotify
@@ -54,7 +59,7 @@ public class OaNotifyService extends CrudService<OaNotifyDao, OaNotify> {
 	/**
 	 * @author 练浩文
 	 * @TODO (注：)
-	  * @param null
+	  * @param
 	 * @DATE: 2017/11/6 14:26
 	 */
 	public Page<OaNotify> find(Page<OaNotify> page, OaNotify oaNotify,List<OaNotify> oaNotifies) {

@@ -36,6 +36,17 @@
 		<include refid="oaNotifyJoins"/>
 		WHERE a.id = #{id}
 	</select>
+
+	<select id="getByIds" resultType="OaNotify">
+		SELECT
+		<include refid="oaNotifyColumns"/>
+		FROM oa_notify a
+		<include refid="oaNotifyJoins"/>
+		WHERE a.id IN
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+		#{item}
+		</foreach>
+	</select>
 	
 	<select id="findList" resultType="OaNotify">
 		SELECT 

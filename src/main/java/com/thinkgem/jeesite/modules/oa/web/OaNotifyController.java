@@ -107,19 +107,18 @@ public class OaNotifyController extends BaseController {
 		oaNotify.setSelf(true);
 		User user = getUser();
 		List oaNotifyList=new ArrayList();
-				//获取oaNotifyRecord的信息
+		List<String> oaNotifyIds = new ArrayList<String>();
+		//获取oaNotifyRecord的信息
 		List<OaNotifyRecord> oaNotifyRecord = oaNotifyService.getByUserId(user.getId());
 		//通过user表中的id获取oaNotifyId
-		System.out.println("----------"+oaNotifyRecord);
 		if (oaNotifyRecord!=null) {
 			for (int i = 0; i < oaNotifyRecord.size(); i++) {
 				String oaNotifyRecordId = oaNotifyRecord.get(i).getOaNotify().getId();
 				if (oaNotifyRecordId != null || !"null".equals(oaNotifyRecordId)) {
-					oaNotify = oaNotifyService.get(oaNotifyRecordId);
-					oaNotifyList.add(oaNotify);
+					oaNotifyIds.add(oaNotifyRecordId);
 				}
-//				System.out.println("++++++++" + oaNotifyList);
 			}
+			oaNotifyList = oaNotifyService.getByIds(oaNotifyIds);
 		}
 		Page<OaNotify> page = oaNotifyService.find(new Page<OaNotify>(request, response), oaNotify,oaNotifyList);
 		model.addAttribute("page", page);
