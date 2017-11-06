@@ -14,6 +14,9 @@ import com.thinkgem.jeesite.modules.certificate.entity.CertificateLibrary;
 import com.thinkgem.jeesite.modules.certificate.entity.CertificateType;
 import com.thinkgem.jeesite.modules.certificate.service.CertificateLibraryService;
 import com.thinkgem.jeesite.modules.certificate.service.CertificateTypeService;
+import com.thinkgem.jeesite.modules.oa.dao.OaNotifyRecordDao;
+import com.thinkgem.jeesite.modules.oa.entity.OaNotify;
+import com.thinkgem.jeesite.modules.oa.service.OaNotifyService;
 import com.thinkgem.jeesite.modules.sys.service.SystemService;
 import org.apache.commons.lang3.StringUtils;
 import com.thinkgem.jeesite.modules.sys.entity.User;
@@ -32,6 +35,7 @@ import com.thinkgem.jeesite.modules.license.entity.BusinessLicense;
 import com.thinkgem.jeesite.modules.license.service.BusinessLicenseService;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -49,6 +53,10 @@ import static oracle.net.aso.C05.b;
 @Controller
 @RequestMapping(value = "${adminPath}/license/businessLicense")
 public class BusinessLicenseController extends BaseController {
+
+	@Autowired
+	private OaNotifyService oaNotifyService;
+
 
 	@Autowired
 	private BusinessLicenseService businessLicenseService;
@@ -176,9 +184,27 @@ public class BusinessLicenseController extends BaseController {
 		}
 		String radio=request.getParameter("bt1");
 		businessLicense.setRegisteredCapital(businessLicense.getRegisteredCapital()+radio);
+
+
+		//保存在通告表中
+		OaNotify oaNotify=new OaNotify();
+		DateFormat df = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+
 		businessLicenseService.save(businessLicense);
+		oaNotify.setType(businessLicense.getCertificateTypeName());
+		oaNotify.setTitle(businessLicense.getCertificateName()+"-"+df.format(businessLicense.getCreateDate()));
+		oaNotify.setStatus("审核中....");
+		oaNotify.setReadNum("1");
+		oaNotify.setOaNotifyRecordIds(UserUtils.getUser().getId());
+		oaNotify.setSelf(true);
+		oaNotifyService.save(oaNotify);
+
+
 		addMessage(redirectAttributes, "保存营业执照成功");
-		return "redirect:" + adminPath + "/act/task/todo/";
+
+			return "redirect:" + adminPath + "/oa/oaNotify/?repage";
+
+
 	}
 
 

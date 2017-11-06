@@ -57,13 +57,16 @@
 		<c:forEach items="${page.list}" var="oaNotify">
 			<tr>
 				<td><a href="${ctx}/oa/oaNotify/${requestScope.oaNotify.self?'view':'form'}?id=${oaNotify.id}">
-					${fns:abbr(oaNotify.title,50)}
+					<%--${fns:abbr(oaNotify.title,100)}--%>
+					${oaNotify.title}
 				</a></td>
 				<td>
-					${fns:getDictLabel(oaNotify.type, 'oa_notify_type', '')}
+					<%--${fns:getDictLabel(oaNotify.type, 'oa_notify_type', '')}--%>
+					${oaNotify.type}
 				</td>
 				<td>
-					${fns:getDictLabel(oaNotify.status, 'oa_notify_status', '')}
+					<%--${fns:getDictLabel(oaNotify.status, 'oa_notify_status', '')}--%>
+					${oaNotify.status}
 				</td>
 				<td>
 					<c:if test="${requestScope.oaNotify.self}">

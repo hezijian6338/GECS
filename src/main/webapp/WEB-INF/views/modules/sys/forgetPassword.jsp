@@ -37,7 +37,8 @@
                     loginName: {
                         required:true,
                         isIdCardNo: true,
-                        remote: "${ctxFront}/checkLoginNameExist?oldLoginName=" + encodeURIComponent('${user.loginName}')
+                        remote: "${ctxFront}/checkLoginNameExist?oldLoginName="
+                        + encodeURIComponent('${user.loginName}')
                     },
                     validateCode: {remote: "${pageContext.request.contextPath}/servlet/validateCodeServlet"},
                 },
@@ -66,7 +67,6 @@
             //获取验证码
             $('#getCodeBtn').on('click', function() {
                 var loginName1 = $("#loginName").val();
-                if(loginName1){
                     $('input[name="validateCode"]').focus();
                     var getValidateCodeObj = $('#getCodeBtn');
                     getValidateCodeObj.attr('disabled', true);
@@ -81,7 +81,7 @@
                             getValidateCodeObj.attr('disabled', false);
                         }
                     }
-                    $.axs('/f', function(result) {
+                    $.axs(function(result) {
                         if (!result.isSuc) {
                             $("#loginName_error").html(result.msg);
                             clearInterval(myInterval);
@@ -90,9 +90,6 @@
                         }
                     });
                     $("#validateCode_error").html('');
-                }else{
-                    $("#loginName_error").html('登录名不能为空！');
-                }
 
             });
         });
@@ -108,13 +105,15 @@
 <div class="container register">
     <div class="box register-box">
         <div class="box-title">忘记密码</div>
-        <form:form id="inputForm" modelAttribute="user" method="post" class="form-horizontal register-form">
+        <form:form id="inputForm" modelAttribute="user" method="post"
+                   class="form-horizontal register-form">
             <form:hidden path="id"/>
             <sys:message content="${message}"/>
             <div class="control-group">
                 <label class="control-label"><font color="red">*</font>&nbsp;登录名:</label>
                 <div class="controls">
-                    <form:input path="loginName" id="loginName" placeholder="登录名为身份证号" htmlEscape="false" maxlength="50" />
+                    <form:input path="loginName" id="loginName"
+                                placeholder="登录名为身份证号" htmlEscape="false" maxlength="50" />
                     <label id="loginName_error" class="error"></label>
                 </div>
             </div>
@@ -138,7 +137,8 @@
                 <label class="control-label"><font style="color: red;">*</font>&nbsp;验证码：</label>
                 <div class="controls">
 
-                    <input type="text" id="validateCode" name="validateCode" value="" placeholder="请输入验证码" maxlength="11" style="width:100px;"/>
+                    <input type="text" id="validateCode" name="validateCode" value=""
+                           placeholder="请输入验证码" maxlength="11" style="width:100px;"/>
 
                     <button type="button" id="getCodeBtn" class="btn btn-info">获取手机验证码</button>
 
@@ -150,7 +150,8 @@
 
             <div class="form-actions">
                 <input id="btnSubmit" class="btn btn-primary" type="submit" value="提交"/>&nbsp;
-                <input id="btnCancel" class="btn btn-primary" type="button" value="返回" onclick="history.go(-1)"/>
+                <input id="btnCancel" class="btn btn-primary" type="button" value="返回"
+                       onclick="history.go(-1)"/>
             </div>
 
         </form:form>

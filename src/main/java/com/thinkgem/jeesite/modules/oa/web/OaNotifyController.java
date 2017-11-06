@@ -3,9 +3,14 @@
  */
 package com.thinkgem.jeesite.modules.oa.web;
 
+import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.thinkgem.jeesite.modules.oa.dao.OaNotifyRecordDao;
+import com.thinkgem.jeesite.modules.oa.entity.OaNotifyRecord;
+import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +27,8 @@ import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.oa.entity.OaNotify;
 import com.thinkgem.jeesite.modules.oa.service.OaNotifyService;
 
+import java.util.List;
+
 /**
  * 通知通告Controller
  * @author ThinkGem
@@ -33,6 +40,9 @@ public class OaNotifyController extends BaseController {
 
 	@Autowired
 	private OaNotifyService oaNotifyService;
+
+	@Autowired
+	private  OaNotifyRecordDao oaNotifyRecordDao;
 	
 	@ModelAttribute
 	public OaNotify get(@RequestParam(required=false) String id) {
@@ -49,10 +59,16 @@ public class OaNotifyController extends BaseController {
 	@RequiresPermissions("oa:oaNotify:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(OaNotify oaNotify, HttpServletRequest request, HttpServletResponse response, Model model) {
+
+
 		Page<OaNotify> page = oaNotifyService.find(new Page<OaNotify>(request, response), oaNotify);
+
+
 		model.addAttribute("page", page);
 		return "modules/oa/oaNotifyList";
 	}
+
+
 
 	@RequiresPermissions("oa:oaNotify:view")
 	@RequestMapping(value = "form")
@@ -97,7 +113,7 @@ public class OaNotifyController extends BaseController {
 	@RequestMapping(value = "self")
 	public String selfList(OaNotify oaNotify, HttpServletRequest request, HttpServletResponse response, Model model) {
 		oaNotify.setSelf(true);
-		Page<OaNotify> page = oaNotifyService.find(new Page<OaNotify>(request, response), oaNotify); 
+		Page<OaNotify> page = oaNotifyService.find(new Page<OaNotify>(request, response), oaNotify);
 		model.addAttribute("page", page);
 		return "modules/oa/oaNotifyList";
 	}

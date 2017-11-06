@@ -5,8 +5,11 @@
 .register{ margin-top:25px;}
 .register-box{ padding:30px 70px;}
 .register-form{ width:700px; margin:auto; padding:30px 0;}
-.examine{ width:100%; height:100%; background:rgba(0,0,0,0.4); position:fixed; left:0; top:0; display:none;}
-.examine-box{ width:240px; height:320px; background:#fff; border-radius:2px; padding:40px 80px; box-shadow:0 0 20px #666; text-align:center; position:absolute; left:50%; top:50%; margin:-200px 0 0 -200px;}
+.examine{ width:100%; height:100%; background:rgba(0,0,0,0.4);
+    position:fixed; left:0; top:0; display:none;}
+.examine-box{ width:240px; height:320px; background:#fff;
+    border-radius:2px; padding:40px 80px; box-shadow:0 0 20px #666;
+    text-align:center; position:absolute; left:50%; top:50%; margin:-200px 0 0 -200px;}
 .examine-box h3{ margin-bottom:15px;}
 .examine-box p{ line-height:26px; font-size:16px; margin-bottom:30px;}
 .examine-box .btn{ width:150px; padding:12px; font-size:16px;}

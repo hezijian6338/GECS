@@ -30,5 +30,7 @@ public interface OaNotifyRecordDao extends CrudDao<OaNotifyRecord> {
 	 * @return
 	 */
 	public int deleteByOaNotifyId(String oaNotifyId);
+
+
 	
 }
