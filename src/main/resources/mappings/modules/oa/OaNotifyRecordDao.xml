@@ -30,7 +30,7 @@
 		<include refid="oaNotifyRecordColumns"/>
   		FROM oa_notify_record a
 		<include refid="oaNotifyRecordJoins"/>
-		WHERE a.USER_ID = #{id}
+		WHERE a.USER_ID = #{userId1}
 	</select>
 	
 	<select id="findList" resultType="OaNotifyRecord">
