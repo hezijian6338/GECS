@@ -66,7 +66,9 @@
 				</td>
 				<td>
 					<%--${fns:getDictLabel(oaNotify.status, 'oa_notify_status', '')}--%>
+					<font size="3" color="red">
 					${oaNotify.status}
+					</font>
 				</td>
 				<td>
 					<c:if test="${requestScope.oaNotify.self}">
