@@ -32,8 +32,5 @@ public interface OaNotifyRecordDao extends CrudDao<OaNotifyRecord> {
 	 */
 	public int deleteByOaNotifyId(String oaNotifyId);
 
-
-
-	List<OaNotifyRecord> getByUserId(User user);
-
+	List<OaNotifyRecord> getByUserId(String userId1);
 }

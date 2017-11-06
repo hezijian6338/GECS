@@ -34,7 +34,12 @@ public class OaNotifyService extends CrudService<OaNotifyDao, OaNotify> {
 		OaNotify entity = dao.get(id);
 		return entity;
 	}
-	
+
+	public List<OaNotify> getByIds(List<String> ids){
+		List<OaNotify> oaNotifies = dao.getByIds(ids);
+		return oaNotifies;
+	}
+
 	/**
 	 * 获取通知发送记录
 	 * @param oaNotify
@@ -50,16 +55,16 @@ public class OaNotifyService extends CrudService<OaNotifyDao, OaNotify> {
 		page.setList(dao.findList(oaNotify));
 		return page;
 	}
-/**
- * @author 许彩开
- * @TODO (注：)
-  * @param
- * @DATE: 2017\11\6 0006 11:38
- */
 
-	public Page<OaNotify> find2(Page<OaNotify> page, OaNotify oaNotify ,List<String> list) {
+	/**
+	 * @author 练浩文
+	 * @TODO (注：)
+	  * @param
+	 * @DATE: 2017/11/6 14:26
+	 */
+	public Page<OaNotify> find(Page<OaNotify> page, OaNotify oaNotify,List<OaNotify> oaNotifies) {
 		oaNotify.setPage(page);
-		page.setList(dao.getOaNotifyList(list));
+		page.setList(oaNotifies);
 		return page;
 	}
 	
@@ -95,10 +100,9 @@ public class OaNotifyService extends CrudService<OaNotifyDao, OaNotify> {
 		oaNotifyRecordDao.update(oaNotifyRecord);
 	}
 
-    public List<OaNotifyRecord> getByUserId(User user) {
-		List<OaNotifyRecord> oaNotifyRecordId = oaNotifyRecordDao.getByUserId(user);
+    public List<OaNotifyRecord> getByUserId(String userId1) {
+		List<OaNotifyRecord> oaNotifyRecordId = oaNotifyRecordDao.getByUserId(userId1);
 		System.out.println("........" + oaNotifyRecordId);
 		return oaNotifyRecordId;
     }
-
 }

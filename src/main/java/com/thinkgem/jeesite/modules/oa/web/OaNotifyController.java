@@ -3,20 +3,12 @@
  */
 package com.thinkgem.jeesite.modules.oa.web;
 
-import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
-import com.thinkgem.jeesite.modules.oa.dao.OaNotifyRecordDao;
 import com.thinkgem.jeesite.modules.oa.entity.OaNotifyRecord;
 import com.thinkgem.jeesite.modules.sys.entity.User;
-import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
-
-import com.thinkgem.jeesite.modules.oa.entity.OaNotifyRecord;
-import com.thinkgem.jeesite.modules.sys.entity.User;
-
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,12 +25,10 @@ import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.oa.entity.OaNotify;
 import com.thinkgem.jeesite.modules.oa.service.OaNotifyService;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.thinkgem.jeesite.modules.sys.utils.UserUtils.getUser;
-
 
 /**
  * 通知通告Controller
@@ -51,9 +41,6 @@ public class OaNotifyController extends BaseController {
 
 	@Autowired
 	private OaNotifyService oaNotifyService;
-
-	@Autowired
-	private  OaNotifyRecordDao oaNotifyRecordDao;
 	
 	@ModelAttribute
 	public OaNotify get(@RequestParam(required=false) String id) {
@@ -70,16 +57,10 @@ public class OaNotifyController extends BaseController {
 	@RequiresPermissions("oa:oaNotify:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(OaNotify oaNotify, HttpServletRequest request, HttpServletResponse response, Model model) {
-
-
 		Page<OaNotify> page = oaNotifyService.find(new Page<OaNotify>(request, response), oaNotify);
-
-
 		model.addAttribute("page", page);
 		return "modules/oa/oaNotifyList";
 	}
-
-
 
 	@RequiresPermissions("oa:oaNotify:view")
 	@RequestMapping(value = "form")
@@ -124,21 +105,23 @@ public class OaNotifyController extends BaseController {
 	@RequestMapping(value = "self")
 	public String selfList(OaNotify oaNotify, HttpServletRequest request, HttpServletResponse response, Model model) {
 		oaNotify.setSelf(true);
-
 		User user = getUser();
+		List oaNotifyList=new ArrayList();
+		List<String> oaNotifyIds = new ArrayList<String>();
 		//获取oaNotifyRecord的信息
-		List<OaNotifyRecord> oaNotifyRecord = oaNotifyService.getByUserId(user);
-		System.out.println("会尽快收到回复接口==="+oaNotifyRecord);
+		List<OaNotifyRecord> oaNotifyRecord = oaNotifyService.getByUserId(user.getId());
 		//通过user表中的id获取oaNotifyId
-		List<String> temp=new ArrayList<String>();
-		for(OaNotifyRecord oaNotifyRecord2:oaNotifyRecord){
-			String oaNotifyRecordId1 = oaNotifyRecord2.getOaNotify().getId();
-			System.out.println("好地方接口和==="+oaNotifyRecordId1);
-			temp.add(oaNotifyRecordId1);
+		if (oaNotifyRecord!=null) {
+			for (int i = 0; i < oaNotifyRecord.size(); i++) {
+				String oaNotifyRecordId = oaNotifyRecord.get(i).getOaNotify().getId();
+				if (oaNotifyRecordId != null || !"null".equals(oaNotifyRecordId)) {
+					oaNotifyIds.add(oaNotifyRecordId);
+				}
+			}
+			oaNotifyList = oaNotifyService.getByIds(oaNotifyIds);
 		}
-
-		//Page<OaNotify> page = oaNotifyService.find2(new Page<OaNotify>(request, response), oaNotify ,temp);
-		//model.addAttribute("page", page);
+		Page<OaNotify> page = oaNotifyService.find(new Page<OaNotify>(request, response), oaNotify,oaNotifyList);
+		model.addAttribute("page", page);
 		return "modules/oa/oaNotifyList";
 	}
 
@@ -204,8 +187,4 @@ public class OaNotifyController extends BaseController {
 		oaNotify.setReadFlag("0");
 		return String.valueOf(oaNotifyService.findCount(oaNotify));
 	}
-
-
-
-
 }
