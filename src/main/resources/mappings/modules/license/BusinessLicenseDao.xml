@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thinkgem.jeesite.modules.license.dao.BusinessLicenseDao">
-    
+
 	<sql id="businessLicenseColumns">
 		a.id AS "id",
 		a.proc_ins_id AS "procInsId",
@@ -47,17 +47,17 @@
 		a27.name AS "scope.name",
 		u.name AS "createBy.name"
 	</sql>
-	
+
 	<sql id="businessLicenseJoins">
 		LEFT JOIN sys_office o6 ON o6.id = a.office_id
 		LEFT JOIN sys_area a28 ON a28.id = a.area_id
 		LEFT JOIN business_scope a27 ON a27.id = a.scope
 		LEFT JOIN sys_user u ON u.id = a.create_by
 	</sql>
-    
+
 	<select id="get" resultType="BusinessLicense">
-		SELECT 
-			<include refid="businessLicenseColumns"/>
+		SELECT
+		<include refid="businessLicenseColumns"/>
 		FROM business_license a
 		<include refid="businessLicenseJoins"/>
 		WHERE a.id = #{id}
@@ -65,34 +65,34 @@
 
 	<select id="findList" resultType="BusinessLicense">
 		SELECT
-			<include refid="businessLicenseColumns"/>
+		<include refid="businessLicenseColumns"/>
 		FROM business_license a
 		<include refid="businessLicenseJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="certificateTypeId != null and certificateTypeId != ''">
 				AND a.certificate_type_id LIKE
-					<if test="dbName == 'oracle'">'%'||#{certificateTypeId}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{certificateTypeId}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{certificateTypeId},'%')</if>
+				<if test="dbName == 'oracle'">'%'||#{certificateTypeId}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{certificateTypeId}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{certificateTypeId},'%')</if>
 			</if>
 			<if test="certificateName != null and certificateName != ''">
 				AND a.certificate_name LIKE
-					<if test="dbName == 'oracle'">'%'||#{certificateName}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{certificateName}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{certificateName},'%')</if>
+				<if test="dbName == 'oracle'">'%'||#{certificateName}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{certificateName}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{certificateName},'%')</if>
 			</if>
 			<if test="office != null and office.id != null and office.id != ''">
 				AND a.office_id LIKE
-					<if test="dbName == 'oracle'">'%'||#{office.id}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{office.id}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{office.id},'%')</if>
+				<if test="dbName == 'oracle'">'%'||#{office.id}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{office.id}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{office.id},'%')</if>
 			</if>
 			<if test="registeredType != null and registeredType != ''">
 				AND a.registered_type LIKE
-					<if test="dbName == 'oracle'">'%'||#{registeredType}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{registeredType}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{registeredType},'%')</if>
+				<if test="dbName == 'oracle'">'%'||#{registeredType}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{registeredType}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{registeredType},'%')</if>
 			</if>
 		</where>
 		<choose>
@@ -104,15 +104,15 @@
 			</otherwise>
 		</choose>
 	</select>
-	
+
 	<select id="findAllList" resultType="BusinessLicense">
-		SELECT 
-			<include refid="businessLicenseColumns"/>
+		SELECT
+		<include refid="businessLicenseColumns"/>
 		FROM business_license a
 		<include refid="businessLicenseJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-		</where>		
+		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}
@@ -122,132 +122,132 @@
 			</otherwise>
 		</choose>
 	</select>
-	
+
 	<insert id="insert">
 		INSERT INTO business_license(
-			id,
-			proc_ins_id,
-			certificate_type_id,
-			certificate_type_name,
-			certificate_code,
-			certificate_name,
-			office_id,
-			establish_date,
-			effective_date_star,
-			effective_date_end,
-			registered_type,
-			registered_capital,
-			address,
-			persion_name,
-			persion_id_type,
-			person_id,
-			persion_phone,
-			handler_name,
-			handler_id_type,
-			handler_id,
-			handler_phone,
-			scope,
-			building_name,
-			floor_number,
-			use_area,
-			usage1,
-			dealfire_facilities,
-			postcode,
-			area_id,
-			create_by,
-			opinion1,
-			opinion2,
-			create_date,
-			update_by,
-			opinion3,
-			update_date,
-			opinion4,
-			remarks,
-			del_flag
+		id,
+		proc_ins_id,
+		certificate_type_id,
+		certificate_type_name,
+		certificate_code,
+		certificate_name,
+		office_id,
+		establish_date,
+		effective_date_star,
+		effective_date_end,
+		registered_type,
+		registered_capital,
+		address,
+		persion_name,
+		persion_id_type,
+		person_id,
+		persion_phone,
+		handler_name,
+		handler_id_type,
+		handler_id,
+		handler_phone,
+		scope,
+		building_name,
+		floor_number,
+		use_area,
+		usage1,
+		dealfire_facilities,
+		postcode,
+		area_id,
+		create_by,
+		opinion1,
+		opinion2,
+		create_date,
+		update_by,
+		opinion3,
+		update_date,
+		opinion4,
+		remarks,
+		del_flag
 		) VALUES (
-			#{id},
-			#{procInsId},
-			#{certificateTypeId},
-			#{certificateTypeName},
-			#{certificateCode},
-			#{certificateName},
-			#{office.id},
-			#{establishDate},
-			#{effectiveDateStar},
-			#{effectiveDateEnd},
-			#{registeredType},
-			#{registeredCapital},
-			#{address},
-			#{persionName},
-			#{persionIdType},
-			#{personId},
-			#{persionPhone},
-			#{handlerName},
-			#{handlerIdType},
-			#{handlerId},
-			#{handlerPhone},
-			#{scope.id},
-			#{buildingName},
-			#{floorNumber},
-			#{useArea},
-			#{usage1},
-			#{dealfireFacilities},
-			#{postcode},
-			#{area.id},
-			#{createBy.id},
-			#{opinion1},
-			#{opinion2},
-			#{createDate},
-			#{updateBy.id},
-			#{opinion3},
-			#{updateDate},
-			#{opinion4},
-			#{remarks},
-			#{delFlag}
+		#{id},
+		#{procInsId},
+		#{certificateTypeId},
+		#{certificateTypeName},
+		#{certificateCode},
+		#{certificateName},
+		#{office.id},
+		#{establishDate},
+		#{effectiveDateStar},
+		#{effectiveDateEnd},
+		#{registeredType},
+		#{registeredCapital},
+		#{address},
+		#{persionName},
+		#{persionIdType},
+		#{personId},
+		#{persionPhone},
+		#{handlerName},
+		#{handlerIdType},
+		#{handlerId},
+		#{handlerPhone},
+		#{scope.id},
+		#{buildingName},
+		#{floorNumber},
+		#{useArea},
+		#{usage1},
+		#{dealfireFacilities},
+		#{postcode},
+		#{area.id},
+		#{createBy.id},
+		#{opinion1},
+		#{opinion2},
+		#{createDate},
+		#{updateBy.id},
+		#{opinion3},
+		#{updateDate},
+		#{opinion4},
+		#{remarks},
+		#{delFlag}
 		)
 	</insert>
-	
+
 	<update id="update">
-		UPDATE business_license SET 	
-			certificate_type_id = #{certificateTypeId},
-			certificate_type_id = #{certificateTypeName},
-			certificate_code = #{certificateCode},
-			certificate_name = #{certificateName},
-			office_id = #{office.id},
-			establish_date = #{establishDate},
-			effective_date_star = #{effectiveDateStar},
-			effective_date_end = #{effectiveDateEnd},
-			registered_type = #{registeredType},
-			registered_capital = #{registeredCapital},
-			address = #{address},
-			persion_name = #{persionName},
-			persion_id_type = #{persionIdType},
-			person_id = #{personId},
-			persion_phone = #{persionPhone},
-			handler_name = #{handlerName},
-			handler_id_type = #{handlerIdType},
-			handler_id = #{handlerId},
-			handler_phone = #{handlerPhone},
-			scope = #{scope.id},
-			building_name = #{buildingName},
-			floor_number = #{floorNumber},
-			use_area = #{useArea},
-			usage1 = #{usage1},
-			dealfire_facilities = #{dealfireFacilities},
-			postcode = #{postcode},
-			area_id = #{area.id},
-			opinion1 = #{opinion1},
-			opinion2 = #{opinion2},
-			update_by = #{updateBy.id},
-			opinion3 = #{opinion3},
-			update_date = #{updateDate},
-			opinion4 = #{opinion4},
-			remarks = #{remarks}
+		UPDATE business_license SET
+		certificate_type_id = #{certificateTypeId},
+		certificate_type_id = #{certificateTypeName},
+		certificate_code = #{certificateCode},
+		certificate_name = #{certificateName},
+		office_id = #{office.id},
+		establish_date = #{establishDate},
+		effective_date_star = #{effectiveDateStar},
+		effective_date_end = #{effectiveDateEnd},
+		registered_type = #{registeredType},
+		registered_capital = #{registeredCapital},
+		address = #{address},
+		persion_name = #{persionName},
+		persion_id_type = #{persionIdType},
+		person_id = #{personId},
+		persion_phone = #{persionPhone},
+		handler_name = #{handlerName},
+		handler_id_type = #{handlerIdType},
+		handler_id = #{handlerId},
+		handler_phone = #{handlerPhone},
+		scope = #{scope.id},
+		building_name = #{buildingName},
+		floor_number = #{floorNumber},
+		use_area = #{useArea},
+		usage1 = #{usage1},
+		dealfire_facilities = #{dealfireFacilities},
+		postcode = #{postcode},
+		area_id = #{area.id},
+		opinion1 = #{opinion1},
+		opinion2 = #{opinion2},
+		update_by = #{updateBy.id},
+		opinion3 = #{opinion3},
+		update_date = #{updateDate},
+		opinion4 = #{opinion4},
+		remarks = #{remarks}
 		WHERE id = #{id}
 	</update>
-	
+
 	<update id="delete">
-		UPDATE business_license SET 
+		UPDATE business_license SET
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>

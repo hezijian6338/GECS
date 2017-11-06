@@ -18,11 +18,19 @@
 	</sql>
     
 	<select id="get" resultType="OaNotifyRecord">
-		SELECT 
+		SELECT
 			<include refid="oaNotifyRecordColumns"/>
 		FROM oa_notify_record a
 		<include refid="oaNotifyRecordJoins"/>
 		WHERE a.id = #{id}
+	</select>
+
+	<select id="getByUserId" resultType="OaNotifyRecord">
+		SELECT
+		<include refid="oaNotifyRecordColumns"/>
+  		FROM oa_notify_record a
+		<include refid="oaNotifyRecordJoins"/>
+		WHERE a.USER_ID = #{id}
 	</select>
 	
 	<select id="findList" resultType="OaNotifyRecord">

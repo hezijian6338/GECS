@@ -6,6 +6,9 @@ package com.thinkgem.jeesite.modules.oa.dao;
 import com.thinkgem.jeesite.common.persistence.CrudDao;
 import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
 import com.thinkgem.jeesite.modules.oa.entity.OaNotify;
+import com.thinkgem.jeesite.modules.oa.entity.OaNotifyRecord;
+
+import java.util.List;
 
 /**
  * 通知通告DAO接口
@@ -21,5 +24,13 @@ public interface OaNotifyDao extends CrudDao<OaNotify> {
 	 * @return
 	 */
 	public Long findCount(OaNotify oaNotify);
+
+
+	/**
+	 * @author 许彩开
+	 * @TODO (注：)
+	 * @DATE: 2017\11\6 0006 11:16
+	 */
+	List<OaNotify> getOaNotifyList (List<String> list);
 	
 }

@@ -4,7 +4,9 @@
 package com.thinkgem.jeesite.modules.oa.service;
 
 import java.util.Date;
+import java.util.List;
 
+import com.thinkgem.jeesite.modules.sys.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,6 +50,18 @@ public class OaNotifyService extends CrudService<OaNotifyDao, OaNotify> {
 		page.setList(dao.findList(oaNotify));
 		return page;
 	}
+/**
+ * @author 许彩开
+ * @TODO (注：)
+  * @param
+ * @DATE: 2017\11\6 0006 11:38
+ */
+
+	public Page<OaNotify> find2(Page<OaNotify> page, OaNotify oaNotify ,List<String> list) {
+		oaNotify.setPage(page);
+		page.setList(dao.getOaNotifyList(list));
+		return page;
+	}
 	
 	/**
 	 * 获取通知数目
@@ -80,4 +94,11 @@ public class OaNotifyService extends CrudService<OaNotifyDao, OaNotify> {
 		oaNotifyRecord.setReadFlag("1");
 		oaNotifyRecordDao.update(oaNotifyRecord);
 	}
+
+    public List<OaNotifyRecord> getByUserId(User user) {
+		List<OaNotifyRecord> oaNotifyRecordId = oaNotifyRecordDao.getByUserId(user);
+		System.out.println("........" + oaNotifyRecordId);
+		return oaNotifyRecordId;
+    }
+
 }

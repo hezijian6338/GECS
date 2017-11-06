@@ -14,6 +14,27 @@
 			$("#searchForm").submit();
         	return false;
         }
+
+        function licenseInfo(s) {
+            var rand = Math.random();
+            $.ajax({
+                type:"GET",
+                url:"${ctx}/license/businessLicense/getPathByTitle/"+s,
+                success:function (result) {
+                    console.log(result);
+                    var path = result.extend.certificateLibrary.path;
+                    console.log(path+"?"+rand);
+
+                    if(path!=""&&path!=null){
+                        $('#btn_browse').modal({});
+                        url1=path+"?"+rand;
+                        $('#displayPdfIframe').attr("src",'${ctxStatic}/pdfjs/web/viewer.html?file='+encodeURIComponent(url1));
+                    }else {
+                        alert("执照还未生成！");
+                    }
+                }
+            });
+        }
 	</script>
 </head>
 <body>
@@ -84,11 +105,25 @@
 				<c:if test="${!requestScope.oaNotify.self}"><shiro:hasPermission name="oa:oaNotify:edit"><td>
     				<a href="${ctx}/oa/oaNotify/form?id=${oaNotify.id}">修改</a>
 					<a href="${ctx}/oa/oaNotify/delete?id=${oaNotify.id}" onclick="return confirmx('确认要删除该通知吗？', this.href)">删除</a>
+					<a data-toggle="modal" onclick="licenseInfo('${oaNotify.title}')">预览</a>
 				</td></shiro:hasPermission></c:if>
 			</tr>
 		</c:forEach>
 		</tbody>
 	</table>
 	<div class="pagination">${page}</div>
+	<!--预览模态框-->
+	<div id="btn_browse" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+		 style="width: 100%;height: 100%;left: 450px; top:0px;">
+		<div class="modal-header" style="background-color: rgb(0,0,0); filter: alpha(opacity=10);">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:white;">×</button>
+			<h3 id="myModalLabel">预览</h3>
+		</div>
+		<div class="modal-body" style="width: 100%;max-height: 800px; padding: 0px;">
+
+			<iframe id="displayPdfIframe" width="100%" height="780px"></iframe>
+
+		</div>
+	</div>
 </body>
 </html>

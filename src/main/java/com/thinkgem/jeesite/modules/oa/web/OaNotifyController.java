@@ -6,11 +6,17 @@ package com.thinkgem.jeesite.modules.oa.web;
 import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 
 import com.thinkgem.jeesite.modules.oa.dao.OaNotifyRecordDao;
 import com.thinkgem.jeesite.modules.oa.entity.OaNotifyRecord;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
+
+import com.thinkgem.jeesite.modules.oa.entity.OaNotifyRecord;
+import com.thinkgem.jeesite.modules.sys.entity.User;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +33,12 @@ import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.oa.entity.OaNotify;
 import com.thinkgem.jeesite.modules.oa.service.OaNotifyService;
 
+
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.thinkgem.jeesite.modules.sys.utils.UserUtils.getUser;
+
 
 /**
  * 通知通告Controller
@@ -113,8 +124,21 @@ public class OaNotifyController extends BaseController {
 	@RequestMapping(value = "self")
 	public String selfList(OaNotify oaNotify, HttpServletRequest request, HttpServletResponse response, Model model) {
 		oaNotify.setSelf(true);
-		Page<OaNotify> page = oaNotifyService.find(new Page<OaNotify>(request, response), oaNotify);
-		model.addAttribute("page", page);
+
+		User user = getUser();
+		//获取oaNotifyRecord的信息
+		List<OaNotifyRecord> oaNotifyRecord = oaNotifyService.getByUserId(user);
+		System.out.println("会尽快收到回复接口==="+oaNotifyRecord);
+		//通过user表中的id获取oaNotifyId
+		List<String> temp=new ArrayList<String>();
+		for(OaNotifyRecord oaNotifyRecord2:oaNotifyRecord){
+			String oaNotifyRecordId1 = oaNotifyRecord2.getOaNotify().getId();
+			System.out.println("好地方接口和==="+oaNotifyRecordId1);
+			temp.add(oaNotifyRecordId1);
+		}
+
+		//Page<OaNotify> page = oaNotifyService.find2(new Page<OaNotify>(request, response), oaNotify ,temp);
+		//model.addAttribute("page", page);
 		return "modules/oa/oaNotifyList";
 	}
 
@@ -180,4 +204,8 @@ public class OaNotifyController extends BaseController {
 		oaNotify.setReadFlag("0");
 		return String.valueOf(oaNotifyService.findCount(oaNotify));
 	}
+
+
+
+
 }

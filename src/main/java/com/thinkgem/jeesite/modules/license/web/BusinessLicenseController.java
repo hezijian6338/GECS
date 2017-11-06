@@ -10,6 +10,8 @@ import com.itextpdf.text.DocumentException;
 import com.thinkgem.jeesite.common.persistence.Msg;
 import com.thinkgem.jeesite.common.utils.PDFUtil;
 import com.thinkgem.jeesite.common.utils.SendMailUtil;
+import com.thinkgem.jeesite.modules.act.entity.Act;
+import com.thinkgem.jeesite.modules.act.service.ActTaskService;
 import com.thinkgem.jeesite.modules.certificate.entity.CertificateLibrary;
 import com.thinkgem.jeesite.modules.certificate.entity.CertificateType;
 import com.thinkgem.jeesite.modules.certificate.service.CertificateLibraryService;
@@ -40,10 +42,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.List;
 
-import static oracle.net.aso.C05.b;
 
 /**
  * 营业执照Controller
@@ -65,13 +65,8 @@ public class BusinessLicenseController extends BaseController {
 	private CertificateTypeService certificateTypeService;
 
 	@Autowired
-	private SystemService systemService;
-
-	@Autowired
 	private CertificateLibraryService certificateLibraryService;
 
-
-	
 	@ModelAttribute
 	public BusinessLicense get(@RequestParam(required=false) String id) {
 		BusinessLicense entity = null;
@@ -136,7 +131,7 @@ public class BusinessLicenseController extends BaseController {
 			}*/
 			// 审核环节2
 			else if ("audit1".equals(taskDefKey)){
-				System.out.println("+++++++"+certificateLibrary);
+//				System.out.println("+++++++"+certificateLibrary);
 				view = "businessLicenseAudit";
 			}
 			// 审核环节3
@@ -202,8 +197,7 @@ public class BusinessLicenseController extends BaseController {
 
 		addMessage(redirectAttributes, "保存营业执照成功");
 
-			return "redirect:" + adminPath + "/oa/oaNotify/?repage";
-
+		return "redirect:" + adminPath + "/oa/oaNotify/?repage";
 
 	}
 
@@ -236,6 +230,12 @@ public class BusinessLicenseController extends BaseController {
 	}
 
 
+	/**
+	 * @author 练浩文
+	 * @TODO (注：certificateCode)
+	  * @param certificateCode
+	 * @DATE: 2017/11/2 8:56
+	 */
 	@ResponseBody
 	@RequestMapping(value="/getPath/{certificateCode}",method= RequestMethod.GET)
 	public Msg getPath(@PathVariable String certificateCode){
@@ -243,6 +243,21 @@ public class BusinessLicenseController extends BaseController {
 		return Msg.success().add("certificateLibrary",certificateLibrary);
 	}
 
+	/**
+	 * @author 练浩文
+	 * @TODO (注：certificateCode)
+	 * @param title
+	 * @DATE: 2017/11/2 8:56
+	 */
+	@ResponseBody
+	@RequestMapping(value="/getPathByTitle/{title}",method= RequestMethod.GET)
+	public Msg getPathByTitle(@PathVariable String title){
+
+		String certificateName = title.substring(0,title.indexOf("-"));
+		System.out.println("---------"+certificateName);
+		CertificateLibrary certificateLibrary = certificateLibraryService.getByCertificateCode(certificateName);
+		return Msg.success().add("certificateLibrary",certificateLibrary);
+	}
 
 	@RequiresPermissions("license:businessLicense:edit")
 	@RequestMapping(value = "testJump")

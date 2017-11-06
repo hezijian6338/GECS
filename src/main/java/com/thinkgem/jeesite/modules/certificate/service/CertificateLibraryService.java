@@ -50,5 +50,8 @@ public class CertificateLibraryService extends CrudService<CertificateLibraryDao
 	public void delete(CertificateLibrary certificateLibrary) {
 		super.delete(certificateLibrary);
 	}
-	
+
+	public CertificateLibrary getByCertificateName(String certificateName){
+		return certificateLibraryDao.getByCertificateName(certificateName);
+	}
 }
