@@ -27,6 +27,8 @@
 		a.scope AS "scope.id",
 		a.building_name AS "buildingName",
 		a.floor_number AS "floorNumber",
+		a.path AS "path"
+		a.status AS "status"
 		a.use_area AS "useArea",
 		a.usage1 AS "usage1",
 		a.dealfire_facilities AS "dealfireFacilities",
@@ -149,6 +151,8 @@
 		scope,
 		building_name,
 		floor_number,
+		path,
+		status,
 		use_area,
 		usage1,
 		dealfire_facilities,
@@ -189,6 +193,8 @@
 		#{scope.id},
 		#{buildingName},
 		#{floorNumber},
+		#{path},
+		#{status},
 		#{useArea},
 		#{usage1},
 		#{dealfireFacilities},
@@ -231,6 +237,8 @@
 		scope = #{scope.id},
 		building_name = #{buildingName},
 		floor_number = #{floorNumber},
+		path = #{path},
+		status = #{status},
 		use_area = #{useArea},
 		usage1 = #{usage1},
 		dealfire_facilities = #{dealfireFacilities},
@@ -251,9 +259,6 @@
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
-
-
-
 
 	<update id="updateOpinion1">
 		UPDATE business_license SET
