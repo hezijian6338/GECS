@@ -27,6 +27,28 @@
             }
         }
 	</script>
+	<style type="text/css">
+		.bg-primary {
+			color: #fff;
+			background-color: #337ab7;
+		}
+		a.bg-primary:hover,
+		a.bg-primary:focus {
+			background-color: #286090;
+		}
+
+		.bg-info {
+			background-color: #d9edf7;
+		}
+		.modal {
+			width:900px;
+			margin-left:-450px;
+		}
+		@media (min-width: 992px) {
+			.modal-lg {
+				width: 900px;
+			}
+		}
 </head>
 <body>
 	<ul class="nav nav-tabs">

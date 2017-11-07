@@ -46,10 +46,10 @@ public class BusinessLicense extends ActEntity<BusinessLicense> {
 	private String handlerId;		// 经办人身份证件号码
 	private String handlerPhone;		// 经办人联系方式
 	private BusinessScope scope;		// 经营/业务/许可范围
-	private String buildingName;		// 建筑名称
-	private String floorNumber;		// 层数
 	private String path;           //证照路径
 	private String status;         //审核状态
+	private String buildingName;		// 建筑名称
+	private String floorNumber;		// 层数
 	private String useArea;		// 使用面积
 	private String usage1;		// 使用情况
 	private String dealfireFacilities;		// 现有消防设施
