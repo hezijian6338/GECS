@@ -149,7 +149,16 @@
 					${businessLicense.area.name}
 				</td>
 				<td>
-					${businessLicense.status}
+					<c:if test="${businessLicense.status eq '审核通过'}">
+					<font size="3" color="green">
+						${businessLicense.status}
+					</font>
+					</c:if>
+					<c:if test="${businessLicense.status ne '审核通过'}">
+						<font size="3" color="red">
+								${businessLicense.status}
+						</font>
+					</c:if>
 				</td>
 				<td>
 					${businessLicense.createBy.name}
@@ -159,8 +168,8 @@
 				</td>
 				<shiro:hasPermission name="license:businessLicense:edit"><td>
     				<a href="${ctx}/license/businessLicense/form?id=${businessLicense.id}">详情</a>
-					<a data-toggle="modal" onclick="licenseInfo('${businessLicense.certificateCode}')">预览</a>
-					<a href="${ctx}/license/businessLicense/delete?id=${businessLicense.path}" onclick="return confirmx('确认要删除该营业执照吗？', this.href)">删除</a>
+					<a data-toggle="modal" onclick="licenseInfo('${businessLicense.path}')">预览</a>
+					<a href="${ctx}/license/businessLicense/delete?id=${businessLicense.id}" onclick="return confirmx('确认要删除该营业执照吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>
