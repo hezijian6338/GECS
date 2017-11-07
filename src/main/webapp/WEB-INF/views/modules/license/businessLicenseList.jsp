@@ -82,7 +82,7 @@
 			<sys:treeselect id="office" name="office.id" value="${businessLicense.office.id}" labelName="office.name" labelValue="${businessLicense.office.name}"
 							title="部门" url="/sys/office/treeData?type=2" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/>
 		</li>
-		<li><label class="">注册公司类型：</label>
+		<li><label class="">公司类型：</label>
 			<form:input path="registeredType" htmlEscape="false" maxlength="64" class="input-medium"/>
 		</li>
 		<li class="btns"><input id="btnSubmit" class="btn btn-primary input-medium" type="submit" value="查询"/></li>
@@ -149,7 +149,16 @@
 					${businessLicense.area.name}
 			</td>
 			<td>
+				<c:if test="${businessLicense.status eq '审核通过'}">
+				<font size="3" color="green">
 					${businessLicense.status}
+				</font>
+				</c:if>
+				<c:if test="${businessLicense.status ne '审核通过'}">
+					<font size="3" color="red">
+							${businessLicense.status}
+					</font>
+				</c:if>
 			</td>
 			<td>
 					${businessLicense.createBy.name}

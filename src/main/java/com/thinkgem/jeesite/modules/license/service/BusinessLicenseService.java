@@ -63,6 +63,7 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 			businessLicense.preInsert();
 			dao.insert(businessLicense);
 
+			System.out.println("收到货给客户定时关机====="+businessLicense.getId());
 			//启动流程
 			actTaskService.startProcess(ActUtils.PD_BUSINESS_LICENSE[0],ActUtils.PD_BUSINESS_LICENSE[1],businessLicense.getId(),businessLicense.getCertificateName()+"-"+df.format(businessLicense.getCreateDate()));
 		}

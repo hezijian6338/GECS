@@ -27,7 +27,7 @@
 </head>
 <body>
 <ul class="nav nav-tabs">
-    <li><a href="${ctx}/license/businessLicense/">营业执照列表</a></li>
+    <c:if test="${!fns:isPopulace()}"><li><a href="${ctx}/license/businessLicense/">营业执照列表</a></li></c:if>
     <li class="active"><a href="${ctx}/license/businessLicense/form?id=${businessLicense.procInsId}">营业执照审批详情</a></li>
 </ul><br/>
 <form:form id="inputForm" modelAttribute="businessLicense" action="${ctx}/license/businessLicense/save" method="post" class="form-horizontal">
