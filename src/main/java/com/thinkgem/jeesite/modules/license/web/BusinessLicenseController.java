@@ -165,6 +165,13 @@ public class BusinessLicenseController extends BaseController {
 			certificateLibrary.setPath(realativePath);
 			certificateLibraryService.save(certificateLibrary);
 
+				//保存在通告表中
+				OaNotify oaNotify=new OaNotify();
+				oaNotify.setContent(businessLicense.getId());
+				oaNotify.setStatus("审核通过");
+				oaNotifyService.updateStatus(oaNotify);
+				System.out.println("地方官就是感觉========="+businessLicense.getId());
+
 			}
 		}
 		model.addAttribute("businessLicense", businessLicense);
@@ -188,6 +195,10 @@ public class BusinessLicenseController extends BaseController {
 		businessLicenseService.save(businessLicense);
 		oaNotify.setType(businessLicense.getCertificateTypeName());
 		oaNotify.setTitle(businessLicense.getCertificateName()+"-"+df.format(businessLicense.getCreateDate()));
+
+		//将business_license的id存在content里
+		oaNotify.setContent(businessLicense.getId());
+
 		oaNotify.setStatus("审核中....");
 		oaNotify.setReadNum("1");
 		oaNotify.setOaNotifyRecordIds(UserUtils.getUser().getId());

@@ -37,6 +37,7 @@ public class OaNotifyService extends CrudService<OaNotifyDao, OaNotify> {
 
 	public List<OaNotify> getByIds(List<String> ids){
 		List<OaNotify> oaNotifies = dao.getByIds(ids);
+		System.out.println("++++++++"+oaNotifies);
 		return oaNotifies;
 	}
 
@@ -105,4 +106,9 @@ public class OaNotifyService extends CrudService<OaNotifyDao, OaNotify> {
 		System.out.println("........" + oaNotifyRecordId);
 		return oaNotifyRecordId;
     }
+
+	@Transactional(readOnly = false)
+    public void updateStatus(OaNotify oaNotify){
+		dao.updateStatus(oaNotify);
+	}
 }

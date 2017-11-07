@@ -77,8 +77,9 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="oaNotify">
 			<tr>
-				<td><a href="${ctx}/oa/oaNotify/${requestScope.oaNotify.self?'view':'form'}?id=${oaNotify.id}">
+				<td><%--<a href="${ctx}/oa/oaNotify/${requestScope.oaNotify.self?'view':'form'}?id=${oaNotify.id}">--%>
 					<%--${fns:abbr(oaNotify.title,100)}--%>
+					<a href="${ctx}/license/businessLicense/form?id=${oaNotify.content}">
 					${oaNotify.title}
 				</a></td>
 				<td>
@@ -87,9 +88,17 @@
 				</td>
 				<td>
 					<%--${fns:getDictLabel(oaNotify.status, 'oa_notify_status', '')}--%>
-					<font size="3" color="red">
-					${oaNotify.status}
-					</font>
+					<c:if test="${oaNotify.status eq '审核通过'}">
+						<font size="3" color="green">
+						  ${oaNotify.status}
+						</font>
+					</c:if>
+					<c:if test="${oaNotify.status ne '审核通过'}">
+						<font size="3" color="red">
+								${oaNotify.status}
+						</font>
+					</c:if>
+
 				</td>
 				<td>
 					<c:if test="${requestScope.oaNotify.self}">

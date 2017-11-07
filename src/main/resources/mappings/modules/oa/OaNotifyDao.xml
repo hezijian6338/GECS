@@ -38,15 +38,15 @@
 	</select>
 
 	<select id="getByIds" resultType="OaNotify">
-		SELECT
-		<include refid="oaNotifyColumns"/>
-		FROM oa_notify a
+	SELECT
+	<include refid="oaNotifyColumns"/>
+	FROM oa_notify a
 		<include refid="oaNotifyJoins"/>
-		WHERE a.id IN
-		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
-			#{item}
-		</foreach>
-	</select>
+	WHERE a.id IN
+	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+		#{item}
+	</foreach>
+</select>
 
 	<select id="findList" resultType="OaNotify">
 		SELECT
@@ -152,5 +152,13 @@
 		del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
+
+<!--更新状态：如：“审核通过，审核中....”-->
+	<update id="updateStatus">
+		UPDATE oa_notify SET
+		STATUS = #{status}
+		WHERE CONTENT = #{content}
+	</update>
+
 
 </mapper>

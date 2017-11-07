@@ -25,5 +25,7 @@ public interface OaNotifyDao extends CrudDao<OaNotify> {
 	public Long findCount(OaNotify oaNotify);
 
 	List<OaNotify> getByIds(List<String> ids);
+
+	void updateStatus(OaNotify oaNotify);
 	
 }
