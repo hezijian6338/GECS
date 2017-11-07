@@ -152,7 +152,7 @@ public class BusinessLicenseController extends BaseController {
 //				SendMailUtil.sendCommonMail(emailAddr,"执照生成通知",sendMessage);
 
 			PDFUtil.fillTemplate(businessLicense,path,savaPath);
-			view = "businessLicenseAudit";
+
 
 			certificateLibrary.setCertificateCode(businessLicense.getCertificateCode());
 			certificateLibrary.setCertificateTypeId(businessLicense.getCertificateTypeId());
@@ -167,13 +167,14 @@ public class BusinessLicenseController extends BaseController {
 				//保存在通告表中
 			businessLicense.setPath(realativePath);
 			businessLicense.setStatus("审核通过");
-			businessLicenseService.save(businessLicense);
+			businessLicenseService.update(businessLicense);
 
 			OaNotify oaNotify=new OaNotify();
 			oaNotify.setContent(businessLicense.getId());
 			oaNotify.setStatus("审核通过");
 			oaNotify.setFiles(realativePath);
 			oaNotifyService.updateStatus(oaNotify);
+			view = "businessLicenseAudit";
 			}
 		}
 		model.addAttribute("businessLicense", businessLicense);

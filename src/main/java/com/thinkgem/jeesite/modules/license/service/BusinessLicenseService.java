@@ -164,4 +164,8 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 		return val;
 	}
 
+	@Transactional(readOnly = false)
+	public void update(BusinessLicense businessLicense) {
+		dao.update(businessLicense);
+	}
 }
