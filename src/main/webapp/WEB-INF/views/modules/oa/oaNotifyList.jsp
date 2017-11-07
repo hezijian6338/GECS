@@ -27,31 +27,31 @@
             }
         }
 	</script>
-
-</head>
-<style type="text/css">
-	.bg-primary {
-		color: #fff;
-		background-color: #337ab7;
-	}
-	a.bg-primary:hover,
-	a.bg-primary:focus {
-		background-color: #286090;
-	}
-
-	.bg-info {
-		background-color: #d9edf7;
-	}
-	.modal {
-		width:900px;
-		margin-left:-450px;
-	}
-	@media (min-width: 992px) {
-		.modal-lg {
-			width: 900px;
+	<style type="text/css">
+		.bg-primary {
+			color: #fff;
+			background-color: #337ab7;
 		}
-	}
-</style>
+		a.bg-primary:hover,
+		a.bg-primary:focus {
+			background-color: #286090;
+		}
+
+		.bg-info {
+			background-color: #d9edf7;
+		}
+		.modal {
+			width:900px;
+			margin-left:-450px;
+		}
+		@media (min-width: 992px) {
+			.modal-lg {
+				width: 900px;
+			}
+		}
+	</style>
+</head>
+
 <body>
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/oa/oaNotify/${oaNotify.self?'self':''}">通知列表</a></li>

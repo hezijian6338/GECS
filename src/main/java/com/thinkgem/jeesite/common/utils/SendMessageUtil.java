@@ -40,6 +40,32 @@ public class SendMessageUtil {
 
     /**
      * @author 练浩文
+     * @TODO (注：)
+     * @param personName
+     * @param certificateType
+     * @param phoneNum
+     * @DATE: 2017/11/7 17:13
+     */
+    public static boolean sendMessage(String personName,String certificateType,String phoneNum) throws ApiException {
+
+        String url = "http://gw.api.taobao.com/router/rest";
+        String appkey = "LTAIu0omVFXsvKkk";
+        String secret = "jiblKJLlVIqOB15P6jlCWRakeSUNf5";
+        TaobaoClient client = new DefaultTaobaoClient(url, appkey, secret);
+        AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
+        req.setExtend("");
+        req.setSmsType( "normal" );
+        req.setSmsFreeSignName( "证照生成通知" );
+        req.setSmsParamString( "{\"name\":\"" + personName + "\",\"certificateType\":\""+certificateType+"}" );
+        req.setRecNum( phoneNum );
+        req.setSmsTemplateCode( "SMS_107795097" );
+        AlibabaAliqinFcSmsNumSendResponse rsp = client.execute(req);
+        System.out.println(rsp.getBody());
+        return true;
+    }
+
+    /**
+     * @author 练浩文
      * @TODO (注：验证验证码)
      * @param valiNum
      * @DATE: 2017/10/26 9:33

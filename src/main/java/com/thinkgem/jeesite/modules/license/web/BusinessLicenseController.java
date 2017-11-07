@@ -10,6 +10,7 @@ import com.itextpdf.text.DocumentException;
 import com.thinkgem.jeesite.common.persistence.Msg;
 import com.thinkgem.jeesite.common.utils.PDFUtil;
 import com.thinkgem.jeesite.common.utils.SendMailUtil;
+import com.thinkgem.jeesite.common.utils.SendMessageUtil;
 import com.thinkgem.jeesite.modules.act.entity.Act;
 import com.thinkgem.jeesite.modules.act.service.ActTaskService;
 import com.thinkgem.jeesite.modules.certificate.entity.CertificateLibrary;
@@ -174,6 +175,13 @@ public class BusinessLicenseController extends BaseController {
 			oaNotify.setStatus("审核通过");
 			oaNotify.setFiles(realativePath);
 			oaNotifyService.updateStatus(oaNotify);
+			try {
+				SendMessageUtil.sendMessage(businessLicense.getPersionName(),businessLicense.getCertificateTypeName(),
+						businessLicense.getPersionPhone());
+			}catch (Exception e){
+				e.printStackTrace();
+			}
+
 			view = "businessLicenseAudit";
 			}
 		}
