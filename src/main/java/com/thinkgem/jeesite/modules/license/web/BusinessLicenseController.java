@@ -199,7 +199,7 @@ public class BusinessLicenseController extends BaseController {
 		//将business_license的id存在content里
 		oaNotify.setContent(businessLicense.getId());
 
-		oaNotify.setStatus("审核中....");
+		oaNotify.setStatus("审核中");
 		oaNotify.setReadNum("1");
 		oaNotify.setOaNotifyRecordIds(UserUtils.getUser().getId());
 		oaNotify.setSelf(true);
