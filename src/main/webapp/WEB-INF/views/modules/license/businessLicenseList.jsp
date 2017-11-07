@@ -149,7 +149,16 @@
 					${businessLicense.area.name}
 			</td>
 			<td>
+				<c:if test="${businessLicense.status eq '审核通过'}">
+				<font size="3" color="green">
 					${businessLicense.status}
+				</font>
+				</c:if>
+				<c:if test="${businessLicense.status ne '审核通过'}">
+					<font size="3" color="red">
+							${businessLicense.status}
+					</font>
+				</c:if>
 			</td>
 			<td>
 					${businessLicense.createBy.name}
