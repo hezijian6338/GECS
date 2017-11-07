@@ -17,26 +17,41 @@
 
         function licenseInfo(s) {
             var rand = Math.random();
-            $.ajax({
-                type:"GET",
-                url:"${ctx}/license/businessLicense/getPathByTitle/"+s,
-                success:function (result) {
-                    console.log(result);
-                    var path = result.extend.certificateLibrary.path;
-                    console.log(path+"?"+rand);
-
-                    if(path!=""&&path!=null){
-                        $('#btn_browse').modal({});
-                        url1=path+"?"+rand;
-                        $('#displayPdfIframe').attr("src",'${ctxStatic}/pdfjs/web/viewer.html?file='+encodeURIComponent(url1));
-                    }else {
-                        alert("执照还未生成！");
-                    }
-                }
-            });
+            var path = s;
+            if(path!=""&&path!=null){
+                $('#btn_browse').modal({});
+                url1=path+"?"+rand;
+                $('#displayPdfIframe').attr("src",'${ctxStatic}/pdfjs/web/viewer.html?file='+encodeURIComponent(url1));
+            }else {
+                alert("执照还未生成！");
+            }
         }
 	</script>
+
 </head>
+<style type="text/css">
+	.bg-primary {
+		color: #fff;
+		background-color: #337ab7;
+	}
+	a.bg-primary:hover,
+	a.bg-primary:focus {
+		background-color: #286090;
+	}
+
+	.bg-info {
+		background-color: #d9edf7;
+	}
+	.modal {
+		width:900px;
+		margin-left:-450px;
+	}
+	@media (min-width: 992px) {
+		.modal-lg {
+			width: 900px;
+		}
+	}
+</style>
 <body>
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/oa/oaNotify/${oaNotify.self?'self':''}">通知列表</a></li>
@@ -114,7 +129,7 @@
 				<c:if test="${!requestScope.oaNotify.self}"><shiro:hasPermission name="oa:oaNotify:edit"><td>
     				<a href="${ctx}/oa/oaNotify/form?id=${oaNotify.id}">修改</a>
 					<a href="${ctx}/oa/oaNotify/delete?id=${oaNotify.id}" onclick="return confirmx('确认要删除该通知吗？', this.href)">删除</a>
-					<a data-toggle="modal" onclick="licenseInfo('${oaNotify.title}')">预览</a>
+					<a data-toggle="modal" onclick="licenseInfo('${oaNotify.files}')">预览</a>
 				</td></shiro:hasPermission></c:if>
 			</tr>
 		</c:forEach>

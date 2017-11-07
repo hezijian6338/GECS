@@ -46,6 +46,8 @@ public class BusinessLicense extends ActEntity<BusinessLicense> {
 	private String handlerId;		// 经办人身份证件号码
 	private String handlerPhone;		// 经办人联系方式
 	private BusinessScope scope;		// 经营/业务/许可范围
+	private String path;           //证照路径
+	private String status;         //审核状态
 	private String buildingName;		// 建筑名称
 	private String floorNumber;		// 层数
 	private String useArea;		// 使用面积
@@ -82,6 +84,22 @@ public class BusinessLicense extends ActEntity<BusinessLicense> {
 
 	public void setCertificateTypeId(String certificateTypeId) {
 		this.certificateTypeId = certificateTypeId;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	@Length(min=1, max=18, message="证照类型长度必须介于 1 和 18 之间")

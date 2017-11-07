@@ -27,9 +27,14 @@
 
 	<select id="getByUserId" resultType="OaNotifyRecord">
 		SELECT
-		<include refid="oaNotifyRecordColumns"/>
+		a.ID AS "id",
+		a.OA_NOTIFY_ID AS "oaNotify.id",
+		a.USER_ID AS "user.id",
+		a.READ_FLAG AS "readFlag",
+		a.READ_DATE AS "readDate",
+		u.name AS "user.name"
   		FROM oa_notify_record a
-		<include refid="oaNotifyRecordJoins"/>
+		JOIN sys_user u ON u.id = a.user_id
 		WHERE a.USER_ID = #{userId1}
 	</select>
 	

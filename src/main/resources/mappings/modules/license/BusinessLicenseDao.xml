@@ -25,6 +25,8 @@
 		a.handler_id AS "handlerId",
 		a.handler_phone AS "handlerPhone",
 		a.scope AS "scope.id",
+		a.path AS "path",
+		a.status AS "status",
 		a.building_name AS "buildingName",
 		a.floor_number AS "floorNumber",
 		a.use_area AS "useArea",
@@ -149,6 +151,8 @@
 		scope,
 		building_name,
 		floor_number,
+		path,
+		status,
 		use_area,
 		usage1,
 		dealfire_facilities,
@@ -189,6 +193,8 @@
 		#{scope.id},
 		#{buildingName},
 		#{floorNumber},
+		#{path},
+		#{status},
 		#{useArea},
 		#{usage1},
 		#{dealfireFacilities},
@@ -228,6 +234,8 @@
 		handler_id_type = #{handlerIdType},
 		handler_id = #{handlerId},
 		handler_phone = #{handlerPhone},
+		path = #{path},
+		status = #{status},
 		scope = #{scope.id},
 		building_name = #{buildingName},
 		floor_number = #{floorNumber},
@@ -251,9 +259,6 @@
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
-
-
-
 
 	<update id="updateOpinion1">
 		UPDATE business_license SET

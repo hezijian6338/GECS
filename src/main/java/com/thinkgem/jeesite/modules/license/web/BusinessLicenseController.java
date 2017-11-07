@@ -164,14 +164,16 @@ public class BusinessLicenseController extends BaseController {
 			certificateLibrary.setOffice(businessLicense.getOffice());
 			certificateLibrary.setPath(realativePath);
 			certificateLibraryService.save(certificateLibrary);
-
 				//保存在通告表中
-				OaNotify oaNotify=new OaNotify();
-				oaNotify.setContent(businessLicense.getId());
-				oaNotify.setStatus("审核通过");
-				oaNotifyService.updateStatus(oaNotify);
-				System.out.println("地方官就是感觉========="+businessLicense.getId());
+			businessLicense.setPath(realativePath);
+			businessLicense.setStatus("审核通过");
+			businessLicenseService.save(businessLicense);
 
+			OaNotify oaNotify=new OaNotify();
+			oaNotify.setContent(businessLicense.getId());
+			oaNotify.setStatus("审核通过");
+			oaNotify.setFiles(realativePath);
+			oaNotifyService.updateStatus(oaNotify);
 			}
 		}
 		model.addAttribute("businessLicense", businessLicense);
@@ -186,7 +188,7 @@ public class BusinessLicenseController extends BaseController {
 		}
 		String radio=request.getParameter("bt1");
 		businessLicense.setRegisteredCapital(businessLicense.getRegisteredCapital()+radio);
-
+		businessLicense.setStatus("审核中");
 
 		//保存在通告表中
 		OaNotify oaNotify=new OaNotify();
@@ -203,6 +205,7 @@ public class BusinessLicenseController extends BaseController {
 		oaNotify.setReadNum("1");
 		oaNotify.setOaNotifyRecordIds(UserUtils.getUser().getId());
 		oaNotify.setSelf(true);
+		System.out.println("------"+oaNotify);
 		oaNotifyService.save(oaNotify);
 
 
@@ -266,7 +269,8 @@ public class BusinessLicenseController extends BaseController {
 
 		String certificateName = title.substring(0,title.indexOf("-"));
 		System.out.println("---------"+certificateName);
-		CertificateLibrary certificateLibrary = certificateLibraryService.getByCertificateCode(certificateName);
+		CertificateLibrary certificateLibrary = certificateLibraryService.getByCertificateName(certificateName);
+		System.out.println("------------========="+certificateLibrary);
 		return Msg.success().add("certificateLibrary",certificateLibrary);
 	}
 

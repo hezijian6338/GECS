@@ -105,11 +105,10 @@ public class OaNotifyController extends BaseController {
 	@RequestMapping(value = "self")
 	public String selfList(OaNotify oaNotify, HttpServletRequest request, HttpServletResponse response, Model model) {
 		oaNotify.setSelf(true);
-		User user = getUser();
 		List oaNotifyList=new ArrayList();
 		List<String> oaNotifyIds = new ArrayList<String>();
 		//获取oaNotifyRecord的信息
-		List<OaNotifyRecord> oaNotifyRecord = oaNotifyService.getByUserId(user.getId());
+		List<OaNotifyRecord> oaNotifyRecord = oaNotifyService.getByUserId(getUser().getId());
 		//通过user表中的id获取oaNotifyId
 		if (!oaNotifyRecord.isEmpty()) {
 			for (int i = 0; i < oaNotifyRecord.size(); i++) {
@@ -120,7 +119,6 @@ public class OaNotifyController extends BaseController {
 			}
 			oaNotifyList = oaNotifyService.getByIds(oaNotifyIds);
 		}
-
 		Page<OaNotify> page = oaNotifyService.find(new Page<OaNotify>(request, response), oaNotify,oaNotifyList);
 		model.addAttribute("page", page);
 		return "modules/oa/oaNotifyList";

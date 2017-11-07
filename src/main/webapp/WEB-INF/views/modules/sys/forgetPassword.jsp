@@ -66,7 +66,7 @@
 
             //获取验证码
             $('#getCodeBtn').on('click', function() {
-                var loginName1 = $("#loginName").val();
+                     var loginName1 = $("#loginName").val();
                     $('input[name="validateCode"]').focus();
                     var getValidateCodeObj = $('#getCodeBtn');
                     getValidateCodeObj.attr('disabled', true);
@@ -77,7 +77,8 @@
                         getValidateCodeObj.html('<b style="padding:0 33px;color:#a9a9a9;">' + i + '</b>');
                         if (i == 0) {
                             clearInterval(myInterval);
-                            getValidateCodeObj.html('获取验证码');
+                            getValidateCodeObj.
+                            html('获取验证码');
                             getValidateCodeObj.attr('disabled', false);
                         }
                     }

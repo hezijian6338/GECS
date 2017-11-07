@@ -27,23 +27,15 @@
 		};
 		function licenseInfo(s) {
 			var rand = Math.random();
-			$.ajax({
-				type:"GET",
-				url:"${ctx}/license/businessLicense/getPath/"+s,
-				success:function (result) {
-				    console.log(result);
-				    var path = result.extend.certificateLibrary.path;
-				    console.log(path+"?"+rand);
-
-                    if(path!=""&&path!=null){
-					    $('#btn_browse').modal({});
-					    url1=path+"?"+rand;
-					    $('#displayPdfIframe').attr("src",'${ctxStatic}/pdfjs/web/viewer.html?file='+encodeURIComponent(url1));
-                    }else {
+			path = s;
+            if(path!=""&&path!=null){
+				$('#btn_browse').modal({});
+				url1=path+"?"+rand;
+				$('#displayPdfIframe').attr("src",'${ctxStatic}/pdfjs/web/viewer.html?file='+encodeURIComponent(url1));
+			}else {
                         alert("执照还未生成！");
-					}
-                }
-			});
+			}
+
 		}
 	</script>
 	<style type="text/css">
@@ -112,6 +104,7 @@
 				<th>经办人姓名</th>
 				<th>经营/业务/许可范围</th>
 				<th>所属区域</th>
+				<th>状态</th>
 				<th>创建者</th>
 				<th>更新时间</th>
 				<shiro:hasPermission name="license:businessLicense:edit"><th>操作</th></shiro:hasPermission>
@@ -147,11 +140,16 @@
 				<td>
 					${businessLicense.handlerName}
 				</td>
+
 				<td>
 					${businessLicense.scope.name}
 				</td>
+
 				<td>
 					${businessLicense.area.name}
+				</td>
+				<td>
+					${businessLicense.status}
 				</td>
 				<td>
 					${businessLicense.createBy.name}
@@ -162,7 +160,7 @@
 				<shiro:hasPermission name="license:businessLicense:edit"><td>
     				<a href="${ctx}/license/businessLicense/form?id=${businessLicense.id}">详情</a>
 					<a data-toggle="modal" onclick="licenseInfo('${businessLicense.certificateCode}')">预览</a>
-					<a href="${ctx}/license/businessLicense/delete?id=${businessLicense.id}" onclick="return confirmx('确认要删除该营业执照吗？', this.href)">删除</a>
+					<a href="${ctx}/license/businessLicense/delete?id=${businessLicense.path}" onclick="return confirmx('确认要删除该营业执照吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>
