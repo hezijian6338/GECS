@@ -208,7 +208,7 @@ public class BusinessLicenseController extends BaseController {
 
 		addMessage(redirectAttributes, "保存营业执照成功");
 
-		return "redirect:" + adminPath + "/oa/oaNotify/?repage";
+		return "redirect:" + adminPath + "/oa/oaNotify/self?repage";
 
 	}
 
