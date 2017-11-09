@@ -1,8 +1,8 @@
 ﻿/*
  * CKFinder
  * ========
- * http://ckfinder.com
- * Copyright (C) 2007-2012, CKSource - Frederico Knabben. All rights reserved.
+ * http://cksource.com/ckfinder
+ * Copyright (C) 2007-2015, CKSource - Frederico Knabben. All rights reserved.
  *
  * The software, this file, and its contents are subject to the CKFinder
  * License. Please read the license.txt file before using, installing, copying,
@@ -243,7 +243,7 @@ CKFinder.lang['nl'] =
 		FileInvChar		: 'De bestandsnaam mag de volgende tekens niet bevatten: \n\\ / : * ? " < > |',
 		FolderInvChar	: 'De mapnaam mag de volgende tekens niet bevatten: \n\\ / : * ? " < > |',
 
-		PopupBlockView	: 'Het was niet mogelijk om dit bestand in een nieuw venster te openen. Configureer de browser zodat het de popups van deze jeesite niet blokkeert.',
+		PopupBlockView	: 'Het was niet mogelijk om dit bestand in een nieuw venster te openen. Configureer de browser zodat het de popups van deze website niet blokkeert.',
 		XmlError		: 'Het is niet gelukt om de XML van de webserver te laden.',
 		XmlEmpty		: 'Het is niet gelukt om de XML van de webserver te laden. De server gaf een leeg resultaat terug.',
 		XmlRawResponse	: 'Origineel resultaat van de server: %s'
@@ -303,5 +303,10 @@ CKFinder.lang['nl'] =
 		removeAndExtract	: 'Remove existing and extract', // MISSING
 		extractAndOverwrite	: 'Extract overwriting existing files', // MISSING
 		extractSuccess		: 'File extracted successfully.' // MISSING
+	},
+
+	Search :
+	{
+		searchPlaceholder : 'Zoeken'
 	}
 };

@@ -607,7 +607,7 @@
 <%--页面右侧div(Mickey)--%>
 <div class="pageRight" id="pageRight">
     <%--页面中ckfinder预览div(hezijian6338)--%>
-    <div id="pdf" class="pdf">.....</div>
+    <div id="pdf" class="pdf"></div>
     <%--页面工具栏（hezijian6338）--%>
     <div class="util" id="util">
 
@@ -638,6 +638,7 @@
                 var finder = new CKFinder();
                 finder.basePath = '../';	// The path for the installation of CKFinder (default = "/ckfinder/").
                 finder.startupPath = startupPath;
+
                 finder.resourceType = "元素图片文件夹";
                 finder.selectActionFunction = SetFileField;
                 finder.selectActionData = selectAD;
@@ -660,6 +661,7 @@
                 // You can use the "CKFinder" class to render CKFinder in a page:
                 var finder = new CKFinder();
                 finder.basePath = '../';	// The path for the installation of CKFinder (default = "/ckfinder/").
+
                 //Startup path in a form: "Type:/path/to/directory/"
                 finder.readOnly = true;
                 finder.resourceType = "证照模板文件夹";
@@ -778,7 +780,7 @@
             </select>
             <button id="downloadPDF" class="bttn-unite bttn-xs bttn-primary" onclick="print()">下载PDF</button>
             <button id="saveTxt" class="bttn-unite bttn-xs bttn-primary" onclick="saveTxt()">下载图片</button>
-            <input id="xFilePath" name="FilePath" type="text" size="60" hidden=""/>
+            <input id="xFilePath" name="FilePath" type="text" size="60" style="display: none"/>
             <%--ui风格按钮--%>
             <button class="bttn-unite bttn-xs bttn-primary" onclick="BrowseServer('元素图片文件夹:/','xFilePath');">浏览文件夹
             </button>
@@ -831,10 +833,10 @@
 
         <!--字体设置工具栏(Mickey)-->
         <div id="setFont_option" class="_util" style="float:left;">
-            <button id="bold" class="bttn-pill bttn-xs bttn-primary">加粗</button>
-            <button id="italic" class="bttn-pill bttn-xs bttn-primary">加斜</button>
-            <button id="underline" class="bttn-pill bttn-xs bttn-primary">下划线</button>
-            <button id="textareaBorder" class="bttn-pill bttn-xs bttn-primary">边框</button>
+            <button id="bold" class="bttn-unite bttn-xs bttn-primary">加粗</button>
+            <button id="italic" class="bttn-unite bttn-xs bttn-primary">加斜</button>
+            <button id="underline" class="bttn-unite bttn-xs bttn-primary">下划线</button>
+            <button id="textareaBorder" class="bttn-unite bttn-xs bttn-primary">边框</button>
             <%--<button id="setBackGround" class="bttn-unite bttn-xs bttn-primary">设置背景图片</button>--%>
             <%--<input id="bold" type="button" value="加粗" style="height:24px;line-height:20px"/>--%>
             <%--<input id="italic" type="button" value="加斜" style="height:24px;line-height:20px"/>--%>
