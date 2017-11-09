@@ -80,7 +80,8 @@
 <div class="container register">
     <div class="box register-box">
         <div class="box-title">用户注册</div>
-        <form:form id="inputForm" modelAttribute="user" action="${ctxFront}/save" method="post" class="form-horizontal register-form">
+        <form:form id="inputForm" modelAttribute="user" action="${ctxFront}/save" method="post"
+                   class="form-horizontal register-form">
             <form:hidden path="id"/>
             <sys:message content="${message}"/>
             <div class="control-group">
@@ -92,20 +93,23 @@
             <div class="control-group">
                 <label class="control-label"><font color="red">*</font>&nbsp;登录名:</label>
                 <div class="controls">
-                    <form:input path="loginName" placeholder="请输入身份证号进行注册" htmlEscape="false" maxlength="50" class="required userName"/>
+                    <form:input path="loginName" placeholder="请输入身份证号进行注册" htmlEscape="false"
+                                maxlength="50" class="required userName"/>
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label"><font color="red">*</font>&nbsp;密码:</label>
                 <div class="controls">
-                    <input id="password" name="password" type="password" value="" maxlength="50" minlength="3" class="${empty user.id?'required':''}"/>
+                    <input id="password" name="password" type="password" value="" maxlength="50" minlength="3"
+                           class="${empty user.id?'required':''}"/>
                     <c:if test="${empty user.id}"><span class="help-inline"></span></c:if>
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label"><font color="red">*</font>&nbsp;确认密码:</label>
                 <div class="controls">
-                    <input id="confirmNewPassword" name="confirmNewPassword" type="password" value="" maxlength="50" minlength="3" equalTo="#password"/>
+                    <input id="confirmNewPassword" name="confirmNewPassword" type="password" value=""
+                           maxlength="50" minlength="3" equalTo="#password"/>
                     <c:if test="${empty user.id}"><span class="help-inline"></span></c:if>
                 </div>
             </div>

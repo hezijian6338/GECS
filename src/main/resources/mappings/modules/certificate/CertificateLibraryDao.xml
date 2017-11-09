@@ -47,6 +47,13 @@
 		WHERE
 		a.certificate_code=#{certificateCode}
 	</select>
+
+	<select id="getByCertificateName" parameterType="string" resultType="CertificateLibrary">
+		Select <include refid="certificateLibraryColumns"/>
+		FROM certificate_library a <include refid="certificateLibraryJoins"/>
+		WHERE
+		a.certificate_Name=#{certificateName}
+	</select>
 	
 	<select id="findList" resultType="CertificateLibrary">
 		SELECT 

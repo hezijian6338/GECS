@@ -54,7 +54,7 @@ public class OaNotify extends DataEntity<OaNotify> {
 		this.title = title;
 	}
 	
-	@Length(min=0, max=1, message="类型长度必须介于 0 和 1 之间")
+	@Length(min=0, max=255, message="类型长度必须介于 0 和 1 之间")
 	public String getType() {
 		return type;
 	}
@@ -63,7 +63,7 @@ public class OaNotify extends DataEntity<OaNotify> {
 		this.type = type;
 	}
 	
-	@Length(min=0, max=1, message="状态长度必须介于 0 和 1 之间")
+	@Length(min=0, max=64, message="状态长度必须介于 0 和 1 之间")
 	public String getStatus() {
 		return status;
 	}

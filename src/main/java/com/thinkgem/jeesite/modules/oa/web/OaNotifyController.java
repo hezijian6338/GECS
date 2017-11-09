@@ -5,7 +5,10 @@ package com.thinkgem.jeesite.modules.oa.web;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.thinkgem.jeesite.modules.oa.entity.OaNotifyRecord;
+import com.thinkgem.jeesite.modules.sys.entity.User;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +24,11 @@ import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.oa.entity.OaNotify;
 import com.thinkgem.jeesite.modules.oa.service.OaNotifyService;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.thinkgem.jeesite.modules.sys.utils.UserUtils.getUser;
 
 /**
  * 通知通告Controller
@@ -97,7 +105,21 @@ public class OaNotifyController extends BaseController {
 	@RequestMapping(value = "self")
 	public String selfList(OaNotify oaNotify, HttpServletRequest request, HttpServletResponse response, Model model) {
 		oaNotify.setSelf(true);
-		Page<OaNotify> page = oaNotifyService.find(new Page<OaNotify>(request, response), oaNotify); 
+		List oaNotifyList=new ArrayList();
+		List<String> oaNotifyIds = new ArrayList<String>();
+		//获取oaNotifyRecord的信息
+		List<OaNotifyRecord> oaNotifyRecord = oaNotifyService.getByUserId(getUser().getId());
+		//通过user表中的id获取oaNotifyId
+		if (!oaNotifyRecord.isEmpty()) {
+			for (int i = 0; i < oaNotifyRecord.size(); i++) {
+				String oaNotifyRecordId = oaNotifyRecord.get(i).getOaNotify().getId();
+				if (oaNotifyRecordId != null || !"null".equals(oaNotifyRecordId)) {
+					oaNotifyIds.add(oaNotifyRecordId);
+				}
+			}
+			oaNotifyList = oaNotifyService.getByIds(oaNotifyIds);
+		}
+		Page<OaNotify> page = oaNotifyService.find(new Page<OaNotify>(request, response), oaNotify,oaNotifyList);
 		model.addAttribute("page", page);
 		return "modules/oa/oaNotifyList";
 	}

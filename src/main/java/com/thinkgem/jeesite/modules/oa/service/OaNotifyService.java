@@ -4,7 +4,9 @@
 package com.thinkgem.jeesite.modules.oa.service;
 
 import java.util.Date;
+import java.util.List;
 
+import com.thinkgem.jeesite.modules.sys.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +34,13 @@ public class OaNotifyService extends CrudService<OaNotifyDao, OaNotify> {
 		OaNotify entity = dao.get(id);
 		return entity;
 	}
-	
+
+	public List<OaNotify> getByIds(List<String> ids){
+		List<OaNotify> oaNotifies = dao.getByIds(ids);
+		System.out.println("++++++++"+oaNotifies);
+		return oaNotifies;
+	}
+
 	/**
 	 * 获取通知发送记录
 	 * @param oaNotify
@@ -46,6 +54,18 @@ public class OaNotifyService extends CrudService<OaNotifyDao, OaNotify> {
 	public Page<OaNotify> find(Page<OaNotify> page, OaNotify oaNotify) {
 		oaNotify.setPage(page);
 		page.setList(dao.findList(oaNotify));
+		return page;
+	}
+
+	/**
+	 * @author 练浩文
+	 * @TODO (注：)
+	  * @param
+	 * @DATE: 2017/11/6 14:26
+	 */
+	public Page<OaNotify> find(Page<OaNotify> page, OaNotify oaNotify,List<OaNotify> oaNotifies) {
+		oaNotify.setPage(page);
+		page.setList(oaNotifies);
 		return page;
 	}
 	
@@ -79,5 +99,16 @@ public class OaNotifyService extends CrudService<OaNotifyDao, OaNotify> {
 		oaNotifyRecord.setReadDate(new Date());
 		oaNotifyRecord.setReadFlag("1");
 		oaNotifyRecordDao.update(oaNotifyRecord);
+	}
+
+    public List<OaNotifyRecord> getByUserId(String userId1) {
+		List<OaNotifyRecord> oaNotifyRecordId = oaNotifyRecordDao.getByUserId(userId1);
+		System.out.println("........" + oaNotifyRecordId);
+		return oaNotifyRecordId;
+    }
+
+	@Transactional(readOnly = false)
+    public void updateStatus(OaNotify oaNotify){
+		dao.updateStatus(oaNotify);
 	}
 }

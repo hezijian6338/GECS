@@ -10,10 +10,16 @@ import com.itextpdf.text.DocumentException;
 import com.thinkgem.jeesite.common.persistence.Msg;
 import com.thinkgem.jeesite.common.utils.PDFUtil;
 import com.thinkgem.jeesite.common.utils.SendMailUtil;
+import com.thinkgem.jeesite.common.utils.SendMessageUtil;
+import com.thinkgem.jeesite.modules.act.entity.Act;
+import com.thinkgem.jeesite.modules.act.service.ActTaskService;
 import com.thinkgem.jeesite.modules.certificate.entity.CertificateLibrary;
 import com.thinkgem.jeesite.modules.certificate.entity.CertificateType;
 import com.thinkgem.jeesite.modules.certificate.service.CertificateLibraryService;
 import com.thinkgem.jeesite.modules.certificate.service.CertificateTypeService;
+import com.thinkgem.jeesite.modules.oa.dao.OaNotifyRecordDao;
+import com.thinkgem.jeesite.modules.oa.entity.OaNotify;
+import com.thinkgem.jeesite.modules.oa.service.OaNotifyService;
 import com.thinkgem.jeesite.modules.sys.service.SystemService;
 import org.apache.commons.lang3.StringUtils;
 import com.thinkgem.jeesite.modules.sys.entity.User;
@@ -32,14 +38,13 @@ import com.thinkgem.jeesite.modules.license.entity.BusinessLicense;
 import com.thinkgem.jeesite.modules.license.service.BusinessLicenseService;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.List;
 
-import static oracle.net.aso.C05.b;
 
 /**
  * 营业执照Controller
@@ -51,19 +56,18 @@ import static oracle.net.aso.C05.b;
 public class BusinessLicenseController extends BaseController {
 
 	@Autowired
+	private OaNotifyService oaNotifyService;
+
+
+	@Autowired
 	private BusinessLicenseService businessLicenseService;
 
 	@Autowired
 	private CertificateTypeService certificateTypeService;
 
 	@Autowired
-	private SystemService systemService;
-
-	@Autowired
 	private CertificateLibraryService certificateLibraryService;
 
-
-	
 	@ModelAttribute
 	public BusinessLicense get(@RequestParam(required=false) String id) {
 		BusinessLicense entity = null;
@@ -128,7 +132,7 @@ public class BusinessLicenseController extends BaseController {
 			}*/
 			// 审核环节2
 			else if ("audit1".equals(taskDefKey)){
-				System.out.println("+++++++"+certificateLibrary);
+//				System.out.println("+++++++"+certificateLibrary);
 				view = "businessLicenseAudit";
 			}
 			// 审核环节3
@@ -149,7 +153,7 @@ public class BusinessLicenseController extends BaseController {
 //				SendMailUtil.sendCommonMail(emailAddr,"执照生成通知",sendMessage);
 
 			PDFUtil.fillTemplate(businessLicense,path,savaPath);
-			view = "businessLicenseAudit";
+
 
 			certificateLibrary.setCertificateCode(businessLicense.getCertificateCode());
 			certificateLibrary.setCertificateTypeId(businessLicense.getCertificateTypeId());
@@ -161,7 +165,24 @@ public class BusinessLicenseController extends BaseController {
 			certificateLibrary.setOffice(businessLicense.getOffice());
 			certificateLibrary.setPath(realativePath);
 			certificateLibraryService.save(certificateLibrary);
+				//保存在通告表中
+			businessLicense.setPath(realativePath);
+			businessLicense.setStatus("审核通过");
+			businessLicenseService.update(businessLicense);
 
+			OaNotify oaNotify=new OaNotify();
+			oaNotify.setContent(businessLicense.getId());
+			oaNotify.setStatus("审核通过");
+			oaNotify.setFiles(realativePath);
+			oaNotifyService.updateStatus(oaNotify);
+			try {
+				SendMessageUtil.sendMessage(businessLicense.getPersionName(),businessLicense.getCertificateTypeName(),
+						businessLicense.getPersionPhone());
+			}catch (Exception e){
+				e.printStackTrace();
+			}
+
+			view = "businessLicenseAudit";
 			}
 		}
 		model.addAttribute("businessLicense", businessLicense);
@@ -176,9 +197,31 @@ public class BusinessLicenseController extends BaseController {
 		}
 		String radio=request.getParameter("bt1");
 		businessLicense.setRegisteredCapital(businessLicense.getRegisteredCapital()+radio);
+		businessLicense.setStatus("审核中");
+
+		//保存在通告表中
+		OaNotify oaNotify=new OaNotify();
+		DateFormat df = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+
 		businessLicenseService.save(businessLicense);
+		oaNotify.setType(businessLicense.getCertificateTypeName());
+		oaNotify.setTitle(businessLicense.getCertificateName()+"-"+df.format(businessLicense.getCreateDate()));
+
+		//将business_license的id存在content里
+		oaNotify.setContent(businessLicense.getId());
+
+		oaNotify.setStatus("审核中");
+		oaNotify.setReadNum("1");
+		oaNotify.setOaNotifyRecordIds(UserUtils.getUser().getId());
+		oaNotify.setSelf(true);
+		System.out.println("------"+oaNotify);
+		oaNotifyService.save(oaNotify);
+
+
 		addMessage(redirectAttributes, "保存营业执照成功");
-		return "redirect:" + adminPath + "/act/task/todo/";
+
+		return "redirect:" + adminPath + "/oa/oaNotify/self?repage";
+
 	}
 
 
@@ -210,6 +253,12 @@ public class BusinessLicenseController extends BaseController {
 	}
 
 
+	/**
+	 * @author 练浩文
+	 * @TODO (注：certificateCode)
+	  * @param certificateCode
+	 * @DATE: 2017/11/2 8:56
+	 */
 	@ResponseBody
 	@RequestMapping(value="/getPath/{certificateCode}",method= RequestMethod.GET)
 	public Msg getPath(@PathVariable String certificateCode){
@@ -217,6 +266,22 @@ public class BusinessLicenseController extends BaseController {
 		return Msg.success().add("certificateLibrary",certificateLibrary);
 	}
 
+	/**
+	 * @author 练浩文
+	 * @TODO (注：certificateCode)
+	 * @param title
+	 * @DATE: 2017/11/2 8:56
+	 */
+	@ResponseBody
+	@RequestMapping(value="/getPathByTitle/{title}",method= RequestMethod.GET)
+	public Msg getPathByTitle(@PathVariable String title){
+
+		String certificateName = title.substring(0,title.indexOf("-"));
+		System.out.println("---------"+certificateName);
+		CertificateLibrary certificateLibrary = certificateLibraryService.getByCertificateName(certificateName);
+		System.out.println("------------========="+certificateLibrary);
+		return Msg.success().add("certificateLibrary",certificateLibrary);
+	}
 
 	@RequiresPermissions("license:businessLicense:edit")
 	@RequestMapping(value = "testJump")
