@@ -7,11 +7,11 @@
 <%--<meta name="decorator" content="default"/>--%>
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9"/>
 <script type="text/javascript" src="${ctxStatic}/js/jquery-1.8.3.min.js"></script>
-<script type="text/javascript" src="${ctxStatic}/js/jquery.min.js"></script>
-<script type="text/javascript" src="${ctxStatic}/js/jquery-1.12.4.js"></script>
-<script type="text/javascript" src="${ctxStatic}/js/jquery-ui.js"></script>
-<script type="text/javascript" src="${ctxStatic}/js/jquery-v1.min.js"></script>
-<script type="text/javascript" src="${ctxStatic}/js/jquery-v1-ui.js"></script>
+<%--<script type="text/javascript" src="${ctxStatic}/js/jquery.min.js"></script>--%>
+<%--<script type="text/javascript" src="${ctxStatic}/js/jquery-1.12.4.js"></script>--%>
+<%--<script type="text/javascript" src="${ctxStatic}/js/jquery-ui.js"></script>--%>
+<%--<script type="text/javascript" src="${ctxStatic}/js/jquery-v1.min.js"></script>--%>
+<%--<script type="text/javascript" src="${ctxStatic}/js/jquery-v1-ui.js"></script>--%>
 
 <%--ckfinder相关的css&js--%>
 <link rel="stylesheet" type="text/css" href="${ctxStatic}/ckfinder/_samples/sample.css"/>
