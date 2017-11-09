@@ -12,12 +12,17 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9"/>
 <head><title>Moudle Demo</title></head>
 <script type="text/javascript" src="${ctxStatic}/js/html2canvas.js"></script>
-<script type="text/javascript" src="${ctxStatic}/js/jquery-1.8.3.min.js"></script>
-<script type="text/javascript" src="${ctxStatic}/js/jquery.min.js"></script>
-<script type="text/javascript" src="${ctxStatic}/js/jquery-1.12.4.js"></script>
-<script type="text/javascript" src="${ctxStatic}/js/jquery-ui.js"></script>
-<script type="text/javascript" src="${ctxStatic}/js/jquery-v1.min.js"></script>
+<%--<script type="text/javascript" src="${ctxStatic}/js/jquery-3.2.1.js"></script>--%>
+<script type="text/javascript" src="${ctxStatic}/js/jquery-1.7.2.js"></script>
+<%--<script type="text/javascript" src="${ctxStatic}/js/jquery.js"></script>--%>
+<%--<script type="text/javascript" src="${ctxStatic}/js/jquery-1.8.3.min.js"></script>--%>
+<%--<script type="text/javascript" src="${ctxStatic}/js/jquery-1.8.3.js"></script>--%>
+<%--<script type="text/javascript" src="${ctxStatic}/js/jquery.min.js"></script>--%>
+<%--<script type="text/javascript" src="${ctxStatic}/js/jquery-1.12.4.js"></script>--%>
+<%--<script type="text/javascript" src="${ctxStatic}/js/jquery-ui.js"></script>--%>
+<%--<script type="text/javascript" src="${ctxStatic}/js/jquery-v1.min.js"></script>--%>
 <script type="text/javascript" src="${ctxStatic}/js/jquery-v1-ui.js"></script>
+<%--<script type="text/javascript" src="${ctxStatic}/js/jquery-ui.min.js"></script>--%>
 <script type="text/javascript" src="${ctxStatic}/js/jscolor.js"></script>
 <script type="text/javascript" src="${ctxStatic}/js/jscolor.min.js"></script>
 <script type="text/javascript" src="${ctxStatic}/js/FileSaver.js"></script>
@@ -37,9 +42,12 @@
 <script type="text/javascript" src="${ctxStatic}/js/jspdf.debug.js"></script>
 <%--工具栏自适应位置--%>
 <script type="text/javascript" src="${ctxStatic}/js/jquery.vgrid.min.js"></script>
+<%--&lt;%&ndash;右键菜单插件&ndash;%&gt;--%>
+<%--<link rel="stylesheet" type="text/css" href="${ctxStatic}/css/jquery.contextmenu.css"/>--%>
+<%--<script type="text/javascript" src="${ctxStatic}/js/jquery.contextmenu.js"></script>--%>
 <%--右键菜单插件--%>
-<link rel="stylesheet" type="text/css" href="${ctxStatic}/css/jquery.contextmenu.css"/>
-<script type="text/javascript" src="${ctxStatic}/js/jquery.contextmenu.js"></script>
+<link rel="stylesheet" type="text/css" href="${ctxStatic}/css/context.standalone.css"/>
+<script type="text/javascript" src="${ctxStatic}/js/context.js"></script>
 <%--按钮UI插件--%>
 <link rel="stylesheet" type="text/css" href="${ctxStatic}/css/bttn.min.css"/>
 <%--开关按钮插件--%>
@@ -57,6 +65,54 @@
                 delay: 50
             }
         });
+        context.init({
+            fadeSpeed: 100,
+            filter: function ($obj){},
+            above: 'auto',
+            preventDoubleContext: true,
+            compress: false
+        });
+        context.settings({compress: true});
+        context.attach('html', [
+            {header: 'Compressed Menu'},
+            {text: 'Back', href: '#'},
+            {text: 'Reload', href: '#'},
+            {divider: true},
+            {text: 'Disable This Menu', action: function(e){
+                e.preventDefault();
+                context.destroy('html');
+                alert('html contextual menu destroyed!');
+            }},
+        ]);
+        context.attach('#pdf', [
+            {header: 'pdf Menu'},
+            {text: 'Back', href: '#'},
+            {text: 'Reload', href: '#'},
+            {divider: true},
+            {text: 'Disable This Menu', action: function(e){
+                e.preventDefault();
+                context.destroy('html');
+                alert('html contextual menu destroyed!');
+            }},
+        ]);
+
+        /*加载画布的右键插件(hezijian6338)*/
+        context.attach('#printf', [
+            {header: 'printf Menu'},
+            {text: '清空画布', action: function(e){
+                if (confirm("是否清空画布？")) {
+                    document.getElementById("printf").innerHTML = "";
+                }
+            }},
+            {text: 'Reload', href: '#'},
+            {divider: true},
+            {text: 'Disable This Menu', action: function(e){
+                e.preventDefault();
+                context.destroy('html');
+                alert('html contextual menu destroyed!');
+            }},
+        ]);
+
     });
 
     /*加载可拖拽的组件(Mickey)*/
@@ -73,13 +129,13 @@
         document.getElementById("printf").style.height = document.getElementById("pageRight").offsetHeight - document.getElementById("util").offsetHeight + 100;
 
         /*左边组件栏设置为可缩放（Mickey）*/
-        $("#products").resizable({
-            minHeight: 140,
-            minWidth: 200,
-            resize: function () {
-                $("#catalog").accordion("refresh");
-            }
-        });
+//        $("#products").resizable({
+//            minHeight: 140,
+//            minWidth: 200,
+//            resize: function () {
+//                $("#catalog").accordion("refresh");
+//            }
+//        });
         $("#catalog").accordion({
             autoHeight: false
         });
@@ -102,26 +158,32 @@
                 <!--第一个拖拉组件文本框的生成(Mickey)-->
 
                 if (ui.helper.attr("id") == "Text") {
-                    var el = $("<div class='printComponents textComponents ' onclick='checkClick(this)'  tabindex='0' ></div>");
+                    var el = $("<div class='printComponents textComponents' onclick='checkClick(this)'  tabindex='0' ></div>");
                     //el.append("<ul><li style='list-style: none;'><textarea class='textarea' id='textarea' style='' onchange='wirteText(this)'></textarea></li></ul>");
                     el.append("<textarea class='textarea' id='textarea' style='' onchange='wirteText(this)'></textarea>");
                     var id = (new Date()).getMilliseconds();
                     el.attr("id", "new" + id);
                     el.draggable({
                         containment: "#printf",
-                        handle: "ul"
-                    }).resizable({
+                        handle: "se"
+                    })
+                        .resizable({
                         stop: function (e, ui) {
                             var hereDrag = this;
                             var width = parseInt($(hereDrag).css("width"));
                             var height = parseInt($(hereDrag).css("height"));
-                            $(hereDrag).find('textarea').css('width', width - (width * 0.06));
+                            /*宽度会自动填充*/
+                            //$(hereDrag).find('textarea').css('width', width - (width * 0.06));
+
+                            /*动态可拖拽的高度*/
+                            //$(hereDrag).find('textarea').css('height', height - 10 );
                             $(hereDrag).find('textarea').css('height', height - (height * 0.06));
                         },
                         containment: "#printf",
                         handles: 'se'
-                    }).appendTo("#printf");
-                    //$("ul").disableSelection();
+                    })
+                        .appendTo("#printf");
+
 
                 } else if (ui.helper.attr("id") == "radiobutton") {
 
@@ -545,7 +607,7 @@
 <%--页面右侧div(Mickey)--%>
 <div class="pageRight" id="pageRight">
     <%--页面中ckfinder预览div(hezijian6338)--%>
-    <div id="pdf" class="pdf"></div>
+    <div id="pdf" class="pdf">.....</div>
     <%--页面工具栏（hezijian6338）--%>
     <div class="util" id="util">
 
@@ -869,8 +931,8 @@
                 document.getElementById("bgcolorPicker").style.display = "none"
                 printf.style.backgroundColor = "transparent";
             });
-        }
-    );
+        });
+
 
     /*设定PDF生成格式的大小*/
     var pageFormats = { // Size in pt of various paper formats
@@ -970,34 +1032,19 @@
         }
     };
 
-    /*加载画布的右键插件(hezijian6338)*/
-    $("#printf").contextPopup({
 
-        title: '画布操作',
-
-        items: [
-            {
-                label: '清空画布', action: function () {
-                if (confirm("是否清空画布？")) {
-//                        alert(originId);
-                    document.getElementById("printf").innerHTML = "";
-                }
-            }
-            }
-        ]
-    });
 
     /*页面控制（Mickey）*/
-    window.onload = function () {					//禁止鼠标右键事件
-        document.oncontextmenu = function (e) {
-            e.preventDefault();
-        }
-        <% String realPrintfContent=request.getParameter("printfContent") ; %>
-        realPrintfContent = <%=realPrintfContent%>;
-        if (!(realPrintfContent == 0 || realPrintfContent == "" || realPrintfContent == null || realPrintfContent == undefined)) {
-            alert(realPrintfContent);
-        }
-    };
+    <%--window.onload = function () {					//禁止鼠标右键事件--%>
+        <%--document.oncontextmenu = function (e) {--%>
+            <%--e.preventDefault();--%>
+        <%--}--%>
+        <%--<% String realPrintfContent=request.getParameter("printfContent") ; %>--%>
+        <%--realPrintfContent = <%=realPrintfContent%>;--%>
+        <%--if (!(realPrintfContent == 0 || realPrintfContent == "" || realPrintfContent == null || realPrintfContent == undefined)) {--%>
+            <%--alert(realPrintfContent);--%>
+        <%--}--%>
+    <%--};--%>
 
 
     function wirteText(e) {			//为每一个文本框输入后自动生成相对应的Html
@@ -1075,29 +1122,47 @@
     /*图片元素右键监测函数（Mickey&hezijian6338）*/
     function setIndex(e) {//使选中的元素永远在图层的最上面
         var xIndex = 2;
-        $(e).contextPopup({
-
-            title: '图片元素操作',
-
-            items: [
-                {
-                    label: '设置背景', action: function () {
-                    if (backGroundUnique != 1) {			//还没有设置背景
-                        $(e).css("zIndex", "1");
-                        backGroundUnique = 1;
-                    } else {
-                        xIndex++;
-                        $(e).css("zIndex", xIndex);
-                        backGroundUnique = 0;
-                    }
+        var _this = "#" + e.getAttribute("id") ;
+        context.attach(_this, [
+            {header: '图片元素属性操作'},
+            {text: 'Back', href: '#'},
+            {text: '删除元素', action:function (event) {
+                if (confirm("是否删除该元素？")) {
+//                        alert(originId);
+                    $(event).remove();
                 }
-                }, {
-                    label: '删除元素', action: function () {
-                        $(e).remove();
-                    }
-                }
-            ]
-        });
+            }},
+            {divider: true},
+            {text: 'Disable This Menu', action: function(e){
+                e.preventDefault();
+                context.destroy('html');
+                alert('html contextual menu destroyed!');
+            }},
+        ]);
+
+//        $(e).contextPopup({
+//
+//            title: '图片元素操作',
+//
+//            items: [
+//                {
+//                    label: '设置背景', action: function () {
+//                    if (backGroundUnique != 1) {			//还没有设置背景
+//                        $(e).css("zIndex", "1");
+//                        backGroundUnique = 1;
+//                    } else {
+//                        xIndex++;
+//                        $(e).css("zIndex", xIndex);
+//                        backGroundUnique = 0;
+//                    }
+//                }
+//                }, {
+//                    label: '删除元素', action: function () {
+//                        $(e).remove();
+//                    }
+//                }
+//            ]
+//        });
 
         //让保存的元素重新到画布上后能重新拖拽伸缩编辑功能
         if ($(e).hasClass("printComponents")) {
@@ -1119,26 +1184,52 @@
             var oEvent = window.event;
             if (oEvent.keyCode == 46) {
                 $(e).remove();
+
+                /*删除唯一元素后工具栏颜色取消*/
+                document.getElementById(originId).style.backgroundColor = "";
             }
         }
+        var _this = "#" + e.getAttribute("id") ;
+        //alert(_this);
 
-
-        $(e).contextPopup({
-
-            title: '元素属性操作',
-
-            items: [
-                {
-                    label: '删除元素', action: function () {
-                    if (confirm("是否删除该元素？")) {
+        context.attach(_this, [
+            {header: '元素属性操作'},
+            {text: 'Back', href: '#'},
+            {text: '删除元素', action:function (e) {
+                if (confirm("是否删除该元素？")) {
 //                        alert(originId);
+                    if(document.getElementById(originId).style.backgroundColor != ""){
                         document.getElementById(originId).style.backgroundColor = "";
-                        $(e).remove();
                     }
+                    $(_this).each().remove();
+                    $(_this).remove();
                 }
-                }
-            ]
-        });
+            }},
+            {divider: true},
+            {text: 'Disable This Menu', action: function(e){
+                e.preventDefault();
+                context.destroy('html');
+                alert('html contextual menu destroyed!');
+            }},
+        ]);
+
+
+//        $(e).contextPopup({
+//
+//            title: '元素属性操作',
+//
+//            items: [
+//                {
+//                    label: '删除元素', action: function () {
+//                    if (confirm("是否删除该元素？")) {
+////                        alert(originId);
+//                        document.getElementById(originId).style.backgroundColor = "";
+//                        $(e).remove();
+//                    }
+//                }
+//                }
+//            ]
+//        });
 
         /*字体样式监测（Mickey）*/
         var bold = document.getElementById("bold");
@@ -1187,6 +1278,7 @@
         var textareaBorder = document.getElementById("textareaBorder");
         textareaBorder.onclick = function () {
             if ($(thisID).hasClass("textComponents")) {
+                //alert("font-family");
                 if (l == 0 || l == "" || l == undefined) {
                     $(thisID).find('textarea').css('border', "1px solid #000");
                     l = 1;
@@ -1197,19 +1289,21 @@
             }
         }
 
-        /*字体样式监测（Mickey）*/
-        var setBackGround = document.getElementById("setBackGround");
-        setBackGround.onclick = function () {
-            if ($(thisID).hasClass("textComponents")) {
-                if (l == 0 || l == "" || l == undefined) {
-                    $(thisID).find('textarea').css('border', "1px solid #000");
-                    l = 1;
-                } else {
-                    $(thisID).find('textarea').css('border', "none");
-                    l = 0;
-                }
-            }
-        }
+//        alert("...");
+//
+//        /*字体样式监测（Mickey）*/
+//        var setBackGround = document.getElementById("setBackGround");
+//        setBackGround.onclick = function () {
+//            if ($(thisID).hasClass("textComponents")) {
+//                if (l == 0 || l == "" || l == undefined) {
+//                    $(thisID).find('textarea').css('border', "1px solid #000");
+//                    l = 1;
+//                } else {
+//                    $(thisID).find('textarea').css('border', "none");
+//                    l = 0;
+//                }
+//            }
+//        }
 
         /*字体具体属性控制（Mickey）*/
         var colorselect = document.getElementById('chosen1-value');
@@ -1218,20 +1312,21 @@
         var setFontsize = document.getElementById("fontsize");
         var setFontfamily = document.getElementById("fontfamily");
 
+
+
         //获取当前元素的颜色 字体 大小属性并显示在分别显示在三个选择框 如果为空显示默认的
         if ($(thisID).hasClass("textComponents")) {
-
             //字体属性获取
             if ($(thisID).find('textarea').css('font-family') == 'Courier New') {			//当前字体为默认字体
                 //alert("font-family");
                 setFontfamily.options[0].selected = true;
-            } else {																		//用户已经设置新的字体
+            } else {
+                //用户已经设置新的字体
                 setFontfamily.value = $(thisID).find('textarea').css('font-family');
             }
 
             //大小属性获取
             if (parseFloat($(thisID).find('textarea').css('font-size')) == '13.33') {			//当前大小为默认大小
-                //alert("font-size");
                 setFontsize.options[0].selected = true;
             } else {																			//用户已经设置新的大小
                 setFontsize.value = $(thisID).find('textarea').css('font-size');
@@ -1249,18 +1344,21 @@
 
         }
         colorselect.onchange = function () {
+            //alert(colorselect.value);
             var fontcolor = colorselect.value;
             $(thisID).find('textarea').css('color', fontcolor);
             $(thisID).find('label').css('color', fontcolor);
         }
         size.onchange = function () {
             var fontsize = size.value;
+            //alert(size.value);
             $(thisID).find('textarea').css('font-size', fontsize);
             $(thisID).find('label').css('font-size', fontsize);
         }
 
         family.onchange = function () {
             var fontfamily = family.value;
+            //alert(family.value);
             $(thisID).find('textarea').css('font-family', fontfamily);
             $(thisID).find('label').css('font-family', fontfamily);
         }
