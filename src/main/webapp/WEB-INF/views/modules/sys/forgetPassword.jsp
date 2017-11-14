@@ -71,6 +71,7 @@
                 }
             });
 
+
             function buttonClike(){
                 var code=$("#validateCode").val();
                 alert(code);
@@ -95,7 +96,27 @@
             $('#getCodeBtn').on('click', function() {
                     var loginName1 = $("#loginName").val();
                     sendCode(loginName1);
+
+            <%--function sendUrl(s) {--%>
+                <%--console.log("身份证号"+s);--%>
+                <%--Location = "${ctxFront}/sendCode?loginName="+s;--%>
+                <%--console.log();--%>
+                <%--&lt;%&ndash;$.ajax({&ndash;%&gt;--%>
+                    <%--&lt;%&ndash;type:"GET",&ndash;%&gt;--%>
+                    <%--&lt;%&ndash;url:"${ctxFront}/sendCode?loginName="+s,&ndash;%&gt;--%>
+                    <%--&lt;%&ndash;dataType:"json",&ndash;%&gt;--%>
+                    <%--&lt;%&ndash;success:function(){&ndash;%&gt;--%>
+                        <%--&lt;%&ndash;console.log("这个就很有趣了");&ndash;%&gt;--%>
+                    <%--&lt;%&ndash;}});&ndash;%&gt;--%>
+            <%--};--%>
+            //获取验证码
+            $('#getCodeBtn').on('click', function() {
+                    var loginName1 = $("#loginName").val();
+
                     $('input[name="validateCode"]').focus();
+                    console.log("zhenghao"+loginName1);
+                    Location = "${ctxFront}/sendCode?loginName="+loginName1;
+                    console.log("zhenghao"+loginName1);
                     var getValidateCodeObj = $('#getCodeBtn');
                     getValidateCodeObj.attr('disabled', true);
                     var i = 60;
@@ -123,7 +144,7 @@
 
             });
         });
-
+        });
     </script>
 </head>
 <body>
