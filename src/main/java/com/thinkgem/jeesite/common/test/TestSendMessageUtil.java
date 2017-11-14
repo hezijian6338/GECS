@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class TestSendMessageUtil {
     public static void main(String []args) throws ApiException {
-        String phoneNum = "13160676759";
+        String phoneNum = "13750051367";
 //        String random = "dog";
         boolean b2 = SendMessageUtil.SendAuthCode(phoneNum);
         Scanner scan = new Scanner(System.in);

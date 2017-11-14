@@ -245,10 +245,10 @@ public class PDFUtil {
         s.setFieldProperty("idcertificateTypeId", "textfont", bfChinese, null);
         s.setFieldProperty("idcertificateTypeId", "textsize", new Float(15), null);
 
-        //证照编号 注入
+ /*       //证照编号 注入
         s.setFieldProperty("idcertificateCode", "clrflags", 1, null);
         s.setFieldProperty("idcertificateCode", "textfont", bfChinese, null);
-        s.setFieldProperty("idcertificateCode", "textsize", new Float(15), null);
+        s.setFieldProperty("idcertificateCode", "textsize", new Float(15), null);*/
 
         //证照名称 注入
         s.setFieldProperty("idcertificateName", "clrflags", 1, null);
@@ -261,9 +261,9 @@ public class PDFUtil {
         s.setFieldProperty("idoffice", "textsize", new Float(15), null);
 
         //统一社会信用代码 注入
-        s.setFieldProperty("idtyshxydm", "clrflags", 1, null);
-        s.setFieldProperty("idtyshxydm", "textfont", bfChinese, null);
-        s.setFieldProperty("idtyshxydm", "textsize", new Float(15), null);
+        s.setFieldProperty("idcertificateCode", "clrflags", 1, null);
+        s.setFieldProperty("idcertificateCode", "textfont", bfChinese, null);
+        s.setFieldProperty("idcertificateCode", "textsize", new Float(15), null);
 
         //成立日期 注入
         s.setFieldProperty("idestablishDate", "clrflags", 1, null);

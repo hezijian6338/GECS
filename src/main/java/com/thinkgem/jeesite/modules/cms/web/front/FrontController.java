@@ -10,6 +10,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.taobao.api.ApiException;
+import com.thinkgem.jeesite.common.persistence.Msg;
+import com.thinkgem.jeesite.common.utils.SendMessageUtil;
 import com.thinkgem.jeesite.common.utils.SpringContextHolder;
 import com.thinkgem.jeesite.modules.sys.dao.RoleDao;
 import com.thinkgem.jeesite.modules.sys.entity.Office;
@@ -17,6 +20,7 @@ import com.thinkgem.jeesite.modules.sys.entity.Role;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.service.OfficeService;
 import com.thinkgem.jeesite.modules.sys.service.SystemService;
+import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -130,6 +134,47 @@ public class FrontController extends BaseController{
 		mobile=mobile.substring(0,mobile.length()-(mobile.substring(3)).length())+"****"+mobile.substring(7);
 		request.setAttribute("mobile1",mobile);
 		return "true";
+	}
+/**
+ * @author 许彩开
+ * @TODO (注：发送验证码)
+  * @param
+ * @DATE: 2017\11\10 0010 15:56
+ */
+
+	@ResponseBody
+	@RequestMapping(value = "sendCode",method = RequestMethod.GET)
+	public Msg sendCode(String loginName) throws ApiException {
+		System.out.println("很久的开发环境客户端防控技术========="+loginName);
+
+		User user=systemService.getUserByLoginName(loginName);
+		String mobile=user.getMobile();
+		System.out.println("手机号码：：：：："+mobile);
+		SendMessageUtil.SendAuthCode(mobile);
+		return Msg.success();
+	}
+
+/**
+ * @author 许彩开
+ * @TODO (注：验证提交过来的验证码是否正确)
+  * @param
+ * @DATE: 2017\11\10 0010 16:39
+ */
+
+
+	@RequestMapping(value = "checkCode")
+	public String checkCode(String code,String loginName,Model model,RedirectAttributes redirectAttributes){
+		System.out.println("验证码========="+code);
+		System.out.println("繁花似锦打款发货时间========"+SendMessageUtil.isValidate(code));
+		User user=systemService.getUserByLoginName(loginName);
+
+		System.out.println("用户======="+user);
+		model.addAttribute("user", user);
+		if(SendMessageUtil.isValidate(code)){
+			return "modules/sys/userModifyPwd";
+		}
+		addMessage(redirectAttributes,"手机验证码错误！");
+		return "redirect"+Global.getAdminPath()+"/sys/forgetPassword/?repage";
 	}
 
 	/**

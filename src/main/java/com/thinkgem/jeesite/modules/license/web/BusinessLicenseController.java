@@ -275,11 +275,8 @@ public class BusinessLicenseController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value="/getPathByTitle/{title}",method= RequestMethod.GET)
 	public Msg getPathByTitle(@PathVariable String title){
-
 		String certificateName = title.substring(0,title.indexOf("-"));
-		System.out.println("---------"+certificateName);
 		CertificateLibrary certificateLibrary = certificateLibraryService.getByCertificateName(certificateName);
-		System.out.println("------------========="+certificateLibrary);
 		return Msg.success().add("certificateLibrary",certificateLibrary);
 	}
 
@@ -322,7 +319,6 @@ public class BusinessLicenseController extends BaseController {
 		model.addAttribute("businessLicense", businessLicense);
 		return "modules/license/businessLicenseForm";
 	}
-
 
 
 }
