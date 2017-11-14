@@ -58,7 +58,6 @@ public class BusinessLicenseController extends BaseController {
 	@Autowired
 	private OaNotifyService oaNotifyService;
 
-
 	@Autowired
 	private BusinessLicenseService businessLicenseService;
 
@@ -107,11 +106,11 @@ public class BusinessLicenseController extends BaseController {
 	@RequestMapping(value = "form")
 	public String form(BusinessLicense businessLicense, Model model) throws IOException, DocumentException {
 
-		String path = "E:\\certificate\\BusinessModel\\BusinessModel.pdf";
-		String savaPath = "E:\\certificate\\Business\\"+businessLicense.getCertificateName()+businessLicense.getPersonId()+".pdf";
-		String realativePath = "/pic/certificate/Business/"+businessLicense.getCertificateName()+businessLicense.getPersonId()+".pdf";
+//		String path = "E:\\certificate\\BusinessModel\\BusinessModel.pdf";
+//		String savaPath = "E:\\certificate\\Business\\"+businessLicense.getCertificateName()+businessLicense.getPersonId()+".pdf";
+//		String realativePath = "/pic/certificate/Business/"+businessLicense.getCertificateName()+businessLicense.getPersonId()+".pdf";
 		String view = "businessLicenseForm";
-		CertificateLibrary certificateLibrary = new CertificateLibrary();
+//		CertificateLibrary certificateLibrary = new CertificateLibrary();
 
 		//查看审批申请单
 		if(StringUtils.isNotBlank(businessLicense.getId())){
@@ -145,42 +144,6 @@ public class BusinessLicenseController extends BaseController {
 			}
 			// 兑现环节
 			else if ("apply_end".equals(taskDefKey)){
-
-//				User user = systemService.getUser(businessLicense.getPersonId());
-//				addMessage(redirectAttributes,"成功生成营业执照");
-//				String sendMessage="亲爱的"+businessLicense.getPersionName()+"!您申请的营业执照已通过审核并生成，请到www.runcheng.com查阅";
-//				String emailAddr = businessLicense.getPersionPhone();
-//				SendMailUtil.sendCommonMail(emailAddr,"执照生成通知",sendMessage);
-
-			PDFUtil.fillTemplate(businessLicense,path,savaPath);
-
-
-			certificateLibrary.setCertificateCode(businessLicense.getCertificateCode());
-			certificateLibrary.setCertificateTypeId(businessLicense.getCertificateTypeId());
-			certificateLibrary.setCertificateName(businessLicense.getCertificateName());
-			certificateLibrary.setArea(businessLicense.getArea());
-			certificateLibrary.setDownloadsNum("0");
-			certificateLibrary.setEffectiveDateEnd(businessLicense.getEffectiveDateEnd());
-			certificateLibrary.setEffectiveDateStart(businessLicense.getEffectiveDateStar());
-			certificateLibrary.setOffice(businessLicense.getOffice());
-			certificateLibrary.setPath(realativePath);
-			certificateLibraryService.save(certificateLibrary);
-				//保存在通告表中
-			businessLicense.setPath(realativePath);
-			businessLicense.setStatus("审核通过");
-			businessLicenseService.update(businessLicense);
-
-			OaNotify oaNotify=new OaNotify();
-			oaNotify.setContent(businessLicense.getId());
-			oaNotify.setStatus("审核通过");
-			oaNotify.setFiles(realativePath);
-			oaNotifyService.updateStatus(oaNotify);
-			try {
-				SendMessageUtil.sendMessage(businessLicense.getPersionName(),businessLicense.getCertificateTypeName(),
-						businessLicense.getPersionPhone());
-			}catch (Exception e){
-				e.printStackTrace();
-			}
 
 			view = "businessLicenseAudit";
 			}

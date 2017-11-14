@@ -10,6 +10,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.aliyuncs.exceptions.ClientException;
+import com.thinkgem.jeesite.common.persistence.Msg;
+import com.thinkgem.jeesite.common.utils.SendMessageUtil;
 import com.thinkgem.jeesite.common.utils.SpringContextHolder;
 import com.thinkgem.jeesite.modules.sys.dao.RoleDao;
 import com.thinkgem.jeesite.modules.sys.entity.Office;
@@ -53,8 +56,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  */
 @Controller
 @RequestMapping(value = "${frontPath}")
-public class FrontController extends BaseController{
-	
+public class FrontController extends BaseController {
+
 	@Autowired
 	private ArticleService articleService;
 	@Autowired
@@ -96,16 +99,17 @@ public class FrontController extends BaseController{
 
 	/**
 	 * 验证登录名是否有效可用
+	 *
 	 * @param loginName
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "checkLoginName")
 	public String checkLoginName(String oldLoginName, String loginName) {
-		if (loginName !=null && loginName.equals(oldLoginName)) {
+		if (loginName != null && loginName.equals(oldLoginName)) {
 			return "true";
 
-		} else if (loginName !=null && systemService.getUserByLoginName(loginName) == null) {
+		} else if (loginName != null && systemService.getUserByLoginName(loginName) == null) {
 			return "true";
 		}
 		return "false";
@@ -113,50 +117,50 @@ public class FrontController extends BaseController{
 
 	/**
 	 * 验证登录名是否存在
+	 *
 	 * @param loginName
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "checkLoginNameExist")
-	public String checkLoginNameExist(String oldLoginName, String loginName,HttpServletRequest request) {
-		if (loginName !=null && loginName.equals(oldLoginName)) {
+	public String checkLoginNameExist(String oldLoginName, String loginName, HttpServletRequest request) {
+		if (loginName != null && loginName.equals(oldLoginName)) {
 			return "false";
 
-		} else if (loginName !=null && systemService.getUserByLoginName(loginName) == null) {
+		} else if (loginName != null && systemService.getUserByLoginName(loginName) == null) {
 			return "false";
 		}
-		User user=systemService.getUserByLoginName(loginName);
-		String mobile=user.getMobile();
-		mobile=mobile.substring(0,mobile.length()-(mobile.substring(3)).length())+"****"+mobile.substring(7);
-		request.setAttribute("mobile1",mobile);
+		User user = systemService.getUserByLoginName(loginName);
+		String mobile = user.getMobile();
+		mobile = mobile.substring(0, mobile.length() - (mobile.substring(3)).length()) + "****" + mobile.substring(7);
+		request.setAttribute("mobile1", mobile);
 		return "true";
 	}
 
 	/**
 	 * @author YuXiaoXi
 	 * @TODO (注：保存注册用户信息)
-
 	 * @DATE: 2017/10/17 19:26
 	 */
 	@RequestMapping(value = "save")
 	public String save(User user, HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
 		//获取登录ip地址
-		String localip=null;
-		InetAddress local=null;
+		String localip = null;
+		InetAddress local = null;
 		try {
-			local=local.getLocalHost();
-			localip=local.getHostAddress();
-			System.out.println("本机的ip是 ："+localip);
+			local = local.getLocalHost();
+			localip = local.getHostAddress();
+			System.out.println("本机的ip是 ：" + localip);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		user.setCompany(new Office("1"));
 		user.setOffice(new Office("1"));
-		if (!beanValidator(model, user)){
+		if (!beanValidator(model, user)) {
 			return Registe(user, model);
 		}
-		if (!"true".equals(checkLoginName(user.getOldLoginName(), user.getLoginName()))){
+		if (!"true".equals(checkLoginName(user.getOldLoginName(), user.getLoginName()))) {
 			addMessage(model, "保存用户'" + user.getLoginName() + "'失败，登录名已存在");
 			return Registe(user, model);
 		}
@@ -169,7 +173,7 @@ public class FrontController extends BaseController{
 		user.setLoginDate(new Date());
 		System.out.println(user.getLoginIp());
 		// 设置注册用户的角色数据
-		Role role=systemService.getRoleByEnname("populace");
+		Role role = systemService.getRoleByEnname("populace");
 		List<Role> roleList = Lists.newArrayList();
 		roleList.add(role);
 		user.setRoleList(roleList);
@@ -179,6 +183,16 @@ public class FrontController extends BaseController{
 		return "modules/sys/sysLogin";
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "sendCode")
+	public boolean sendCode(String loginName) throws ClientException {
+		System.out.println("很久的开发环境客户端防控技术========="+loginName);
+
+		User user=systemService.getUserByLoginName(loginName);
+		String mobile=user.getMobile();
+		SendMessageUtil.sendAuthCode(mobile);
+		return true;
+	}
 
 
 

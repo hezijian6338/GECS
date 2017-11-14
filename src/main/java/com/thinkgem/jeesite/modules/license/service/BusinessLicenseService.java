@@ -3,6 +3,7 @@
  */
 package com.thinkgem.jeesite.modules.license.service;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,10 +13,18 @@ import java.util.Map;
 import java.util.Random;
 
 import com.google.common.collect.Maps;
+import com.itextpdf.text.DocumentException;
+import com.thinkgem.jeesite.common.utils.PDFUtil;
+import com.thinkgem.jeesite.common.utils.SendMessageUtil;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.act.service.ActTaskService;
 import com.thinkgem.jeesite.modules.act.utils.ActUtils;
 
+import com.thinkgem.jeesite.modules.certificate.entity.CertificateLibrary;
+import com.thinkgem.jeesite.modules.certificate.service.CertificateLibraryService;
+import com.thinkgem.jeesite.modules.certificate.service.CertificateTypeService;
+import com.thinkgem.jeesite.modules.oa.entity.OaNotify;
+import com.thinkgem.jeesite.modules.oa.service.OaNotifyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +42,12 @@ import com.thinkgem.jeesite.modules.license.dao.BusinessLicenseDao;
 @Service
 @Transactional(readOnly = true)
 public class BusinessLicenseService extends CrudService<BusinessLicenseDao, BusinessLicense> {
+
+	@Autowired
+	private OaNotifyService oaNotifyService;
+
+	@Autowired
+	private CertificateLibraryService certificateLibraryService;
 
 	@Autowired
 	private ActTaskService actTaskService;
@@ -88,8 +103,12 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 	 * @param businessLicense
 	 */
 	@Transactional(readOnly = false)
-	public void auditSave(BusinessLicense businessLicense) {
-
+	public void auditSave(BusinessLicense businessLicense) throws IOException, DocumentException {
+		String path = "E:\\certificate\\BusinessModel\\BusinessModel.pdf";
+		String savaPath = "E:\\certificate\\Business\\"+businessLicense.getCertificateName()+businessLicense.getPersonId()+".pdf";
+		String realativePath = "/pic/certificate/Business/"+businessLicense.getCertificateName()+businessLicense.getPersonId()+".pdf";
+//		String view = "businessLicenseForm";
+		CertificateLibrary certificateLibrary = new CertificateLibrary();
 		// 设置意见
 		businessLicense.getAct().setComment(("yes".equals(businessLicense.getAct().getFlag())?"[同意] ":"[驳回] ")+businessLicense.getAct().getComment());
 
@@ -114,10 +133,38 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 		else if ("apply_end".equals(taskDefKey)){
 			businessLicense.setOpinion4(businessLicense.getAct().getComment());
 			dao.updateOpinion4(businessLicense);
+			PDFUtil.fillTemplate(businessLicense,path,savaPath);
+			certificateLibrary.setCertificateCode(businessLicense.getCertificateCode());
+			certificateLibrary.setCertificateTypeId(businessLicense.getCertificateTypeId());
+			certificateLibrary.setCertificateName(businessLicense.getCertificateName());
+			certificateLibrary.setArea(businessLicense.getArea());
+			certificateLibrary.setDownloadsNum("0");
+			certificateLibrary.setEffectiveDateEnd(businessLicense.getEffectiveDateEnd());
+			certificateLibrary.setEffectiveDateStart(businessLicense.getEffectiveDateStar());
+			certificateLibrary.setOffice(businessLicense.getOffice());
+			certificateLibrary.setPath(realativePath);
+			certificateLibraryService.save(certificateLibrary);
+			//保存在通告表中
+			businessLicense.setPath(realativePath);
+			businessLicense.setStatus("审核通过");
+			dao.update(businessLicense);
+
+			OaNotify oaNotify=new OaNotify();
+			oaNotify.setContent(businessLicense.getId());
+			oaNotify.setStatus("审核通过");
+			oaNotify.setFiles(realativePath);
+			oaNotifyService.updateStatus(oaNotify);
+			try {
+				SendMessageUtil.sendMessage(businessLicense.getPersionName(),businessLicense.getCertificateTypeName(),
+						businessLicense.getPersionPhone());
+			}catch (Exception e){
+				e.printStackTrace();
+			}
 		}
 
 		// 未知环节，直接返回
 		else{
+
 			return;
 		}
 
