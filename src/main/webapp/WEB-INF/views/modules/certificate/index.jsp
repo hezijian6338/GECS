@@ -72,46 +72,24 @@
             preventDoubleContext: true,
             compress: false
         });
-        context.settings({compress: true});
-        context.attach('html', [
-            {header: 'Compressed Menu'},
-            {text: 'Back', href: '#'},
-            {text: 'Reload', href: '#'},
-            {divider: true},
-            {text: 'Disable This Menu', action: function(e){
-                e.preventDefault();
-                context.destroy('html');
-                alert('html contextual menu destroyed!');
-            }},
-        ]);
-        context.attach('#pdf', [
-            {header: 'pdf Menu'},
-            {text: 'Back', href: '#'},
-            {text: 'Reload', href: '#'},
-            {divider: true},
-            {text: 'Disable This Menu', action: function(e){
-                e.preventDefault();
-                context.destroy('html');
-                alert('html contextual menu destroyed!');
-            }},
-        ]);
+        //context.settings({compress: true});
 
         /*加载画布的右键插件(hezijian6338)*/
-        context.attach('#printf', [
-            {header: 'printf Menu'},
-            {text: '清空画布', action: function(e){
-                if (confirm("是否清空画布？")) {
-                    document.getElementById("printf").innerHTML = "";
-                }
-            }},
-            {text: 'Reload', href: '#'},
-            {divider: true},
-            {text: 'Disable This Menu', action: function(e){
-                e.preventDefault();
-                context.destroy('html');
-                alert('html contextual menu destroyed!');
-            }},
-        ]);
+//        context.attach('#printf', [
+//            {header: 'printf Menu'},
+//            {text: '清空画布', action: function(e){
+//                if (confirm("是否清空画布？")) {
+//                    document.getElementById("printf").innerHTML = "";
+//                }
+//            }},
+//            {text: 'Reload', href: '#'},
+//            {divider: true},
+//            {text: 'Disable This Menu', action: function(e){
+//                e.preventDefault();
+//                context.destroy('html');
+//                alert('html contextual menu destroyed!');
+//            }},
+//        ]);
 
     });
 
@@ -158,14 +136,18 @@
                 <!--第一个拖拉组件文本框的生成(Mickey)-->
 
                 if (ui.helper.attr("id") == "Text") {
+                    //alert("top(offset):" + ui.offset.top + "left(offset):" + ui.offset.left + "；top(position):" + ui.position.top + "left(position):" + ui.position.left);
                     var el = $("<div class='printComponents textComponents' onclick='checkClick(this)'  tabindex='0' ></div>");
                     //el.append("<ul><li style='list-style: none;'><textarea class='textarea' id='textarea' style='' onchange='wirteText(this)'></textarea></li></ul>");
                     el.append("<textarea class='textarea' id='textarea' style='' onchange='wirteText(this)'></textarea>");
                     var id = (new Date()).getMilliseconds();
                     el.attr("id", "new" + id);
+                    //el.css("position","absolute");
+                    //el.css("left",ui.offset.top -  document.getElementById("util").offsetHeight);
+                    //el.css("top",ui.offset.left + "px");
                     el.draggable({
-                        containment: "#printf",
-                        handle: "se"
+                        containment: "#printf"
+//                        , handle: "se,nw"
                     })
                         .resizable({
                         stop: function (e, ui) {
@@ -179,8 +161,9 @@
                             //$(hereDrag).find('textarea').css('height', height - 10 );
                             $(hereDrag).find('textarea').css('height', height - (height * 0.06));
                         },
-                        containment: "#printf",
-                        handles: 'se'
+                        containment: "#printf"
+                            , handles: 'se,nw,ne,sw'
+//                            ,ghost:true
                     })
                         .appendTo("#printf");
 
@@ -214,6 +197,7 @@
                                 $(hereDrag).find('input').css('height', height / 2);
                             },
                             containment: "#printf"
+                            , handles: 'se,nw,ne,sw'
                         }).draggable({
                             containment: "#printf",
                             cancel: "#input"
@@ -244,6 +228,7 @@
                                     }
                                 },
                                 containment: "#printf"
+                                , handles: 'se,nw,ne,sw'
                             }).draggable({
                                 containment: "#printf",
                                 cancel: "#input"
@@ -282,6 +267,7 @@
                                 $(hereDrag).find('input').css('height', height / 2);
                             },
                             containment: "#printf"
+                            , handles: 'se,nw,ne,sw'
                         }).draggable({
                             containment: "#printf",
                             cancel: "#input"
@@ -312,6 +298,7 @@
                                     }
                                 },
                                 containment: "#printf"
+                                , handles: 'se,nw,ne,sw'
                             }).draggable({
                                 containment: "#printf",
                                 cancel: "#input"
@@ -334,6 +321,7 @@
                         el.resizable({
                             containment: "#printf",
                             maxWidth: 5
+                            , handles: 'se,nw,ne,sw'
                         }).draggable({
                             containment: "#printf"
                         }).appendTo("#printf");
@@ -344,6 +332,7 @@
                         el.resizable({
                             containment: "#printf",
                             maxHeight: 5
+                            , handles: 'se,nw,ne,sw'
                         }).draggable({
                             containment: "#printf"
                         }).appendTo("#printf");
@@ -367,9 +356,9 @@
                         el.attr("name", id);
                         el.text("ID:" + id);
                         el.resizable({
-                            containment: "#printf",
-                            handle: 'se',
-                            stop: function (e, ui) {
+                            containment: "#printf"
+                            , handles: 'se,nw,ne,sw'
+                            ,stop: function (e, ui) {
                                 var photoWidth = parseInt((99.21 * document.getElementById("printf").offsetWidth) / 841.89) + 'px';
                                 var photoHeight = parseInt((150.2338 * document.getElementById("printf").offsetHeight) / 595.28) + 'px';
                                 //alert("画布宽度：" + photoWidth + "   " + "画布长度：" + photoHeight);
@@ -377,6 +366,7 @@
                                 $(hereDrag).css('width', photoWidth);
                                 $(hereDrag).css('height', photoHeight);
                             }
+
                         }).draggable({
                             containment: "#printf"
                         }).appendTo("#printf");
@@ -389,6 +379,7 @@
                         el.text("ID:" + id);
                         el.resizable({
                             containment: "#printf"
+                            , handles: 'se,nw,ne,sw'
                         }).draggable({
                             containment: "#printf"
                         }).appendTo("#printf");
@@ -427,6 +418,7 @@
                             $(hereDrag).find('textarea').css('height', height / lineAcount - 5);
                         },
                         containment: "#printf"
+                        , handles: 'se,nw,ne,sw'
                     }).draggable({
                         containment: "#printf"
                     }).appendTo("#printf");
@@ -437,7 +429,7 @@
 
                     var fileName = "/picFile/upload/1/modelPhoto/" + ui.helper.attr("id");
                     //alert(fileName);
-                    var el = $("<div class='printComponents picComponents'  onclick='setIndex(this)' tabindex='0'></div>");
+                    var el = $("<div class='printComponents picComponents'  onmousedown='setIndex(event,this)' tabindex='0'></div>");
 
                     el.append("<img src=" + fileName + " class='img' style='width:98%;height: auto'  />");
                     var id = (new Date()).getMilliseconds();
@@ -451,6 +443,7 @@
                             $(hereDrag).find('img').css('height', height);
                         },
                         containment: "#printf"
+                        , handles: 'se,nw,ne,sw'
                     }).draggable({
                         containment: "#printf"
                     }).appendTo("#printf");
@@ -466,6 +459,7 @@
                         containment: "#printf"
                     }).resizable({
                         containment: "#printf"
+                        , handles: 'se,nw,ne,sw'
                     }).appendTo("#printf");
 
                 }
@@ -704,7 +698,7 @@
 
 
         <!--背景颜色设置透明（Mickey&hezijian6338）-->
-        <div id="setBG_color" class="_util" style="float:left;clear: both;width: 35%">
+        <div id="setBG_color" class="_util" style="float:left;clear: both;width: 45%;">
             <%--<form>--%>
             背景颜色：是否透明
             <%--<select id="backgroundTransparent" style="margin-right: 0.2em">--%>
@@ -1037,16 +1031,16 @@
 
 
     /*页面控制（Mickey）*/
-    <%--window.onload = function () {					//禁止鼠标右键事件--%>
-        <%--document.oncontextmenu = function (e) {--%>
-            <%--e.preventDefault();--%>
-        <%--}--%>
-        <%--<% String realPrintfContent=request.getParameter("printfContent") ; %>--%>
-        <%--realPrintfContent = <%=realPrintfContent%>;--%>
-        <%--if (!(realPrintfContent == 0 || realPrintfContent == "" || realPrintfContent == null || realPrintfContent == undefined)) {--%>
-            <%--alert(realPrintfContent);--%>
-        <%--}--%>
-    <%--};--%>
+    window.onload = function () {					//禁止鼠标右键事件
+        document.oncontextmenu = function (e) {
+            e.preventDefault();
+        }
+        <% String realPrintfContent=request.getParameter("printfContent") ; %>
+        realPrintfContent = <%=realPrintfContent%>;
+        if (!(realPrintfContent == 0 || realPrintfContent == "" || realPrintfContent == null || realPrintfContent == undefined)) {
+            alert(realPrintfContent);
+        }
+    };
 
 
     function wirteText(e) {			//为每一个文本框输入后自动生成相对应的Html
@@ -1122,49 +1116,73 @@
 
 
     /*图片元素右键监测函数（Mickey&hezijian6338）*/
-    function setIndex(e) {//使选中的元素永远在图层的最上面
-        var xIndex = 2;
+    function setIndex(event, e) {
+        document.onkeydown = function () {
+            var oEvent = window.event;
+            if (oEvent.keyCode == 46) {
+                $(e).remove();
+            }
+        }
         var _this = "#" + e.getAttribute("id") ;
-        context.attach(_this, [
-            {header: '图片元素属性操作'},
-            {text: 'Back', href: '#'},
-            {text: '删除元素', action:function (event) {
+        context.attach(e, [
+            {header: '元素属性操作'},
+            {text: '设置背景',  action:function (et) {
+                            if (backGroundUnique == 0) {			//还没有设置背景
+                if (confirm("确认此图作为背景？")) {
+                    e.style.zIndex = 1;
+                    backGroundUnique = 1; //背景已经设置了
+                }
+            } else {
+                alert("你已设置过背景！背景只能有一个！");
+            }
+            }},
+            {text: '取消背景', action: function(et){
+                if (e.style.zIndex == 1) {
+                if (confirm("是否解除当前组件背景？")) {
+                    index = index + 1;
+                    e.style.zIndex = index;
+                    backGroundUnique = 0;
+                }
+            }
+            }},
+            {text: '删除元素', action:function (et) {
                 if (confirm("是否删除该元素？")) {
-//                        alert(originId);
-                    $(event).remove();
+                    backGroundUnique = 0;
+                    $(e).remove();
                 }
             }},
-            {divider: true},
-            {text: 'Disable This Menu', action: function(e){
-                e.preventDefault();
-                context.destroy('html');
-                alert('html contextual menu destroyed!');
-            }},
         ]);
-
-//        $(e).contextPopup({
-//
-//            title: '图片元素操作',
-//
-//            items: [
-//                {
-//                    label: '设置背景', action: function () {
-//                    if (backGroundUnique != 1) {			//还没有设置背景
-//                        $(e).css("zIndex", "1");
-//                        backGroundUnique = 1;
-//                    } else {
-//                        xIndex++;
-//                        $(e).css("zIndex", xIndex);
-//                        backGroundUnique = 0;
-//                    }
+        //使选中的元素永远在图层的最上面
+//        var btnNum = event.button;
+//        //alert(e.button);
+//        if (e.style.zIndex != 1) {				//不是背景的元素
+//            index = index + 1;
+//            e.style.zIndex = index;
+//        }
+//        if (btnNum == 1) {
+//            //alert("点击鼠标中键");
+//            if (e.style.zIndex == 1) {
+//                if (confirm("是否解除当前组件背景？")) {
+//                    index = index + 1;
+//                    e.style.zIndex = index;
+//                    backGroundUnique = 0; //背景已经设置了
 //                }
-//                }, {
-//                    label: '删除元素', action: function () {
-//                        $(e).remove();
-//                    }
+//            } else {								//设置选中元素的zIndex
+//
+//            }
+//        } else if (btnNum == 0) {
+//            //alert("点击鼠标左键");
+//        } else if (btnNum == 2) {
+//            //alert("点击鼠标右键");
+//            if (backGroundUnique == 0) {			//还没有设置背景
+//                if (confirm("确认此图作为背景？")) {
+//                    e.style.zIndex = 1;
+//                    backGroundUnique = 1; //背景已经设置了
 //                }
-//            ]
-//        });
+//            } else {
+//                alert("你已设置过背景！背景只能有一个！");
+//            }
+//        }
 
         //让保存的元素重新到画布上后能重新拖拽伸缩编辑功能
         if ($(e).hasClass("printComponents")) {
@@ -1186,7 +1204,6 @@
             var oEvent = window.event;
             if (oEvent.keyCode == 46) {
                 $(e).remove();
-
                 /*删除唯一元素后工具栏颜色取消*/
                 document.getElementById(originId).style.backgroundColor = "";
             }
@@ -1197,14 +1214,13 @@
         context.attach(_this, [
             {header: '元素属性操作'},
             {text: 'Back', href: '#'},
-            {text: '删除元素', action:function (e) {
+            {text: '删除元素', action:function (event) {
                 if (confirm("是否删除该元素？")) {
 //                        alert(originId);
                     if(document.getElementById(originId).style.backgroundColor != ""){
                         document.getElementById(originId).style.backgroundColor = "";
                     }
-                    $(_this).each().remove();
-                    $(_this).remove();
+                    $(e).remove();
                 }
             }},
             {divider: true},
