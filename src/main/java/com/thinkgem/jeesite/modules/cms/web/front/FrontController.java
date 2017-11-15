@@ -9,17 +9,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.aliyuncs.exceptions.ClientException;
-import com.thinkgem.jeesite.common.persistence.Msg;
 import com.thinkgem.jeesite.common.utils.SendMessageUtil;
-import com.thinkgem.jeesite.common.utils.SpringContextHolder;
-import com.thinkgem.jeesite.modules.sys.dao.RoleDao;
 import com.thinkgem.jeesite.modules.sys.entity.Office;
 import com.thinkgem.jeesite.modules.sys.entity.Role;
 import com.thinkgem.jeesite.modules.sys.entity.User;
-import com.thinkgem.jeesite.modules.sys.service.OfficeService;
 import com.thinkgem.jeesite.modules.sys.service.SystemService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -137,6 +133,28 @@ public class FrontController extends BaseController {
 		return "true";
 	}
 
+
+/**
+ * @author 许彩开
+ * @TODO (注：验证提交过来的验证码是否正确)
+  * @param
+ * @DATE: 2017\11\10 0010 16:39
+ */
+
+
+	@RequestMapping(value = "checkCode")
+	public String checkCode(String code,String loginName,Model model,RedirectAttributes redirectAttributes){
+		User user=systemService.getUserByLoginName(loginName);
+
+		System.out.println("用户======="+user);
+		model.addAttribute("user", user);
+		if(SendMessageUtil.isValidate(code)){
+			return "modules/sys/userModifyPwd";
+		}
+		addMessage(redirectAttributes,"手机验证码错误！");
+		return "redirect"+Global.getAdminPath()+"/sys/forgetPassword/?repage";
+	}
+
 	/**
 	 * @author YuXiaoXi
 	 * @TODO (注：保存注册用户信息)
@@ -182,69 +200,22 @@ public class FrontController extends BaseController {
 		addMessage(redirectAttributes, "注册用户'" + user.getLoginName() + "'成功");
 		return "modules/sys/sysLogin";
 	}
+/**
+ * @author 许彩开
+ * @TODO (注：发送验证码)
+  * @param loginName
+ * @DATE: 2017\11\14 0014 9:15
+ */
 
 	@ResponseBody
 	@RequestMapping(value = "sendCode")
 	public boolean sendCode(String loginName) throws ClientException {
+		System.out.println("登录名========="+loginName);
 		User user=systemService.getUserByLoginName(loginName);
 		String mobile=user.getMobile();
 		SendMessageUtil.sendAuthCode(mobile);
 		return true;
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	/**
 	 * 网站首页

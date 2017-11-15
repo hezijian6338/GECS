@@ -238,11 +238,8 @@ public class BusinessLicenseController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value="/getPathByTitle/{title}",method= RequestMethod.GET)
 	public Msg getPathByTitle(@PathVariable String title){
-
 		String certificateName = title.substring(0,title.indexOf("-"));
-		System.out.println("---------"+certificateName);
 		CertificateLibrary certificateLibrary = certificateLibraryService.getByCertificateName(certificateName);
-		System.out.println("------------========="+certificateLibrary);
 		return Msg.success().add("certificateLibrary",certificateLibrary);
 	}
 
@@ -290,7 +287,6 @@ public class BusinessLicenseController extends BaseController {
 	@RequestMapping(value = "checkCertificateName")
 	public String checkCertificateName(String certificateName){
 		String realCertifcateName = certificateName.substring(1);
-		System.out.println("+++++++++++++"+realCertifcateName);
 		List<BusinessLicense> list = businessLicenseService.getByCertificateName(realCertifcateName);
 
 		if (list.size()>0){

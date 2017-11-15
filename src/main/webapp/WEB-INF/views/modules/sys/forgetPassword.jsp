@@ -50,9 +50,16 @@
                     validateCode: {remote: "验证码不正确.", required: "请填写验证码."}
                 },
                 submitHandler: function(form){
-                    loading('正在提交，请稍等...');
-                    form.submit();
+                   // loading('正在提交，请稍等...');
+                    var code=$("#validateCode22").val();
+                    var loginName=$("#loginName").val();
+                   // alert(code);
+                    checkCode(code,loginName);
+
+                   // form.submit();
                 },
+
+
                 errorContainer: "#messageBox",
                 errorPlacement: function(error, element) {
                     $("#messageBox").text("输入有误，请先更正。");
@@ -63,6 +70,32 @@
                     }
                 }
             });
+
+
+            function buttonClike(){
+                var code=$("#validateCode").val();
+                alert(code);
+                checkCode(code);
+            }
+            function sendCode(s) {
+                $.ajax({
+                    type:"GET",
+                    url:"${ctxFront}/sendCode?loginName="+s,
+                    success:function () {
+
+                    }
+                })
+            }
+
+            function checkCode(s,l) {
+                location="${ctxFront}/checkCode?code="+s+"&loginName="+l;
+            }
+
+
+            //获取验证码
+            $('#getCodeBtn').on('click', function() {
+                    var loginName1 = $("#loginName").val();
+                    sendCode(loginName1);
 
             <%--function sendUrl(s) {--%>
                 <%--console.log("身份证号"+s);--%>
@@ -79,6 +112,7 @@
             //获取验证码
             $('#getCodeBtn').on('click', function() {
                     var loginName1 = $("#loginName").val();
+
                     $('input[name="validateCode"]').focus();
                     console.log("zhenghao"+loginName1);
                     Location = "${ctxFront}/sendCode?loginName="+loginName1;
@@ -97,17 +131,19 @@
                             getValidateCodeObj.attr('disabled', false);
                         }
                     }
-//                    $.axs(function(result) {
-//                        if (!result.isSuc) {
-//                            $("#loginName_error").html(result.msg);
-//                            clearInterval(myInterval);
-//                            getValidateCodeObj.html('获取验证码');
-//                            getValidateCodeObj.attr('disabled', false);
-//                        }
-//                    });
+                    $.axs(function(result) {
+                        if (!result.isSuc) {
+                            $("#loginName_error").html(result.msg);
+                            clearInterval(myInterval);
+                            getValidateCodeObj.html('获取验证码');
+                            getValidateCodeObj.attr('disabled', false);
+                        }
+                    });
                     $("#validateCode_error").html('');
 
+
             });
+        });
         });
     </script>
 </head>
@@ -122,7 +158,7 @@
     <div class="box register-box">
         <div class="box-title">忘记密码</div>
         <form:form id="inputForm" modelAttribute="user" method="post"
-                   class="form-horizontal register-form">
+                   class="form-horizontal register-form" >
             <form:hidden path="id"/>
             <sys:message content="${message}"/>
             <div class="control-group">
@@ -151,10 +187,10 @@
             </div>
 
             <div class="control-group">
-                <label class="control-label"><font style="color: red;">*</font>&nbsp;验证码：</label>
+                <label class="control-label"><font style="color: red;">*</font>&nbsp;手机验证码：</label>
                 <div class="controls">
 
-                    <input type="text" id="validateCode" name="validateCode" value=""
+                    <input type="text" id="validateCode22" name="validateCode22" value=""
                            placeholder="请输入验证码" maxlength="11" style="width:100px;"/>
 
                     <button type="button" id="getCodeBtn" class="btn btn-info">获取手机验证码</button>

@@ -9,8 +9,10 @@ import java.util.Scanner;
 
 
 public class TestSendMessageUtil {
+
     public static void main(String []args) throws ClientException {
         String phoneNum = "13160676759";
+
 //        String random = "dog";
         String name  = "许彩开";
         String type = "营业执照";
