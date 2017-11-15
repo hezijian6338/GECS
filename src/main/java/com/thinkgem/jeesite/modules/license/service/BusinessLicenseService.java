@@ -52,6 +52,9 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 	@Autowired
 	private ActTaskService actTaskService;
 
+	@Autowired
+	private BusinessLicenseDao businessLicenseDao;
+
 	public BusinessLicense get(String id) {
 		return super.get(id);
 	}
@@ -216,4 +219,8 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 	public void update(BusinessLicense businessLicense) {
 		dao.update(businessLicense);
 	}
+
+    public List<BusinessLicense> getByCertificateName(String certificateName) {
+		return businessLicenseDao.getByCertificateName(certificateName);
+    }
 }

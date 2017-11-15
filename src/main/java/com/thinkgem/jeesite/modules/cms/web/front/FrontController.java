@@ -186,8 +186,6 @@ public class FrontController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "sendCode")
 	public boolean sendCode(String loginName) throws ClientException {
-		System.out.println("很久的开发环境客户端防控技术========="+loginName);
-
 		User user=systemService.getUserByLoginName(loginName);
 		String mobile=user.getMobile();
 		SendMessageUtil.sendAuthCode(mobile);

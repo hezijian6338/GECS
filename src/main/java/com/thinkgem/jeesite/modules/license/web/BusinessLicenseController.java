@@ -286,6 +286,18 @@ public class BusinessLicenseController extends BaseController {
 		return "modules/license/businessLicenseForm";
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "checkCertificateName")
+	public String checkCertificateName(String certificateName){
+		String realCertifcateName = certificateName.substring(1);
+		System.out.println("+++++++++++++"+realCertifcateName);
+		List<BusinessLicense> list = businessLicenseService.getByCertificateName(realCertifcateName);
 
+		if (list.size()>0){
+			return "false";
+		}else {
+			return "true";
+		}
+	}
 
 }

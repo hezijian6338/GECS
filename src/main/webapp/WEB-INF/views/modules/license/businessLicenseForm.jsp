@@ -41,9 +41,14 @@
                     handlerPhone : {
                         required : true,
                         minlength : 11,
-                        // remote: "/f/checkmobile?mobile=" + encodeURIComponent('${user.mobile}')
+                        <%--// remote: "/f/checkmobile?mobile=" + encodeURIComponent('${user.mobile}')--%>
                         isMobile : true
                     },
+
+                    certificateName:{
+						remote: "${ctx}/license/businessLicense/checkCertificateName?certificateName=" + encodeURIComponent('${businessLicense.certificateName}')
+					},
+
                 },
                 messages: {
                     personId: {
@@ -63,6 +68,9 @@
                         minlength : "确认手机不能小于11个字符",
                         isMobile : "请正确填写您的手机号码"
                     },
+                    certificateName:{
+                        remote:"该公司名已被注册",
+					},
                 },
                 submitHandler: function(form){
                     loading('正在提交，请稍等...');

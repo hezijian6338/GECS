@@ -19,59 +19,16 @@ import com.aliyuncs.profile.IClientProfile;
 public class SendMessageUtil {
     private static String authCode;
 
-//    /**
-//     * @author 练浩文
-//     * @TODO (注：发送验证码)
-//     * @param phoneNum
-//     * @DATE: 2017/10/26 9:32
-//     */
-//    public static boolean SendAuthCode(String phoneNum){
-//
-//        System.out.println("====="+randNum);
-//        String url = "http://gw.api.taobao.com/router/rest";
-//        String appkey = "23293904";
-//        String secret = "e6fdba63321ad26515bfbe3c88f19ba9";
-//        TaobaoClient client = new DefaultTaobaoClient(url, appkey, secret);
-//        AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
-//        req.setExtend("");
-//        req.setSmsType( "normal" );
-//        req.setSmsFreeSignName( "注册验证" );
-//        req.setSmsParamString( "{\"code\":\"" + randNum + "\",\"minute\":\"2\"}" );
-//        req.setRecNum( phoneNum );
-//        req.setSmsTemplateCode( "SMS_3985867" );
-//        AlibabaAliqinFcSmsNumSendResponse rsp = client.execute(req);
-//        System.out.println(rsp.getBody());
-//        return true;
-//
-//    }
-
     /**
      * @author 练浩文
-     * @TODO (注：)
+     * @TODO (注：发送通知)
      * @param personName
-     * @param certificateType
-     * @param phoneNum
-     * @DATE: 2017/11/7 17:13
+     * @param certificateType
+     * @param phoneNum
+     * @DATE: 2017/11/14 9:15
      */
-//    public static boolean sendMessage(String personName,String certificateType,String phoneNum) throws ApiException {
-//
-//        String url = "http://gw.api.taobao.com/router/rest";
-//        String appkey = "LTAIu0omVFXsvKkk";
-//        String secret = "jiblKJLlVIqOB15P6jlCWRakeSUNf5";
-//        TaobaoClient client = new DefaultTaobaoClient(url, appkey, secret);
-//        AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
-//        req.setExtend("");
-//        req.setSmsType( "normal" );
-//        req.setSmsFreeSignName( "润成科技" );
-//        req.setSmsParamString( "{\"name\":\"" + personName + "\",\"certificateType\":\""+certificateType+"}" );
-//        req.setRecNum( phoneNum );
-//        req.setSmsTemplateCode( "SMS_107795097" );
-//        AlibabaAliqinFcSmsNumSendResponse rsp = client.execute(req);
-//        System.out.println(rsp.getBody());
-//        return true;
-//    }
-
     public static void sendMessage(String personName,String certificateType,String phoneNum) throws ClientException {
+
         //设置超时时间-可自行调整
         System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
         System.setProperty("sun.net.client.defaultReadTimeout", "10000");
@@ -113,7 +70,14 @@ public class SendMessageUtil {
         }
     }
 
+    /**
+     * @author 练浩文
+     * @TODO (注：发送验证码)
+     * @param phoneNum
+     * @DATE: 2017/11/14 9:15
+     */
     public static void sendAuthCode(String phoneNum) throws ClientException {
+
         String rand = Double.toString((Math.random()*9+1)*100000);
         authCode = rand.substring(0,6);
         //设置超时时间-可自行调整

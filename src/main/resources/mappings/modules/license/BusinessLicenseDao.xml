@@ -65,6 +65,14 @@
 		WHERE a.id = #{id}
 	</select>
 
+	<select id="getByCertificateName" resultType="BusinessLicense">
+		SELECT
+		<include refid="businessLicenseColumns"/>
+		FROM business_license a
+		<include refid="businessLicenseJoins"/>
+		WHERE a.certificate_name = #{certificateName}
+	</select>
+
 	<select id="findList" resultType="BusinessLicense">
 		SELECT
 		<include refid="businessLicenseColumns"/>
