@@ -283,9 +283,16 @@ public class BusinessLicenseController extends BaseController {
 		return "modules/license/businessLicenseForm";
 	}
 
+    /**
+     * @author 练浩文
+     * @TODO (注:公司名字校验)
+     * @param certificateName
+     * @DATE: 2017/11/15 15:34
+     */
 	@ResponseBody
 	@RequestMapping(value = "checkCertificateName")
 	public String checkCertificateName(String certificateName){
+
 		String realCertifcateName = certificateName.substring(1);
 		List<BusinessLicense> list = businessLicenseService.getByCertificateName(realCertifcateName);
 
