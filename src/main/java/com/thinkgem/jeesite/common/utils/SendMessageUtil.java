@@ -150,6 +150,7 @@ public class SendMessageUtil {
 //        request.setOutId("yourOutId");
         //请求失败这里会抛ClientException异常
         SendSmsResponse sendSmsResponse = acsClient.getAcsResponse(request);
+        System.out.println("+++++++++++++++++++"+authCode);
 //        System.out.println("----"+sendSmsResponse.getCode());
         if(sendSmsResponse.getCode() != null && sendSmsResponse.getCode().equals("OK")) {
             //请求成功
