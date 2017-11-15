@@ -285,7 +285,7 @@ public class BusinessLicenseController extends BaseController {
 
     /**
      * @author 练浩文
-     * @TODO (注:公司名字校验)
+     * @TODO (注:公司名字校验，如果已经有了则显示已被注册)
      * @param certificateName
      * @DATE: 2017/11/15 15:34
      */
