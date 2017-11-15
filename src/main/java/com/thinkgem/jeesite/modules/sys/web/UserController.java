@@ -315,7 +315,6 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "modifyPwd")
 	public String modifyPwd(String oldPassword, String newPassword, Model model) {
 		User user = UserUtils.getUser();
-		System.out.println("这里是UserController====user==="+user);
 		if (StringUtils.isNotBlank(oldPassword) && StringUtils.isNotBlank(newPassword)){
 			if(Global.isDemoMode()){
 				model.addAttribute("message", "演示模式，不允许操作！");
@@ -331,6 +330,10 @@ public class UserController extends BaseController {
 		model.addAttribute("user", user);
 		return "modules/sys/userModifyPwd";
 	}
+
+
+
+
 	
 	@RequiresPermissions("user")
 	@ResponseBody

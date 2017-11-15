@@ -16,6 +16,8 @@ import com.thinkgem.jeesite.modules.sys.entity.Role;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.service.SystemService;
 
+import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -143,17 +145,47 @@ public class FrontController extends BaseController {
 
 
 	@RequestMapping(value = "checkCode")
-	public String checkCode(String code,String loginName,Model model,RedirectAttributes redirectAttributes){
+	public String checkCode(String code,String loginName,Model model){
+		System.out.println("验证码========="+code);
+		System.out.println("验证码是否正确========"+SendMessageUtil.isValidate(code));
 		User user=systemService.getUserByLoginName(loginName);
-
+		//临时保存user
+		UserUtils.tempUser=user;
 		System.out.println("用户======="+user);
 		model.addAttribute("user", user);
 		if(SendMessageUtil.isValidate(code)){
-			return "modules/sys/userModifyPwd";
+			//addMessage(redirectAttributes,"手机验证码正确！");
+			return "modules/sys/userModifyPwd2";
 		}
-		addMessage(redirectAttributes,"手机验证码错误！");
-		return "redirect"+Global.getAdminPath()+"/sys/forgetPassword/?repage";
+		//addMessage(redirectAttributes,"手机验证码错误！");
+		return "";
 	}
+
+
+
+	/**
+	 * @author 许彩开
+	 * @TODO (注：忘记密码的修改)
+	 * @param newPassword
+	 * @DATE: 2017\11\14 0014 16:38
+	 */
+
+
+//	@RequiresPermissions("user")
+	@RequestMapping(value = "modifyPwd2",method = RequestMethod.POST)
+	public String modifyPwd2( String newPassword,Model model) {
+		User user = UserUtils.getTempUser();
+		System.out.println("这里是UserController====user==="+user);
+		if (StringUtils.isNotBlank(newPassword)){
+
+			systemService.updatePasswordById(user.getId(), user.getLoginName(), newPassword);
+			model.addAttribute("message", "修改密码成功");
+
+		}
+		model.addAttribute("user", user);
+		return "modules/sys/sysLogin";
+	}
+
 
 	/**
 	 * @author YuXiaoXi
@@ -211,6 +243,7 @@ public class FrontController extends BaseController {
 	@RequestMapping(value = "sendCode")
 	public boolean sendCode(String loginName) throws ClientException {
 		System.out.println("登录名========="+loginName);
+
 		User user=systemService.getUserByLoginName(loginName);
 		String mobile=user.getMobile();
 		SendMessageUtil.sendAuthCode(mobile);

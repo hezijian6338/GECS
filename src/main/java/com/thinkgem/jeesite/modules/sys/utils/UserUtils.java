@@ -51,7 +51,15 @@ public class UserUtils {
 	public static final String CACHE_AREA_LIST = "areaList";
 	public static final String CACHE_OFFICE_LIST = "officeList";
 	public static final String CACHE_OFFICE_ALL_LIST = "officeAllList";
-	
+
+
+	public static User tempUser;
+
+	public static User getTempUser() {
+		return tempUser;
+	}
+
+
 	/**
 	 * 根据ID获取用户
 	 * @param id
