@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.*;
+
 import com.aliyuncs.exceptions.ClientException;
 import com.thinkgem.jeesite.common.utils.SendMessageUtil;
 import com.thinkgem.jeesite.modules.sys.entity.Office;
@@ -121,17 +123,19 @@ public class FrontController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "checkLoginNameExist")
-	public String checkLoginNameExist(String oldLoginName, String loginName, HttpServletRequest request) {
-		if (loginName != null && loginName.equals(oldLoginName)) {
-			return "false";
-
-		} else if (loginName != null && systemService.getUserByLoginName(loginName) == null) {
+	public String checkLoginNameExist(String oldLoginName, String loginName, HttpServletRequest request,Model model) {
+		if (loginName != null && systemService.getUserByLoginName(loginName) == null) {
 			return "false";
 		}
 		User user = systemService.getUserByLoginName(loginName);
-		String mobile = user.getMobile();
-		mobile = mobile.substring(0, mobile.length() - (mobile.substring(3)).length()) + "****" + mobile.substring(7);
-		request.setAttribute("mobile1", mobile);
+		if(user!=null) {
+			String mobile = user.getMobile();
+			mobile = mobile.substring(0, mobile.length() - (mobile.substring(3)).length()) + "****" + mobile.substring(7);
+			User user1 =new User();
+			user1.setMobile(mobile);
+			model.addAttribute("user",user1);
+			//request.setAttribute("mobile", mobile);
+		}
 		return "true";
 	}
 
@@ -143,8 +147,8 @@ public class FrontController extends BaseController {
  * @DATE: 2017\11\10 0010 16:39
  */
 
-
-	@RequestMapping(value = "checkCode")
+	@ResponseBody
+	@RequestMapping(value = "checkCode",method = RequestMethod.GET)
 	public String checkCode(String code,String loginName,Model model){
 		System.out.println("验证码========="+code);
 		System.out.println("验证码是否正确========"+SendMessageUtil.isValidate(code));
@@ -154,14 +158,12 @@ public class FrontController extends BaseController {
 		System.out.println("用户======="+user);
 		model.addAttribute("user", user);
 		if(SendMessageUtil.isValidate(code)){
-			//addMessage(redirectAttributes,"手机验证码正确！");
+			System.out.println("验证码正确");
 			return "modules/sys/userModifyPwd2";
 		}
-		//addMessage(redirectAttributes,"手机验证码错误！");
-		return "";
+		JOptionPane.showConfirmDialog(null,"手机验证码输入错误！！！","确认信息",JOptionPane.YES_NO_OPTION);
+		return "modules/sys/forgetPassword";
 	}
-
-
 
 	/**
 	 * @author 许彩开
@@ -170,22 +172,25 @@ public class FrontController extends BaseController {
 	 * @DATE: 2017\11\14 0014 16:38
 	 */
 
-
 //	@RequiresPermissions("user")
-	@RequestMapping(value = "modifyPwd2",method = RequestMethod.POST)
-	public String modifyPwd2( String newPassword,Model model) {
+	@RequestMapping(value = "modifyPwd2",method = RequestMethod.GET)
+	public String  modifyPwd2( String newPassword) {
 		User user = UserUtils.getTempUser();
 		System.out.println("这里是UserController====user==="+user);
 		if (StringUtils.isNotBlank(newPassword)){
-
 			systemService.updatePasswordById(user.getId(), user.getLoginName(), newPassword);
-			model.addAttribute("message", "修改密码成功");
-
+			//model.addAttribute("message", "修改密码成功");
+			JOptionPane.showConfirmDialog(null,"密码修改成功！！！","确认信息",JOptionPane.YES_NO_OPTION);
+			return "modules/sys/sysLogin";
 		}
-		model.addAttribute("user", user);
-		return "modules/sys/sysLogin";
+		//model.addAttribute("user", user);
+			return "modules/sys/sysLogin";
 	}
 
+	@RequestMapping(value = "jumpLogin" ,method = RequestMethod.GET)
+	public String jumpLogin() {
+		return "modules/sys/sysLogin";
+	}
 
 	/**
 	 * @author YuXiaoXi
@@ -245,8 +250,10 @@ public class FrontController extends BaseController {
 		System.out.println("登录名========="+loginName);
 
 		User user=systemService.getUserByLoginName(loginName);
-		String mobile=user.getMobile();
-		SendMessageUtil.sendAuthCode(mobile);
+		if(user!=null) {
+			String mobile = user.getMobile();
+			SendMessageUtil.sendAuthCode(mobile);
+		}
 		return true;
 	}
 

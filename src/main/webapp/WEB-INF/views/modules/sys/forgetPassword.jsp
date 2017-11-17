@@ -24,6 +24,7 @@
     </style>
     <script src="/static/js/idCardNo.js" type="text/javascript"></script>
     <script type="text/javascript">
+
         $(document).ready(function() {
 
             //验证手身份证号码格式格式
@@ -38,7 +39,7 @@
                         required:true,
                         isIdCardNo: true,
                         remote: "${ctxFront}/checkLoginNameExist?oldLoginName="
-                        + encodeURIComponent('${user.loginName}')
+                       + encodeURIComponent('${user.loginName}')
                     },
                     validateCode: {remote: "${pageContext.request.contextPath}/servlet/validateCodeServlet"},
                 },
@@ -71,12 +72,6 @@
                 }
             });
 
-
-            function buttonClike(){
-                var code=$("#validateCode").val();
-                alert(code);
-                checkCode(code);
-            }
             function sendCode(s) {
                 $.ajax({
                     type:"GET",
@@ -87,35 +82,29 @@
                 })
             }
 
+
             function checkCode(s,l) {
-                location="${ctxFront}/checkCode?code="+s+"&loginName="+l;
+                $.ajax({
+                    type:"GET",
+                    url:"${ctxFront}/checkCode?code="+s+"&loginName="+l,
+                    success:function () {
+
+                    }
+                })
             }
 
-
             //获取验证码
             $('#getCodeBtn').on('click', function() {
-                    var loginName1 = $("#loginName").val();
-                    sendCode(loginName1);
 
-            <%--function sendUrl(s) {--%>
-                <%--console.log("身份证号"+s);--%>
-                <%--Location = "${ctxFront}/sendCode?loginName="+s;--%>
-                <%--console.log();--%>
-                <%--&lt;%&ndash;$.ajax({&ndash;%&gt;--%>
-                    <%--&lt;%&ndash;type:"GET",&ndash;%&gt;--%>
-                    <%--&lt;%&ndash;url:"${ctxFront}/sendCode?loginName="+s,&ndash;%&gt;--%>
-                    <%--&lt;%&ndash;dataType:"json",&ndash;%&gt;--%>
-                    <%--&lt;%&ndash;success:function(){&ndash;%&gt;--%>
-                        <%--&lt;%&ndash;console.log("这个就很有趣了");&ndash;%&gt;--%>
-                    <%--&lt;%&ndash;}});&ndash;%&gt;--%>
-            <%--};--%>
-            //获取验证码
-            $('#getCodeBtn').on('click', function() {
-                    var loginName1 = $("#loginName").val();
+                //身份证
+                var loginName1 = $("#loginName").val();
 
+
+                sendCode(loginName1);
+               // if(loginName1&&vCode){//判断是否都输入正确才发送验证码
+                    var loginName1 = $("#loginName").val();
                     $('input[name="validateCode"]').focus();
                     console.log("zhenghao"+loginName1);
-                    Location = "${ctxFront}/sendCode?loginName="+loginName1;
                     console.log("zhenghao"+loginName1);
                     var getValidateCodeObj = $('#getCodeBtn');
                     getValidateCodeObj.attr('disabled', true);
@@ -131,6 +120,9 @@
                             getValidateCodeObj.attr('disabled', false);
                         }
                     }
+                /*}else {
+                    alert("请输入正确的登录名和验证码");
+                }*/
                     $.axs(function(result) {
                         if (!result.isSuc) {
                             $("#loginName_error").html(result.msg);
@@ -141,10 +133,10 @@
                     });
                     $("#validateCode_error").html('');
 
-
             });
+
         });
-        });
+
     </script>
 </head>
 <body>
@@ -171,13 +163,13 @@
             </div>
 
 
-            <%--<div class="control-group">--%>
-                <%--<label class="control-label">手机:</label>--%>
-                <%--<div class="controls">--%>
-                    <%--<label class="lbl" id="moblic"></label>--%>
-                <%--</div>--%>
-            <%--</div>--%>
-
+       <%--     <div class="control-group">
+                <label class="control-label">手机:</label>
+                <div class="controls">
+                   ${user.mobile}
+                </div>
+            </div>
+--%>
             <div class="control-group">
                 <label class="control-label"><font color="red">*</font>&nbsp;验证码:</label>
                 <div class="validateCode">

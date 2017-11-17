@@ -25,11 +25,40 @@
 	<script src="/static/js/idCardNo.js" type="text/javascript"></script>
 	<script type="text/javascript">
 
+        $(document).ready(function() {
+            $("#oldPassword").focus();
+            $("#inputForm").validate({
+                rules: {
+                },
+                messages: {
+                    confirmNewPassword: {equalTo: "输入与上面相同的密码"}
+                },
+                submitHandler: function(form){
+                    loading('正在提交，请稍等...');
+                    form.submit();
+                },
+                errorContainer: "#messageBox",
+                errorPlacement: function(error, element) {
+                    $("#messageBox").text("输入有误，请先更正。");
+                    if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
+                        error.appendTo(element.parent().parent());
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+            });
+        });
+
         function a(){
             var newPassword=$("#newPassword").val();
-            $.post("${ctxFront}/modifyPwd2?newPassword="+newPassword);
+            //$.get("${ctxFront}/modifyPwd2?newPassword="+newPassword);
             <%--location = "${ctxFront}/modifyPwd2?newPassword="+newPassword;--%>
-            alert(newPassword);
+
+			location="${ctxFront}/modifyPwd2?newPassword="+newPassword;
+            alert("密码修改成功！！");
+            //$.get("${ctxFront}/jumpLogin");
+
+            console.log("成功");
 		}
 
 //		function b(s){
