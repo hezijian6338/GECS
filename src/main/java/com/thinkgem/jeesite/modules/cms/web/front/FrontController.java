@@ -147,7 +147,7 @@ public class FrontController extends BaseController {
  * @DATE: 2017\11\10 0010 16:39
  */
 
-	@ResponseBody
+
 	@RequestMapping(value = "checkCode",method = RequestMethod.GET)
 	public String checkCode(String code,String loginName,Model model){
 		System.out.println("验证码========="+code);

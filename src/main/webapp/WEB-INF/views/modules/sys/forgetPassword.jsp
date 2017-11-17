@@ -84,13 +84,7 @@
 
 
             function checkCode(s,l) {
-                $.ajax({
-                    type:"GET",
-                    url:"${ctxFront}/checkCode?code="+s+"&loginName="+l,
-                    success:function () {
-
-                    }
-                })
+                location="${ctxFront}/checkCode?code="+s+"&loginName="+l;
             }
 
             //获取验证码
