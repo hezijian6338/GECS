@@ -40,6 +40,7 @@
 	</script>
 </head>
 <body>
+<sys:message content="${message}"/>
 <div class="header">
 	<div class="container">
 		<h3 class="logo">电子证照系统</h3>
