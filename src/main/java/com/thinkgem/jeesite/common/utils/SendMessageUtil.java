@@ -113,13 +113,13 @@ public class SendMessageUtil {
         //可选:outId为提供给业务方扩展字段,最终在短信回执消息中将此值带回给调用者
 //        request.setOutId("yourOutId");
         //请求失败这里会抛ClientException异常
-        //SendSmsResponse sendSmsResponse = acsClient.getAcsResponse(request);
+        SendSmsResponse sendSmsResponse = acsClient.getAcsResponse(request);
         System.out.println("+++++++++++++++++++"+authCode);
 //        System.out.println("----"+sendSmsResponse.getCode());
-       /* if(sendSmsResponse.getCode() != null && sendSmsResponse.getCode().equals("OK")) {
+        if(sendSmsResponse.getCode() != null && sendSmsResponse.getCode().equals("OK")) {
             //请求成功
             System.out.println("请求成功");
-        }*/
+        }
     }
     /**
      * @author 练浩文
