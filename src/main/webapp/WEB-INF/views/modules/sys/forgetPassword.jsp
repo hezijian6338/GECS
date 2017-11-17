@@ -41,13 +41,19 @@
                         + encodeURIComponent('${user.loginName}')
                     },
                     validateCode: {remote: "${pageContext.request.contextPath}/servlet/validateCodeServlet"},
+                    validateCode22:{
+                        required:true,
+                    },
                 },
                 messages: {
                     loginName: {
                         required:"登录名不能为空",
                         isIdCardNo:"请正确输入您的身份证号码",
                         remote: "用户登录名不存在"},
-                    validateCode: {remote: "验证码不正确.", required: "请填写验证码."}
+                    validateCode: {remote: "验证码不正确.", required: "请填写验证码."},
+                    validateCode22:{
+                        required:"请输入手机验证码"
+                    }
                 },
                 submitHandler: function(form){
                     // loading('正在提交，请稍等...');
@@ -92,19 +98,14 @@
             }
 
 
-            //获取验证码
+     /*       //获取验证码
             $('#getCodeBtn').on('click', function() {
                 var loginName1 = $("#loginName").val();
                 $.post("${ctxFront}/sendCode?loginName="+loginName1);
 
-                //获取验证码
-                $('#getCodeBtn').on('click', function() {
-                    var loginName1 = $("#loginName").val();
-
                     $('input[name="validateCode"]').focus();
                     console.log("zhenghao"+loginName1);
 
-                    console.log("zhenghao"+loginName1);
                     var getValidateCodeObj = $('#getCodeBtn');
                     getValidateCodeObj.attr('disabled', true);
                     var i = 60;
@@ -130,9 +131,34 @@
                     $("#validateCode_error").html('');
 
 
-                });
-            });
+                });*/
+
         });
+        //倒计时
+        function resetCode(){
+            var loginName1 = $("#loginName").val();
+            var code = $("#validateCode").val();
+            if(loginName1&&code){
+            $.post("${ctxFront}/sendCode?loginName="+loginName1);
+            $('#J_getCode').hide();
+            $('#J_second').html('60');
+            $('#J_resetCode').show();
+            var second = 60;
+            var timer = null;
+            timer = setInterval(function(){
+                second -= 1;
+                if(second >0 ){
+                    $('#J_second').html(second);
+                }else{
+                    clearInterval(timer);
+                    $('#J_getCode').show();
+                    $('#J_resetCode').hide();
+                }
+            },1000);
+            }else {
+                alert("请输入正确的登录名和验证码！");
+            }
+        }
     </script>
 </head>
 <body>
@@ -181,7 +207,8 @@
                     <input type="text" id="validateCode22" name="validateCode22" value=""
                            placeholder="请输入验证码" maxlength="11" style="width:100px;"/>
 
-                    <button type="button" id="getCodeBtn" class="btn btn-info">获取手机验证码</button>
+                    <button class="btn btn-small get-code" onclick="resetCode()" id="J_getCode">获取验证码</button>
+                    <button class="btn btn-small reset-code" id="J_resetCode" style="display:none;"><span id="J_second">60</span>秒后重发</button>
 
                     <label id="validateCode_error" class="error"></label>
                 </div>
@@ -190,10 +217,7 @@
 
 
             <div class="form-actions">
-                <input id="btnSubmit" class="btn btn-primary" type="submit" value="提交"/>&nbsp;
-                <input id="btnCancel" class="btn btn-primary" type="button" value="返回"
-                       onclick="history.go(-1)"/>
-            </div>
+                <input id="btnSubmit" class="btn btn-primary" type="submit" value="提交"/>
 
         </form:form>
     </div>
