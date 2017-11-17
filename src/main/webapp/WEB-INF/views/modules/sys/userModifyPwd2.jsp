@@ -34,8 +34,9 @@
                     confirmNewPassword: {equalTo: "输入与上面相同的密码"}
                 },
                 submitHandler: function(form){
-                    loading('正在提交，请稍等...');
-                    form.submit();
+                   // loading('正在提交，请稍等...');
+                    a();
+                    //form.submit();
                 },
                 errorContainer: "#messageBox",
                 errorPlacement: function(error, element) {
@@ -51,14 +52,10 @@
 
         function a(){
             var newPassword=$("#newPassword").val();
-            //$.get("${ctxFront}/modifyPwd2?newPassword="+newPassword);
-            <%--location = "${ctxFront}/modifyPwd2?newPassword="+newPassword;--%>
 
 			location="${ctxFront}/modifyPwd2?newPassword="+newPassword;
-            alert("密码修改成功！！");
-            //$.get("${ctxFront}/jumpLogin");
+           // alert("密码修改成功！！");
 
-            console.log("成功");
 		}
 
 //		function b(s){
@@ -98,7 +95,7 @@
 				</div>
 			</div>
 			<div class="form-actions">
-				<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存" onclick="a()"/>
+				<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存" />
 			</div>
 		</form:form>
 	</div>

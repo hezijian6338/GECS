@@ -24,7 +24,6 @@
     </style>
     <script src="/static/js/idCardNo.js" type="text/javascript"></script>
     <script type="text/javascript">
-
         $(document).ready(function() {
 
             //验证手身份证号码格式格式
@@ -39,7 +38,7 @@
                         required:true,
                         isIdCardNo: true,
                         remote: "${ctxFront}/checkLoginNameExist?oldLoginName="
-                       + encodeURIComponent('${user.loginName}')
+                        + encodeURIComponent('${user.loginName}')
                     },
                     validateCode: {remote: "${pageContext.request.contextPath}/servlet/validateCodeServlet"},
                 },
@@ -51,13 +50,13 @@
                     validateCode: {remote: "验证码不正确.", required: "请填写验证码."}
                 },
                 submitHandler: function(form){
-                   // loading('正在提交，请稍等...');
+                    // loading('正在提交，请稍等...');
                     var code=$("#validateCode22").val();
                     var loginName=$("#loginName").val();
-                   // alert(code);
+                    // alert(code);
                     checkCode(code,loginName);
 
-                   // form.submit();
+                    // form.submit();
                 },
 
 
@@ -72,9 +71,15 @@
                 }
             });
 
+
+            function buttonClike(){
+                var code=$("#validateCode").val();
+                alert(code);
+                checkCode(code);
+            }
             function sendCode(s) {
                 $.ajax({
-                    type:"GET",
+                    type:"post",
                     url:"${ctxFront}/sendCode?loginName="+s,
                     success:function () {
 
@@ -82,28 +87,28 @@
                 })
             }
 
-
             function checkCode(s,l) {
                 location="${ctxFront}/checkCode?code="+s+"&loginName="+l;
             }
 
+
             //获取验证码
             $('#getCodeBtn').on('click', function() {
-
-                //身份证
                 var loginName1 = $("#loginName").val();
+                $.post("${ctxFront}/sendCode?loginName="+loginName1);
 
-
-                sendCode(loginName1);
-               // if(loginName1&&vCode){//判断是否都输入正确才发送验证码
+                //获取验证码
+                $('#getCodeBtn').on('click', function() {
                     var loginName1 = $("#loginName").val();
+
                     $('input[name="validateCode"]').focus();
                     console.log("zhenghao"+loginName1);
+
                     console.log("zhenghao"+loginName1);
                     var getValidateCodeObj = $('#getCodeBtn');
                     getValidateCodeObj.attr('disabled', true);
                     var i = 60;
-                    var myInterval = setInterval(myIntervalFun, 2000);
+                    var myInterval = setInterval(myIntervalFun, 1000);
                     function myIntervalFun() {
                         i--;
                         getValidateCodeObj.html('<b style="padding:0 33px;color:#a9a9a9;">' + i + '</b>');
@@ -114,9 +119,6 @@
                             getValidateCodeObj.attr('disabled', false);
                         }
                     }
-                /*}else {
-                    alert("请输入正确的登录名和验证码");
-                }*/
                     $.axs(function(result) {
                         if (!result.isSuc) {
                             $("#loginName_error").html(result.msg);
@@ -127,10 +129,10 @@
                     });
                     $("#validateCode_error").html('');
 
+
+                });
             });
-
         });
-
     </script>
 </head>
 <body>
@@ -157,13 +159,13 @@
             </div>
 
 
-       <%--     <div class="control-group">
-                <label class="control-label">手机:</label>
-                <div class="controls">
-                   ${user.mobile}
-                </div>
-            </div>
---%>
+            <%--<div class="control-group">--%>
+            <%--<label class="control-label">手机:</label>--%>
+            <%--<div class="controls">--%>
+            <%--<label class="lbl" id="moblic"></label>--%>
+            <%--</div>--%>
+            <%--</div>--%>
+
             <div class="control-group">
                 <label class="control-label"><font color="red">*</font>&nbsp;验证码:</label>
                 <div class="validateCode">

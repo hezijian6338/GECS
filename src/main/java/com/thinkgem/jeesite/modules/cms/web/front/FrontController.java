@@ -148,7 +148,7 @@ public class FrontController extends BaseController {
  */
 
 
-	@RequestMapping(value = "checkCode",method = RequestMethod.GET)
+	@RequestMapping(value = "checkCode")
 	public String checkCode(String code,String loginName,Model model){
 		System.out.println("验证码========="+code);
 		System.out.println("验证码是否正确========"+SendMessageUtil.isValidate(code));
@@ -161,7 +161,7 @@ public class FrontController extends BaseController {
 			System.out.println("验证码正确");
 			return "modules/sys/userModifyPwd2";
 		}
-		JOptionPane.showConfirmDialog(null,"手机验证码输入错误！！！","确认信息",JOptionPane.YES_NO_OPTION);
+		JOptionPane.showMessageDialog(null,"手机验证码输入错误！！！","确认信息",JOptionPane.INFORMATION_MESSAGE);
 		return "modules/sys/forgetPassword";
 	}
 
@@ -173,14 +173,14 @@ public class FrontController extends BaseController {
 	 */
 
 //	@RequiresPermissions("user")
-	@RequestMapping(value = "modifyPwd2",method = RequestMethod.GET)
+	@RequestMapping(value = "modifyPwd2")
 	public String  modifyPwd2( String newPassword) {
 		User user = UserUtils.getTempUser();
 		System.out.println("这里是UserController====user==="+user);
 		if (StringUtils.isNotBlank(newPassword)){
 			systemService.updatePasswordById(user.getId(), user.getLoginName(), newPassword);
 			//model.addAttribute("message", "修改密码成功");
-			JOptionPane.showConfirmDialog(null,"密码修改成功！！！","确认信息",JOptionPane.YES_NO_OPTION);
+			JOptionPane.showMessageDialog(null,"密码修改成功！！！","确认信息",JOptionPane.INFORMATION_MESSAGE);
 			return "modules/sys/sysLogin";
 		}
 		//model.addAttribute("user", user);
@@ -245,7 +245,7 @@ public class FrontController extends BaseController {
  */
 
 	@ResponseBody
-	@RequestMapping(value = "sendCode")
+	@RequestMapping(value = "sendCode",method = RequestMethod.POST)
 	public boolean sendCode(String loginName) throws ClientException {
 		System.out.println("登录名========="+loginName);
 
