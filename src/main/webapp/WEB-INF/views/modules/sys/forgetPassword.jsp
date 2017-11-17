@@ -227,12 +227,12 @@
     <a href="javascript:;" class="tel">
         <div class="box">
             <p>客服电话：</p>
-            <p>140202011026</p>
+            <p>0756-3322881</p>
         </div>
     </a>
     <a href="javascript:;" class="wechat">
         <div class="box">
-            <img src="/static/images/2.png">
+            <img src="/static/images/runcheng.jpg">
             <p>关注微信</p>
         </div>
     </a>
