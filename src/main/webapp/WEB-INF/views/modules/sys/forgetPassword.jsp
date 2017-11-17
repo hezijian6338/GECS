@@ -100,6 +100,8 @@
 
      /*       //获取验证码
             $('#getCodeBtn').on('click', function() {
+
+                    //身份证
                 var loginName1 = $("#loginName").val();
                 $.post("${ctxFront}/sendCode?loginName="+loginName1);
 

@@ -241,9 +241,9 @@ public class PDFUtil {
         s.setFieldProperty("idEngSex", "textsize", new Float(15), null);
 
         //证照类型 注入
-        s.setFieldProperty("idcertificateTypeId", "clrflags", 1, null);
-        s.setFieldProperty("idcertificateTypeId", "textfont", bfChinese, null);
-        s.setFieldProperty("idcertificateTypeId", "textsize", new Float(15), null);
+        s.setFieldProperty("idcertificateType", "clrflags", 1, null);
+        s.setFieldProperty("idcertificateType", "textfont", bfChinese, null);
+        s.setFieldProperty("idcertificateType", "textsize", new Float(15), null);
 
  /*       //证照编号 注入
         s.setFieldProperty("idcertificateCode", "clrflags", 1, null);
@@ -261,9 +261,9 @@ public class PDFUtil {
         s.setFieldProperty("idoffice", "textsize", new Float(15), null);
 
         //统一社会信用代码 注入
-        s.setFieldProperty("idcertificateCode", "clrflags", 1, null);
-        s.setFieldProperty("idcertificateCode", "textfont", bfChinese, null);
-        s.setFieldProperty("idcertificateCode", "textsize", new Float(15), null);
+        s.setFieldProperty("idtyshxydm", "clrflags", 1, null);
+        s.setFieldProperty("idtyshxydm", "textfont", bfChinese, null);
+        s.setFieldProperty("idtyshxydm", "textsize", new Float(15), null);
 
         //成立日期 注入
         s.setFieldProperty("idestablishDate", "clrflags", 1, null);
@@ -401,9 +401,9 @@ public class PDFUtil {
 //
 //                s.setField("EngSex", fillSpace(BusinessLicense.getStuName() ,15 , isNull(s,"EngSex")));
         //注册公司类型 ：（如：责任有限公司）
-        s.setField("idcertificateTypeId", fillSpace(businessLicense.getRegisteredType() ,15 , isNull(s,"idcertificateTypeId")));
+        s.setField("idcertificateType", fillSpace(businessLicense.getRegisteredType() ,15 , isNull(s,"idcertificateType")));
         //统一社会信用代码
-        s.setField("idcertificateCode", fillSpace(businessLicense.getCertificateCode() ,15 , isNull(s,"idcertificateCode")));
+        s.setField("idtyshxydm", fillSpace(businessLicense.getCertificateCode() ,15 , isNull(s,"idtyshxydm")));
         System.out.println("统一社会信用代码"+businessLicense.getCertificateCode());
         s.setField("idcertificateName", fillSpace(businessLicense.getCertificateName() ,15 , isNull(s,"idcertificateName")));
 
