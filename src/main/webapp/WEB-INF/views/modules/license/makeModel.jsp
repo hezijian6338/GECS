@@ -998,7 +998,12 @@
 
     //PDF大小控制
     pdfsize.onchange = function () {
-        alert("自动修改画布为你当前所选的格式,并且清楚画布内容,请重新排版！");
+        if(printf.innerHTML != ""){
+            alert("自动修改画布为你当前所选的格式,并且清楚画布内容,请重新排版！");
+        }
+        $.each($('.Elements'),function () {
+            $(this).css("backgroundColor","");
+        });
         printf.innerHTML = "";
         var size = pdfsize.value;
         var format = size.toLowerCase();
@@ -1011,7 +1016,12 @@
 
     //PDF排版控制
     lorp.onchange = function () {
-        alert("自动修改画布为你当前所选的格式,并且清楚画布内容,请重新排版！");
+        if(printf.innerHTML != ""){
+            alert("自动修改画布为你当前所选的格式,并且清楚画布内容,请重新排版！");
+        }
+        $.each($('.Elements'),function () {
+            $(this).css("backgroundColor","");
+        });
         printf.innerHTML = "";
         var or = lorp.value;
         var orientation = or;
@@ -1500,6 +1510,9 @@
 
         //更改了排版方式为竖版（p--竖版；l--横版）
         var pdf = new jsPDF(LorP.value, 'pt', pdfSize.value);
+        $.each($('.Elements'),function () {
+            $(this).css("backgroundColor","");
+        });
         $.each($('.specialElements'), function () {
             var TF_T = $(this).text();
             var TF_Id = $(this).attr("id");
