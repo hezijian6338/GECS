@@ -20,6 +20,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 证照模板管理Controller
@@ -63,7 +65,11 @@ public class CertificateTemplateController extends BaseController {
 	@RequiresPermissions("certificate:certificateTemplate:view")
 	@RequestMapping(value = "makeModel")
 	public String makeModel(CertificateTemplate certificateTemplate, Model model) {
+		List<String> list = new ArrayList<String>();
+		list.add("test1");
+		list.add("test2");
 		model.addAttribute("certificateTemplate", certificateTemplate);
+		model.addAttribute("list", list);
 		return "modules/certificate/index";
 	}
 
