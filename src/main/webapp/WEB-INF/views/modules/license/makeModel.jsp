@@ -72,9 +72,10 @@
             preventDoubleContext: true,
             compress: false
         });
-        CreateCE();
+
+        /*检查浏览器的型号，确定按钮样式（暂时）*/
         myBrowser();
-        //alert(myBrowser());
+
         //context.settings({compress: true});
 
         /*加载画布的右键插件(hezijian6338)*/
@@ -140,7 +141,7 @@
 
                 if (ui.helper.attr("id") == "Text") {
                     //alert("top(offset):" + ui.offset.top + "left(offset):" + ui.offset.left + "；top(position):" + ui.position.top + "left(position):" + ui.position.left);
-                    var el = $("<div class='printComponents textComponents' onclick='checkClick(this)'  tabindex='0' ></div>");
+                    var el = $("<div class='printComponents textComponents' onclick='setIndex(event,this)'  tabindex='0' ></div>");
                     //el.append("<ul><li style='list-style: none;'><textarea class='textarea' id='textarea' style='' onchange='wirteText(this)'></textarea></li></ul>");
                     el.append("<textarea class='textarea' id='textarea' style='' onchange='wirteText(this)'></textarea>");
                     var id = (new Date()).getMilliseconds();
@@ -669,10 +670,34 @@
                 finder.popup();
             }
 
+            function viewTxt(startupPath) {
+                // You can use the "CKFinder" class to render CKFinder in a page:
+                var finder = new CKFinder();
+                finder.basePath = '../';	// The path for the installation of CKFinder (default = "/ckfinder/").
+
+                //Startup path in a form: "Type:/path/to/directory/"
+                finder.resourceType = "二次编辑文件夹";
+                finder.startupPath = startupPath;
+                finder.selectActionFunction = SetTxtField;
+                finder.popup();
+            }
+
             // This is a sample function which is called when a file is selected in CKFinder.
             function SetFileField(fileUrl, data) {
                 document.getElementById(data["selectActionData"]).value = fileUrl;
                 createNewElements();
+            }
+
+            // This is a sample function which is called when a file is selected in CKFinder.
+            function SetTxtField(fileUrl, data) {
+                var furl = "/picFile" + fileUrl;
+                $.ajax({
+                    url: furl,
+                    dataType: 'text',
+                    success: function(data) {
+                        document.getElementById("printf").innerHTML = data ;
+                    }
+                });
             }
 
             function closeWindow() {
@@ -784,6 +809,7 @@
             <button class="bttn-unite bttn-xs bttn-primary" onclick="BrowseServer('元素图片文件夹:/','xFilePath');">浏览文件夹
             </button>
             <button class="bttn-unite bttn-xs bttn-primary" onclick="viewBS('证照模板文件夹:/');">查看历史模板</button>
+            <button class="bttn-unite bttn-xs bttn-primary" onclick="viewTxt('二次编辑文件夹:/');">二次编辑文件夹</button>
             <%--<input type="button" id="downloadPDF" onclick="print()" value="下载PDF"/>--%>
             <%--<input type="button" id="saveTxt" onclick="saveTxt()" value="下载图片"/>--%>
         </div>
@@ -1077,11 +1103,11 @@
     /* 把画布内容保存到txt和图片(Mickey)*/
     function saveTxt() {
         var blob = new Blob([document.getElementById("printf").innerHTML], {type: "text/plain;charset=utf-8"});
-        saveAs(blob, "printf.txt");
+        saveAs(blob, "secondText.txt");
         html2canvas($("#printf"), {
             onrendered: function (canvas) {
                 canvas.toBlob(function (blob) {
-                    saveAs(blob, "printf.png");
+                    saveAs(blob, "secondPic.png");
                 });
             }
         });
@@ -1132,6 +1158,8 @@
 
     /*图片元素右键监测函数（Mickey&hezijian6338）*/
     function setIndex(event, e) {
+        var thisID = document.getElementById(e.getAttribute("id"));
+        checkFont(thisID);
         document.onkeydown = function () {
             var oEvent = window.event;
             if (oEvent.keyCode == 46) {
@@ -1140,7 +1168,7 @@
         }
         var _this = "#" + e.getAttribute("id") ;
         context.attach(e, [
-            {header: '元素属性操作'},
+            {header: '元素属性操作' + _this},
             {text: '设置背景',  action:function (et) {
                             if (backGroundUnique == 0) {			//还没有设置背景
                 if (confirm("确认此图作为背景？")) {
@@ -1163,41 +1191,13 @@
             {text: '删除元素', action:function (et) {
                 if (confirm("是否删除该元素？")) {
                     backGroundUnique = 0;
+                    $(e).unbind();
+                    $(e).attr("onclick","");
                     $(e).remove();
+                    context.destroy(et);
                 }
             }},
         ]);
-        //使选中的元素永远在图层的最上面
-//        var btnNum = event.button;
-//        //alert(e.button);
-//        if (e.style.zIndex != 1) {				//不是背景的元素
-//            index = index + 1;
-//            e.style.zIndex = index;
-//        }
-//        if (btnNum == 1) {
-//            //alert("点击鼠标中键");
-//            if (e.style.zIndex == 1) {
-//                if (confirm("是否解除当前组件背景？")) {
-//                    index = index + 1;
-//                    e.style.zIndex = index;
-//                    backGroundUnique = 0; //背景已经设置了
-//                }
-//            } else {								//设置选中元素的zIndex
-//
-//            }
-//        } else if (btnNum == 0) {
-//            //alert("点击鼠标左键");
-//        } else if (btnNum == 2) {
-//            //alert("点击鼠标右键");
-//            if (backGroundUnique == 0) {			//还没有设置背景
-//                if (confirm("确认此图作为背景？")) {
-//                    e.style.zIndex = 1;
-//                    backGroundUnique = 1; //背景已经设置了
-//                }
-//            } else {
-//                alert("你已设置过背景！背景只能有一个！");
-//            }
-//        }
 
         //让保存的元素重新到画布上后能重新拖拽伸缩编辑功能
         if ($(e).hasClass("printComponents")) {
@@ -1211,8 +1211,8 @@
 
     /*普通元素右键监测(Mickey&hezijian6338)*/
     function checkClick(e) {
-        //alert(e.getAttribute("id"));
         var thisID = document.getElementById(e.getAttribute("id"));
+        checkFont(thisID);
         var tempId = e.getAttribute("id");
         var originId = tempId.substring(2, tempId.length);
         document.onkeydown = function () {
@@ -1227,8 +1227,7 @@
         //alert(_this);
 
         context.attach(_this, [
-            {header: '元素属性操作'},
-            {text: 'Back', href: '#'},
+            {header: '元素属性操作' + originId},
             {text: '删除元素', action:function (event) {
                 if (confirm("是否删除该元素？")) {
 //                        alert(originId);
@@ -1246,23 +1245,9 @@
             }},
         ]);
 
+    }
 
-//        $(e).contextPopup({
-//
-//            title: '元素属性操作',
-//
-//            items: [
-//                {
-//                    label: '删除元素', action: function () {
-//                    if (confirm("是否删除该元素？")) {
-////                        alert(originId);
-//                        document.getElementById(originId).style.backgroundColor = "";
-//                        $(e).remove();
-//                    }
-//                }
-//                }
-//            ]
-//        });
+    function checkFont(thisID){
 
         /*字体样式监测（Mickey）*/
         var bold = document.getElementById("bold");
@@ -1582,11 +1567,6 @@
         }
     }
 
-    /*componentsElements的动态创建代码*/
-    function CreateCE() {
-        <%--var ceList =<%=request.getAttribute("certificateTemplate")%>;--%>
-        var ceDiv = "<div class='components Elements' id='Photo'>照片</div>" ;
-    }
 
     function editPdf_txt() {
         <%

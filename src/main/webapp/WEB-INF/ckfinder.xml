@@ -52,6 +52,13 @@
 			<allowedExtensions>pdf</allowedExtensions>
 			<deniedExtensions></deniedExtensions>
 		</type>
+		<type name="二次编辑文件夹">
+			<url>%BASE_URL%secondEdit/</url>
+			<directory>%BASE_DIR%secondEdit</directory>
+			<maxSize>30M</maxSize>
+			<allowedExtensions>txt</allowedExtensions>
+			<deniedExtensions></deniedExtensions>
+		</type>
 	</types>
 	<accessControls>
 		<accessControl>
