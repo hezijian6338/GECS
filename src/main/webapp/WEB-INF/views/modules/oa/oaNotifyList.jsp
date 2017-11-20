@@ -129,7 +129,7 @@
 				<td>
 					<c:if test="${!fns:isPopulace()}">
     				<%--<a href="${ctx}/oa/oaNotify/form?id=${oaNotify.id}">修改</a>--%>
-					<a href="${ctx}/oa/oaNotify/delete?id=${oaNotify.id}" onclick="return confirmx('确认要删除该通知吗？', this.href)">删除</a>
+				<%--	<a href="${ctx}/oa/oaNotify/delete?id=${oaNotify.id}" onclick="return confirmx('确认要删除该通知吗？', this.href)">删除</a>--%>
 					</c:if>
 					<a data-toggle="modal" onclick="licenseInfo('${oaNotify.files}')">预览</a>
 				</td>
