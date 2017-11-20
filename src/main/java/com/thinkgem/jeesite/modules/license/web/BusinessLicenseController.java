@@ -3,27 +3,22 @@
  */
 package com.thinkgem.jeesite.modules.license.web;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.itextpdf.text.DocumentException;
+import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Msg;
-import com.thinkgem.jeesite.common.utils.PDFUtil;
-import com.thinkgem.jeesite.common.utils.SendMailUtil;
-import com.thinkgem.jeesite.common.utils.SendMessageUtil;
-import com.thinkgem.jeesite.modules.act.entity.Act;
-import com.thinkgem.jeesite.modules.act.service.ActTaskService;
+import com.thinkgem.jeesite.common.persistence.Page;
+import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.certificate.entity.CertificateLibrary;
 import com.thinkgem.jeesite.modules.certificate.entity.CertificateType;
 import com.thinkgem.jeesite.modules.certificate.service.CertificateLibraryService;
 import com.thinkgem.jeesite.modules.certificate.service.CertificateTypeService;
-import com.thinkgem.jeesite.modules.oa.dao.OaNotifyRecordDao;
+import com.thinkgem.jeesite.modules.license.entity.BusinessLicense;
+import com.thinkgem.jeesite.modules.license.service.BusinessLicenseService;
 import com.thinkgem.jeesite.modules.oa.entity.OaNotify;
 import com.thinkgem.jeesite.modules.oa.service.OaNotifyService;
-import com.thinkgem.jeesite.modules.sys.service.SystemService;
-import org.apache.commons.lang3.StringUtils;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,12 +26,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.thinkgem.jeesite.common.config.Global;
-import com.thinkgem.jeesite.common.persistence.Page;
-import com.thinkgem.jeesite.common.web.BaseController;
-import com.thinkgem.jeesite.modules.license.entity.BusinessLicense;
-import com.thinkgem.jeesite.modules.license.service.BusinessLicenseService;
-
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -214,6 +205,7 @@ public class BusinessLicenseController extends BaseController {
 		addMessage(redirectAttributes, "删除营业执照成功");
 		return "redirect:"+Global.getAdminPath()+"/license/businessLicense/?repage";
 	}
+
 
 
 	/**

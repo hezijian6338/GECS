@@ -3,9 +3,12 @@
  */
 package com.thinkgem.jeesite.modules.license.web;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.thinkgem.jeesite.common.config.Global;
+import com.thinkgem.jeesite.common.persistence.Page;
+import com.thinkgem.jeesite.common.utils.StringUtils;
+import com.thinkgem.jeesite.common.web.BaseController;
+import com.thinkgem.jeesite.modules.license.entity.BusinessElement;
+import com.thinkgem.jeesite.modules.license.service.BusinessElementService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,12 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.thinkgem.jeesite.common.config.Global;
-import com.thinkgem.jeesite.common.persistence.Page;
-import com.thinkgem.jeesite.common.web.BaseController;
-import com.thinkgem.jeesite.common.utils.StringUtils;
-import com.thinkgem.jeesite.modules.license.entity.BusinessElement;
-import com.thinkgem.jeesite.modules.license.service.BusinessElementService;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 营业执照元素生成表Controller
@@ -49,7 +48,7 @@ public class BusinessElementController extends BaseController {
 	@RequiresPermissions("license:businessElement:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(BusinessElement businessElement, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<BusinessElement> page = businessElementService.findPage(new Page<BusinessElement>(request, response), businessElement); 
+		Page<BusinessElement> page = businessElementService.findPage(new Page<BusinessElement>(request, response), businessElement);
 		model.addAttribute("page", page);
 		return "modules/license/businessElementList";
 	}
@@ -59,6 +58,20 @@ public class BusinessElementController extends BaseController {
 	public String form(BusinessElement businessElement, Model model) {
 		model.addAttribute("businessElement", businessElement);
 		return "modules/license/businessElementForm";
+	}
+
+	@RequestMapping(value = "makeModel")
+	public String makeModel(BusinessElement businessElement, HttpServletRequest request, HttpServletResponse response, Model model) {
+		Page<BusinessElement> page = businessElementService.findPage(new Page<BusinessElement>(request, response), businessElement);
+		model.addAttribute("page", page);
+		model.addAttribute("businessElement", businessElement);
+		return "modules/license/makeModel";
+	}
+
+	@RequestMapping(value = "managerModel")
+	public String managerModel(BusinessElement businessElement, Model model) {
+		model.addAttribute("businessElement", businessElement);
+		return "modules/license/managerModel";
 	}
 
 	@RequiresPermissions("license:businessElement:edit")
