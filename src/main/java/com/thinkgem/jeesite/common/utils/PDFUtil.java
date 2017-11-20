@@ -261,9 +261,9 @@ public class PDFUtil {
         s.setFieldProperty("idoffice", "textsize", new Float(15), null);
 
         //统一社会信用代码 注入
-        s.setFieldProperty("idtyshxydm", "clrflags", 1, null);
-        s.setFieldProperty("idtyshxydm", "textfont", bfChinese, null);
-        s.setFieldProperty("idtyshxydm", "textsize", new Float(15), null);
+        s.setFieldProperty("idcertificateCode", "clrflags", 1, null);
+        s.setFieldProperty("idcertificateCode", "textfont", bfChinese, null);
+        s.setFieldProperty("idcertificateCode", "textsize", new Float(15), null);
 
         //成立日期 注入
         s.setFieldProperty("idestablishDate", "clrflags", 1, null);
@@ -403,12 +403,12 @@ public class PDFUtil {
         //注册公司类型 ：（如：责任有限公司）
         s.setField("idcertificateType", fillSpace(businessLicense.getRegisteredType() ,15 , isNull(s,"idcertificateType")));
         //统一社会信用代码
-        s.setField("idtyshxydm", fillSpace(businessLicense.getCertificateCode() ,15 , isNull(s,"idtyshxydm")));
-        System.out.println("统一社会信用代码"+businessLicense.getCertificateCode());
+        s.setField("idcertificateCode", fillSpace(businessLicense.getCertificateCode() ,15 , isNull(s,"idcertificateCode")));
+//        System.out.println("统一社会信用代码"+businessLicense.getCertificateCode());
         s.setField("idcertificateName", fillSpace(businessLicense.getCertificateName() ,15 , isNull(s,"idcertificateName")));
 
         s.setField("idoffice", fillSpace(String.valueOf(businessLicense.getOffice()),15 , isNull(s,"idoffice")));
-        System.out.println("++++++++"+businessLicense.getScope().getName()+"====="+String.valueOf(businessLicense.getScope().getName()));
+//        System.out.println("++++++++"+businessLicense.getScope().getName()+"====="+String.valueOf(businessLicense.getScope().getName()));
 
         String EstablishDate1 = df.format(businessLicense.getEstablishDate());
         String EstablishDateYear1 = EstablishDate1.substring(0,EstablishDate1.indexOf("年"));
