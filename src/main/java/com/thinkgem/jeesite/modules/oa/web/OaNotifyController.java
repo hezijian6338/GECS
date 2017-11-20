@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.thinkgem.jeesite.common.config.Global;
+import com.thinkgem.jeesite.common.utils.FileUtils;
 import com.thinkgem.jeesite.modules.oa.entity.OaNotifyRecord;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -25,6 +27,7 @@ import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.oa.entity.OaNotify;
 import com.thinkgem.jeesite.modules.oa.service.OaNotifyService;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -185,5 +188,31 @@ public class OaNotifyController extends BaseController {
 		oaNotify.setSelf(true);
 		oaNotify.setReadFlag("0");
 		return String.valueOf(oaNotifyService.findCount(oaNotify));
+	}
+
+	/**
+	 * @author 练浩文
+	 * @TODO (注：下载)
+	 * @param certificateName
+	 * @param request
+	 * @param response
+	 * @param redirectAttributes
+	 * @DATE: 2017/11/20 17:56
+	 */
+	@RequestMapping(value = "downLoad")
+	public String downLoad(String certificateName,HttpServletRequest request,HttpServletResponse response,RedirectAttributes redirectAttributes){
+		String companyName = certificateName.substring(0,certificateName.indexOf("-"));
+		String savaPath = "E:\\certificate\\Business\\"+companyName;
+		String downLoadPath = "E:\\certificate\\Business\\"+companyName+".zip";
+		File file = new File(savaPath);
+		if (file.exists()){
+			FileUtils.zipFiles(savaPath,companyName,downLoadPath);
+			file = new File(downLoadPath);
+			FileUtils.downFile(file,request,response,companyName+".zip");
+		}
+		else{
+			addMessage(redirectAttributes,"证照还未生成！！！");
+		}
+		return "redirect:" + adminPath + "/oa/oaNotify/oaNotifyList?repage";
 	}
 }

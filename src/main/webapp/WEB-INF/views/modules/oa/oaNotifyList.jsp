@@ -133,6 +133,8 @@
     				<%--<a href="${ctx}/oa/oaNotify/form?id=${oaNotify.id}">修改</a>--%>
 				<%--	<a href="${ctx}/oa/oaNotify/delete?id=${oaNotify.id}" onclick="return confirmx('确认要删除该通知吗？', this.href)">删除</a>--%>
 					</c:if>
+					<a href="${ctx}/oa/oaNotify/downLoad?certificateName=${oaNotify.title}">下载</a>
+
 					<a data-toggle="modal" onclick="licenseInfo('${oaNotify.files}')">预览</a>
 				</td>
 			</tr>

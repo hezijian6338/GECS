@@ -7,6 +7,7 @@ import com.itextpdf.text.DocumentException;
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Msg;
 import com.thinkgem.jeesite.common.persistence.Page;
+import com.thinkgem.jeesite.common.utils.FileUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.certificate.entity.CertificateLibrary;
 import com.thinkgem.jeesite.modules.certificate.entity.CertificateType;
@@ -20,6 +21,7 @@ import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.codehaus.groovy.runtime.powerassert.SourceText;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +30,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -96,13 +99,7 @@ public class BusinessLicenseController extends BaseController {
 	@RequiresPermissions("license:businessLicense:view")
 	@RequestMapping(value = "form")
 	public String form(BusinessLicense businessLicense, Model model) throws IOException, DocumentException {
-
-//		String path = "E:\\certificate\\BusinessModel\\BusinessModel.pdf";
-//		String savaPath = "E:\\certificate\\Business\\"+businessLicense.getCertificateName()+businessLicense.getPersonId()+".pdf";
-//		String realativePath = "/pic/certificate/Business/"+businessLicense.getCertificateName()+businessLicense.getPersonId()+".pdf";
 		String view = "businessLicenseForm";
-//		CertificateLibrary certificateLibrary = new CertificateLibrary();
-
 		//查看审批申请单
 		if(StringUtils.isNotBlank(businessLicense.getId())){
 			//环节编号
@@ -135,7 +132,6 @@ public class BusinessLicenseController extends BaseController {
 			}
 			// 兑现环节
 			else if ("apply_end".equals(taskDefKey)){
-
 			view = "businessLicenseAudit";
 			}
 		}
@@ -295,4 +291,30 @@ public class BusinessLicenseController extends BaseController {
 		}
 	}
 
+	/**
+	 * @author 练浩文
+	 * @TODO (注：下载)
+	 * @param certificateName
+	 * @param request
+	 * @param response
+	 * @param redirectAttributes
+	 * @DATE: 2017/11/20 17:57
+	 */
+	@RequiresPermissions("license:businessLicense:edit")
+	@RequestMapping(value = "downLoad")
+	public String downLoad(String certificateName,HttpServletRequest request,HttpServletResponse response,RedirectAttributes redirectAttributes){
+		String savaPath = "E:\\certificate\\Business";
+		String isExsitFile = "E:\\certificate\\Business\\"+certificateName;
+		String downLoadPath = "E:\\certificate\\Business\\"+certificateName+".zip";
+		File file = new File(isExsitFile);
+//		System.out.println("aaaa"+file.exists());
+		if (file.exists()){
+			FileUtils.zipFiles(savaPath,certificateName,downLoadPath);
+			file = new File(downLoadPath);
+			FileUtils.downFile(file,request,response,certificateName+".zip");
+		} else{
+			addMessage(redirectAttributes,"证照还未生成！！！");
+		}
+		return "redirect:"+Global.getAdminPath()+"/license/businessLicense/?repage";
+	}
 }

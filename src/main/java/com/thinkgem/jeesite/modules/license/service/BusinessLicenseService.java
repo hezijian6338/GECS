@@ -14,6 +14,7 @@ import java.util.Random;
 
 import com.google.common.collect.Maps;
 import com.itextpdf.text.DocumentException;
+import com.thinkgem.jeesite.common.utils.FileUtils;
 import com.thinkgem.jeesite.common.utils.PDFUtil;
 import com.thinkgem.jeesite.common.utils.SendMessageUtil;
 import com.thinkgem.jeesite.common.utils.StringUtils;
@@ -108,8 +109,14 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 	@Transactional(readOnly = false)
 	public void auditSave(BusinessLicense businessLicense) throws IOException, DocumentException {
 		String path = "E:\\certificate\\BusinessModel\\BusinessModel.pdf";
-		String savaPath = "E:\\certificate\\Business\\"+businessLicense.getCertificateName()+businessLicense.getPersonId()+".pdf";
-		String realativePath = "/pic/certificate/Business/"+businessLicense.getCertificateName()+businessLicense.getPersonId()+".pdf";
+		String path_copy = "E:\\certificate\\BusinessModel\\BusinessModel_copy.pdf";
+		FileUtils.createDirectory("E:\\certificate\\Business\\"+businessLicense.getCertificateName());
+		String savaPath = "E:\\certificate\\Business\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()
+				+businessLicense.getPersonId()+".pdf";
+		String realativePath = "/pic/certificate/Business/"+businessLicense.getCertificateName()+"/"+businessLicense.getCertificateName()
+				+businessLicense.getPersonId()+".pdf";
+		String savaPath_copy = "E:\\certificate\\Business\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()
+				+businessLicense.getPersonId()+"_copy"+".pdf";
 //		String view = "businessLicenseForm";
 		CertificateLibrary certificateLibrary = new CertificateLibrary();
 		// 设置意见
@@ -137,6 +144,7 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 			businessLicense.setOpinion4(businessLicense.getAct().getComment());
 			dao.updateOpinion4(businessLicense);
 			PDFUtil.fillTemplate(businessLicense,path,savaPath);
+			PDFUtil.fillTemplate(businessLicense,path_copy,savaPath_copy);
 			certificateLibrary.setCertificateCode(businessLicense.getCertificateCode());
 			certificateLibrary.setCertificateTypeId(businessLicense.getCertificateTypeId());
 			certificateLibrary.setCertificateName(businessLicense.getCertificateName());
