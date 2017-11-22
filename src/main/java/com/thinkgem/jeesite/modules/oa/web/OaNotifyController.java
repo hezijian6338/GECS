@@ -28,6 +28,8 @@ import com.thinkgem.jeesite.modules.oa.entity.OaNotify;
 import com.thinkgem.jeesite.modules.oa.service.OaNotifyService;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -200,19 +202,24 @@ public class OaNotifyController extends BaseController {
 	 * @DATE: 2017/11/20 17:56
 	 */
 	@RequestMapping(value = "downLoad")
-	public String downLoad(String certificateName,HttpServletRequest request,HttpServletResponse response,RedirectAttributes redirectAttributes){
+	public void downLoad(String certificateName,HttpServletRequest request,HttpServletResponse response,RedirectAttributes redirectAttributes){
 		String companyName = certificateName.substring(0,certificateName.indexOf("-"));
-		String savaPath = "E:\\certificate\\Business\\"+companyName;
+		String savaPath = "E:\\certificate\\Business";
+		String isExsitFile = "E:\\certificate\\Business\\"+companyName;
 		String downLoadPath = "E:\\certificate\\Business\\"+companyName+".zip";
-		File file = new File(savaPath);
+		File file = new File(isExsitFile);
 		if (file.exists()){
 			FileUtils.zipFiles(savaPath,companyName,downLoadPath);
 			file = new File(downLoadPath);
-			FileUtils.downFile(file,request,response,companyName+".zip");
+			FileUtils.downFile(file,request,response,companyName + ".zip");
+		}else{
+			try {
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert(\"证照还未生成！无法下载！！！\");</script>");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-		else{
-			addMessage(redirectAttributes,"证照还未生成！！！");
-		}
-		return "redirect:" + adminPath + "/oa/oaNotify/oaNotifyList?repage";
+//		return "redirect:" + adminPath + "/oa/oaNotify/self?repage";
 	}
 }

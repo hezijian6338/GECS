@@ -32,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -300,21 +301,29 @@ public class BusinessLicenseController extends BaseController {
 	 * @param redirectAttributes
 	 * @DATE: 2017/11/20 17:57
 	 */
-	@RequiresPermissions("license:businessLicense:edit")
+//	@RequiresPermissions("license:businessLicense:edit")
 	@RequestMapping(value = "downLoad")
-	public String downLoad(String certificateName,HttpServletRequest request,HttpServletResponse response,RedirectAttributes redirectAttributes){
+	public void downLoad(String certificateName,HttpServletRequest request,HttpServletResponse response,RedirectAttributes redirectAttributes){
 		String savaPath = "E:\\certificate\\Business";
 		String isExsitFile = "E:\\certificate\\Business\\"+certificateName;
 		String downLoadPath = "E:\\certificate\\Business\\"+certificateName+".zip";
 		File file = new File(isExsitFile);
-//		System.out.println("aaaa"+file.exists());
 		if (file.exists()){
 			FileUtils.zipFiles(savaPath,certificateName,downLoadPath);
-			file = new File(downLoadPath);
-			FileUtils.downFile(file,request,response,certificateName+".zip");
+			File file1 = new File(downLoadPath);
+			FileUtils.downFile(file1,request,response,certificateName +".zip");
 		} else{
-			addMessage(redirectAttributes,"证照还未生成！！！");
+			try {
+				PrintWriter out = response.getWriter();
+				out.println("<script Language='JavaScript'>");
+				out.println("alert(\"证照还未生成！无法下载！！！\");");
+				out.println("history.back();");
+				out.println("</script>");
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-		return "redirect:"+Global.getAdminPath()+"/license/businessLicense/?repage";
+//		return "redirect:"+Global.getAdminPath()+"/license/businessLicense/?repage";
 	}
 }

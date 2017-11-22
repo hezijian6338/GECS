@@ -169,7 +169,7 @@
 			<shiro:hasPermission name="license:businessLicense:edit"><td>
 				<a href="${ctx}/license/businessLicense/form?id=${businessLicense.id}">详情</a>
 				<a data-toggle="modal" onclick="licenseInfo('${businessLicense.path}')">预览</a>
-				<a href="${ctx}/license/businessLicense/downLoad?certificateName=${businessLicense.certificateName}">下载</a>
+				<a href="javascript:location.href=encodeURI('${ctx}/license/businessLicense/downLoad?certificateName=${businessLicense.certificateName}')">下载</a>
 				<a href="${ctx}/license/businessLicense/delete?id=${businessLicense.id}" onclick="return confirmx('确认要删除该营业执照吗？', this.href)">删除</a>
 			</td></shiro:hasPermission>
 		</tr>
