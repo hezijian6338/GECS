@@ -215,7 +215,11 @@ public class OaNotifyController extends BaseController {
 		}else{
 			try {
 				PrintWriter out = response.getWriter();
-				out.println("<script>alert(\"证照还未生成！无法下载！！！\");</script>");
+				out.println("<script Language='JavaScript'>");
+				out.println("alert(\"证照还未生成！无法下载！！！\");");
+				out.println("history.back();");
+				out.println("</script>");
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
