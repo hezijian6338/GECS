@@ -6,6 +6,7 @@ package com.thinkgem.jeesite.common.web;
 import com.ckfinder.connector.configuration.Configuration;
 import com.ckfinder.connector.data.AccessControlLevel;
 import com.ckfinder.connector.utils.AccessControlUtil;
+import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.utils.FileUtils;
 import com.thinkgem.jeesite.modules.sys.security.SystemAuthorizingRealm.Principal;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
@@ -55,21 +56,23 @@ public class CKFinderConfig extends Configuration {
 
 			//this.baseURL = FileUtils.path(Servlets.getRequest().getContextPath() + Global.USERFILES_BASE_URL + principal + "/");
 
+
 			//Windows文件配置
 			//this.baseURL = FileUtils.path("\\upload\\"+ principal + "/");
 
 			//Mac文件配置
-			this.baseURL = FileUtils.path("/upload/"+ principal + "/");
+			this.baseURL = FileUtils.path(Global.getConfig("this.baseURL") + principal + "/");
 
 			//this.baseURL = FileUtils.path("/");
 
 			//this.baseDir = FileUtils.path(Global.getUserfilesBaseDir() + Global.USERFILES_BASE_URL + principal + "/");
 
+
 			//Windows文件配置
 			//this.baseDir = FileUtils.path("E:\\photo\\upload\\"+ principal + "/");
 
 			//Mac文件配置
-			this.baseDir = FileUtils.path("/Users/Macx/github/RC_Work/GECS/manager/upload/"+ principal + "/");
+			this.baseDir = FileUtils.path(Global.getConfig("this.baseDir") + principal + "/");
 
 
 		} catch (Exception e) {
