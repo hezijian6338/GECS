@@ -160,7 +160,7 @@
     </a>
     <a href="javascript:;" class="wechat">
         <div class="box">
-            <img src="/static/images/2.png">
+            <img src="/static/images/runcheng.jpg">
             <p>关注微信</p>
         </div>
     </a>
