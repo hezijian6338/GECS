@@ -3,7 +3,8 @@
  */
 package com.thinkgem.jeesite.modules.license.service;
 
-import java.io.IOException;
+import java.io.*;
+import java.security.GeneralSecurityException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,16 +15,12 @@ import java.util.Random;
 
 import com.google.common.collect.Maps;
 import com.itextpdf.text.DocumentException;
-import com.thinkgem.jeesite.common.utils.FileUtils;
-import com.thinkgem.jeesite.common.utils.PDFUtil;
-import com.thinkgem.jeesite.common.utils.SendMessageUtil;
-import com.thinkgem.jeesite.common.utils.StringUtils;
+import com.thinkgem.jeesite.common.utils.*;
 import com.thinkgem.jeesite.modules.act.service.ActTaskService;
 import com.thinkgem.jeesite.modules.act.utils.ActUtils;
 
 import com.thinkgem.jeesite.modules.certificate.entity.CertificateLibrary;
 import com.thinkgem.jeesite.modules.certificate.service.CertificateLibraryService;
-import com.thinkgem.jeesite.modules.certificate.service.CertificateTypeService;
 import com.thinkgem.jeesite.modules.oa.entity.OaNotify;
 import com.thinkgem.jeesite.modules.oa.service.OaNotifyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +31,10 @@ import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
 import com.thinkgem.jeesite.modules.license.entity.BusinessLicense;
 import com.thinkgem.jeesite.modules.license.dao.BusinessLicenseDao;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+
+import com.thinkgem.jeesite.common.utils.PdfSignItext;
 
 /**
  * 营业执照Service
@@ -114,7 +115,7 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 		String savaPath = "E:\\certificate\\Business\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()
 				+businessLicense.getPersonId()+".pdf";
 		String realativePath = "/pic/certificate/Business/"+businessLicense.getCertificateName()+"/"+businessLicense.getCertificateName()
-				+businessLicense.getPersonId()+".pdf";
+				+businessLicense.getPersonId()+"_itext.pdf";
 		String savaPath_copy = "E:\\certificate\\Business\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()
 				+businessLicense.getPersonId()+"_copy"+".pdf";
 //		String view = "businessLicenseForm";
@@ -165,9 +166,19 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 			oaNotify.setStatus("审核通过");
 			oaNotify.setFiles(realativePath);
 			oaNotifyService.updateStatus(oaNotify);
+
+
 			try {
+				//进行盖章
+				startStamp(savaPath);
+
+				File file = new File(savaPath);
+				if(file.isFile()&&file.exists()){
+					file.delete();
+				}
 				SendMessageUtil.sendMessage(businessLicense.getPersionName(),businessLicense.getCertificateTypeName(),
 						businessLicense.getPersionPhone());
+
 			}catch (Exception e){
 				e.printStackTrace();
 			}
@@ -231,4 +242,39 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
     public List<BusinessLicense> getByCertificateName(String certificateName) {
 		return businessLicenseDao.getByCertificateName(certificateName);
     }
+
+/**
+ * @author 许彩开
+ * @TODO (注：调用盖章接口，进行盖章)
+  * @param SRC
+ * @DATE: 2017\11\24 0024 16:34
+ */
+
+	@Transactional(readOnly = false)
+    public void startStamp(String SRC) throws Exception {
+
+		String KEYSTORE="E://certificate/pdfsign/贺志军.pfx";
+		char[] PASSWORD = "1234".toCharArray();//keystory密码
+		//String SRC="E://certificate/pdfsign/src/练浩文打飞机有限公司440825199509103912.pdf" ;//原始pdf
+		//   String DEST=SRC.replace(".pdf", "_box.pdf"); //"d://demo_signed_box.pdf" ;//签名完成的pdf
+		String DEST2=SRC.replace(".pdf", "_itext.pdf");//签名完成的pdf
+		String chapterPath="E://certificate/pdfsign/src/runcheng2.gif";//签章图片
+		String signername="润成科技";
+		String reason="润成电子印章签名";
+		String location="珠海";
+
+
+/*
+	PdfSignBox.sign(PASSWORD, new FileInputStream(KEYSTORE),
+			new FileInputStream(chapterPath),
+			new File(SRC),new File(DEST),signername, reason, location);	*/
+
+
+		PdfSignItext.sign(new FileInputStream(SRC), new FileOutputStream(DEST2),
+				new FileInputStream(KEYSTORE), PASSWORD,
+				reason, location, chapterPath);
+
+	}
+
+
 }
