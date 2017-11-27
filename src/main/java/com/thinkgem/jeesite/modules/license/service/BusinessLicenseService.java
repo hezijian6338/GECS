@@ -3,8 +3,9 @@
  */
 package com.thinkgem.jeesite.modules.license.service;
 
-import java.io.*;
-import java.security.GeneralSecurityException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,7 +13,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
+import com.aliyuncs.exceptions.ClientException;
 import com.google.common.collect.Maps;
 import com.itextpdf.text.DocumentException;
 import com.thinkgem.jeesite.common.utils.*;
@@ -21,6 +25,7 @@ import com.thinkgem.jeesite.modules.act.utils.ActUtils;
 
 import com.thinkgem.jeesite.modules.certificate.entity.CertificateLibrary;
 import com.thinkgem.jeesite.modules.certificate.service.CertificateLibraryService;
+import com.thinkgem.jeesite.modules.certificate.service.CertificateTypeService;
 import com.thinkgem.jeesite.modules.oa.entity.OaNotify;
 import com.thinkgem.jeesite.modules.oa.service.OaNotifyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +36,6 @@ import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
 import com.thinkgem.jeesite.modules.license.entity.BusinessLicense;
 import com.thinkgem.jeesite.modules.license.dao.BusinessLicenseDao;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-
-import com.thinkgem.jeesite.common.utils.PdfSignItext;
 
 /**
  * 营业执照Service
@@ -108,18 +109,18 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 	 * @param businessLicense
 	 */
 	@Transactional(readOnly = false)
-	public void auditSave(BusinessLicense businessLicense) throws IOException, DocumentException {
-		String path = "E:\\certificate\\BusinessModel\\BusinessModel.pdf";
-		String path_copy = "E:\\certificate\\BusinessModel\\BusinessModel_copy.pdf";
+	public void auditSave(final BusinessLicense businessLicense) throws IOException, DocumentException, ClientException {
+		final String path = "E:\\certificate\\BusinessModel\\BusinessModel.pdf";
+		final String path_copy = "E:\\certificate\\BusinessModel\\BusinessModel_copy.pdf";
 		FileUtils.createDirectory("E:\\certificate\\Business\\"+businessLicense.getCertificateName());
-		String savaPath = "E:\\certificate\\Business\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()
+		final String savaPath = "E:\\certificate\\Business\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()
 				+businessLicense.getPersonId()+".pdf";
-		String realativePath = "/pic/certificate/Business/"+businessLicense.getCertificateName()+"/"+businessLicense.getCertificateName()
+		final String realativePath = "/pic/certificate/Business/"+businessLicense.getCertificateName()+"/"+businessLicense.getCertificateName()
 				+businessLicense.getPersonId()+"_itext.pdf";
-		String savaPath_copy = "E:\\certificate\\Business\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()
+		final String savaPath_copy = "E:\\certificate\\Business\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()
 				+businessLicense.getPersonId()+"_copy"+".pdf";
 //		String view = "businessLicenseForm";
-		CertificateLibrary certificateLibrary = new CertificateLibrary();
+		final CertificateLibrary certificateLibrary = new CertificateLibrary();
 		// 设置意见
 		businessLicense.getAct().setComment(("yes".equals(businessLicense.getAct().getFlag())?"[同意] ":"[驳回] ")+businessLicense.getAct().getComment());
 
@@ -142,46 +143,65 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 			dao.updateOpinion3(businessLicense);
 		}
 		else if ("apply_end".equals(taskDefKey)){
-			businessLicense.setOpinion4(businessLicense.getAct().getComment());
-			dao.updateOpinion4(businessLicense);
-			PDFUtil.fillTemplate(businessLicense,path,savaPath);
-			PDFUtil.fillTemplate(businessLicense,path_copy,savaPath_copy);
-			certificateLibrary.setCertificateCode(businessLicense.getCertificateCode());
-			certificateLibrary.setCertificateTypeId(businessLicense.getCertificateTypeId());
-			certificateLibrary.setCertificateName(businessLicense.getCertificateName());
-			certificateLibrary.setArea(businessLicense.getArea());
-			certificateLibrary.setDownloadsNum("0");
-			certificateLibrary.setEffectiveDateEnd(businessLicense.getEffectiveDateEnd());
-			certificateLibrary.setEffectiveDateStart(businessLicense.getEffectiveDateStar());
-			certificateLibrary.setOffice(businessLicense.getOffice());
-			certificateLibrary.setPath(realativePath);
-			certificateLibraryService.save(certificateLibrary);
-			//保存在通告表中
-			businessLicense.setPath(realativePath);
-			businessLicense.setStatus("审核通过");
-			dao.update(businessLicense);
+			ExecutorService pool = Executors.newFixedThreadPool(4);
+			pool.execute(new Runnable() {
+				@Override
+				public void run() {
+					businessLicense.setOpinion4(businessLicense.getAct().getComment());
+//					dao.updateOpinion4(businessLicense);
+					businessLicense.setPath(realativePath);
+					businessLicense.setStatus("审核通过");
+					dao.update(businessLicense);
+					try {
+						PDFUtil.fillTemplate(businessLicense,path,savaPath);
+						PDFUtil.fillTemplate(businessLicense,path_copy,savaPath_copy);
+					} catch (IOException e) {
+						e.printStackTrace();
+					} catch (DocumentException e) {
+						e.printStackTrace();
+					}
 
-			OaNotify oaNotify=new OaNotify();
-			oaNotify.setContent(businessLicense.getId());
-			oaNotify.setStatus("审核通过");
-			oaNotify.setFiles(realativePath);
-			oaNotifyService.updateStatus(oaNotify);
-
-
-			try {
-				//进行盖章
-				startStamp(savaPath);
-
-				File file = new File(savaPath);
-				if(file.isFile()&&file.exists()){
-					file.delete();
 				}
-				SendMessageUtil.sendMessage(businessLicense.getPersionName(),businessLicense.getCertificateTypeName(),
-						businessLicense.getPersionPhone());
+			});
+			pool.execute(new Runnable() {
+				@Override
+				public void run() {
+					certificateLibrary.setCertificateCode(businessLicense.getCertificateCode());
+					certificateLibrary.setCertificateTypeId(businessLicense.getCertificateTypeId());
+					certificateLibrary.setCertificateName(businessLicense.getCertificateName());
+					certificateLibrary.setArea(businessLicense.getArea());
+					certificateLibrary.setDownloadsNum("0");
+					certificateLibrary.setEffectiveDateEnd(businessLicense.getEffectiveDateEnd());
+					certificateLibrary.setEffectiveDateStart(businessLicense.getEffectiveDateStar());
+					certificateLibrary.setOffice(businessLicense.getOffice());
+					certificateLibrary.setPath(realativePath);
+					certificateLibraryService.save(certificateLibrary);
+					//保存在通告表中
+				}
+			});
+			pool.execute(new Runnable() {
+				@Override
+				public void run() {
+					OaNotify oaNotify=new OaNotify();
+					oaNotify.setContent(businessLicense.getId());
+					oaNotify.setStatus("审核通过");
+					oaNotify.setFiles(realativePath);
+					oaNotifyService.updateStatus(oaNotify);
+				}
+			});
+			pool.execute(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						SendMessageUtil.sendMessage(businessLicense.getPersionName(),businessLicense.getCertificateTypeName(),
+                                businessLicense.getPersionPhone());
+					} catch (ClientException e) {
+						e.printStackTrace();
+					}
+				}
+			});
 
-			}catch (Exception e){
-				e.printStackTrace();
-			}
+
 		}
 
 		// 未知环节，直接返回
