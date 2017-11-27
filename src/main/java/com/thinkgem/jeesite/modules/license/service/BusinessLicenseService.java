@@ -4,11 +4,9 @@
 package com.thinkgem.jeesite.modules.license.service;
 
 import java.io.*;
-import java.security.GeneralSecurityException;
+
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -35,6 +33,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 import com.thinkgem.jeesite.common.utils.PdfSignItext;
+import com.thinkgem.jeesite.common.utils.PdfSignItext_copy;
 
 /**
  * 营业执照Service
@@ -170,12 +169,16 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 
 			try {
 				//进行盖章
-				startStamp(savaPath);
+				startStamp(savaPath,savaPath_copy);
 
 				File file = new File(savaPath);
 				if(file.isFile()&&file.exists()){
 					file.delete();
 				}
+			/*	File file2 = new File(savaPath_copy);
+				if(file2.isFile()&&file2.exists()){
+					file2.delete();
+				}*/
 				SendMessageUtil.sendMessage(businessLicense.getPersionName(),businessLicense.getCertificateTypeName(),
 						businessLicense.getPersionPhone());
 
@@ -251,7 +254,7 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
  */
 
 	@Transactional(readOnly = false)
-    public void startStamp(String SRC) throws Exception {
+    public void startStamp(String SRC,String SRC2) throws Exception {
 
 		String KEYSTORE="E://certificate/pdfsign/贺志军.pfx";
 		char[] PASSWORD = "1234".toCharArray();//keystory密码
@@ -269,8 +272,12 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 			new FileInputStream(chapterPath),
 			new File(SRC),new File(DEST),signername, reason, location);	*/
 
-
+//正本盖章
 		PdfSignItext.sign(new FileInputStream(SRC), new FileOutputStream(DEST2),
+				new FileInputStream(KEYSTORE), PASSWORD,
+				reason, location, chapterPath);
+//副本盖章
+		PdfSignItext_copy.sign(new FileInputStream(SRC2), new FileOutputStream(DEST2),
 				new FileInputStream(KEYSTORE), PASSWORD,
 				reason, location, chapterPath);
 

@@ -1,5 +1,15 @@
 package com.thinkgem.jeesite.common.utils;
 
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfSignatureAppearance;
+import com.itextpdf.text.pdf.PdfSignatureAppearance.RenderingMode;
+import com.itextpdf.text.pdf.PdfStamper;
+import com.itextpdf.text.pdf.security.*;
+import com.itextpdf.text.pdf.security.MakeSignature.CryptoStandard;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -8,21 +18,7 @@ import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.cert.Certificate;
 
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.PdfSignatureAppearance;
-import com.itextpdf.text.pdf.PdfSignatureAppearance.RenderingMode;
-import com.itextpdf.text.pdf.PdfStamper;
-import com.itextpdf.text.pdf.security.BouncyCastleDigest;
-import com.itextpdf.text.pdf.security.DigestAlgorithms;
-import com.itextpdf.text.pdf.security.ExternalDigest;
-import com.itextpdf.text.pdf.security.ExternalSignature;
-import com.itextpdf.text.pdf.security.MakeSignature;
-import com.itextpdf.text.pdf.security.MakeSignature.CryptoStandard;
-import com.itextpdf.text.pdf.security.PrivateKeySignature;
-public class PdfSignItext {
+public class PdfSignItext_copy {
 	//  public static  String KEYSTORE="d://test.p12";
 	   // public static  char[] PASSWORD = "123".toCharArray();//keystory密码
 	   // public static  String SRC="d://demo.pdf" ;//原始pdf
@@ -80,7 +76,7 @@ public class PdfSignItext {
         //设置签名的位置，页码，签名域名称，多次追加签名的时候，签名预名称不能一样
         //签名的位置，是图章相对于pdf页面的位置坐标，原点为pdf页面左下角
         //四个参数的分别是，图章左下角x，图章左下角y，图章右上角x，图章右上角y
-        appearance.setVisibleSignature(new Rectangle(540, 150, 660, 270), 1, "sig1");
+        appearance.setVisibleSignature(new Rectangle(360, 100, 480, 220), 1, "sig1");
         //读取图章图片，这个image是itext包的image
         Image image = Image.getInstance(chapterPath);
         appearance.setSignatureGraphic(image); 
