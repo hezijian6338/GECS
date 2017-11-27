@@ -25,13 +25,13 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>证照类型编号：</label>
+			<li><label>类型编号：</label>
 				<form:input path="certificateTypeCode" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
-			<li><label>证照类型名称：</label>
+			<li><label>类型名称：</label>
 				<form:input path="certificateTypeName" htmlEscape="false" maxlength="18" class="input-medium"/>
 			</li>
-			<li><label>颁发机构id：</label>
+			<li><label>颁发机构：</label>
 				<sys:treeselect id="office" name="office.id" value="${certificateType.office.id}" labelName="office.name" labelValue="${certificateType.office.name}"
 					title="部门" url="/sys/office/treeData?type=2" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/>
 			</li>
@@ -45,7 +45,7 @@
 			<tr>
 				<th>证照类型编号</th>
 				<th>证照类型名称</th>
-				<th>颁发机构id</th>
+				<th>颁发机构</th>
 				<th>有效期限（年）</th>
 				<th>证照描述</th>
 				<th>持证者类型</th>

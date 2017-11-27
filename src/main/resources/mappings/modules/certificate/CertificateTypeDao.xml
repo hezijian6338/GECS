@@ -113,7 +113,7 @@
 			#{certificatePath},
 			#{createBy.id},
 			#{createDate},
-			#{updateBy.id},``
+			#{updateBy.id},
 			#{updateDate},
 			#{remarks},
 			#{delFlag}
