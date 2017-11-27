@@ -3,6 +3,7 @@
  */
 package com.thinkgem.jeesite.modules.license.service;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -109,7 +110,7 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 	 * @param businessLicense
 	 */
 	@Transactional(readOnly = false)
-	public void auditSave(final BusinessLicense businessLicense) throws IOException, DocumentException, ClientException {
+	public void auditSave( BusinessLicense businessLicense) throws IOException, DocumentException, ClientException {
 		final String path = "E:\\certificate\\BusinessModel\\BusinessModel.pdf";
 		final String path_copy = "E:\\certificate\\BusinessModel\\BusinessModel_copy.pdf";
 		FileUtils.createDirectory("E:\\certificate\\Business\\"+businessLicense.getCertificateName());
@@ -143,10 +144,7 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 			dao.updateOpinion3(businessLicense);
 		}
 		else if ("apply_end".equals(taskDefKey)){
-			ExecutorService pool = Executors.newFixedThreadPool(4);
-			pool.execute(new Runnable() {
-				@Override
-				public void run() {
+
 					businessLicense.setOpinion4(businessLicense.getAct().getComment());
 //					dao.updateOpinion4(businessLicense);
 					businessLicense.setPath(realativePath);
@@ -161,11 +159,6 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 						e.printStackTrace();
 					}
 
-				}
-			});
-			pool.execute(new Runnable() {
-				@Override
-				public void run() {
 					certificateLibrary.setCertificateCode(businessLicense.getCertificateCode());
 					certificateLibrary.setCertificateTypeId(businessLicense.getCertificateTypeId());
 					certificateLibrary.setCertificateName(businessLicense.getCertificateName());
@@ -177,34 +170,35 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 					certificateLibrary.setPath(realativePath);
 					certificateLibraryService.save(certificateLibrary);
 					//保存在通告表中
-				}
-			});
-			pool.execute(new Runnable() {
-				@Override
-				public void run() {
+
 					OaNotify oaNotify=new OaNotify();
 					oaNotify.setContent(businessLicense.getId());
 					oaNotify.setStatus("审核通过");
 					oaNotify.setFiles(realativePath);
 					oaNotifyService.updateStatus(oaNotify);
-				}
-			});
-			pool.execute(new Runnable() {
-				@Override
-				public void run() {
-					try {
+
+				try {
+					//开始盖章
+						startStamp(savaPath);
+						startStamp2(savaPath_copy);
+
+					File file = new File(savaPath);
+					if (file.isFile()&&file.exists()){
+						file.delete();
+					}
+
+					File file2 = new File(savaPath_copy);
+					if (file2.isFile()&&file2.exists()){
+						file2.delete();
+					}
+
 						SendMessageUtil.sendMessage(businessLicense.getPersionName(),businessLicense.getCertificateTypeName(),
 								businessLicense.getPersionPhone());
-					} catch (ClientException e) {
+					} catch (Exception e) {
 						e.printStackTrace();
 					}
-				}
-			});
 
-
-		}
-
-		// 未知环节，直接返回
+		}		// 未知环节，直接返回
 		else{
 
 			return;
@@ -284,6 +278,7 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 		String location="珠海";
 
 
+		System.out.println("==================这里是startStamp方法======================");
 /*
 	PdfSignBox.sign(PASSWORD, new FileInputStream(KEYSTORE),
 			new FileInputStream(chapterPath),
@@ -291,6 +286,42 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 
 
 		PdfSignItext.sign(new FileInputStream(SRC), new FileOutputStream(DEST2),
+				new FileInputStream(KEYSTORE), PASSWORD,
+				reason, location, chapterPath);
+
+	}
+
+
+
+	/**
+	 * @author 许彩开
+	 * @TODO (注：调用盖章接口，进行盖章)
+	 * @param SRC
+	 * @DATE: 2017\11\24 0024 16:34
+	 */
+
+	@Transactional(readOnly = false)
+	public void startStamp2(String SRC) throws Exception {
+
+		String KEYSTORE="E://certificate/pdfsign/贺志军.pfx";
+		char[] PASSWORD = "1234".toCharArray();//keystory密码
+		//String SRC="E://certificate/pdfsign/src/练浩文打飞机有限公司440825199509103912.pdf" ;//原始pdf
+		//   String DEST=SRC.replace(".pdf", "_box.pdf"); //"d://demo_signed_box.pdf" ;//签名完成的pdf
+		String DEST2=SRC.replace(".pdf", "_itext.pdf");//签名完成的pdf
+		String chapterPath="E://certificate/pdfsign/src/runcheng2.gif";//签章图片
+		String signername="润成科技";
+		String reason="润成电子印章签名";
+		String location="珠海";
+
+
+		System.out.println("==================这里是startStamp2方法======================");
+/*
+	PdfSignBox.sign(PASSWORD, new FileInputStream(KEYSTORE),
+			new FileInputStream(chapterPath),
+			new File(SRC),new File(DEST),signername, reason, location);	*/
+
+
+		PdfSignItext_copy.sign(new FileInputStream(SRC), new FileOutputStream(DEST2),
 				new FileInputStream(KEYSTORE), PASSWORD,
 				reason, location, chapterPath);
 
