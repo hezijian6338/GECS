@@ -3,6 +3,7 @@
  */
 package com.thinkgem.jeesite.modules.license.web;
 
+import com.aliyuncs.exceptions.ClientException;
 import com.itextpdf.text.DocumentException;
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Msg;
@@ -190,7 +191,11 @@ public class BusinessLicenseController extends BaseController {
 			addMessage(model, "请填写审核意见。");
 			return form(businessLicense, model);
 		}
-		businessLicenseService.auditSave(businessLicense);
+		try {
+			businessLicenseService.auditSave(businessLicense);
+		} catch (ClientException e) {
+			e.printStackTrace();
+		}
 		return "redirect:" + adminPath + "/act/task/todo/";
 	}
 
