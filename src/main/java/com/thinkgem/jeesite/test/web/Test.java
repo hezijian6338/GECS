@@ -39,8 +39,13 @@ public class Test {
 			new FileInputStream(chapterPath), 
 			new File(SRC),new File(DEST),signername, reason, location);	*/
 	
-	PdfSignItext.sign(new FileInputStream(SRC), new FileOutputStream(DEST2),
+	boolean temp = PdfSignItext.sign(new FileInputStream(SRC), new FileOutputStream(DEST2),
 			new FileInputStream(KEYSTORE), PASSWORD, 
 		 reason, location, chapterPath);
+	if(temp){
+		System.out.println("密码输入正确==============");
+	}else{
+		System.out.println("密码输入错误==============");
+	}
 	}
 }

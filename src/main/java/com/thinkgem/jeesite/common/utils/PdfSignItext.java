@@ -48,7 +48,7 @@ public class PdfSignItext {
 	    }
 	    
 	    
-	public static void sign(InputStream src  //需要签章的pdf文件路径
+	public static boolean sign(InputStream src  //需要签章的pdf文件路径
             , OutputStream dest  // 签完章的pdf文件路径
             , InputStream p12Stream, //p12 路径
             char[] password
@@ -57,7 +57,11 @@ public class PdfSignItext {
                     throws GeneralSecurityException, IOException, DocumentException {
 		 //读取keystore ，获得私钥和证书链
         KeyStore ks = KeyStore.getInstance("PKCS12");
-        ks.load(p12Stream, password);
+        try {
+                ks.load(p12Stream, password);
+        }catch (Exception e){
+                return false;
+        }
         String alias = (String)ks.aliases().nextElement();
         PrivateKey pk = (PrivateKey) ks.getKey(alias, password);
         Certificate[] chain = ks.getCertificateChain(alias);
@@ -95,5 +99,6 @@ public class PdfSignItext {
         ExternalSignature signature = new PrivateKeySignature(pk, DigestAlgorithms.SHA1, null);
         // 调用itext签名方法完成pdf签章CryptoStandard.CMS 签名方式，建议采用这种
         MakeSignature.signDetached(appearance, digest, signature, chain, null, null, null, 0, CryptoStandard.CMS);
+        return true;
 	}
 }

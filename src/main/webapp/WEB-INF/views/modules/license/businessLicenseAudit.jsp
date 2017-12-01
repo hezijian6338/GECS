@@ -1,9 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
+
+
 <html>
 <head>
     <title>营业执照管理</title>
     <meta name="decorator" content="default"/>
+
     <script type="text/javascript">
         $(document).ready(function() {
             $("#name").focus();
@@ -23,6 +26,16 @@
                 }
             });
         });
+
+        function a(){
+            var ex=prompt("请输入密码：");
+            if (ex=='1234'){
+                alert("输入正确！！！！！！！");
+                $('#flag').val('yes');
+            }
+        }
+
+
     </script>
 </head>
 <body>
@@ -240,7 +253,7 @@
     <div class="form-actions">
         <shiro:hasPermission name="license:businessLicense:edit">
             <c:if test="${businessLicense.act.taskDefKey eq 'apply_end'}">
-                <input id="btnSubmit" class="btn btn-primary" type="submit" value="生成执照" onclick="$('#flag').val('yes');" />&nbsp;
+                <input id="btnSubmit" class="btn btn-primary" type="submit" value="生成执照" onclick="a();" />&nbsp;
             </c:if>
             <c:if test="${businessLicense.act.taskDefKey ne 'apply_end'}">
                 <input id="btnSubmit" class="btn btn-primary" type="submit" value="同 意" onclick="$('#flag').val('yes')"/>&nbsp;

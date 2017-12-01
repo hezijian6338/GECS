@@ -3,22 +3,35 @@
  */
 package com.thinkgem.jeesite.modules.cms.web.front;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.InetAddress;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.*;
 
 import com.aliyuncs.exceptions.ClientException;
-import com.thinkgem.jeesite.common.utils.SendMessageUtil;
+import com.itextpdf.text.DocumentException;
+import com.thinkgem.jeesite.common.persistence.Msg;
+import com.thinkgem.jeesite.common.utils.*;
+import com.thinkgem.jeesite.modules.license.entity.BusinessLicense;
 import com.thinkgem.jeesite.modules.sys.entity.Office;
 import com.thinkgem.jeesite.modules.sys.entity.Role;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.service.SystemService;
 
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
+import org.activiti.engine.impl.util.json.JSONArray;
+import org.activiti.engine.impl.util.json.JSONObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,7 +46,6 @@ import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.servlet.ValidateCodeServlet;
-import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.cms.entity.Article;
 import com.thinkgem.jeesite.modules.cms.entity.Category;
@@ -536,5 +548,98 @@ public class FrontController extends BaseController {
             return article.getCustomContentView();
         }
     }
-	
+
+
+	/**
+	 * @author 许彩开
+	 * @TODO (注：生成证照)
+	 * @param request
+	 * @DATE: 2017\11\29 0029 17:18
+	 */
+
+
+	@ResponseBody
+	@RequestMapping(value = "getTemplate")
+	public Map<String,Object> getTemplate(HttpServletRequest request, HttpServletResponse response){
+		Map<String,Object> result=new HashMap<String, Object>();
+		BusinessLicense businessLicense = new BusinessLicense();
+		//解析json数据
+		//response.setContentType("application/json");
+		String jsonStr = request.getParameter("mydata");
+		JSONArray jsonArray = new JSONArray(jsonStr);
+		for(int i=0;i<jsonArray.length();i++){
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+			//统一社会信用代码=idcertificateCode
+			businessLicense.setCertificateCode(jsonObject.getString("idcertificateCode"));
+			System.out.println("================统一社会信用代码===="+businessLicense.getCertificateCode());
+			businessLicense.setCertificateName(jsonObject.getString("idcertificateName"));
+			businessLicense.setRegisteredType(jsonObject.getString("idregisteredType"));
+			businessLicense.setAddress(jsonObject.getString("idaddress"));
+			businessLicense.setPersionName(jsonObject.getString("idpersionName"));
+			businessLicense.setRegisteredCapital(jsonObject.getString("idregisteredCapital"));
+			businessLicense.setEstablishDate(StrToDate(jsonObject.getString("idestablishDate")));
+			businessLicense.setEffectiveDateStar(StrToDate(jsonObject.getString("ideffectiveDateStar")));
+			businessLicense.setEffectiveDateEnd(StrToDate(jsonObject.getString("ideffectiveDateEnd")));
+			//这里是临时使用“备注-》remarks”字段保存“经营范围”
+			businessLicense.setRemarks(jsonObject.getString("idscope"));
+			//这里是临时使用“意见1-》opinion1”字段保存“登记机关”
+			businessLicense.setOpinion1(jsonObject.getString("idoffice"));
+			System.out.println("===============成功===");
+		}
+
+		final String path = "E:\\certificate\\BusinessModel\\BusinessModel.pdf";
+		final String savaPath = "E:\\certificate\\Business\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()+".pdf";
+		FileUtils.createDirectory("E:\\certificate\\Business\\"+businessLicense.getCertificateName());
+		try {
+			//接口pdf
+			PDFUtil_interface.fillTemplate(businessLicense,path,savaPath);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (DocumentException e) {
+			e.printStackTrace();
+		}
+
+		String savaPath2 = "E:\\certificate\\Business";
+		String isExsitFile = "E:\\certificate\\Business\\"+businessLicense.getCertificateName();
+		String downLoadPath = "E:\\certificate\\Business\\"+businessLicense.getCertificateName()+".zip";
+		File file = new File(isExsitFile);
+		if (file.exists()){
+			FileUtils.zipFiles(savaPath2,businessLicense.getCertificateName(),downLoadPath);
+			File file1 = new File(downLoadPath);
+			//FileUtils.downFile(file1,request,response,businessLicense.getCertificateName() +".zip");
+			result.put("downLoadPath","下载地址：192.168.8.117\\"+downLoadPath);
+		} else{
+			try {
+				PrintWriter out = response.getWriter();
+				out.println("<script Language='JavaScript'>");
+				out.println("alert(\"证照还未生成！无法下载()！！！\");");
+				out.println("history.back();");
+				out.println("</script>");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+
+	}
+
+/**
+ * @author 许彩开
+ * @TODO (注：字符串转日期)
+  * @param str
+ * @DATE: 2017\11\30 0030 9:58
+ */
+
+	public static Date StrToDate(String str) {
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = null;
+		try {
+			date = format.parse(str);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return date;
+	}
+
 }
