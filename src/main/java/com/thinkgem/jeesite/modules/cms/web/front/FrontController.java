@@ -561,6 +561,7 @@ public class FrontController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "getTemplate")
 	public Map<String,Object> getTemplate(HttpServletRequest request, HttpServletResponse response){
+		response.setHeader("Access-Control-Allow-Origin", "*");
 		Map<String,Object> result=new HashMap<String, Object>();
 		BusinessLicense businessLicense = new BusinessLicense();
 		//解析json数据
@@ -587,9 +588,9 @@ public class FrontController extends BaseController {
 			System.out.println("===============成功===");
 		}
 
-		final String path = "E:\\certificate\\BusinessModel\\BusinessModel.pdf";
-		final String savaPath = "E:\\certificate\\Business\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()+".pdf";
-		FileUtils.createDirectory("E:\\certificate\\Business\\"+businessLicense.getCertificateName());
+		final String path = "C:\\certificate\\BusinessModel\\BusinessModel.pdf";
+		final String savaPath = "C:\\certificate\\Business\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()+".pdf";
+		FileUtils.createDirectory("C:\\certificate\\Business\\"+businessLicense.getCertificateName());
 		try {
 			//接口pdf
 			PDFUtil_interface.fillTemplate(businessLicense,path,savaPath);
@@ -599,15 +600,15 @@ public class FrontController extends BaseController {
 			e.printStackTrace();
 		}
 
-		String savaPath2 = "E:\\certificate\\Business";
-		String isExsitFile = "E:\\certificate\\Business\\"+businessLicense.getCertificateName();
-		String downLoadPath = "E:\\certificate\\Business\\"+businessLicense.getCertificateName()+".zip";
+		String savaPath2 = "C:\\certificate\\Business";
+		String isExsitFile = "C:\\certificate\\Business\\"+businessLicense.getCertificateName();
+		String downLoadPath = "C:\\certificate\\Business\\"+businessLicense.getCertificateName()+".zip";
 		File file = new File(isExsitFile);
 		if (file.exists()){
 			FileUtils.zipFiles(savaPath2,businessLicense.getCertificateName(),downLoadPath);
 			File file1 = new File(downLoadPath);
 			//FileUtils.downFile(file1,request,response,businessLicense.getCertificateName() +".zip");
-			result.put("downLoadPath","下载地址：192.168.8.117\\"+downLoadPath);
+			result.put("name",businessLicense.getCertificateName());
 		} else{
 			try {
 				PrintWriter out = response.getWriter();
@@ -623,7 +624,45 @@ public class FrontController extends BaseController {
 
 	}
 
-/**
+
+	/**
+	 * @author 练浩文
+	 * @TODO (注：下载)
+	 * @param certificateName
+	 * @param request
+	 * @param response
+	 * @param redirectAttributes
+	 * @DATE: 2017/11/20 17:57
+	 */
+//	@RequiresPermissions("license:businessLicense:edit")
+	@RequestMapping(value = "downLoad",method = RequestMethod.GET)
+	public void downLoad(String certificateName,HttpServletRequest request,HttpServletResponse response,RedirectAttributes redirectAttributes){
+		String savaPath = "C:\\certificate\\Business";
+		String isExsitFile = "C:\\certificate\\Business\\"+certificateName;
+		String downLoadPath = "C:\\certificate\\Business\\"+certificateName+".zip";
+		File file = new File(isExsitFile);
+		if (file.exists()){
+			FileUtils.zipFiles(savaPath,certificateName,downLoadPath);
+			File file1 = new File(downLoadPath);
+			FileUtils.downFile(file1,request,response,certificateName +".zip");
+		} else{
+			try {
+				PrintWriter out = response.getWriter();
+				out.println("<script Language='JavaScript'>");
+				out.println("alert(\"证照还未生成！无法下载！！！\");");
+				out.println("history.back();");
+				out.println("</script>");
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+//		return "redirect:"+Global.getAdminPath()+"/license/businessLicense/?repage";
+	}
+
+
+
+	/**
  * @author 许彩开
  * @TODO (注：字符串转日期)
   * @param str
