@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.api.dao.ApiInterfaceDao">
+    
+	<sql id="apiInterfaceColumns">
+		a.id AS "id",
+		a.company AS "company",
+		a.companytype AS "companytype",
+		a.appid AS "appid",
+		a.appseceret AS "appseceret",
+		a.accesstoken AS "accesstoken",
+		a.time_stamp AS "timeStamp",
+		a.expires_in AS "expiresIn",
+		a.man AS "man",
+		a.phone AS "phone",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="apiInterfaceJoins">
+	</sql>
+    
+	<select id="get" resultType="ApiInterface">
+		SELECT 
+			<include refid="apiInterfaceColumns"/>
+		FROM api_interface a
+		<include refid="apiInterfaceJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="ApiInterface">
+		SELECT 
+			<include refid="apiInterfaceColumns"/>
+		FROM api_interface a
+		<include refid="apiInterfaceJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="company != null and company != ''">
+				AND a.company LIKE 
+					<if test="dbName == 'oracle'">'%'||#{company}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{company}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{company},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="ApiInterface">
+		SELECT 
+			<include refid="apiInterfaceColumns"/>
+		FROM api_interface a
+		<include refid="apiInterfaceJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO api_interface(
+			id,
+			company,
+			companytype,
+			appid,
+			appseceret,
+			accesstoken,
+			time_stamp,
+			expires_in,
+			man,
+			phone,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{company},
+			#{companytype},
+			#{appid},
+			#{appseceret},
+			#{accesstoken},
+			#{timeStamp},
+			#{expiresIn},
+			#{man},
+			#{phone},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE api_interface SET 	
+			company = #{company},
+			companytype = #{companytype},
+			expires_in = #{expiresIn},
+			man = #{man},
+			phone = #{phone},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE api_interface SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+
+<!--判断是否存在该token-->
+	<select id="isExistToken" resultType="ApiInterface">
+		SELECT
+		<include refid="apiInterfaceColumns"/>
+		FROM api_interface a
+		<include refid="apiInterfaceJoins"/>
+		WHERE a.accesstoken = #{accesstoken}
+	</select>
+
+<!--根据返回token-->
+	<select id="getToken" resultType="ApiInterface">
+		SELECT
+		<include refid="apiInterfaceColumns"/>
+		FROM api_interface a
+		<include refid="apiInterfaceJoins"/>
+		WHERE a.appid = #{appid} and a.appseceret = #{appseceret}
+	</select>
+
+</mapper>

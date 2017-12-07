@@ -84,6 +84,7 @@ public class UploadUtils {
 		Map<String, Object> fieldsMap = new HashMap<String, Object>();
 		if (infos[0].equals("true")) {
 			fieldsMap = this.initFields(request);
+			System.out.println("fieldsMap===="+fieldsMap);
 		}
 		// 上传
 		List<FileItem> fiList = (List<FileItem>) fieldsMap.get(UploadUtils.FILE_FIELDS);
@@ -91,6 +92,7 @@ public class UploadUtils {
 			for (FileItem item : fiList) {
 				infos[1] = this.saveFile(item);
 			}
+			System.out.println("fiList==="+fiList);
 			infos[2] = savePath;
 			infos[3] = saveUrl;
 			infos[4] = fileUrl;
@@ -179,6 +181,7 @@ public class UploadUtils {
 
 		// 第一步：判断request
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+		System.out.println("isMultipart==="+isMultipart);
 		// 第二步：解析request
 		if (isMultipart) {
 			// Create a factory for disk-based file items

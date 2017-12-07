@@ -10,19 +10,18 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.*;
 
 import com.aliyuncs.exceptions.ClientException;
+
 import com.itextpdf.text.DocumentException;
-import com.thinkgem.jeesite.common.persistence.Msg;
 import com.thinkgem.jeesite.common.utils.*;
+import com.thinkgem.jeesite.modules.api.entity.ApiInterface;
+import com.thinkgem.jeesite.modules.api.service.ApiInterfaceService;
 import com.thinkgem.jeesite.modules.license.entity.BusinessLicense;
 import com.thinkgem.jeesite.modules.sys.entity.Office;
 import com.thinkgem.jeesite.modules.sys.entity.Role;
@@ -30,9 +29,11 @@ import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.service.SystemService;
 
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
+
 import org.activiti.engine.impl.util.json.JSONArray;
 import org.activiti.engine.impl.util.json.JSONObject;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.ibatis.annotations.Param;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,6 +60,7 @@ import com.thinkgem.jeesite.modules.cms.service.CommentService;
 import com.thinkgem.jeesite.modules.cms.service.LinkService;
 import com.thinkgem.jeesite.modules.cms.service.SiteService;
 import com.thinkgem.jeesite.modules.cms.utils.CmsUtils;
+import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
@@ -85,6 +87,8 @@ public class FrontController extends BaseController {
 
 	@Autowired
 	private SystemService systemService;
+	@Autowired
+	private ApiInterfaceService apiInterfaceService;
 
 
 	/**
@@ -550,6 +554,65 @@ public class FrontController extends BaseController {
     }
 
 
+/**
+ * @author 许彩开
+ * @TODO (注：获取token)
+  * @param appid
+  * @param appseceret
+ * @DATE: 2017\12\6 0006 17:15
+ */
+
+	@ResponseBody
+	@RequestMapping(value = "getToken")
+	public Map<String,Object> getToken(@Param("appid") String appid,@Param("appseceret") String appseceret){
+			Map<String ,Object> result = new HashMap<String, Object>();
+		System.out.println("appid===="+appid);
+		System.out.println("appseceret======="+appseceret);
+			ApiInterface apiInterface = apiInterfaceService.getToken(appid,appseceret);
+			if(apiInterface!=null){
+				result.put("token",apiInterface.getAccesstoken());
+				result.put("massage","SUCCESS！");
+			}else {
+				result.put("token","NULL");
+				result.put("massage","验证错误！");
+			}
+		return result;
+	}
+
+	/**
+	 * @author 许彩开
+	 * @TODO (注：获取token)
+	 * @param request
+	 * @DATE: 2017\12\6 0006 17:15
+	 */
+
+	@ResponseBody
+	@RequestMapping(value = "upload")
+	public Map<String,Object> upload(HttpServletRequest request,String TOKEN){
+		Map<String, Object> result = new HashMap<String, Object>();
+		ApiInterface apiInterface = apiInterfaceService.isExistToken(TOKEN);
+		System.out.println("apiInterface==="+apiInterface);
+		if(apiInterface!=null) {
+			UploadUtils uploadUtils = new UploadUtils();
+			String[] a = uploadUtils.uploadFile(request);
+			for (int i=0;i<5;i++){
+				System.out.println(i+"===="+a[i]);
+			}
+			if(a[4]!=null){
+				result.put("return_code","SUCCESS");
+				result.put("return_msg","上传图片成功");
+			}else{
+				result.put("return_code","FAIL11");
+				result.put("return_msg","上传图片失败11");
+			}
+		}else{
+			result.put("return_code","FAI22L");
+			result.put("return_msg","上传图片失败22");
+		}
+		return result;
+	}
+
+
 	/**
 	 * @author 许彩开
 	 * @TODO (注：生成证照)
@@ -558,9 +621,10 @@ public class FrontController extends BaseController {
 	 */
 
 
+
 	@ResponseBody
 	@RequestMapping(value = "getTemplate")
-	public Map<String,Object> getTemplate(HttpServletRequest request, HttpServletResponse response){
+	public Map<String,Object> getTemplate(HttpServletRequest request, HttpServletResponse response) {
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		Map<String,Object> result=new HashMap<String, Object>();
 		BusinessLicense businessLicense = new BusinessLicense();
@@ -570,27 +634,52 @@ public class FrontController extends BaseController {
 		JSONArray jsonArray = new JSONArray(jsonStr);
 		for(int i=0;i<jsonArray.length();i++){
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
-			//统一社会信用代码=idcertificateCode
-			businessLicense.setCertificateCode(jsonObject.getString("idcertificateCode"));
-			System.out.println("================统一社会信用代码===="+businessLicense.getCertificateCode());
-			businessLicense.setCertificateName(jsonObject.getString("idcertificateName"));
-			businessLicense.setRegisteredType(jsonObject.getString("idregisteredType"));
-			businessLicense.setAddress(jsonObject.getString("idaddress"));
-			businessLicense.setPersionName(jsonObject.getString("idpersionName"));
-			businessLicense.setRegisteredCapital(jsonObject.getString("idregisteredCapital"));
-			businessLicense.setEstablishDate(StrToDate(jsonObject.getString("idestablishDate")));
-			businessLicense.setEffectiveDateStar(StrToDate(jsonObject.getString("ideffectiveDateStar")));
-			businessLicense.setEffectiveDateEnd(StrToDate(jsonObject.getString("ideffectiveDateEnd")));
-			//这里是临时使用“备注-》remarks”字段保存“经营范围”
-			businessLicense.setRemarks(jsonObject.getString("idscope"));
-			//这里是临时使用“意见1-》opinion1”字段保存“登记机关”
-			businessLicense.setOpinion1(jsonObject.getString("idoffice"));
-			System.out.println("===============成功===");
+			ApiInterface apiInterface = apiInterfaceService.isExistToken(jsonObject.getString("TOKEN"));
+			System.out.println("token========"+jsonObject.getString("TOKEN"));
+			if(apiInterface!=null) {
+				//统一社会信用代码=idcertificateCode
+				businessLicense.setId(UUID.randomUUID().toString().replaceAll("-",""));
+				businessLicense.setCertificateCode(jsonObject.getString("idcertificateCode"));
+				System.out.println("================统一社会信用代码====" + businessLicense.getCertificateCode());
+				businessLicense.setCertificateName(jsonObject.getString("idcertificateName"));
+				businessLicense.setRegisteredType(jsonObject.getString("idregisteredType"));
+				businessLicense.setAddress(jsonObject.getString("idaddress"));
+				businessLicense.setPersionName(jsonObject.getString("idpersionName"));
+				businessLicense.setRegisteredCapital(jsonObject.getString("idregisteredCapital"));
+				businessLicense.setEstablishDate(StrToDate(jsonObject.getString("idestablishDate")));
+				businessLicense.setEffectiveDateStar(StrToDate(jsonObject.getString("ideffectiveDateStar")));
+				businessLicense.setEffectiveDateEnd(StrToDate(jsonObject.getString("ideffectiveDateEnd")));
+				//这里是临时使用“备注-》remarks”字段保存“经营范围”
+				businessLicense.setRemarks(jsonObject.getString("idscope"));
+				//这里是临时使用“意见1-》opinion1”字段保存“登记机关”
+				businessLicense.setOpinion1(jsonObject.getString("idoffice"));
+				System.out.println("===============成功===");
+
+				/*System.out.println("时间戳==========" + jsonObject.getString("timestamp"));
+				//SimpleDateFormat format=new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+				long clientTiem=Long.parseLong(jsonObject.getString("timestamp"));
+				*//*try {
+					clientTiem= format.parse(jsonObject.getString("timestamp")).getTime();
+				}catch (Exception e){
+					e.printStackTrace();
+				}*//*
+				System.out.println("前端转变之后的时间戳==========" + clientTiem);
+				long t=new Date().getTime();
+				System.out.println("后台获取的时间戳是========" +t);
+				long timespan =(t-clientTiem)/1000;
+				System.out.println("相差的时间======"+timespan);*/
+
+				result.put("return_msg","SUCCESS");
+			}
+			else{
+				result.put("return_msg","参数有篡改！");
+				return result;
+			}
 		}
 
 		final String path = "C:\\certificate\\BusinessModel\\BusinessModel.pdf";
-		final String savaPath = "C:\\certificate\\Business\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()+".pdf";
-		FileUtils.createDirectory("C:\\certificate\\Business\\"+businessLicense.getCertificateName());
+		final String savaPath = "C:\\certificate\\Business\\"+businessLicense.getId()+"\\"+businessLicense.getCertificateName()+".pdf";
+		FileUtils.createDirectory("C:\\certificate\\Business\\"+businessLicense.getId());
 		try {
 			//接口pdf
 			PDFUtil_interface.fillTemplate(businessLicense,path,savaPath);
@@ -600,26 +689,7 @@ public class FrontController extends BaseController {
 			e.printStackTrace();
 		}
 
-		String savaPath2 = "C:\\certificate\\Business";
-		String isExsitFile = "C:\\certificate\\Business\\"+businessLicense.getCertificateName();
-		String downLoadPath = "C:\\certificate\\Business\\"+businessLicense.getCertificateName()+".zip";
-		File file = new File(isExsitFile);
-		if (file.exists()){
-			FileUtils.zipFiles(savaPath2,businessLicense.getCertificateName(),downLoadPath);
-			File file1 = new File(downLoadPath);
-			//FileUtils.downFile(file1,request,response,businessLicense.getCertificateName() +".zip");
-			result.put("name",businessLicense.getCertificateName());
-		} else{
-			try {
-				PrintWriter out = response.getWriter();
-				out.println("<script Language='JavaScript'>");
-				out.println("alert(\"证照还未生成！无法下载()！！！\");");
-				out.println("history.back();");
-				out.println("</script>");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		result.put("return_id",businessLicense.getId());
 		return result;
 
 	}
@@ -628,7 +698,7 @@ public class FrontController extends BaseController {
 	/**
 	 * @author 练浩文
 	 * @TODO (注：下载)
-	 * @param certificateName
+	 * @param id
 	 * @param request
 	 * @param response
 	 * @param redirectAttributes
@@ -636,25 +706,28 @@ public class FrontController extends BaseController {
 	 */
 //	@RequiresPermissions("license:businessLicense:edit")
 	@RequestMapping(value = "downLoad",method = RequestMethod.GET)
-	public void downLoad(String certificateName,HttpServletRequest request,HttpServletResponse response,RedirectAttributes redirectAttributes){
+	public void downLoad(String id,String TOKEN,HttpServletRequest request,HttpServletResponse response,RedirectAttributes redirectAttributes){
 		String savaPath = "C:\\certificate\\Business";
-		String isExsitFile = "C:\\certificate\\Business\\"+certificateName;
-		String downLoadPath = "C:\\certificate\\Business\\"+certificateName+".zip";
+		String isExsitFile = "C:\\certificate\\Business\\"+id;
+		String downLoadPath = "C:\\certificate\\Business\\"+id+".zip";
 		File file = new File(isExsitFile);
-		if (file.exists()){
-			FileUtils.zipFiles(savaPath,certificateName,downLoadPath);
-			File file1 = new File(downLoadPath);
-			FileUtils.downFile(file1,request,response,certificateName +".zip");
-		} else{
-			try {
-				PrintWriter out = response.getWriter();
-				out.println("<script Language='JavaScript'>");
-				out.println("alert(\"证照还未生成！无法下载！！！\");");
-				out.println("history.back();");
-				out.println("</script>");
+		ApiInterface apiInterface = apiInterfaceService.isExistToken(TOKEN);
+		if(apiInterface!=null) {
+			if (file.exists()) {
+				FileUtils.zipFiles(savaPath, id, downLoadPath);
+				File file1 = new File(downLoadPath);
+				FileUtils.downFile(file1, request, response, id + ".zip");
+			} else {
+				try {
+					PrintWriter out = response.getWriter();
+					out.println("<script Language='JavaScript'>");
+					out.println("alert(\"证照还未生成！无法下载！！！\");");
+					out.println("history.back();");
+					out.println("</script>");
 
-			} catch (IOException e) {
-				e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 //		return "redirect:"+Global.getAdminPath()+"/license/businessLicense/?repage";
