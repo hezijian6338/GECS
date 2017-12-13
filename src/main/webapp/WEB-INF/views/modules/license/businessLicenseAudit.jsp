@@ -253,7 +253,7 @@
     <div class="form-actions">
         <shiro:hasPermission name="license:businessLicense:edit">
             <c:if test="${businessLicense.act.taskDefKey eq 'apply_end'}">
-                <input id="btnSubmit" class="btn btn-primary" type="submit" value="生成执照" onclick="a();" />&nbsp;
+                <input id="btnSubmit" class="btn btn-primary" type="submit" value="生成执照" onclick="$('#flag').val('yes')"/>&nbsp;
             </c:if>
             <c:if test="${businessLicense.act.taskDefKey ne 'apply_end'}">
                 <input id="btnSubmit" class="btn btn-primary" type="submit" value="同 意" onclick="$('#flag').val('yes')"/>&nbsp;

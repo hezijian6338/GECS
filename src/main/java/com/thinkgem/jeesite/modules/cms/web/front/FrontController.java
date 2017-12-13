@@ -3,10 +3,7 @@
  */
 package com.thinkgem.jeesite.modules.cms.web.front;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.InetAddress;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,6 +33,7 @@ import org.apache.ibatis.annotations.Param;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -621,7 +619,6 @@ public class FrontController extends BaseController {
 	 */
 
 
-
 	@ResponseBody
 	@RequestMapping(value = "getTemplate")
 	public Map<String,Object> getTemplate(HttpServletRequest request, HttpServletResponse response) {
@@ -636,7 +633,7 @@ public class FrontController extends BaseController {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 			ApiInterface apiInterface = apiInterfaceService.isExistToken(jsonObject.getString("TOKEN"));
 			System.out.println("token========"+jsonObject.getString("TOKEN"));
-			if(apiInterface!=null) {
+			if(apiInterface!=null) {//判断是否存在该token
 				//统一社会信用代码=idcertificateCode
 				businessLicense.setId(UUID.randomUUID().toString().replaceAll("-",""));
 				businessLicense.setCertificateCode(jsonObject.getString("idcertificateCode"));
@@ -683,14 +680,44 @@ public class FrontController extends BaseController {
 		try {
 			//接口pdf
 			PDFUtil_interface.fillTemplate(businessLicense,path,savaPath);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (DocumentException e) {
+			//进行盖章
+			startStamp(savaPath);
+			File file = new File(savaPath);
+			if (file.isFile()&&file.exists()){
+				file.delete();
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		result.put("return_id",businessLicense.getId());
 		return result;
+
+	}
+
+	/**
+	 * @author 许彩开
+	 * @TODO (注：接口实现：调用盖章接口，进行盖章)
+	 * @param SRC
+	 * @DATE: 2017\11\24 0024 16:34
+	 */
+
+	//@Transactional(readOnly = false)
+	public void startStamp(String SRC) throws Exception {
+
+		String KEYSTORE="C://certificate/pdfsign/贺志军.pfx";
+		char[] PASSWORD = "1234".toCharArray();//keystory密码
+		String DEST2=SRC.replace(".pdf", "_itext.pdf");//签名完成的pdf
+		String chapterPath="C://certificate/pdfsign/src/runcheng2.gif";//签章图片
+		String signername="润成科技";
+		String reason="润成电子印章签名";
+		String location="珠海";
+
+		System.out.println("==================这里是startStamp方法======================");
+
+		PdfSignItext.sign(new FileInputStream(SRC), new FileOutputStream(DEST2),
+				new FileInputStream(KEYSTORE), PASSWORD,
+				reason, location, chapterPath);
 
 	}
 
@@ -705,13 +732,14 @@ public class FrontController extends BaseController {
 	 * @DATE: 2017/11/20 17:57
 	 */
 //	@RequiresPermissions("license:businessLicense:edit")
-	@RequestMapping(value = "downLoad",method = RequestMethod.GET)
+	@RequestMapping(value = "downLoad")
 	public void downLoad(String id,String TOKEN,HttpServletRequest request,HttpServletResponse response,RedirectAttributes redirectAttributes){
 		String savaPath = "C:\\certificate\\Business";
 		String isExsitFile = "C:\\certificate\\Business\\"+id;
 		String downLoadPath = "C:\\certificate\\Business\\"+id+".zip";
 		File file = new File(isExsitFile);
 		ApiInterface apiInterface = apiInterfaceService.isExistToken(TOKEN);
+		System.out.println("donwLoad方法中的apiInterface===="+apiInterface);
 		if(apiInterface!=null) {
 			if (file.exists()) {
 				FileUtils.zipFiles(savaPath, id, downLoadPath);
