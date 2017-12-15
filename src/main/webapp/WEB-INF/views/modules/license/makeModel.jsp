@@ -68,7 +68,8 @@
         });
         context.init({
             fadeSpeed: 100,
-            filter: function ($obj){},
+            filter: function ($obj) {
+            },
             above: 'auto',
             preventDoubleContext: true,
             compress: false
@@ -144,7 +145,7 @@
                     //alert("top(offset):" + ui.offset.top + "left(offset):" + ui.offset.left + "；top(position):" + ui.position.top + "left(position):" + ui.position.left);
                     var el = $("<div class='printComponents textComponents' onclick='setIndex(event,this)'  tabindex='0' ></div>");
                     //el.append("<ul><li style='list-style: none;'><textarea class='textarea' id='textarea' style='' onchange='wirteText(this)'></textarea></li></ul>");
-                    el.append("<textarea class='textarea' id='textarea' style='' onchange='wirteText(this)'></textarea>");
+                    el.append("<textarea class='textarea'  style='' onchange='wirteText(this)'></textarea>");
                     var id = (new Date()).getMilliseconds();
                     el.attr("id", "new" + id);
                     //el.css("position","absolute");
@@ -155,21 +156,21 @@
 //                        , handle: "se,nw"
                     })
                         .resizable({
-                        stop: function (e, ui) {
-                            var hereDrag = this;
-                            var width = parseInt($(hereDrag).css("width"));
-                            var height = parseInt($(hereDrag).css("height"));
-                            /*宽度会自动填充*/
-                            //$(hereDrag).find('textarea').css('width', width - (width * 0.06));
+                            stop: function (e, ui) {
+                                var hereDrag = this;
+                                var width = parseInt($(hereDrag).css("width"));
+                                var height = parseInt($(hereDrag).css("height"));
+                                /*宽度会自动填充*/
+                                //$(hereDrag).find('textarea').css('width', width - (width * 0.06));
 
-                            /*动态可拖拽的高度*/
-                            //$(hereDrag).find('textarea').css('height', height - 10 );
-                            $(hereDrag).find('textarea').css('height', height - (height * 0.06));
-                        },
-                        containment: "#printf"
+                                /*动态可拖拽的高度*/
+                                //$(hereDrag).find('textarea').css('height', height - 10 );
+                                $(hereDrag).find('textarea').css('height', height - (height * 0.06));
+                            },
+                            containment: "#printf"
                             , handles: 'se,nw,ne,sw'
 //                            ,ghost:true
-                    })
+                        })
                         .appendTo("#printf");
 
 
@@ -363,7 +364,7 @@
                         el.resizable({
                             containment: "#printf"
                             , handles: 'se,nw,ne,sw'
-                            ,stop: function (e, ui) {
+                            , stop: function (e, ui) {
                                 var photoWidth = parseInt((99.21 * document.getElementById("printf").offsetWidth) / 841.89) + 'px';
                                 var photoHeight = parseInt((150.2338 * document.getElementById("printf").offsetHeight) / 595.28) + 'px';
                                 //alert("画布宽度：" + photoWidth + "   " + "画布长度：" + photoHeight);
@@ -453,20 +454,123 @@
                         containment: "#printf"
                     }).appendTo("#printf");
 
-                } else {
-                    <!--第八个组件的生成 一些其他组件的生成(Mickey)-->
-
-                    var el = $("<div class='printComponents' onclick='checkClick(this)' tabindex='0' ></div>");
+                } else
+                /*先注解掉，用新的营业执照专用组件接上*/
+//                    {
+//
+                <!--第八个组件的生成 一些其他组件的生成(Mickey)-->
+//
+//                    var el = $("<div class='printComponents' onclick='checkClick(this)' tabindex='0' ></div>");
+//                    var id = (new Date()).getMilliseconds();
+//                    el.attr("id", "new" + id);
+//                    el.text("ID=new" + id);
+//                    el.draggable({
+//                        containment: "#printf"
+//                    }).resizable({
+//                        containment: "#printf"
+//                        , handles: 'se,nw,ne,sw'
+//                    }).appendTo("#printf");
+//                }
+                if (ui.helper.hasClass("urlTxt")) {
+                    var el = $("<div class='printComponents textComponents' onclick='setIndex(event,this)'  tabindex='0' ></div>");
+                    el.append("<textarea class='textarea'  style='' onchange='wirteText(this)'>企业信用信息公示系统网址：http://gsxt.gov.cn</textarea>");
                     var id = (new Date()).getMilliseconds();
                     el.attr("id", "new" + id);
-                    el.text("ID=new" + id);
+//                    $(el).find("textarea").val("企业信用信息公示系统网址：http://gsxt.gov.cn");
                     el.draggable({
                         containment: "#printf"
-                    }).resizable({
+                    })
+                        .resizable({
+                            stop: function (e, ui) {
+                                var hereDrag = this;
+                                var width = parseInt($(hereDrag).css("width"));
+                                var height = parseInt($(hereDrag).css("height"));
+                                $(hereDrag).find('textarea').css('height', height - (height * 0.1));
+                            },
+                            containment: "#printf"
+                            , handles: 'se,nw,ne,sw'
+                        })
+                        .appendTo("#printf");
+                } else if (ui.helper.hasClass("companyTxt")) {
+                    var el = $("<div class='printComponents textComponents' onclick='setIndex(event,this)'  tabindex='0' ></div>");
+                    el.append("<textarea class='textarea'  style='' onchange='wirteText(this)'>中华人民共和国国家工商行政管理总局监制</textarea>");
+                    var id = (new Date()).getMilliseconds();
+                    el.attr("id", "new" + id);
+//                    $(el).find("textarea").val("中华人民共和国国家工商行政管理总局监制");
+                    el.draggable({
                         containment: "#printf"
-                        , handles: 'se,nw,ne,sw'
-                    }).appendTo("#printf");
-
+                    })
+                        .resizable({
+                            stop: function (e, ui) {
+                                var hereDrag = this;
+                                var width = parseInt($(hereDrag).css("width"));
+                                var height = parseInt($(hereDrag).css("height"));
+                                $(hereDrag).find('textarea').css('height', height - (height * 0.1));
+                            },
+                            containment: "#printf"
+                            , handles: 'se,nw,ne,sw'
+                        })
+                        .appendTo("#printf");
+                }else if (ui.helper.hasClass("yearTxt")) {
+                    var el = $("<div class='printComponents textComponents' onclick='setIndex(event,this)'  tabindex='0' ></div>");
+                    el.append("<textarea class='textarea'  style='' onchange='wirteText(this)'>年</textarea>");
+                    var id = (new Date()).getMilliseconds();
+                    el.attr("id", "new" + id);
+//                    $(el).find("textarea").val("中华人民共和国国家工商行政管理总局监制");
+                    el.draggable({
+                        containment: "#printf"
+                    })
+                        .resizable({
+                            stop: function (e, ui) {
+                                var hereDrag = this;
+                                var width = parseInt($(hereDrag).css("width"));
+                                var height = parseInt($(hereDrag).css("height"));
+                                $(hereDrag).find('textarea').css('height', height - (height * 0.1));
+                            },
+                            containment: "#printf"
+                            , handles: 'se,nw,ne,sw'
+                        })
+                        .appendTo("#printf");
+                }else if (ui.helper.hasClass("monthTxt")) {
+                    var el = $("<div class='printComponents textComponents' onclick='setIndex(event,this)'  tabindex='0' ></div>");
+                    el.append("<textarea class='textarea'  style='' onchange='wirteText(this)'>月</textarea>");
+                    var id = (new Date()).getMilliseconds();
+                    el.attr("id", "new" + id);
+//                    $(el).find("textarea").val("中华人民共和国国家工商行政管理总局监制");
+                    el.draggable({
+                        containment: "#printf"
+                    })
+                        .resizable({
+                            stop: function (e, ui) {
+                                var hereDrag = this;
+                                var width = parseInt($(hereDrag).css("width"));
+                                var height = parseInt($(hereDrag).css("height"));
+                                $(hereDrag).find('textarea').css('height', height - (height * 0.1));
+                            },
+                            containment: "#printf"
+                            , handles: 'se,nw,ne,sw'
+                        })
+                        .appendTo("#printf");
+                }else if (ui.helper.hasClass("dayTxt")) {
+                    var el = $("<div class='printComponents textComponents' onclick='setIndex(event,this)'  tabindex='0' ></div>");
+                    el.append("<textarea class='textarea'  style='' onchange='wirteText(this)'>日</textarea>");
+                    var id = (new Date()).getMilliseconds();
+                    el.attr("id", "new" + id);
+//                    $(el).find("textarea").val("中华人民共和国国家工商行政管理总局监制");
+                    el.draggable({
+                        containment: "#printf"
+                    })
+                        .resizable({
+                            stop: function (e, ui) {
+                                var hereDrag = this;
+                                var width = parseInt($(hereDrag).css("width"));
+                                var height = parseInt($(hereDrag).css("height"));
+                                $(hereDrag).find('textarea').css('height', height - (height * 0.1));
+                            },
+                            containment: "#printf"
+                            , handles: 'se,nw,ne,sw'
+                        })
+                        .appendTo("#printf");
                 }
             }
         });
@@ -545,7 +649,8 @@
                 <%--<div class="components Elements" id="postcode">邮政编码</div>--%>
                 <%--<div class="components Elements" id="area">所属区域</div>--%>
                 <c:forEach items="${page.list}" var="businessElement">
-                    <div class="components Elements" id="${businessElement.elementeng}">${businessElement.elementchinese}</div>
+                    <div class="components Elements"
+                         id="${businessElement.elementeng}">${businessElement.elementchinese}</div>
                 </c:forEach>
 
             </ul>
@@ -602,6 +707,16 @@
                         }
                     }
                 %>
+            </ul>
+        </div>
+        <h2><a href="#">营业执照相关组件</a></h2>
+        <div>
+            <ul id="yyzzInfo">
+                <div class="components urlTxt" id="urlTxt">信息公示网址</div>
+                <div class="components companyTxt" id="companyTxt">工商局监制</div>
+                <div class="components yearTxt" id="yearTxt">年</div>
+                <div class="components monthTxt" id="monthTxt">月</div>
+                <div class="components dayTxt" id="dayTxt">日</div>
             </ul>
         </div>
     </div>
@@ -697,8 +812,8 @@
                 $.ajax({
                     url: furl,
                     dataType: 'text',
-                    success: function(data) {
-                        document.getElementById("printf").innerHTML = data ;
+                    success: function (data) {
+                        document.getElementById("printf").innerHTML = data;
                     }
                 });
             }
@@ -789,6 +904,7 @@
                 <option value="a6">A6</option>
                 <option value="a5">A5</option>
                 <option value="a4">A4</option>
+                <option value="a99">A99</option>
                 <option value="a3">A3</option>
                 <option value="a2">A2</option>
                 <option value="a1">A1</option>
@@ -951,17 +1067,17 @@
 
     /*加载开关按钮的控制选项*/
     $(function () {
-            var backgroundColorSelect = document.getElementById("backgroundColorSelect");
-            var printf = document.getElementById("printf");
-            switchEvent("#backgroundTransparent", function () {
-                document.getElementById("bgcolorPicker").style.display = ""
-                $(backgroundColorSelect).removeAttr("disabled");
-            }, function () {
-                backgroundColorSelect.setAttribute("disabled", true);
-                document.getElementById("bgcolorPicker").style.display = "none"
-                printf.style.backgroundColor = "transparent";
-            });
+        var backgroundColorSelect = document.getElementById("backgroundColorSelect");
+        var printf = document.getElementById("printf");
+        switchEvent("#backgroundTransparent", function () {
+            document.getElementById("bgcolorPicker").style.display = ""
+            $(backgroundColorSelect).removeAttr("disabled");
+        }, function () {
+            backgroundColorSelect.setAttribute("disabled", true);
+            document.getElementById("bgcolorPicker").style.display = "none"
+            printf.style.backgroundColor = "transparent";
         });
+    });
 
 
     /*设定PDF生成格式的大小*/
@@ -971,6 +1087,7 @@
         'a2': [1190.55, 1683.78],
         'a3': [841.89, 1190.55],
         'a4': [595.28, 841.89],
+        'a99': [1487, 2105],
         'a5': [419.53, 595.28],
         'a6': [297.64, 419.53],
         'a7': [209.76, 297.64],
@@ -1014,7 +1131,7 @@
     var i;	//加粗的变量
     var j;	//加斜的变量
     var k; //下划线的变量
-    var l; //边框属性的变量
+    var l = 1; //边框属性的变量
     var backGroundUnique = 0; //控制背景唯一性
     var index = 2;	//控制每个元素的Z-Index
     var inputSubmit = document.getElementById("inputSubmit");
@@ -1027,11 +1144,11 @@
 
     //PDF大小控制
     pdfsize.onchange = function () {
-        if(printf.innerHTML != ""){
+        if (printf.innerHTML != "") {
             alert("自动修改画布为你当前所选的格式,并且清楚画布内容,请重新排版！");
         }
-        $.each($('.Elements'),function () {
-            $(this).css("backgroundColor","");
+        $.each($('.Elements'), function () {
+            $(this).css("backgroundColor", "");
         });
         printf.innerHTML = "";
         var size = pdfsize.value;
@@ -1045,11 +1162,11 @@
 
     //PDF排版控制
     lorp.onchange = function () {
-        if(printf.innerHTML != ""){
+        if (printf.innerHTML != "") {
             alert("自动修改画布为你当前所选的格式,并且清楚画布内容,请重新排版！");
         }
-        $.each($('.Elements'),function () {
-            $(this).css("backgroundColor","");
+        $.each($('.Elements'), function () {
+            $(this).css("backgroundColor", "");
         });
         printf.innerHTML = "";
         var or = lorp.value;
@@ -1071,7 +1188,6 @@
             }
         }
     };
-
 
 
     /*页面控制（Mickey）*/
@@ -1169,37 +1285,43 @@
                 $(e).remove();
             }
         }
-        var _this = "#" + e.getAttribute("id") ;
+        var _this = "#" + e.getAttribute("id");
         context.attach(e, [
             {header: '元素属性操作' + _this},
-            {text: '设置背景',  action:function (et) {
-                            if (backGroundUnique == 0) {			//还没有设置背景
-                if (confirm("确认此图作为背景？")) {
-                    e.style.zIndex = 1;
-                    backGroundUnique = 1; //背景已经设置了
+            {
+                text: '设置背景', action: function (et) {
+                if (backGroundUnique == 0) {			//还没有设置背景
+                    if (confirm("确认此图作为背景？")) {
+                        e.style.zIndex = 1;
+                        backGroundUnique = 1; //背景已经设置了
+                    }
+                } else {
+                    alert("你已设置过背景！背景只能有一个！");
                 }
-            } else {
-                alert("你已设置过背景！背景只能有一个！");
             }
-            }},
-            {text: '取消背景', action: function(et){
+            },
+            {
+                text: '取消背景', action: function (et) {
                 if (e.style.zIndex == 1) {
-                if (confirm("是否解除当前组件背景？")) {
-                    index = index + 1;
-                    e.style.zIndex = index;
-                    backGroundUnique = 0;
+                    if (confirm("是否解除当前组件背景？")) {
+                        index = index + 1;
+                        e.style.zIndex = index;
+                        backGroundUnique = 0;
+                    }
                 }
             }
-            }},
-            {text: '删除元素', action:function (et) {
+            },
+            {
+                text: '删除元素', action: function (et) {
                 if (confirm("是否删除该元素？")) {
                     backGroundUnique = 0;
                     $(e).unbind();
-                    $(e).attr("onclick","");
+                    $(e).attr("onclick", "");
                     $(e).remove();
                     context.destroy(et);
                 }
-            }},
+            }
+            },
         ]);
 
         //让保存的元素重新到画布上后能重新拖拽伸缩编辑功能
@@ -1226,31 +1348,35 @@
                 document.getElementById(originId).style.backgroundColor = "";
             }
         }
-        var _this = "#" + e.getAttribute("id") ;
+        var _this = "#" + e.getAttribute("id");
         //alert(_this);
 
         context.attach(_this, [
             {header: '元素属性操作' + originId},
-            {text: '删除元素', action:function (event) {
+            {
+                text: '删除元素', action: function (event) {
                 if (confirm("是否删除该元素？")) {
 //                        alert(originId);
-                    if(document.getElementById(originId).style.backgroundColor != ""){
+                    if (document.getElementById(originId).style.backgroundColor != "") {
                         document.getElementById(originId).style.backgroundColor = "";
                     }
                     $(e).remove();
                 }
-            }},
+            }
+            },
             {divider: true},
-            {text: 'Disable This Menu', action: function(e){
+            {
+                text: 'Disable This Menu', action: function (e) {
                 e.preventDefault();
                 context.destroy('html');
                 alert('html contextual menu destroyed!');
-            }},
+            }
+            },
         ]);
 
     }
 
-    function checkFont(thisID){
+    function checkFont(thisID) {
 
         /*字体样式监测（Mickey）*/
         var bold = document.getElementById("bold");
@@ -1296,9 +1422,12 @@
         }
 
         /*字体样式监测（Mickey）*/
+
+        /*边框控制*/
         var textareaBorder = document.getElementById("textareaBorder");
         textareaBorder.onclick = function () {
             if ($(thisID).hasClass("textComponents")) {
+//                alert($(thisID).find('textarea').css('border') + "边框属性显示");
                 //alert("font-family");
                 if (l == 0 || l == "" || l == undefined) {
                     $(thisID).find('textarea').css('border', "1px solid #000");
@@ -1332,7 +1461,6 @@
         var family = document.getElementById("fontfamily");
         var setFontsize = document.getElementById("fontsize");
         var setFontfamily = document.getElementById("fontfamily");
-
 
 
         //获取当前元素的颜色 字体 大小属性并显示在分别显示在三个选择框 如果为空显示默认的
@@ -1453,6 +1581,10 @@
 
     /*使当前页面变成图片 然后转换为pdf(Mickey&hezijian6338)*/
     function print() {
+
+//        var r = 2.5;
+//        $("#printf").css("-webkit-transform", "scale(" + r + ")");
+
         var printfWidth = document.getElementById("printfWidth").value;
         var printfHeight = document.getElementById("printfHeight").value;
 
@@ -1496,10 +1628,13 @@
             printfHeight = 920;
         }
 
-        //更改了排版方式为竖版（p--竖版；l--横版）
+        /*更改了排版方式为竖版（p--竖版；l--横版）*/
         var pdf = new jsPDF(LorP.value, 'pt', pdfSize.value);
-        $.each($('.Elements'),function () {
-            $(this).css("backgroundColor","");
+        //生成PDF时候取消文本域的边框（但文本域位置会稍微偏上移动）
+        $('.textarea').css("border","none");
+        //生成PDF时候把左边工具栏的以拖拽元素颜色提醒取消
+        $.each($('.Elements'), function () {
+            $(this).css("backgroundColor", "");
         });
         $.each($('.specialElements'), function () {
             var TF_T = $(this).text();
@@ -1534,14 +1669,45 @@
         });
 
         //alert("宽"+document.getElementById("printf").offsetWidth);
+//        var p = document.getElementById("printf");
+//        var pWidth = parseInt($(p).css("width"));
+//        var pHeight = parseInt($(p).css("height"));
+        document.getElementById("printf").style.width = pdfWidth * 0.13;
+        document.getElementById("printf").style.height = pdfHeight * 0.13;
+        $("#printf").css("-webkit-transform", "scale(2.5)");
+        $("#printf").css("-moz-transform", "scale(2.5)");
+        $("#printf").css("-transform", "scale(2.5)");
 
-        html2canvas($("#printf"), {
-            onrendered: function (canvas) {
-                pdf.addImage(canvas.toDataURL("image/png", 1.0), 'PNG', 0, 0, pdfWidth, pdfHeight);
-                pdf.save('content.pdf');
-
-            }
+//        alert("修改后的长度:" + document.getElementById("printf").style.height + "修改后的宽度" + document.getElementById("printf").style.width + "；Pdf的宽度：" + pdfWidth + "PDF的高度：" + pdfHeight);
+//        html2canvas($("#printf"), {
+//            onrendered: function (canvas) {
+//                pdf.addImage(canvas.toDataURL("image/png", 1.0), 'PNG', 0, 0, pdfWidth, pdfHeight);
+//                pdf.save('content.pdf');
+//            }
+////        });
+        var scale = 2.5;
+        var opts = {
+//            scale: scale,// 添加的scale 参数
+//            canvas:canvas, //自定义 canvas
+            logging: true //日志开关
+            , width: pdfWidth * 2.5//dom 原始宽度
+            , height: pdfHeight * 2.5 //dom 原始高度
+//            ,windowWidth:pdfWidth*2.5
+//            ,windowHeight:pdfHeight*2.5
+        };
+        html2canvas($("#printf"), opts).then(function (canvas) {
+//            $(canvas).css("-webkit-transform","scale(2.5)");
+//            $(canvas).css("-moz-transform","scale(2.5)");
+//            $(canvas).css("-transform","scale(2.5)");
+            pdf.addImage(canvas.toDataURL("image/png", 1.0), 'PNG', 0, 0, pdfWidth, pdfHeight);
+            pdf.save('content.pdf');
         });
+//        $("#printf").css("-webkit-transform","scale(0.9)");
+//        $("#printf").css("-moz-transform","scale(0.9)");
+//        $("#printf").css("-transform","scale(0.9)");
+//        document.getElementById("printf").style.width = pdfWidth;
+//        document.getElementById("printf").style.height = pdfHeight;
+//        location.reload()
     }
 
 
@@ -1580,16 +1746,17 @@
         %>
     }
 
-    function myBrowser(){
+    function myBrowser() {
         var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
         var isOpera = userAgent.indexOf("Opera") > -1;
         if (isOpera) {
             return "Opera"
-        }; //判断是否Opera浏览器
+        }
+        ; //判断是否Opera浏览器
         if (userAgent.indexOf("Firefox") > -1) {
             return "FF";
         } //判断是否Firefox浏览器
-        if (userAgent.indexOf("Chrome") > -1){
+        if (userAgent.indexOf("Chrome") > -1) {
             //$("button").addClass("bttn-unite bttn-xs bttn-primary");
             return "Chrome";
         }
@@ -1599,7 +1766,8 @@
         if (userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera) {
             $("button").removeClass("bttn-unite bttn-xs bttn-primary");
             return "IE";
-        }; //判断是否IE浏览器
+        }
+        ; //判断是否IE浏览器
     }
 
 </script>
