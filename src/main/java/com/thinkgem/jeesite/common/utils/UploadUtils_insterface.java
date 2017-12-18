@@ -1,23 +1,15 @@
 package com.thinkgem.jeesite.common.utils;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * 文件上传工具类
@@ -28,7 +20,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
  * <pre>
  * </pre>
  */
-public class UploadUtils {
+public class UploadUtils_insterface {
 	/**
 	 * 表单字段常量
 	 */
@@ -59,7 +51,7 @@ public class UploadUtils {
 	// 文件最终的url包括文件名
 	private String fileUrl;
 
-	public UploadUtils() {
+	public UploadUtils_insterface() {
 		// 其中images,flashs,medias,files,对应文件夹名称,对应dirName
 		// key文件夹名称
 		// value该文件夹内可以上传文件的后缀名
@@ -76,10 +68,10 @@ public class UploadUtils {
 	 * @return infos info[0] 验证文件域返回错误信息 info[1] 上传文件错误信息 info[2] savePath info[3] saveUrl info[4] fileUrl
 	 */
 	@SuppressWarnings("unchecked")
-	public String[] uploadFile(HttpServletRequest request) {
+	public String[] uploadFile(HttpServletRequest request,String TOKEN) {
 		String[] infos = new String[5];
 		// 验证
-		infos[0] = this.validateFields(request);
+		infos[0] = this.validateFields(request,TOKEN);
 		// 初始化表单元素
 		Map<String, Object> fieldsMap = new HashMap<String, Object>();
 		if (infos[0].equals("true")) {
@@ -87,10 +79,10 @@ public class UploadUtils {
 			System.out.println("fieldsMap===="+fieldsMap);
 		}
 		// 上传
-		List<FileItem> fiList = (List<FileItem>) fieldsMap.get(UploadUtils.FILE_FIELDS);
+		List<FileItem> fiList = (List<FileItem>) fieldsMap.get(UploadUtils_insterface.FILE_FIELDS);
 		if (fiList != null) {
 			for (FileItem item : fiList) {
-				infos[1] = this.saveFile(item);
+				infos[1] = this.saveFile(item,TOKEN);
 			}
 			System.out.println("fiList==="+fiList);
 			infos[2] = savePath;
@@ -105,7 +97,7 @@ public class UploadUtils {
 	 * 
 	 * @param request
 	 */
-	private String validateFields(HttpServletRequest request) {
+	private String validateFields(HttpServletRequest request,String TOKEN) {
 		String errorInfo = "true";
 		// boolean errorFlag = true;
 		// 获取内容类型
@@ -147,7 +139,8 @@ public class UploadUtils {
 			}
 			// .../basePath/dirName/yyyyMMdd/
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-			String ymd = sdf.format(new Date());
+			//String ymd = sdf.format(new Date());
+			String ymd = TOKEN;
 			savePath += ymd + "/";
 			saveUrl += ymd + "/";
 			File dirFile = new File(savePath);
@@ -170,7 +163,7 @@ public class UploadUtils {
 	 * 处理上传内容
 	 * 
 	 * @param request
-	 * @param maxSize
+	 * @param
 	 * @return
 	 */
 //	@SuppressWarnings("unchecked")
@@ -237,12 +230,12 @@ public class UploadUtils {
 	/**
 	 * 保存文件
 	 * 
-	 * @param obj
+	 * @param TOKEN
 	 *            要上传的文件域
-	 * @param file
+	 * @param item
 	 * @return
 	 */
-	private String saveFile(FileItem item) {
+	private String saveFile(FileItem item,String TOKEN) {
 		String error = "true";
 		String fileName = item.getName();
 		String fileExt = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
@@ -258,9 +251,12 @@ public class UploadUtils {
 				SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
 				newFileName = df.format(new Date()) + "_" + new Random().nextInt(1000) + "." + fileExt;
 			} else {
-				newFileName = fileName + "." + fileExt;
+				//newFileName = fileName + "." + fileExt;
+				newFileName = TOKEN + "." + fileExt;
 			}
 			// .../basePath/dirName/yyyyMMdd/yyyyMMddHHmmss_xxx.xxx
+			System.out.println("fileName===="+fileName);
+			System.out.println("newFileName===="+newFileName);
 			fileUrl = saveUrl + newFileName;
 			try {
 				File uploadedFile = new File(savePath, newFileName);

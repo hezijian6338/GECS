@@ -27,6 +27,7 @@ import com.thinkgem.jeesite.modules.sys.service.SystemService;
 
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
+import jdk.nashorn.internal.parser.Token;
 import org.activiti.engine.impl.util.json.JSONArray;
 import org.activiti.engine.impl.util.json.JSONObject;
 import org.apache.ibatis.annotations.Param;
@@ -590,9 +591,11 @@ public class FrontController extends BaseController {
 		Map<String, Object> result = new HashMap<String, Object>();
 		ApiInterface apiInterface = apiInterfaceService.isExistToken(TOKEN);
 		System.out.println("apiInterface==="+apiInterface);
+		System.out.println("服务器保存文件的路径====="+request.getSession().getServletContext().getRealPath("/"));
 		if(apiInterface!=null) {
-			UploadUtils uploadUtils = new UploadUtils();
-			String[] a = uploadUtils.uploadFile(request);
+			//接口上传
+			UploadUtils_insterface uploadUtils = new UploadUtils_insterface();
+			String[] a = uploadUtils.uploadFile(request,TOKEN);
 			for (int i=0;i<5;i++){
 				System.out.println(i+"===="+a[i]);
 			}
@@ -625,13 +628,18 @@ public class FrontController extends BaseController {
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		Map<String,Object> result=new HashMap<String, Object>();
 		BusinessLicense businessLicense = new BusinessLicense();
+
 		//解析json数据
 		//response.setContentType("application/json");
 		String jsonStr = request.getParameter("mydata");
 		JSONArray jsonArray = new JSONArray(jsonStr);
 		for(int i=0;i<jsonArray.length();i++){
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
-			ApiInterface apiInterface = apiInterfaceService.isExistToken(jsonObject.getString("TOKEN"));
+			String TOKEN = jsonObject.getString("TOKEN");
+			//String imageName=jsonObject.getString("imageName");
+			//String fileExt = imageName.substring(imageName.lastIndexOf(".") + 1).toLowerCase();
+			ApiInterface apiInterface = apiInterfaceService.isExistToken(TOKEN);
+
 			System.out.println("token========"+jsonObject.getString("TOKEN"));
 			if(apiInterface!=null) {//判断是否存在该token
 				//统一社会信用代码=idcertificateCode
@@ -650,7 +658,7 @@ public class FrontController extends BaseController {
 				businessLicense.setRemarks(jsonObject.getString("idscope"));
 				//这里是临时使用“意见1-》opinion1”字段保存“登记机关”
 				businessLicense.setOpinion1(jsonObject.getString("idoffice"));
-				System.out.println("===============成功===");
+				System.out.println("===============成功======");
 
 				/*System.out.println("时间戳==========" + jsonObject.getString("timestamp"));
 				//SimpleDateFormat format=new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
@@ -663,7 +671,7 @@ public class FrontController extends BaseController {
 				System.out.println("前端转变之后的时间戳==========" + clientTiem);
 				long t=new Date().getTime();
 				System.out.println("后台获取的时间戳是========" +t);
-				long timespan =(t-clientTiem)/1000;
+				long timespan =t-clientTiem;
 				System.out.println("相差的时间======"+timespan);*/
 
 				result.put("return_msg","SUCCESS");
@@ -672,25 +680,29 @@ public class FrontController extends BaseController {
 				result.put("return_msg","参数有篡改！");
 				return result;
 			}
-		}
 
-		final String path = "C:\\certificate\\BusinessModel\\BusinessModel.pdf";
-		final String savaPath = "C:\\certificate\\Business\\"+businessLicense.getId()+"\\"+businessLicense.getCertificateName()+".pdf";
-		FileUtils.createDirectory("C:\\certificate\\Business\\"+businessLicense.getId());
-		try {
-			//接口pdf
-			PDFUtil_interface.fillTemplate(businessLicense,path,savaPath);
-			//进行盖章
-			startStamp(savaPath);
-			File file = new File(savaPath);
-			if (file.isFile()&&file.exists()){
-				file.delete();
+			final String path = "C:\\certificate\\BusinessModel\\BusinessModel.pdf";
+			final String savaPath = "C:\\certificate\\Business\\"+businessLicense.getId()+"\\"+businessLicense.getCertificateName()+".pdf";
+			FileUtils.createDirectory("C:\\certificate\\Business\\"+businessLicense.getId());
+			try {
+				//接口pdf
+				PDFUtil_interface.fillTemplate(businessLicense,path,savaPath);
+				//String imagePath = request.getSession().getServletContext().getRealPath("/")+"upload\\images\\"+TOKEN+"/"+TOKEN+"."+fileExt;
+				//进行盖章
+				startStamp(savaPath);
+				File file = new File(savaPath);
+				if (file.isFile()&&file.exists()){
+					file.delete();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+/*				result.put("return_msg","不存在此图片！");
+				return result;*/
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+
+			result.put("return_id",businessLicense.getId());
 		}
 
-		result.put("return_id",businessLicense.getId());
 		return result;
 
 	}

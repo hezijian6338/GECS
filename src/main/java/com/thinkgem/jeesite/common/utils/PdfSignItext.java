@@ -84,7 +84,7 @@ public class PdfSignItext {
         //设置签名的位置，页码，签名域名称，多次追加签名的时候，签名预名称不能一样
         //签名的位置，是图章相对于pdf页面的位置坐标，原点为pdf页面左下角
         //四个参数的分别是，图章左下角x，图章左下角y，图章右上角x，图章右上角y
-        appearance.setVisibleSignature(new Rectangle(540, 150, 660, 270), 1, "sig1");
+        appearance.setVisibleSignature(new Rectangle(540, 170, 660, 290), 1, "sig1");
         //读取图章图片，这个image是itext包的image
         Image image = Image.getInstance(chapterPath);
         appearance.setSignatureGraphic(image); 
