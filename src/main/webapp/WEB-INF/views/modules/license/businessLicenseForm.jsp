@@ -4,7 +4,7 @@
 <head>
 	<title>营业执照管理</title>
 	<meta name="decorator" content="default"/>
-
+    <script type="text/javascript" src="${ctxStatic}/companyName/chachong.js"></script>
 	<script type="text/javascript">
 
         $(document).ready(function() {
@@ -216,6 +216,7 @@
 
 </head>
 <body>
+<div class="center clearfix" style="padding-top: 2%;width: 82%;min-width: 1060px;margin-left: auto;margin-right: auto">
 	<ul class="nav nav-tabs">
 		<%--<li><a href="${ctx}/license/businessLicense/">营业执照列表</a></li>--%>
 		<li class="active"><a href="${ctx}/license/businessLicense/form?id=${businessLicense.id}">营业执照<shiro:hasPermission name="license:businessLicense:edit">${not empty businessLicense.id?'修改':'申请'}流程</shiro:hasPermission><shiro:lacksPermission name="license:businessLicense:edit">查看</shiro:lacksPermission></a></li>
@@ -288,7 +289,8 @@
 					</td>
 					<td class="tit">公司名称</td>
 					<td>
-						<form:input path="certificateName" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
+						<%--<form:input path="certificateName" htmlEscape="false" maxlength="100" class="input-xlarge required"/>--%>
+						<a id="change" class="btn btn-default showcod" data-toggle="modal" data-target=".modal" >名称申请</a>
 						<span class="help-inline"><font color="red">*</font> </span>
 					</td>
 				</tr>
@@ -369,7 +371,7 @@
 						<form:input path="handlerPhone" placeholder="请输入手机号码" htmlEscape="false" maxlength="20" class="input-xlarge required"/>
 					</td>
 				</tr>
-				<tr>
+				<%--<tr>
 					<td colspan="6" class="tit">所入驻建筑信息</td>
 				</tr>
 				<tr>
@@ -406,7 +408,7 @@
 					<td colspan="3">
 						<sys:treeselect id="area" name="area.id" value="${businessLicense.area.id}" labelName="area.name" labelValue="${businessLicense.area.name}" title="区域" url="/sys/area/treeData" cssClass="required" allowClear="true" notAllowSelectParent="true"/>
 					</td>
-				</tr>
+				</tr>--%>
 				<tr>
 					<td class="tit">审批人1的意见</td>
 					<td colspan="5">
@@ -456,5 +458,148 @@
 			<act:histoicFlow procInsId="${businessLicense.act.procInsId}" />
 		</c:if>
 	</form:form>
+	<%--模态框--%>
+	<div class="modal fade " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"style="width:700px">
+		<div class="modal-dialog " role="document" style="width:700px">
+			<div class="modal-content">
+				<div class="modal-header" style="border: 0;padding-right: 0">
+					<%--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true"><img src="${ctxStatic}/images/close.png"></span></button>--%>
+					<h4 class="modal-title" id="modalLabel">公司名称登记</h4>
+				</div>
+                <div class="modal-body">
+                    <div>
+                        <form id="permissionForm" action="${ctx}/policeStampPage/permission" method="post">
+                            <table class="table table-bordered table-hover"  id="tableCombination">
+                                <tbody>
+                                <tr>
+                                    <input id="hidden" name="id" type="hidden" value="">
+                                    <input id="type_id" name="type_id" type="hidden" value="">
+                                    <td rowspan="2"><font color="red" size="3">示例：</font></td>
+                                    <td id="th1">行政区划</td>
+                                    <td id="th11" style="display:none">字号</td>
+                                    <td id="th2">字号</td>
+                                    <td id="th22" style="display:none">行政区划</td>
+                                    <td id="th3">行业特点</td>
+                                    <td id="th33" style="display:none">行政区划</td>
+                                    <td id="th4">组织形式</td>
+                                </tr>
+                                <tr>
+                                    <td id="th5">佛山</td>
+                                    <td id="th55" style="display:none">芝雅</td>
+                                    <td id="th6">芝雅</td>
+                                    <td id="th66" style="display:none">佛山</td>
+                                    <td id="th7">服饰</td>
+                                    <td id="th77" style="display:none">佛山</td>
+                                    <td id="th8">有限责任公司</td>
+                                </tr>
+                                <tr>
+                                    <td ><font color="red" size="3">合成的名称：</font></td>
+                                    <td colspan="4" id="combinationName">佛山芝雅服饰有限责任公司 </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div>
+                                <span class="help-inline"><font color="red">*</font> </span>
+                                <label>名称组合模式：</label>
+                                <select id="combination">
+                                    <option value ="1">行政区划+字号+行业+组织形式</option>
+                                    <option value ="2">字号+行政区划+行业+组织形式</option>
+                                    <option value ="3">字号+行业+行政区划+组织形式</option>
+                                </select>
+                            </div>
+                            <div id="contentDiv" style="display: none">
+                            <font color="red" size="2">根据《企业名称登记管理实施办法》的有关规定，企业名称依次由“行政区划+字号+行业+组织形式”组成，只有具备下列条件的企业法人，可以将名称中的行政区划放在字号之后，组织形式之前：
+                                1、使用控股企业名称中的字号；2、该控股企业的名称不含行政区划。</font>
+                            </div>
+                        </form>
+                    </div>
+                    <div>
+                        <hr style="width:100%;height:1px;background-color:#000;"/>
+                        <span class="help-inline"><font color="red">*</font> </span>
+                        <label>所在地：</label>
+                        <sys:treeselect id="area" name="parent.id" value="${area.parent.id}" labelName="parent.name" labelValue="${area.parent.name}"
+                                        title="区域" url="/sys/area/treeData" extId="${area.id}" cssClass="" allowClear="true"/>
+                    </div>
+                    <div>
+                        <hr style="width:100%;height:1px;background-color:#000;"/>
+                        <span class="help-inline"><font color="red">*</font> </span>
+                        <label>名称基本信息：</label>
+                        <form:form id="permissionForm2" modelAttribute="businessLicense" action="${ctx}/license/businessLicense/save" method="post">
+                            <table class="table table-bordered table-hover" >
+                                <tbody>
+                                <tr>
+                                    <td><span class="help-inline"><font color="red">*</font> </span>行政区划：
+                                        <select id="provinceCity" style="width: 150px">
+                                            <option value ="1">冠省名</option>
+                                            <option value ="2">冠市名</option>
+                                            <option value="3">冠区(县)名</option>
+                                            <option value="123">冠省市区(县)名</option>
+                                            <option value="12">冠省市名</option>
+                                            <option value="23">冠市区(县)名</option>
+                                        </select>
+                                    </td>
+                                    <td id="sheng">省：
+                                        <select id="province">
+                                            <option value ="saab1">广东</option>
+                                            <option value ="saab2">广东省</option>
+                                        </select>
+                                    </td>
+                                    <td id="shi">市：
+                                        <select id="city">
+                                            <option value ="saab2">珠海</option>
+                                            <option value ="saab">珠海市</option>
+                                        </select>
+                                    </td>
+                                    <td id="xian">县（区）：
+                                        <select id="county">
+                                            <option value ="saab2">香洲</option>
+                                            <option value ="saab">斗门</option>
+                                            <option value="opel">金湾</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="help-inline"><font color="red">*</font> </span>字号：
+                                        <input id="zihao" type="text" style="width: 80px" onblur="comName();"/>
+                                    </td>
+                                    <td><span class="help-inline"><font color="red">*</font> </span>行业特点：
+                                        <input id="hangye" type="text" style="width: 80px" onblur="comName();"/>
+                                    </td>
+                                    <td><span class="help-inline"><font color="red">*</font> </span>组织形式：
+                                        <form:select path="registeredType" class="input-medium required" id="companyType">
+                                            <form:option readonly="true" value="" label="请选择公司类型"/>
+                                            <form:options items="${fns:getDictList('company_type')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+                                        </form:select>
+                                    </td>
+                                    <td>
+                                        <button type="submit" class="btn btn-primary">查重</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><font color="red" size="3">合成的名称：</font></td>
+                                    <td colspan="3" id="finalCompanyName"> </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </form:form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" onclick="automatic(this)">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+		</div>
+	</div>
+
+    <div class="bg-model"
+         style="position:absolute;top:0;left:0;display:none;background:rgba(0,0,0,0.3);width:100%;height:100%;position:fixed;z-index:9999">
+        <div class='content'
+             style="position: absolute;left: 35%;top: 25%;border-radius: 8px;width: 30%;height: 40%;text-align: center">
+            <h3 style="color: white;font-weight: bold">亲，正在查重中，请稍等哦.........</h3>
+        </div>
+    </div>
+</div>
 </body>
 </html>
