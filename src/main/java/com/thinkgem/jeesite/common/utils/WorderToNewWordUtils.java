@@ -22,7 +22,7 @@ public class WorderToNewWordUtils {
      * 根据模板生成新word文档
      * 判断表格是需要替换还是需要插入，判断逻辑有$为替换，表格无$为插入
      * @param inputUrl 模板存放地址
-     * @param outPutUrl 新文档存放地址
+     * @param outputUrl 新文档存放地址
      * @param textMap 需要替换的信息集合
      * @param tableList 需要插入的表格信息集合
      * @return 成功返回true,失败返回false

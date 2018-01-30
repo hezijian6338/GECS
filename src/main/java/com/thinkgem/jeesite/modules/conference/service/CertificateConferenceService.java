@@ -30,33 +30,46 @@ public class CertificateConferenceService extends CrudService<CertificateConfere
 	@Autowired
 	private CertificateConferenceSubDao certificateConferenceSubDao;
 	
+	@Override
 	public CertificateConference get(String id) {
 		CertificateConference certificateConference = super.get(id);
 		certificateConference.setCertificateConferenceSubList(certificateConferenceSubDao.findList(new CertificateConferenceSub(certificateConference)));
 		return certificateConference;
 	}
 	
+	@Override
 	public List<CertificateConference> findList(CertificateConference certificateConference) {
 		return super.findList(certificateConference);
 	}
 	
+	@Override
 	public Page<CertificateConference> findPage(Page<CertificateConference> page, CertificateConference certificateConference) {
 		return super.findPage(page, certificateConference);
 	}
 	
+	@Override
 	@Transactional(readOnly = false)
 	public void save(CertificateConference certificateConference) {
 		super.save(certificateConference);
 		BusinessLicense businessLicense = (BusinessLicense) CacheUtils.get("businessLicense","businessLicense");
-		final String path = "E:\\certificate\\BusinessModel\\有限公司章程参考版本3.pdf";
+		final String path = "E:\\certificate\\BusinessModel\\有限公司章程.pdf";
 
 		final String savaPath = "E:\\certificate\\Rules\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()
 				+"+有限公司章程"+".pdf";
+
+		final String path2 = "E:\\certificate\\BusinessModel\\有限公司股东会决议.pdf";
+
+		final String savaPath2 = "E:\\certificate\\conference\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()
+				+"+有限公司章程"+".pdf";
+
+		FileUtils.createDirectory("E:\\certificate\\conference\\"+businessLicense.getCertificateName());
 
 		FileUtils.createDirectory("E:\\certificate\\Rules\\"+businessLicense.getCertificateName());
 		try {
 
 			PDFUtil_rules.fillTemplate(businessLicense,certificateConference, path, savaPath);
+
+			PDFUtil_conference.fillTemplate(certificateConference, path2, savaPath2);
 
 		}catch (Exception E){
 			E.printStackTrace();
@@ -81,6 +94,7 @@ public class CertificateConferenceService extends CrudService<CertificateConfere
 		}
 	}
 	
+	@Override
 	@Transactional(readOnly = false)
 	public void delete(CertificateConference certificateConference) {
 		super.delete(certificateConference);

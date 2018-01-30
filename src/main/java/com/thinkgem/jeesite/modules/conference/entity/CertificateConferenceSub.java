@@ -21,7 +21,7 @@ public class CertificateConferenceSub extends DataEntity<CertificateConferenceSu
 	private String sex;		// 性别
 	private String age;		// 年龄
 	private String placeOrigin;		// 籍贯
-	private String residence;		// 住所
+	private String residence;		// 户口所在地
 	private String currency;		// 以货币出资
 	private String contributionType;		// 出资方式
 	private String contributionPrice;		// 作价出资
