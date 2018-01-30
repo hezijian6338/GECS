@@ -2,19 +2,7 @@
  * Created by xucaikai on 2018\1\29 0029.
  * 用于公司名称查重
  */
-//查重
-function automatic(t) {
-    $(".bg-model").fadeTo(300, 1);
-    //隐藏窗体的滚动条
-    $("body").css({"overflow": "hidden"});
-    setTimeout(function () {
 
-        $(".bg-model").hide();
-        //显示窗体
-        $("body").css({"overflow":"hidden"});
-
-    },2000);
-}
 
 $(document).on("change",'select#combination',function () {
     var va = $("#combination option:selected").val();

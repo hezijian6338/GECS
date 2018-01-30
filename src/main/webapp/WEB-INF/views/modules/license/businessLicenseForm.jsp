@@ -165,6 +165,27 @@
             return true
         }
 
+        //查重
+        function automatic(t) {
+            $(".bg-model").fadeTo(300, 1);
+            //隐藏窗体的滚动条
+            $("body").css({"overflow": "hidden"});
+            setTimeout(function () {
+                var tableCom =document.getElementById("finalTable");
+
+                var finalName = tableCom.getElementsByTagName("tr")[2].cells[1].innerHTML;
+                //alert(finalName);
+                $("#certificateName").attr("value",finalName);
+
+
+                $(".bg-model").hide();
+                $("#myModal2").modal("hide");
+                //显示窗体
+                $("body").css({"overflow":"hidden"});
+
+            },2000);
+        }
+
 	</script>
 
 	<meta name="decorator" content="default"/>
@@ -289,7 +310,7 @@
 					</td>
 					<td class="tit">公司名称</td>
 					<td>
-						<%--<form:input path="certificateName" htmlEscape="false" maxlength="100" class="input-xlarge required"/>--%>
+						<form:input id="certificateName" path="certificateName" placeholder="请点击名称申请" htmlEscape="false" maxlength="100" class="input-xlarge required" readonly="true"/>
 						<a id="change" class="btn btn-default showcod" data-toggle="modal" data-target=".modal" >名称申请</a>
 						<span class="help-inline"><font color="red">*</font> </span>
 					</td>
@@ -459,7 +480,7 @@
 		</c:if>
 	</form:form>
 	<%--模态框--%>
-	<div class="modal fade " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"style="width:700px">
+	<div id="myModal2" class="modal fade " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"style="width:700px">
 		<div class="modal-dialog " role="document" style="width:700px">
 			<div class="modal-content">
 				<div class="modal-header" style="border: 0;padding-right: 0">
@@ -526,7 +547,7 @@
                         <span class="help-inline"><font color="red">*</font> </span>
                         <label>名称基本信息：</label>
                         <form:form id="permissionForm2" modelAttribute="businessLicense" action="${ctx}/license/businessLicense/save" method="post">
-                            <table class="table table-bordered table-hover" >
+                            <table id="finalTable" class="table table-bordered table-hover" >
                                 <tbody>
                                 <tr>
                                     <td><span class="help-inline"><font color="red">*</font> </span>行政区划：

@@ -252,6 +252,7 @@ public class BusinessLicenseController extends BaseController {
 	@RequiresPermissions("license:businessLicense:edit")
 	@RequestMapping(value = "applyBusinessLicense")
 	public String testJump(String typeName,Model model) {
+		typeName = "营业执照";
 		BusinessLicense businessLicense = new BusinessLicense();
 		CertificateType certificateType = certificateTypeService.getTypeByName(typeName);
 		businessLicense.setCertificateCode((int)((Math.random()*9+1)*10000000)+businessLicenseService.getCharAndNumr(9)+(int)((Math.random()*9+1)*1));

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.conference.dao.CertificateConferenceSubDao">
+    
+	<sql id="certificateConferenceSubColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.sex AS "sex",
+		a.age AS "age",
+		a.place_origin AS "placeOrigin",
+		a.residence AS "residence",
+		a.currency AS "currency",
+		a.contribution_type AS "contributionType",
+		a.contribution_price AS "contributionPrice",
+		a.total_price AS "totalPrice",
+		a.pay_time AS "payTime",
+		a.conference_id AS "certificateConference.id",
+		a.attend_state AS "attendState",
+		a.fund AS "fund",
+		a.sg AS "sg",
+		a.position AS "position",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate",
+		a.create_by AS "createBy.id",
+		a.update_by AS "updateBy.id"
+	</sql>
+	
+	<sql id="certificateConferenceSubJoins">
+		LEFT JOIN certificate_conference b ON b.id = a.conference_id
+	</sql>
+    
+	<select id="get" resultType="CertificateConferenceSub">
+		SELECT 
+			<include refid="certificateConferenceSubColumns"/>
+		FROM certificate_conference_sub a
+		<include refid="certificateConferenceSubJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CertificateConferenceSub">
+		SELECT 
+			<include refid="certificateConferenceSubColumns"/>
+		FROM certificate_conference_sub a
+		<include refid="certificateConferenceSubJoins"/>
+		<where>
+			
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="sex != null and sex != ''">
+				AND a.sex LIKE 
+					<if test="dbName == 'oracle'">'%'||#{sex}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{sex}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{sex},'%')</if>
+			</if>
+			<if test="placeOrigin != null and placeOrigin != ''">
+				AND a.place_origin LIKE 
+					<if test="dbName == 'oracle'">'%'||#{placeOrigin}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{placeOrigin}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{placeOrigin},'%')</if>
+			</if>
+			<if test="certificateConference != null and certificateConference.id != null and certificateConference.id != ''">
+				AND a.conference_id = #{certificateConference.id}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="CertificateConferenceSub">
+		SELECT 
+			<include refid="certificateConferenceSubColumns"/>
+		FROM certificate_conference_sub a
+		<include refid="certificateConferenceSubJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO certificate_conference_sub(
+			id,
+			name,
+			sex,
+			age,
+			place_origin,
+			residence,
+			currency,
+			contribution_type,
+			contribution_price,
+			total_price,
+			pay_time,
+			conference_id,
+			attend_state,
+			fund,
+			sg,
+			position,
+			create_date,
+			update_date,
+			create_by,
+			update_by
+		) VALUES (
+			#{id},
+			#{name},
+			#{sex},
+			#{age},
+			#{placeOrigin},
+			#{residence},
+			#{currency},
+			#{contributionType},
+			#{contributionPrice},
+			#{totalPrice},
+			#{payTime},
+			#{certificateConference.id},
+			#{attendState},
+			#{fund},
+			#{sg},
+			#{position},
+			#{createDate},
+			#{updateDate},
+			#{createBy.id},
+			#{updateBy.id}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE certificate_conference_sub SET 	
+			name = #{name},
+			sex = #{sex},
+			age = #{age},
+			place_origin = #{placeOrigin},
+			residence = #{residence},
+			currency = #{currency},
+			contribution_type = #{contributionType},
+			contribution_price = #{contributionPrice},
+			total_price = #{totalPrice},
+			pay_time = #{payTime},
+			conference_id = #{certificateConference.id},
+			attend_state = #{attendState},
+			fund = #{fund},
+			sg = #{sg},
+			position = #{position},
+			update_date = #{updateDate},
+			update_by = #{updateBy.id}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM certificate_conference_sub
+		<choose>
+			<when test="id !=null and id != ''">
+				WHERE id = #{id}
+			</when>
+			<otherwise>
+				WHERE conference_id = #{certificateConference.id}
+			</otherwise>
+		</choose>
+	</update>
+	
+</mapper>

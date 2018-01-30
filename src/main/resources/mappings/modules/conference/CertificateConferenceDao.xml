@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.conference.dao.CertificateConferenceDao">
+    
+	<sql id="certificateConferenceColumns">
+		a.id AS "id",
+		a.conference_type AS "conferenceType",
+		a.company_name AS "companyName",
+		a.conference_inform_type AS "conferenceInformType",
+		a.conference_inform_time AS "conferenceInformTime",
+		a.company_addr AS "companyAddr",
+		a.manage_addr AS "manageAddr",
+		a.register_fund AS "registerFund",
+		a.conference_time AS "conferenceTime",
+		a.conclude_date AS "concludeDate",
+		a.conference_addr AS "conferenceAddr",
+		a.set_directors AS "setDirectors",
+		a.rules_pdfpath AS "rulesPdfpath",
+		a.create_date AS "createDate",
+		a.meeting_pafpath AS "meetingPafpath",
+		a.update_date AS "updateDate",
+		a.create_by AS "createBy.id",
+		a.update_by AS "updateBy.id"
+	</sql>
+	
+	<sql id="certificateConferenceJoins">
+	</sql>
+    
+	<select id="get" resultType="CertificateConference">
+		SELECT 
+			<include refid="certificateConferenceColumns"/>
+		FROM certificate_conference a
+		<include refid="certificateConferenceJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CertificateConference">
+		SELECT 
+			<include refid="certificateConferenceColumns"/>
+		FROM certificate_conference a
+		<include refid="certificateConferenceJoins"/>
+		<where>
+			
+			<if test="companyName != null and companyName != ''">
+				AND a.company_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{companyName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{companyName}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{companyName},'%')</if>
+			</if>
+			<if test="conferenceTime != null and conferenceTime != ''">
+				AND a.conference_time LIKE 
+					<if test="dbName == 'oracle'">'%'||#{conferenceTime}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{conferenceTime}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{conferenceTime},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="CertificateConference">
+		SELECT 
+			<include refid="certificateConferenceColumns"/>
+		FROM certificate_conference a
+		<include refid="certificateConferenceJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO certificate_conference(
+			id,
+			conference_type,
+			company_name,
+			conference_inform_type,
+			conference_inform_time,
+			company_addr,
+			manage_addr,
+			register_fund,
+			conference_time,
+			conclude_date,
+			conference_addr,
+			set_directors,
+			rules_pdfpath,
+			create_date,
+			meeting_pafpath,
+			update_date,
+			create_by,
+			update_by
+		) VALUES (
+			#{id},
+			#{conferenceType},
+			#{companyName},
+			#{conferenceInformType},
+			#{conferenceInformTime},
+			#{companyAddr},
+			#{manageAddr},
+			#{registerFund},
+			#{conferenceTime},
+			#{concludeDate},
+			#{conferenceAddr},
+			#{setDirectors},
+			#{rulesPdfpath},
+			#{createDate},
+			#{meetingPafpath},
+			#{updateDate},
+			#{createBy.id},
+			#{updateBy.id}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE certificate_conference SET 	
+			conference_type = #{conferenceType},
+			company_name = #{companyName},
+			conference_inform_type = #{conferenceInformType},
+			conference_inform_time = #{conferenceInformTime},
+			company_addr = #{companyAddr},
+			manage_addr = #{manageAddr},
+			register_fund = #{registerFund},
+			conference_time = #{conferenceTime},
+			conclude_date = #{concludeDate},
+			conference_addr = #{conferenceAddr},
+			set_directors = #{setDirectors},
+			update_date = #{updateDate},
+			update_by = #{updateBy.id}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM certificate_conference
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
