@@ -5,13 +5,14 @@ package com.thinkgem.jeesite.modules.conference.service;
 
 import java.util.List;
 
+import com.thinkgem.jeesite.common.utils.*;
+import com.thinkgem.jeesite.modules.license.entity.BusinessLicense;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
-import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.conference.entity.CertificateConference;
 import com.thinkgem.jeesite.modules.conference.dao.CertificateConferenceDao;
 import com.thinkgem.jeesite.modules.conference.entity.CertificateConferenceSub;
@@ -46,6 +47,21 @@ public class CertificateConferenceService extends CrudService<CertificateConfere
 	@Transactional(readOnly = false)
 	public void save(CertificateConference certificateConference) {
 		super.save(certificateConference);
+		BusinessLicense businessLicense = (BusinessLicense) CacheUtils.get("businessLicense","businessLicense");
+		final String path = "E:\\certificate\\BusinessModel\\有限公司章程参考版本3.pdf";
+
+		final String savaPath = "E:\\certificate\\Rules\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()
+				+"+有限公司章程"+".pdf";
+
+		FileUtils.createDirectory("E:\\certificate\\Rules\\"+businessLicense.getCertificateName());
+		try {
+
+			PDFUtil_rules.fillTemplate(businessLicense,certificateConference, path, savaPath);
+
+		}catch (Exception E){
+			E.printStackTrace();
+		}
+
 		for (CertificateConferenceSub certificateConferenceSub : certificateConference.getCertificateConferenceSubList()){
 			if (certificateConferenceSub.getId() == null){
 				continue;

@@ -87,12 +87,17 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 
 		final String path = "E:\\certificate\\BusinessModel\\名称预先核准申请书减缩版22222.pdf";
 
-		final String savaPath = "E:\\certificate\\Business\\"+"名称预先核准申请书"+".pdf";
+		final String savaPath = "E:\\certificate\\Application\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()
+				+"+名称预先核准申请书"+".pdf";
+
+		FileUtils.createDirectory("E:\\certificate\\Application\\"+businessLicense.getCertificateName());
 
 		//申请发起
 		if(StringUtils.isBlank(businessLicense.getId())){
 			businessLicense.preInsert();
 			dao.insert(businessLicense);
+			//加入缓存
+			CacheUtils.put("businessLicense","businessLicense",businessLicense);
 
 			try {
 
