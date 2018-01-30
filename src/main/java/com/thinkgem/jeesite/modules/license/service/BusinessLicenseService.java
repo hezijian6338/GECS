@@ -59,14 +59,17 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 	@Autowired
 	private BusinessLicenseDao businessLicenseDao;
 
+	@Override
 	public BusinessLicense get(String id) {
 		return super.get(id);
 	}
 
+	@Override
 	public List<BusinessLicense> findList(BusinessLicense businessLicense) {
 		return super.findList(businessLicense);
 	}
 
+	@Override
 	public Page<BusinessLicense> findPage(Page<BusinessLicense> page, BusinessLicense businessLicense) {
 		return super.findPage(page, businessLicense);
 	}
@@ -77,6 +80,7 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 	 * @DATE: 2017\10\11 0011 9:36
 	 */
 
+	@Override
 	@Transactional(readOnly = false)
 	public void save(BusinessLicense businessLicense) {
 		DateFormat df = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
@@ -176,8 +180,6 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 					oaNotify.setStatus("审核通过");
 					oaNotify.setFiles(realativePath);
 					oaNotifyService.updateStatus(oaNotify);
-
-
 
 					try {
 						//开始盖章
