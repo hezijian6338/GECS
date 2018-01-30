@@ -488,7 +488,7 @@
 		</fieldset>
 		<div class="form-actions">
 			<shiro:hasPermission name="license:businessLicense:edit">
-				<input id="btnSubmit" class="btn btn-primary" type="submit" value="提交申请" onclick="$('#flag').val('yes')"/>&nbsp;
+				<input id="btnSubmit" class="btn btn-primary" type="submit" value="下一步" onclick="$('#flag').val('yes')"/>&nbsp;
 				<c:if test="${not empty businessLicense.id}">
 					<input id="btnSubmit2" class="btn btn-inverse" type="submit" value="销毁申请" onclick="$('#flag').val('no')"/>&nbsp;
 				</c:if>
