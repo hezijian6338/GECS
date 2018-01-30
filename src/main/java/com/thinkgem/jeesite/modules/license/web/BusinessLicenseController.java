@@ -288,7 +288,8 @@ public class BusinessLicenseController extends BaseController {
 	@RequestMapping(value = "checkCertificateName")
 	public String checkCertificateName(String certificateName){
 
-		String realCertifcateName = certificateName.substring(1);
+		String realCertifcateName = certificateName.substring(0);
+		System.out.println("真实公司名称=="+realCertifcateName);
 		List<BusinessLicense> list = businessLicenseService.getByCertificateName(realCertifcateName);
 
 		if (list.size()>0){

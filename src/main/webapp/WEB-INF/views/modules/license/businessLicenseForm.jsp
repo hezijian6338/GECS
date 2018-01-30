@@ -171,17 +171,37 @@
             //隐藏窗体的滚动条
             $("body").css({"overflow": "hidden"});
             setTimeout(function () {
+
                 var tableCom =document.getElementById("finalTable");
 
                 var finalName = tableCom.getElementsByTagName("tr")[2].cells[1].innerHTML;
-                //alert(finalName);
-                $("#certificateName").attr("value",finalName);
 
+                $.ajax({
+                    type: "post",
+                    url: "${ctx}/license/businessLicense/checkCertificateName?certificateName=" +finalName,
+                    dataType: "json",
+                    success: function (result) {
 
-                $(".bg-model").hide();
-                $("#myModal2").modal("hide");
-                //显示窗体
-                $("body").css({"overflow":"hidden"});
+                        if (result == true) {
+
+                                //alert(finalName);
+                                $("#certificateName").attr("value",finalName);
+
+                                $(".bg-model").hide();
+                                $("#myModal2").modal("hide");
+                                //显示窗体
+                                $("body").css({"overflow":"hidden"});
+
+                            }else{
+                                alert("亲，这个名称已存在，请重试！");
+                                $(".bg-model").hide();
+                                //显示窗体的滚动条
+                                $("body").css({"overflow": "visible"});
+
+                         }
+                        }
+                    });
+
 
             },2000);
         }
@@ -594,7 +614,7 @@
                                         </form:select>
                                     </td>
                                     <td>
-                                        <button type="submit" class="btn btn-primary">查重</button>
+                                        <%--<button type="button" class="btn btn-primary">查重</button>--%>&nbsp;
                                     </td>
                                 </tr>
                                 <tr>

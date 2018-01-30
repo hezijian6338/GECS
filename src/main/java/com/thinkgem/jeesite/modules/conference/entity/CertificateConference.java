@@ -25,13 +25,15 @@ public class CertificateConference extends DataEntity<CertificateConference> {
 	private Date conferenceInformTime;		// 通知时间
 	private String companyAddr;		// 公司地址
 	private String manageAddr;		// 经营场所
+	private String shareholdersNum;		// 股东人数
 	private String registerFund;		// 注册资本
 	private Date conferenceTime;		// 会议时间
 	private Date concludeDate;		// 章程订立日期
 	private String conferenceAddr;		// 会议地址
 	private String setDirectors;		// 是否设立董事会
 	private String rulesPdfpath;		// 章程pdf路径
-	private String meetingPafpath;		// 会议决议pdf路径
+	private String applynamePdfpath;		// 名称申请书pdf路径
+	private String meetingPdfpath;		// 会议决议pdf路径
 	private List<CertificateConferenceSub> certificateConferenceSubList = Lists.newArrayList();		// 子表列表
 	
 	public CertificateConference() {
@@ -96,6 +98,15 @@ public class CertificateConference extends DataEntity<CertificateConference> {
 		this.manageAddr = manageAddr;
 	}
 	
+	@Length(min=0, max=11, message="股东人数长度必须介于 0 和 11 之间")
+	public String getShareholdersNum() {
+		return shareholdersNum;
+	}
+
+	public void setShareholdersNum(String shareholdersNum) {
+		this.shareholdersNum = shareholdersNum;
+	}
+	
 	@Length(min=0, max=12, message="注册资本长度必须介于 0 和 12 之间")
 	public String getRegisterFund() {
 		return registerFund;
@@ -150,13 +161,22 @@ public class CertificateConference extends DataEntity<CertificateConference> {
 		this.rulesPdfpath = rulesPdfpath;
 	}
 	
-	@Length(min=0, max=255, message="会议决议pdf路径长度必须介于 0 和 255 之间")
-	public String getMeetingPafpath() {
-		return meetingPafpath;
+	@Length(min=0, max=255, message="名称申请书pdf路径长度必须介于 0 和 255 之间")
+	public String getApplynamePdfpath() {
+		return applynamePdfpath;
 	}
 
-	public void setMeetingPafpath(String meetingPafpath) {
-		this.meetingPafpath = meetingPafpath;
+	public void setApplynamePdfpath(String applynamePdfpath) {
+		this.applynamePdfpath = applynamePdfpath;
+	}
+	
+	@Length(min=0, max=255, message="会议决议pdf路径长度必须介于 0 和 255 之间")
+	public String getMeetingPdfpath() {
+		return meetingPdfpath;
+	}
+
+	public void setMeetingPdfpath(String meetingPdfpath) {
+		this.meetingPdfpath = meetingPdfpath;
 	}
 	
 	public List<CertificateConferenceSub> getCertificateConferenceSubList() {

@@ -3,11 +3,15 @@
  */
 package com.thinkgem.jeesite.common.utils;
 
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.*;
-
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.pdf.AcroFields;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfStamper;
 import com.thinkgem.jeesite.modules.license.entity.BusinessLicense;
-import com.thinkgem.jeesite.modules.sys.service.SystemService;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -21,7 +25,7 @@ import java.util.Map;
  *
  * @CreateTime 2011-4-14 下午02:44:11
  */
-public class PDFUtil {
+public class PDFUtil_mingzi {
 
 
     //  public static final String CHARACTOR_FONT_CH_FILE = "SIMFANG.TTF";  //仿宋常规
@@ -390,84 +394,31 @@ public class PDFUtil {
         s.setFieldProperty("idarea", "textfont", bfChinese, null);
         s.setFieldProperty("id0area", "textsize", new Float(15), null);
 
-        //向相关的文本域注入根据名字
-//                s.setField("Name", fillSpace(BusinessLicense.getStuName() ,15 , isNull(s,"Name")));
+        //以下是名称预选申请书注入：
+        //公司名称注入
+        s.setField("companyName", fillSpace(businessLicense.getCertificateName() ,10 , isNull(s,"companyName")));
 
-//                s.setField("EngFamilyName", fillSpace(BusinessLicense.getStuName() ,15 , isNull(s,"EngFamilyName")));
-//
-//                s.setField("EngName", fillSpace(BusinessLicense.getStuName() ,15 , isNull(s,"EngName")));
-//
-//                s.setField("Sex", fillSpace(BusinessLicense.getStuName() ,15 , isNull(s,"Sex")));
-//
-//                s.setField("EngSex", fillSpace(BusinessLicense.getStuName() ,15 , isNull(s,"EngSex")));
-        //注册公司类型 ：（如：责任有限公司）
-        s.setField("idcertificateType", fillSpace(businessLicense.getRegisteredType() ,15 , isNull(s,"idcertificateType")));
         //统一社会信用代码
-        s.setField("idcertificateCode", fillSpace(businessLicense.getCertificateCode() ,15 , isNull(s,"idcertificateCode")));
-//        System.out.println("统一社会信用代码"+businessLicense.getCertificateCode());
-        s.setField("idcertificateName", fillSpace(businessLicense.getCertificateName() ,15 , isNull(s,"idcertificateName")));
+        s.setField("idcertificateCode", fillSpace(businessLicense.getCertificateCode() ,10 , isNull(s,"idcertificateCode")));
 
-        s.setField("idoffice", fillSpace(String.valueOf(businessLicense.getOffice()),15 , isNull(s,"idoffice")));
-//        System.out.println("++++++++"+businessLicense.getScope().getName()+"====="+String.valueOf(businessLicense.getScope().getName()));
+        //场所注入
+        s.setField("idaddress", fillSpace(businessLicense.getAddress() ,10 , isNull(s,"idaddress")));
 
-        String EstablishDate1 = df.format(businessLicense.getEstablishDate());
-        String EstablishDateYear1 = EstablishDate1.substring(0,EstablishDate1.indexOf("年"));
-        String EstablishDateMonth1 = EstablishDate1.substring(EstablishDate1.indexOf("年")+1,EstablishDate1.indexOf("月"));
-        String EstablishDateDay1 = EstablishDate1.substring(EstablishDate1.indexOf("月")+1,EstablishDate1.indexOf("日"));
+        //注册金额注入
+        s.setField("money", fillSpace(businessLicense.getRegisteredCapital() ,10 , isNull(s,"money")));
 
-        s.setField("idestablishDate", fillSpace(EstablishDate1 ,15 , isNull(s,"idestablishDate")));
+        //经营范围
+        s.setField("idscope", fillSpace(String.valueOf(businessLicense.getScope().getName()),10 , isNull(s,"idscope")));
 
-        s.setField("idestablishDateYear", fillSpace(EstablishDateYear1 ,15 , isNull(s,"idestablishDateYear")));
+        //法人姓名注入
+        s.setField("persionName", fillSpace(businessLicense.getPersionName() ,10 , isNull(s,"persionName")));
 
-        s.setField("idestablishDateMonth", fillSpace(EstablishDateMonth1 ,15 , isNull(s,"idestablishDateMonth")));
+        //法人证件号码注入
+        s.setField("personId", fillSpace(businessLicense.getPersonId() ,10 , isNull(s,"personId")));
 
-        s.setField("idestablishDateDay", fillSpace(EstablishDateDay1 ,15 , isNull(s,"idestablishDateDay")));
+        String dateTime = (new SimpleDateFormat("yyyy年MM月dd日")).format(new Date());
 
-
-        String effectiveDateStar1 = df.format(businessLicense.getEffectiveDateStar());
-        s.setField("ideffectiveDateStar", fillSpace(effectiveDateStar1,15 , isNull(s,"ideffectiveDateStar")));
-
-        String effectiveDateEnd1 = df.format(businessLicense.getEffectiveDateEnd());
-        s.setField("ideffectiveDateEnd", fillSpace(effectiveDateEnd1,15 , isNull(s,"ideffectiveDateEnd")));
-
-        s.setField("idregisteredType", fillSpace(businessLicense.getRegisteredType() ,15 , isNull(s,"idregisteredType")));
-
-        s.setField("idregisteredCapital", fillSpace(businessLicense.getRegisteredCapital() ,15 , isNull(s,"idregisteredCapital")));
-
-        s.setField("idaddress", fillSpace(businessLicense.getAddress() ,15 , isNull(s,"idaddress")));
-
-        s.setField("idpersionName", fillSpace(businessLicense.getPersionName() ,15 , isNull(s,"idpersionName")));
-
-        s.setField("idpersionIdType", fillSpace(businessLicense.getPersionIdType() ,15 , isNull(s,"idpersionIdType")));
-
-        s.setField("idpersonId", fillSpace(businessLicense.getPersonId() ,15 , isNull(s,"idpersonId")));
-
-        s.setField("idpersionPhone", fillSpace(businessLicense.getPersionPhone() ,15 , isNull(s,"idpersionPhone")));
-
-        s.setField("idhandlerName", fillSpace(businessLicense.getHandlerName() ,15 , isNull(s,"idhandlerName")));
-
-        s.setField("idhandlerIdType", fillSpace(businessLicense.getHandlerId() ,15 , isNull(s,"idhandlerIdType")));
-
-        s.setField("idhandlerId", fillSpace(businessLicense.getHandlerId() ,15 , isNull(s,"idhandlerId")));
-
-        s.setField("idhandlerPhone", fillSpace(businessLicense.getHandlerPhone() ,15 , isNull(s,"idhandlerPhone")));
-
-        s.setField("idscope", fillSpace(String.valueOf(businessLicense.getScope().getName()),15 , isNull(s,"idscope")));
-
-        s.setField("idbuildingName", fillSpace(businessLicense.getBuildingName() ,15 , isNull(s,"idbuildingName")));
-
-        s.setField("idfloorNumber", fillSpace(businessLicense.getFloorNumber() ,15 , isNull(s,"idfloorNumber")));
-
-        s.setField("iduseArea", fillSpace(businessLicense.getUseArea() ,15 , isNull(s,"iduseArea")));
-
-        s.setField("idusage1", fillSpace(businessLicense.getUsage1() ,15 , isNull(s,"idusage1")));
-
-        s.setField("iddealfireFacilities", fillSpace(businessLicense.getDealfireFacilities() ,15 , isNull(s,"iddealfireFacilities")));
-
-        s.setField("idpostcode", fillSpace(businessLicense.getPostcode(),15 , isNull(s,"idpostcode")));
-
-        s.setField("idarea", fillSpace(String.valueOf(businessLicense.getArea()),15 , isNull(s,"idarea")));
-
+        s.setField("dateTime", fillSpace(dateTime ,10 , isNull(s,"dateTime")));
 
         ps.setFormFlattening(true); // 这句不能少
         ps.close();

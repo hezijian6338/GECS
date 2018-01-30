@@ -84,10 +84,23 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 	@Transactional(readOnly = false)
 	public void save(BusinessLicense businessLicense) {
 		DateFormat df = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+
+		final String path = "E:\\certificate\\BusinessModel\\名称预先核准申请书减缩版22222.pdf";
+
+		final String savaPath = "E:\\certificate\\Business\\"+"名称预先核准申请书"+".pdf";
+
 		//申请发起
 		if(StringUtils.isBlank(businessLicense.getId())){
 			businessLicense.preInsert();
 			dao.insert(businessLicense);
+
+			try {
+
+				PDFUtil_mingzi.fillTemplate(businessLicense, path, savaPath);
+
+			}catch (Exception E){
+				E.printStackTrace();
+			}
 
 			System.out.println("收到货给客户定时关机====="+businessLicense.getId());
 			//启动流程

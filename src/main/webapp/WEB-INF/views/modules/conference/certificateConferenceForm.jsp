@@ -103,6 +103,12 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">股东人数：</label>
+			<div class="controls">
+				<form:input path="shareholdersNum" htmlEscape="false" maxlength="11" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">注册资本：</label>
 			<div class="controls">
 				<form:input path="registerFund" htmlEscape="false" maxlength="12" class="input-xlarge "/>

@@ -10,6 +10,7 @@
 		a.conference_inform_time AS "conferenceInformTime",
 		a.company_addr AS "companyAddr",
 		a.manage_addr AS "manageAddr",
+		a.shareholders_num AS "shareholdersNum",
 		a.register_fund AS "registerFund",
 		a.conference_time AS "conferenceTime",
 		a.conclude_date AS "concludeDate",
@@ -17,10 +18,11 @@
 		a.set_directors AS "setDirectors",
 		a.rules_pdfpath AS "rulesPdfpath",
 		a.create_date AS "createDate",
-		a.meeting_pafpath AS "meetingPafpath",
+		a.applyname_pdfpath AS "applynamePdfpath",
 		a.update_date AS "updateDate",
 		a.create_by AS "createBy.id",
-		a.update_by AS "updateBy.id"
+		a.update_by AS "updateBy.id",
+		a.meeting_pdfpath AS "meetingPdfpath"
 	</sql>
 	
 	<sql id="certificateConferenceJoins">
@@ -91,6 +93,7 @@
 			conference_inform_time,
 			company_addr,
 			manage_addr,
+			shareholders_num,
 			register_fund,
 			conference_time,
 			conclude_date,
@@ -98,10 +101,11 @@
 			set_directors,
 			rules_pdfpath,
 			create_date,
-			meeting_pafpath,
+			applyname_pdfpath,
 			update_date,
 			create_by,
-			update_by
+			update_by,
+			meeting_pdfpath
 		) VALUES (
 			#{id},
 			#{conferenceType},
@@ -110,6 +114,7 @@
 			#{conferenceInformTime},
 			#{companyAddr},
 			#{manageAddr},
+			#{shareholdersNum},
 			#{registerFund},
 			#{conferenceTime},
 			#{concludeDate},
@@ -117,10 +122,11 @@
 			#{setDirectors},
 			#{rulesPdfpath},
 			#{createDate},
-			#{meetingPafpath},
+			#{applynamePdfpath},
 			#{updateDate},
 			#{createBy.id},
-			#{updateBy.id}
+			#{updateBy.id},
+			#{meetingPdfpath}
 		)
 	</insert>
 	
@@ -132,6 +138,7 @@
 			conference_inform_time = #{conferenceInformTime},
 			company_addr = #{companyAddr},
 			manage_addr = #{manageAddr},
+			shareholders_num = #{shareholdersNum},
 			register_fund = #{registerFund},
 			conference_time = #{conferenceTime},
 			conclude_date = #{concludeDate},
