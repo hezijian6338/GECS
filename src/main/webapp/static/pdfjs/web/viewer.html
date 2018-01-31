@@ -412,18 +412,16 @@ See https://github.com/adobe-type-tools/cmap-resources
     //验签
     $(function() {
         $("#getVerification").click(function () {
-            $("#fade").show();
-            $("#mydiv").show();
+
             $("#result").html("");
-            var token = "12bb5c82-b65b-4aab-b8a0-87d19587eabe";
-            var formdata = new FormData($("#validate")[0]);
+            var formdata = "C:/test/sign/done/23/test-1517392539628.pdf"
             console.log(formdata);
             $.ajax({
 //                url: "http://sign.ieseals.cn:9961/qm/a/signature/qm/pass/Verify.do?token="+token,
-                url: "http://localhost:8081/a/signature/qm/pass/Verify.do?token=" + token,
+                url: "http://localhost:8086/a/verify/certificate/info",
                 type: "POST",
                 data: formdata,
-                dataType: "JSON",
+//                dataType: "JSON",
                 cache: false,
                 processData: false,
                 contentType: false,
