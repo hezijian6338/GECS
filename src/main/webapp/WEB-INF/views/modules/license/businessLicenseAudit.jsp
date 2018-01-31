@@ -266,13 +266,13 @@
                 <tr>
                     <td class="tit" colspan="2"><strong>股东会决议</strong></td>
                     <td>
-                        <a class="btn btn-primary" data-toggle="modal" onclick="checkDoc('${businessLicense.path}',2)">查看</a>
+                        <a class="btn btn-primary" data-toggle="modal" onclick="checkDoc('${businessLicense.certificateName}',2)">查看</a>
                     </td>
                 </tr>
                 <tr>
                     <td class="tit" colspan="2"><strong>公司章程</strong></td>
                     <td>
-                        <a class="btn btn-primary" data-toggle="modal" onclick="checkDoc('${businessLicense.path}',3)">查看</a>
+                        <a class="btn btn-primary" data-toggle="modal" onclick="checkDoc('${businessLicense.certificateName}',3)">查看</a>
                     </td>
                 </tr>
             </center>
