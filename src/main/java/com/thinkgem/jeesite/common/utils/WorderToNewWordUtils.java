@@ -192,8 +192,8 @@ public class WorderToNewWordUtils {
     
     public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String inputUrl = "D:\\template.docx";
-		String outputUrl = "D:\\template1.docx";
+		String inputUrl = "D:\\template.doc";
+		String outputUrl = "D:\\template1.doc";
 		
 		Map<String, String> testMap = new HashMap<String,String>();
 		testMap.put("name", "许彩开");

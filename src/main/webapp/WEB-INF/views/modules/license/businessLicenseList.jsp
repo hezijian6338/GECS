@@ -103,7 +103,7 @@
 		<th>法人姓名</th>
 		<th>经办人姓名</th>
 		<th>经营/业务/许可范围</th>
-		<th>所属区域</th>
+		<%--<th>所属区域</th>--%>
 		<th>状态</th>
 		<th>创建者</th>
 		<th>更新时间</th>
@@ -145,9 +145,9 @@
 					${businessLicense.scope.name}
 			</td>
 
-			<td>
+			<%--<td>
 					${businessLicense.area.name}
-			</td>
+			</td>--%>
 			<td>
 				<c:if test="${businessLicense.status eq '审核通过'}">
 				<font size="3" color="green">

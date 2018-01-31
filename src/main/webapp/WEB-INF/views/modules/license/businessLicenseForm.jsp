@@ -450,7 +450,7 @@
 						<sys:treeselect id="area" name="area.id" value="${businessLicense.area.id}" labelName="area.name" labelValue="${businessLicense.area.name}" title="区域" url="/sys/area/treeData" cssClass="required" allowClear="true" notAllowSelectParent="true"/>
 					</td>
 				</tr>--%>
-				<tr>
+				<%--<tr>
 					<td class="tit">审批人1的意见</td>
 					<td colspan="5">
 						${businessLicense.opinion1}
@@ -473,7 +473,7 @@
 					<td colspan="5">
 							${businessLicense.opinion4}
 					</td>
-				</tr>
+				</tr>--%>
 				<tr>
 					<td class="tit">备注信息</td>
 					<td colspan="5">

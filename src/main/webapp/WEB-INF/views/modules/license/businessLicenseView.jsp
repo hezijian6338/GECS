@@ -157,7 +157,7 @@
                     <form:input path="handlerPhone" htmlEscape="false" maxlength="20" class="input-xlarge " readonly="true"/>
                 </td>
             </tr>
-            <tr>
+           <%-- <tr>
                 <td colspan="6" class="tit">所入驻建筑信息</td>
             </tr>
             <tr>
@@ -193,7 +193,7 @@
                 <td colspan="3">
 					${businessLicense.area.name}
                 </td>
-            </tr>
+            </tr>--%>
             <tr>
                 <td class="tit">审批人1的意见</td>
                 <td colspan="5">

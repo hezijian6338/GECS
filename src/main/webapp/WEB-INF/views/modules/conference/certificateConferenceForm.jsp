@@ -57,93 +57,93 @@
 	</script>
 </head>
 <body>
+<div class="center clearfix" style="padding-top: 2%;width: 82%;min-width: 1060px;margin-left: auto;margin-right: auto">
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/conference/certificateConference/">股东会议表列表</a></li>
 		<li class="active"><a href="${ctx}/conference/certificateConference/form?id=${certificateConference.id}">股东会议表<shiro:hasPermission name="conference:certificateConference:edit">${not empty certificateConference.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="conference:certificateConference:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="certificateConference" action="${ctx}/conference/certificateConference/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
-		<sys:message content="${message}"/>		
-		<div class="control-group">
-			<label class="control-label">会议类型：</label>
-			<div class="controls">
+		<sys:message content="${message}"/>
+	<table class="table-form">
+		<tr>
+			<td class="tit">会议类型：</td>
+			<td>
 				<form:input path="conferenceType" htmlEscape="false" maxlength="24" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">公司名称：</label>
-			<div class="controls">
+				<span class="help-inline"><font color="red">*</font> </span>
+			</td>
+			<td class="tit">公司名称：</td>
+			<td>
 				<form:input path="companyName" htmlEscape="false" maxlength="40" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">通知方式：</label>
-			<div class="controls">
+				<span class="help-inline"><font color="red">*</font> </span>
+			</td>
+			<td class="tit">通知方式：</td>
+			<td>
 				<form:input path="conferenceInformType" htmlEscape="false" maxlength="64" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">通知时间：</label>
-			<div class="controls">
+				<span class="help-inline"><font color="red">*</font> </span>
+			</td>
+		</tr>
+		<tr>
+			<td class="tit">通知时间：</td>
+			<td>
 				<input name="conferenceInformTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
 					value="<fmt:formatDate value="${certificateConference.conferenceInformTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">公司地址：</label>
-			<div class="controls">
+				<span class="help-inline"><font color="red">*</font> </span>
+			</td>
+			<td class="tit">公司地址：</td>
+			<td>
 				<form:input path="companyAddr" htmlEscape="false" maxlength="120" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">经营场所：</label>
-			<div class="controls">
+				<span class="help-inline"><font color="red">*</font> </span>
+			</td>
+			<td class="tit">经营场所：</td>
+			<td>
 				<form:input path="manageAddr" htmlEscape="false" maxlength="120" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">股东人数：</label>
-			<div class="controls">
+				<span class="help-inline"><font color="red">*</font> </span>
+			</td>
+		</tr>
+		<tr>
+			<td class="tit">股东人数：</td>
+			<td>
 				<form:input path="shareholdersNum" htmlEscape="false" maxlength="11" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">注册资本：</label>
-			<div class="controls">
+				<span class="help-inline"><font color="red">*</font> </span>
+			</td>
+			<td class="tit">注册资本：</td>
+			<td>
 				<form:input path="registerFund" htmlEscape="false" maxlength="12" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">会议时间：</label>
-			<div class="controls">
+				<span class="help-inline"><font color="red">*</font> </span>
+			</td>
+			<td class="tit">会议时间：</td>
+			<td>
 				<input name="conferenceTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
 					value="<fmt:formatDate value="${certificateConference.conferenceTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">章程订立日期：</label>
-			<div class="controls">
+				<span class="help-inline"><font color="red">*</font> </span>
+			</td>
+		</tr>
+		<tr>
+			<td class="tit">章程订立日期：</td>
+			<td>
 				<input name="concludeDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
 					value="<fmt:formatDate value="${certificateConference.concludeDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">会议地址：</label>
-			<div class="controls">
+				<span class="help-inline"><font color="red">*</font> </span>
+			</td>
+			<td class="tit">会议地址：</td>
+			<td>
 				<form:input path="conferenceAddr" htmlEscape="false" maxlength="255" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">是否设立董事会：</label>
-			<div class="controls">
+				<span class="help-inline"><font color="red">*</font> </span>
+			</td>
+			<td class="tit">是否设立董事会：</td>
+			<td>
 				<form:input path="setDirectors" htmlEscape="false" maxlength="6" class="input-xlarge "/>
-			</div>
-		</div>
+				<span class="help-inline"><font color="red">*</font> </span>
+			</td>
+		</tr>
 			<div class="control-group">
+<%--
 				<label class="control-label">股东表：</label>
+--%>
 				<div class="controls">
 					<table id="contentTable" class="table table-striped table-bordered table-condensed">
 						<thead>
@@ -242,6 +242,8 @@
 			<shiro:hasPermission name="conference:certificateConference:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
+	</table>
 	</form:form>
+</div>
 </body>
 </html>

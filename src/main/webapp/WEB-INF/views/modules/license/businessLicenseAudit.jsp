@@ -178,7 +178,7 @@
                     <form:input path="handlerPhone" htmlEscape="false" maxlength="20" class="input-xlarge " readonly="true"/>
                 </td>
             </tr>
-            <tr>
+           <%-- <tr>
                 <td colspan="6" class="tit">所入驻建筑信息</td>
             </tr>
             <tr>
@@ -212,11 +212,11 @@
                 </td>
                 <td class="tit">所属区域</td>
                 <td colspan="3">
-<%--                     <sys:treeselect id="area" name="area.id" value="${businessLicense.area.id}" labelName="area.name" labelValue="${businessLicense.area.name}" title="区域" url="/sys/area/treeData" cssClass="" allowClear="true" notAllowSelectParent="true"/>
- --%>               
+&lt;%&ndash;                     <sys:treeselect id="area" name="area.id" value="${businessLicense.area.id}" labelName="area.name" labelValue="${businessLicense.area.name}" title="区域" url="/sys/area/treeData" cssClass="" allowClear="true" notAllowSelectParent="true"/>
+ &ndash;%&gt;
 				 	${businessLicense.area.name}
 				 </td>
-            </tr>
+            </tr>--%>
             <tr>
                 <td class="tit">审批人1的意见</td>
                 <td colspan="5">
