@@ -26,21 +26,51 @@ See https://github.com/adobe-type-tools/cmap-resources
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="google" content="notranslate">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>PDF.js viewer</title>
-
-
+    <title>展示pdf文件</title>
     <link rel="stylesheet" href="viewer.css">
-
-
-
+    <style type="text/css">
+      .btn-upload{
+        width: 40%;
+        padding: 4px 8px;
+        font-size: 20px;
+        background-color: #6b6b6b;
+        color: #fff;
+        border-radius: 3px;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+      }
+      .black_overlay{
+        /*display: none;*/
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+        z-index:1001;
+      }
+      .white_content {
+        /*display: none;*/
+        position: absolute;
+        top: 15%;
+        left: 30%;
+        text-align:center;
+        width: 40%;
+        height: auto;
+        background-color: rgb(236,236,236);
+        border-radius: 16px;
+        z-index:1002;
+        overflow: auto;
+      }
+    </style>
 
 <!-- This snippet is used in production (included from viewer.html) -->
 <link rel="resource" type="application/l10n" href="locale/locale.properties">
 <script src="l10n.js"></script>
 <script src="../build/pdf.js"></script>
-
-
-    <script src="viewer.js"></script>
+<script language="JavaScript" src="../../jquery/jquery-1.9.1.js"></script>
+<script src="viewer.js"></script>
 
   </head>
 
@@ -351,9 +381,103 @@ See https://github.com/adobe-type-tools/cmap-resources
           </div>
         </div>
       </div>  <!-- overlayContainer -->
+      <div style="text-align: center;position: fixed;bottom: 0;left: calc((100% - 100px)/2);z-index: 999">
+        <button id="getVerification" class="btn-upload" style="width: 120px;z-index: 999;
+        background-color: #FF4500">验证签名</button>
 
+        <button id="wait-btn" class="btn-upload" type="button"
+                style="width: 200px;z-index: 999;display:none;background-color: #FF4500">
+          <img width="18px" height="" src="images/loading-icon.gif">
+          &nbsp;验签中,请稍后...
+        </button>
+      </div>
+
+      <!--验证成功弹出层-->
+      <div id="fade" class="black_overlay"></div>
+      <div id="mydiv" class="white_content">
+        <div style="position:relative;top:-30px;height: 10%; background-color:rgb(72, 135, 238)">
+          <h4 style="color: #ffffff;font-size: 20px;position:relative;top: 15px;">验签结果</h4>
+          <span id="close" style="cursor: pointer;float: right;font-size: 40px;
+        color: #ffffff;position:absolute;top: 1px;right: 10px;">×</span>
+        </div>
+        <!--<p>本文档共包含电子签章个数：2</p>-->
+        <div id="result" style="margin-top:-20px;text-align: left">
+        </div>
+      </div>
     </div> <!-- outerContainer -->
     <div id="printContainer"></div>
   </body>
+
+<script type="text/javascript">
+    //验签
+    $(function() {
+        $("#getVerification").click(function () {
+            $("#fade").show();
+            $("#mydiv").show();
+            $("#result").html("");
+            var token = "12bb5c82-b65b-4aab-b8a0-87d19587eabe";
+            var formdata = new FormData($("#validate")[0]);
+            console.log(formdata);
+            $.ajax({
+//                url: "http://sign.ieseals.cn:9961/qm/a/signature/qm/pass/Verify.do?token="+token,
+                url: "http://localhost:8081/a/signature/qm/pass/Verify.do?token=" + token,
+                type: "POST",
+                data: formdata,
+                dataType: "JSON",
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function (result) {
+                    if (result.code == 200) {
+                        $("#result").append("<span style='font-weight: bold;margin-left: 35%;'>本文档共包含电子签章个数：" + result.entity.length + "</span>")
+                        for (var i = 0; i < result.entity.length; i++) {
+                            var j = i + 1;
+//                            var date = changeDate(result.entity[i].signDate);
+                            var html = "<p>序号：" + j + "</p>"
+                            html += "<p style='display: inline;'>签&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名："
+                                + "<div style='width:150px;height: 80px;background: white; border-top: 1px solid #838B83;border-left:1px solid #838B83; display: inline-block;'>"
+                                + "<img src='data:image/png;base64," + result.entity[i].signImage + "' style='width:150px;height: 80px;'>"
+                                + "</div></p>"
+                            html += "<p>文档标题：" + result.entity[i].fileName + "</p>"
+                            html += "<p>签章用户：" + result.entity[i].signer + "</p>"
+                            html += "<p>签章日期：" + result.entity[i].signDate + "</p>"
+
+                            html += "<p>签章有效性：" + result.entity[i].isSignValid + "</p>"
+                            html += "<p>证书持有人：" + result.entity[i].cerHolder + "</p>"
+                            html += "<p>证书颁发机构：" + result.entity[i].cerAuthority + "</p>"
+                            html += "<p>证书有效期：" + result.entity[i].cerDate + "</p>"
+                            html += "<p>签章所用证书当前状态：" + result.entity[i].cerState + "</p>"
+                            html += "<p>签章原因：" + result.entity[i].cerReason + "</p>"
+                            html += "<p>签章地点：" + result.entity[i].cerLocation + "</p>"
+
+                            html += "<p>验证结果：" + result.entity[i].isDocumentUseful + "<img height='40' width='50' src='../../img/pass3.png'></p>"
+
+                            $("#result").append("<div style='text-align: left;display: inline-block;margin-left: 10%;'>" + html + "</div><hr>");
+
+                        }
+
+                        $("#fade").show();
+                        $("#mydiv").show();
+
+                    } else {
+                        $("#result").append("<p>" + result.message + "</P>")
+                        $("#fade").show();
+                        $("#mydiv").show();
+                    }
+                },
+                error: function () {
+                    alert("验签失败!请重新上传")
+                }
+            });
+        });
+
+        //关闭弹窗
+        $("#close").click(function () {
+            $("#fade").hide();
+            $("#mydiv").hide();
+        });
+
+    });
+</script>
 </html>
 

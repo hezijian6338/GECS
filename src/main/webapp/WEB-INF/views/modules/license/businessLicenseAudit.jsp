@@ -7,6 +7,13 @@
     <title>营业执照管理</title>
     <meta name="decorator" content="default"/>
 
+    <style type="text/css">
+        .modal {
+            width:900px;
+            margin-left:-450px;
+        }
+    </style>
+
     <script type="text/javascript">
         $(document).ready(function() {
             $("#name").focus();
@@ -35,7 +42,31 @@
             }
         }
 
-
+        function checkDoc(p,t) {
+            var rand = Math.random();
+            path = p;
+            if(path!=""&&path!=null){
+                $('#btn_browse').modal({});
+                switch(t)
+                {
+                    case 1:
+                        $('#myModalLabel').text("申请书")
+                        break;
+                    case 2:
+                        $('#myModalLabel').text("股东会决议")
+                        break;
+                    case 2:
+                        $('#myModalLabel').text("公司章程")
+                        break;
+                }
+                fileURL=path+"?"+rand;
+//                fileURL='c:/certificate/BusinessPDF/test-1517282536608.pdf';
+                console.log("fileURL:"+fileURL)
+                $('#displayPdfIframe').attr("src",'${ctxStatic}/pdfjs/web/viewer.html?file='+encodeURIComponent(fileURL));
+            }else {
+                alert("执照还未生成！");
+            }
+        }
     </script>
 </head>
 <body>
@@ -178,7 +209,30 @@
                     <form:input path="handlerPhone" htmlEscape="false" maxlength="20" class="input-xlarge " readonly="true"/>
                 </td>
             </tr>
-           <%-- <tr>
+            <center>
+            <tr>
+                <td class="tit" rowspan="4">附件审批</td>
+                <td class="tit" colspan="2"><strong>申请书</strong></td>
+                <td>
+                    <a class="btn btn-primary" data-toggle="modal" onclick="checkDoc('/pic/certificate/BusinessPDF/test-1517282536608.pdf',1)">查看</a>
+                </td>
+            </tr>
+            <tr>
+                <td class="tit" colspan="2"><strong>股东会决议</strong></td>
+                <td>
+                    <a class="btn btn-primary" data-toggle="modal" onclick="checkDoc('${businessLicense.path}',2)">查看</a>
+                </td>
+            </tr>
+            <tr>
+                <td class="tit" colspan="2"><strong>公司章程</strong></td>
+                <td>
+                    <a class="btn btn-primary" data-toggle="modal" onclick="checkDoc('${businessLicense.path}',3)">查看</a>
+                </td>
+            </tr>
+            </center>
+            <tr><br></tr>
+
+            <%--<tr>
                 <td colspan="6" class="tit">所入驻建筑信息</td>
             </tr>
             <tr>
@@ -242,7 +296,7 @@
                 </td>
             </tr>
             <tr>
-                <td class="tit">您的意见</td>
+                <td class="tit">您的意见2</td>
                 <td colspan="5">
                     <form:textarea path="act.comment" class="required" rows="5" maxlength="20" cssStyle="width:500px"/>
                 </td>
@@ -264,5 +318,19 @@
     </div>
     <act:histoicFlow procInsId="${businessLicense.act.procInsId}"/>
 </form:form>
+
+<!--预览模态框-->
+<div id="btn_browse" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+     style="width: 100%;height: 100%;left: 450px; top:0px;">
+    <div class="modal-header" style="background-color: rgb(0,0,0); filter: alpha(opacity=10);">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:white;">×</button>
+        <h3 id="myModalLabel"></h3>
+    </div>
+    <div class="modal-body" style="width: 100%;max-height: 800px; padding: 0px;overflow:hidden;">
+
+        <iframe id="displayPdfIframe" width="100%" height="780px"></iframe>
+
+    </div>
+</div>
 </body>
 </html>
