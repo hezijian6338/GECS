@@ -59,7 +59,7 @@
 <body>
 <div class="center clearfix" style="padding-top: 2%;width: 82%;min-width: 1060px;margin-left: auto;margin-right: auto">
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/conference/certificateConference/">股东会议表列表</a></li>
+		<%--<li><a href="${ctx}/conference/certificateConference/">股东会议表列表</a></li>--%>
 		<li class="active"><a href="${ctx}/conference/certificateConference/form?id=${certificateConference.id}">股东会议表<shiro:hasPermission name="conference:certificateConference:edit">${not empty certificateConference.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="conference:certificateConference:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="certificateConference" action="${ctx}/conference/certificateConference/save" method="post" class="form-horizontal">
@@ -74,7 +74,7 @@
 			</td>
 			<td class="tit">公司名称：</td>
 			<td>
-				<form:input path="companyName" htmlEscape="false" maxlength="40" class="input-xlarge "/>
+				<form:input path="companyName" htmlEscape="false" maxlength="40" class="input-xlarge " readonly="true"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</td>
 			<td class="tit">通知方式：</td>

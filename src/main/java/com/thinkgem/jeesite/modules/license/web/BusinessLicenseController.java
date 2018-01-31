@@ -14,6 +14,7 @@ import com.thinkgem.jeesite.modules.certificate.entity.CertificateLibrary;
 import com.thinkgem.jeesite.modules.certificate.entity.CertificateType;
 import com.thinkgem.jeesite.modules.certificate.service.CertificateLibraryService;
 import com.thinkgem.jeesite.modules.certificate.service.CertificateTypeService;
+import com.thinkgem.jeesite.modules.conference.entity.CertificateConference;
 import com.thinkgem.jeesite.modules.license.entity.BusinessLicense;
 import com.thinkgem.jeesite.modules.license.service.BusinessLicenseService;
 import com.thinkgem.jeesite.modules.oa.entity.OaNotify;
@@ -169,11 +170,18 @@ public class BusinessLicenseController extends BaseController {
 		System.out.println("------"+oaNotify);
 		oaNotifyService.save(oaNotify);
 
+		//传CertificateConference
+		CertificateConference certificateConference = new CertificateConference();
+
+		certificateConference.setCompanyName(businessLicense.getCertificateName());
+
+		model.addAttribute("certificateConference", certificateConference);
 
 		addMessage(redirectAttributes, "保存营业执照成功");
 
 		//return "redirect:" + adminPath + "/oa/oaNotify/self?repage";
-		return "redirect:" + adminPath +"/conference/certificateConference/form?repage";
+		//return "redirect:" + adminPath +"/conference/certificateConference/form?repage";
+		return "modules/conference/certificateConferenceForm";
 
 	}
 
