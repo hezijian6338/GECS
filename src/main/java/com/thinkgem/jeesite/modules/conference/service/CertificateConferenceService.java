@@ -121,5 +121,9 @@ public class CertificateConferenceService extends CrudService<CertificateConfere
 		super.delete(certificateConference);
 		certificateConferenceSubDao.delete(new CertificateConferenceSub(certificateConference));
 	}
-	
+
+	public List<CertificateConference> getPathByCompanyName(CertificateConference certificateConference) {
+		List<CertificateConference> listCertificateConference = super.findList(certificateConference);
+		return listCertificateConference;
+	}
 }

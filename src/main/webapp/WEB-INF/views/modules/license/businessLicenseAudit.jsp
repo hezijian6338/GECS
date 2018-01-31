@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ include file="/WEB-INF/views/include/taglib.jsp"%>
+<%@ include file="/WEB-INF/views/include/taglib.jsp" %>
 
 
 <html>
@@ -9,23 +9,23 @@
 
     <style type="text/css">
         .modal {
-            width:900px;
-            margin-left:-450px;
+            width: 900px;
+            margin-left: -450px;
         }
     </style>
 
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             $("#name").focus();
             $("#inputForm").validate({
-                submitHandler: function(form){
+                submitHandler: function (form) {
                     loading('正在提交，请稍等...');
                     form.submit();
                 },
                 errorContainer: "#messageBox",
-                errorPlacement: function(error, element) {
+                errorPlacement: function (error, element) {
                     $("#messageBox").text("输入有误，请先更正。");
-                    if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
+                    if (element.is(":checkbox") || element.is(":radio") || element.parent().is(".input-append")) {
                         error.appendTo(element.parent().parent());
                     } else {
                         error.insertAfter(element);
@@ -34,47 +34,74 @@
             });
         });
 
-        function a(){
-            var ex=prompt("请输入密码：");
-            if (ex=='1234'){
+        function a() {
+            var ex = prompt("请输入密码：");
+            if (ex == '1234') {
                 alert("输入正确！！！！！！！");
                 $('#flag').val('yes');
             }
         }
 
-        function checkDoc(p,t) {
+        function urlCall(t, path1, path2, path3) {
+            var path;
             var rand = Math.random();
-            path = p;
-            if(path!=""&&path!=null){
+            if (flag) {
                 $('#btn_browse').modal({});
-                switch(t)
-                {
+                switch (t) {
                     case 1:
-                        $('#myModalLabel').text("申请书")
+                        path = path1;
+                        $('#myModalLabel').text("申请书");
                         break;
                     case 2:
-                        $('#myModalLabel').text("股东会决议")
+                        path = path2;
+                        $('#myModalLabel').text("股东会决议");
                         break;
                     case 2:
-                        $('#myModalLabel').text("公司章程")
+                        path = path3;
+                        $('#myModalLabel').text("公司章程");
                         break;
                 }
-                fileURL=path+"?"+rand;
+                fileURL = path + "?" + rand;
+                console.log(fileURL);
 //                fileURL='c:/certificate/BusinessPDF/test-1517282536608.pdf';
-                console.log("fileURL:"+fileURL)
-                $('#displayPdfIframe').attr("src",'${ctxStatic}/pdfjs/web/viewer.html?file='+encodeURIComponent(fileURL));
-            }else {
+                console.log("fileURL:" + fileURL)
+                $('#displayPdfIframe').attr("src", '${ctxStatic}/pdfjs/web/viewer.html?file=' + encodeURIComponent(fileURL));
+            } else {
                 alert("执照还未生成！");
             }
+        }
+
+        function checkDoc(name, t) {
+            var path, path1, path2, path3;
+            $.ajax({
+                type: "POST",
+                url: "${ctx}/conference/certificateConference/getPathByTitle/" + name,
+                success: function (msg) {
+                    path1 = msg.extend.certificateConference.applynamePdfpath;
+                    path2 = msg.extend.certificateConference.meetingPdfpath;
+                    path3 = msg.extend.certificateConference.rulesPdfpath;
+                    flag = true;
+                    urlCall(t, path1, path2, path3);
+                },
+                error:function(msg){
+                    alert("处理错误");
+                }
+
+            });
+
         }
     </script>
 </head>
 <body>
 <ul class="nav nav-tabs">
     <li><a href="${ctx}/license/businessLicense/">营业执照列表</a></li>
-    <li class="active"><a href="#"><shiro:hasPermission name="license:businessLicense:edit">${businessLicense.act.taskName}</shiro:hasPermission><shiro:lacksPermission name="license:businessLicense:edit">查看</shiro:lacksPermission></a></li>
-</ul><br/>
-<form:form id="inputForm" modelAttribute="businessLicense" action="${ctx}/license/businessLicense/saveAudit" method="post" class="form-horizontal">
+    <li class="active"><a href="#"><shiro:hasPermission
+            name="license:businessLicense:edit">${businessLicense.act.taskName}</shiro:hasPermission><shiro:lacksPermission
+            name="license:businessLicense:edit">查看</shiro:lacksPermission></a></li>
+</ul>
+<br/>
+<form:form id="inputForm" modelAttribute="businessLicense" action="${ctx}/license/businessLicense/saveAudit"
+           method="post" class="form-horizontal">
     <sys:message content="${message}"/>
     <form:hidden path="id"/>
     <form:hidden path="act.taskId"/>
@@ -91,186 +118,205 @@
             <tr>
                 <td class="tit">证照类型</td>
                 <td>
-                    <form:input path="certificateTypeName" htmlEscape="false" maxlength="64" class="input-xlarge required" readonly="true"/>
+                    <form:input path="certificateTypeName" htmlEscape="false" maxlength="64"
+                                class="input-xlarge required" readonly="true"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
                 <td class="tit">统一社会信用代码</td>
-                <td> 
-                    <form:input path="certificateCode" htmlEscape="false" maxlength="100" class="input-xlarge " readonly="true"/>
+                <td>
+                    <form:input path="certificateCode" htmlEscape="false" maxlength="100" class="input-xlarge "
+                                readonly="true"/>
                 </td>
                 <td class="tit">颁发机构</td>
                 <td>
-                 <%--    <sys:treeselect id="office" name="office.id" value="${businessLicense.office.id}" labelName="office.name" labelValue="${businessLicense.office.name}"
-                                    title="部门" url="/sys/office/treeData?type=2" cssClass="required" allowClear="true" notAllowSelectParent="true"/>
-                    <span class="help-inline"><font color="red">*</font> </span> --%>
-                    ${businessLicense.office.name}
+                        <%--    <sys:treeselect id="office" name="office.id" value="${businessLicense.office.id}" labelName="office.name" labelValue="${businessLicense.office.name}"
+                                           title="部门" url="/sys/office/treeData?type=2" cssClass="required" allowClear="true" notAllowSelectParent="true"/>
+                           <span class="help-inline"><font color="red">*</font> </span> --%>
+                        ${businessLicense.office.name}
                 </td>
             </tr>
             <tr>
                 <td class="tit">地址</td>
                 <td colspan="5">
-                    <form:input path="address" htmlEscape="false" maxlength="100" class="input-xlarge " readonly="true"/>
+                    <form:input path="address" htmlEscape="false" maxlength="100" class="input-xlarge "
+                                readonly="true"/>
                 </td>
             </tr>
             <tr>
                 <td class="tit" rowspan="3">日期填写</td>
                 <td class="tit">成立日期</td>
                 <td>
-                    <input name="establishDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
+                    <input name="establishDate" type="text" readonly="readonly" maxlength="20"
+                           class="input-medium Wdate required"
                            value="<fmt:formatDate value="${businessLicense.establishDate}" pattern="yyyy-MM-dd"/>"
-                          />
+                    />
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
                 <td class="tit" rowspan="3">公司信息</td>
                 <td class="tit">注册公司类型</td>
                 <td>
-                    <form:input path="registeredType" htmlEscape="false" maxlength="64" class="input-xlarge required" readonly="true"/>
+                    <form:input path="registeredType" htmlEscape="false" maxlength="64" class="input-xlarge required"
+                                readonly="true"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
             </tr>
             <tr>
                 <td class="tit">证照有效期（起始）</td>
                 <td>
-                    <input name="effectiveDateStar" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
+                    <input name="effectiveDateStar" type="text" readonly="readonly" maxlength="20"
+                           class="input-medium Wdate required"
                            value="<fmt:formatDate value="${businessLicense.effectiveDateStar}" pattern="yyyy-MM-dd"/>"
-                          />
+                    />
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
                 <td class="tit">公司名称</td>
                 <td>
-                    <form:input path="certificateName" htmlEscape="false" maxlength="100" class="input-xlarge required" readonly="true"/>
+                    <form:input path="certificateName" htmlEscape="false" maxlength="100" class="input-xlarge required"
+                                readonly="true"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
             </tr>
             <tr>
                 <td class="tit">证照有效期（截至）</td>
                 <td>
-                    <input name="effectiveDateEnd" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
+                    <input name="effectiveDateEnd" type="text" readonly="readonly" maxlength="20"
+                           class="input-medium Wdate required"
                            value="<fmt:formatDate value="${businessLicense.effectiveDateEnd}" pattern="yyyy-MM-dd"/>"
-                           />
+                    />
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
                 <td class="tit">注册资本</td>
                 <td>
-                    <form:input path="registeredCapital" htmlEscape="false" maxlength="20" class="input-xlarge required" readonly="true"/>
+                    <form:input path="registeredCapital" htmlEscape="false" maxlength="20" class="input-xlarge required"
+                                readonly="true"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
             </tr>
-            <tr><td class="tit">经营/业务/许可范围</td>
+            <tr>
+                <td class="tit">经营/业务/许可范围</td>
                 <td colspan="5">
-<%--                                    title="经营范围" url="/scope/businessScope/treeData" cssClass="required" allowClear="true" notAllowSelectParent="true" expandOnLoad="false" checked="true"/>
-                        <span class="help-inline"><font color="red">*</font> </span> --%>
-                    ${businessLicense.scope.name}
+                        <%--                                    title="经营范围" url="/scope/businessScope/treeData" cssClass="required" allowClear="true" notAllowSelectParent="true" expandOnLoad="false" checked="true"/>
+                                                <span class="help-inline"><font color="red">*</font> </span> --%>
+                        ${businessLicense.scope.name}
                 </td>
             </tr>
             <tr>
                 <td class="tit" rowspan="4">法人信息</td>
                 <td class="tit">法人姓名</td>
                 <td>
-                    <form:input path="persionName" htmlEscape="false" maxlength="20" class="input-xlarge required" readonly="true"/>
+                    <form:input path="persionName" htmlEscape="false" maxlength="20" class="input-xlarge required"
+                                readonly="true"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
                 <td class="tit" rowspan="4">经办人信息</td>
                 <td class="tit">经办人姓名</td>
                 <td>
-                    <form:input path="handlerName" htmlEscape="false" maxlength="20" class="input-xlarge " readonly="true"/>
+                    <form:input path="handlerName" htmlEscape="false" maxlength="20" class="input-xlarge "
+                                readonly="true"/>
                 </td>
             </tr>
             <tr>
                 <td class="tit">法人证件类型</td>
                 <td>
-                    <form:input path="persionIdType" htmlEscape="false" maxlength="20" class="input-xlarge required" readonly="true"/>
+                    <form:input path="persionIdType" htmlEscape="false" maxlength="20" class="input-xlarge required"
+                                readonly="true"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
                 <td class="tit">经办人证件类型</td>
                 <td>
-                    <form:input path="handlerIdType" htmlEscape="false" maxlength="20" class="input-xlarge " readonly="true"/>
+                    <form:input path="handlerIdType" htmlEscape="false" maxlength="20" class="input-xlarge "
+                                readonly="true"/>
                 </td>
             </tr>
             <tr>
                 <td class="tit">法人证件号码</td>
                 <td>
-                    <form:input path="personId" htmlEscape="false" maxlength="64" class="input-xlarge required" readonly="true"/>
+                    <form:input path="personId" htmlEscape="false" maxlength="64" class="input-xlarge required"
+                                readonly="true"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
                 <td class="tit">经办人证件号码</td>
                 <td>
-                    <form:input path="handlerId" htmlEscape="false" maxlength="64" class="input-xlarge " readonly="true" />
+                    <form:input path="handlerId" htmlEscape="false" maxlength="64" class="input-xlarge "
+                                readonly="true"/>
                 </td>
             </tr>
             <tr>
                 <td class="tit">法人联系方式</td>
                 <td>
-                    <form:input path="persionPhone" htmlEscape="false" maxlength="20" class="input-xlarge required" readonly="true"/>
+                    <form:input path="persionPhone" htmlEscape="false" maxlength="20" class="input-xlarge required"
+                                readonly="true"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </td>
                 <td class="tit">经办人联系方式</td>
                 <td>
-                    <form:input path="handlerPhone" htmlEscape="false" maxlength="20" class="input-xlarge " readonly="true"/>
+                    <form:input path="handlerPhone" htmlEscape="false" maxlength="20" class="input-xlarge "
+                                readonly="true"/>
                 </td>
             </tr>
             <center>
-            <tr>
-                <td class="tit" rowspan="4">附件审批</td>
-                <td class="tit" colspan="2"><strong>申请书</strong></td>
-                <td>
-                    <a class="btn btn-primary" data-toggle="modal" onclick="checkDoc('/pic/certificate/BusinessPDF/test-1517282536608.pdf',1)">查看</a>
-                </td>
-            </tr>
-            <tr>
-                <td class="tit" colspan="2"><strong>股东会决议</strong></td>
-                <td>
-                    <a class="btn btn-primary" data-toggle="modal" onclick="checkDoc('${businessLicense.path}',2)">查看</a>
-                </td>
-            </tr>
-            <tr>
-                <td class="tit" colspan="2"><strong>公司章程</strong></td>
-                <td>
-                    <a class="btn btn-primary" data-toggle="modal" onclick="checkDoc('${businessLicense.path}',3)">查看</a>
-                </td>
-            </tr>
+                <tr>
+                    <td class="tit" rowspan="4">附件审批</td>
+                    <td class="tit" colspan="2"><strong>申请书</strong></td>
+                    <td>
+                        <a class="btn btn-primary" data-toggle="modal"
+                           onclick="checkDoc('${businessLicense.certificateName}',1)">查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tit" colspan="2"><strong>股东会决议</strong></td>
+                    <td>
+                        <a class="btn btn-primary" data-toggle="modal" onclick="checkDoc('${businessLicense.path}',2)">查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tit" colspan="2"><strong>公司章程</strong></td>
+                    <td>
+                        <a class="btn btn-primary" data-toggle="modal" onclick="checkDoc('${businessLicense.path}',3)">查看</a>
+                    </td>
+                </tr>
             </center>
             <tr><br></tr>
 
-            <%--<tr>
-                <td colspan="6" class="tit">所入驻建筑信息</td>
-            </tr>
-            <tr>
-                <td class="tit">建筑名称</td>
-                <td>
-                    <form:input path="buildingName" htmlEscape="false" maxlength="64" class="input-xlarge " readonly="true"/>
-                </td>
-                <td class="tit">层数</td>
-                <td>
-                    <form:input path="floorNumber" htmlEscape="false" maxlength="10" class="input-xlarge " readonly="true"/>
-                </td>
-                <td class="tit">使用面积</td>
-                <td>
-                    <form:input path="useArea" htmlEscape="false" maxlength="20" class="input-xlarge " readonly="true"/>
-                </td>
-            </tr>
-            <tr>
-                <td class="tit">使用情况</td>
-                <td colspan="">
-                    <form:input path="usage1" htmlEscape="false" maxlength="100" class="input-xlarge " readonly="true"/>
-                </td>
-                <td class="tit">现有消防措施</td>
-                <td colspan="3">
-                    <form:input path="dealfireFacilities" htmlEscape="false" maxlength="100" class="input-xlarge " readonly="true"/>
-                </td>
-            </tr>
-            <tr>
-                <td class="tit">邮政编码</td>
-                <td>
-                    <form:input path="postcode" htmlEscape="false" maxlength="10" class="input-xlarge " readonly="true"/>
-                </td>
-                <td class="tit">所属区域</td>
-                <td colspan="3">
-&lt;%&ndash;                     <sys:treeselect id="area" name="area.id" value="${businessLicense.area.id}" labelName="area.name" labelValue="${businessLicense.area.name}" title="区域" url="/sys/area/treeData" cssClass="" allowClear="true" notAllowSelectParent="true"/>
- &ndash;%&gt;
-				 	${businessLicense.area.name}
-				 </td>
-            </tr>--%>
+                <%--<tr>
+                    <td colspan="6" class="tit">所入驻建筑信息</td>
+                </tr>
+                <tr>
+                    <td class="tit">建筑名称</td>
+                    <td>
+                        <form:input path="buildingName" htmlEscape="false" maxlength="64" class="input-xlarge " readonly="true"/>
+                    </td>
+                    <td class="tit">层数</td>
+                    <td>
+                        <form:input path="floorNumber" htmlEscape="false" maxlength="10" class="input-xlarge " readonly="true"/>
+                    </td>
+                    <td class="tit">使用面积</td>
+                    <td>
+                        <form:input path="useArea" htmlEscape="false" maxlength="20" class="input-xlarge " readonly="true"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tit">使用情况</td>
+                    <td colspan="">
+                        <form:input path="usage1" htmlEscape="false" maxlength="100" class="input-xlarge " readonly="true"/>
+                    </td>
+                    <td class="tit">现有消防措施</td>
+                    <td colspan="3">
+                        <form:input path="dealfireFacilities" htmlEscape="false" maxlength="100" class="input-xlarge " readonly="true"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tit">邮政编码</td>
+                    <td>
+                        <form:input path="postcode" htmlEscape="false" maxlength="10" class="input-xlarge " readonly="true"/>
+                    </td>
+                    <td class="tit">所属区域</td>
+                    <td colspan="3">
+    &lt;%&ndash;                     <sys:treeselect id="area" name="area.id" value="${businessLicense.area.id}" labelName="area.name" labelValue="${businessLicense.area.name}" title="区域" url="/sys/area/treeData" cssClass="" allowClear="true" notAllowSelectParent="true"/>
+     &ndash;%&gt;
+                         ${businessLicense.area.name}
+                     </td>
+                </tr>--%>
             <tr>
                 <td class="tit">审批人1的意见</td>
                 <td colspan="5">
@@ -307,10 +353,12 @@
     <div class="form-actions">
         <shiro:hasPermission name="license:businessLicense:edit">
             <c:if test="${businessLicense.act.taskDefKey eq 'apply_end'}">
-                <input id="btnSubmit" class="btn btn-primary" type="submit" value="生成执照" onclick="$('#flag').val('yes')"/>&nbsp;
+                <input id="btnSubmit" class="btn btn-primary" type="submit" value="生成执照"
+                       onclick="$('#flag').val('yes')"/>&nbsp;
             </c:if>
             <c:if test="${businessLicense.act.taskDefKey ne 'apply_end'}">
-                <input id="btnSubmit" class="btn btn-primary" type="submit" value="同 意" onclick="$('#flag').val('yes')"/>&nbsp;
+                <input id="btnSubmit" class="btn btn-primary" type="submit" value="同 意"
+                       onclick="$('#flag').val('yes')"/>&nbsp;
                 <input id="btnSubmit" class="btn btn-inverse" type="submit" value="驳 回" onclick="$('#flag').val('no')"/>&nbsp;
             </c:if>
         </shiro:hasPermission>
@@ -320,7 +368,8 @@
 </form:form>
 
 <!--预览模态框-->
-<div id="btn_browse" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+<div id="btn_browse" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true"
      style="width: 100%;height: 100%;left: 450px; top:0px;">
     <div class="modal-header" style="background-color: rgb(0,0,0); filter: alpha(opacity=10);">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:white;">×</button>

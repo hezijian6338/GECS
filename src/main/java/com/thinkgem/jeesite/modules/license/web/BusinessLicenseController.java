@@ -15,6 +15,7 @@ import com.thinkgem.jeesite.modules.certificate.entity.CertificateType;
 import com.thinkgem.jeesite.modules.certificate.service.CertificateLibraryService;
 import com.thinkgem.jeesite.modules.certificate.service.CertificateTypeService;
 import com.thinkgem.jeesite.modules.conference.entity.CertificateConference;
+import com.thinkgem.jeesite.modules.conference.service.CertificateConferenceService;
 import com.thinkgem.jeesite.modules.license.entity.BusinessLicense;
 import com.thinkgem.jeesite.modules.license.service.BusinessLicenseService;
 import com.thinkgem.jeesite.modules.oa.entity.OaNotify;
@@ -63,6 +64,9 @@ public class BusinessLicenseController extends BaseController {
 
 	@Autowired
 	private CertificateLibraryService certificateLibraryService;
+
+	@Autowired
+	private CertificateConferenceService certificateConferenceService;
 
 	@ModelAttribute
 	public BusinessLicense get(@RequestParam(required=false) String id) {
@@ -122,7 +126,6 @@ public class BusinessLicenseController extends BaseController {
 			}*/
 			// 审核环节2
 			else if ("audit1".equals(taskDefKey)){
-//				System.out.println("+++++++"+certificateLibrary);
 				view = "businessLicenseAudit";
 			}
 			// 审核环节3
@@ -342,8 +345,6 @@ public class BusinessLicenseController extends BaseController {
 		}
 //		return "redirect:"+Global.getAdminPath()+"/license/businessLicense/?repage";
 	}
-
-
 
 
 }

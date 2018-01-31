@@ -6,13 +6,12 @@ package com.thinkgem.jeesite.modules.conference.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.thinkgem.jeesite.common.persistence.Msg;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.thinkgem.jeesite.common.config.Global;
@@ -21,6 +20,8 @@ import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.conference.entity.CertificateConference;
 import com.thinkgem.jeesite.modules.conference.service.CertificateConferenceService;
+
+import java.util.List;
 
 /**
  * 股东会议Controller
@@ -79,6 +80,23 @@ public class CertificateConferenceController extends BaseController {
 		certificateConferenceService.delete(certificateConference);
 		addMessage(redirectAttributes, "删除股东会议表成功");
 		return "redirect:"+Global.getAdminPath()+"/conference/certificateConference/?repage";
+	}
+
+	/**
+	 * @author 练浩文
+	 * @TODO (注：certificateCode)
+	 * @param title
+	 * @DATE: 2017/11/2 8:56
+	 */
+	@ResponseBody
+	@RequestMapping(value="/getPathByTitle/{title}",method= RequestMethod.POST)
+	public Msg getBookPathByTitle(@PathVariable String title){
+		CertificateConference certificateConference = new CertificateConference();
+		certificateConference.setCompanyName(title);
+		List <CertificateConference> listCertificateConference = certificateConferenceService.getPathByCompanyName(certificateConference);
+		certificateConference = listCertificateConference.get(0);
+		System.out.println("--------"+listCertificateConference.get(0).toString());
+		return Msg.success().add("certificateConference",certificateConference);
 	}
 
 }

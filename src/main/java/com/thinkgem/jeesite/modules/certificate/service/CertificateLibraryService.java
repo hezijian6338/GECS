@@ -25,6 +25,7 @@ public class CertificateLibraryService extends CrudService<CertificateLibraryDao
 	@Autowired
 	CertificateLibraryDao certificateLibraryDao;
 
+	@Override
 	public CertificateLibrary get(String id) {
 		return super.get(id);
 	}
@@ -33,10 +34,12 @@ public class CertificateLibraryService extends CrudService<CertificateLibraryDao
 		return certificateLibraryDao.getByCertificateCode(certificateCode);
 	}
 
+	@Override
 	public List<CertificateLibrary> findList(CertificateLibrary certificateLibrary) {
 		return super.findList(certificateLibrary);
 	}
 	
+	@Override
 	public Page<CertificateLibrary> findPage(Page<CertificateLibrary> page, CertificateLibrary certificateLibrary) {
 		return super.findPage(page, certificateLibrary);
 	}
