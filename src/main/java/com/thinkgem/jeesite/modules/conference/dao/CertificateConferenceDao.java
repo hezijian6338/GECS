@@ -14,5 +14,7 @@ import com.thinkgem.jeesite.modules.conference.entity.CertificateConference;
  */
 @MyBatisDao
 public interface CertificateConferenceDao extends CrudDao<CertificateConference> {
+
+    public int updatePdfPath(CertificateConference certificateConference);
 	
 }

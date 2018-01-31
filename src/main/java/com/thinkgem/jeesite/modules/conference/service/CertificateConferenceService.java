@@ -29,6 +29,9 @@ public class CertificateConferenceService extends CrudService<CertificateConfere
 
 	@Autowired
 	private CertificateConferenceSubDao certificateConferenceSubDao;
+
+	@Autowired
+	private CertificateConferenceDao certificateConferenceDao;
 	
 	@Override
 	public CertificateConference get(String id) {
@@ -60,7 +63,7 @@ public class CertificateConferenceService extends CrudService<CertificateConfere
 		final String path2 = "E:\\certificate\\BusinessModel\\有限公司股东会决议.pdf";
 
 		final String savaPath2 = "E:\\certificate\\conference\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()
-				+"+有限公司章程"+".pdf";
+				+"+有限公司股东会决议"+".pdf";
 
 		FileUtils.createDirectory("E:\\certificate\\conference\\"+businessLicense.getCertificateName());
 
@@ -70,6 +73,24 @@ public class CertificateConferenceService extends CrudService<CertificateConfere
 			PDFUtil_rules.fillTemplate(businessLicense,certificateConference, path, savaPath);
 
 			PDFUtil_conference.fillTemplate(certificateConference, path2, savaPath2);
+
+			//保存pdf路径
+			String applayNamePdfpath = (String)CacheUtils.get("applayRealativePath","applayRealativePath");
+
+			final String realativeSavaPath = "/pic/certificate/Rules/"+businessLicense.getCertificateName()+"/"+businessLicense.getCertificateName()
+					+"+有限公司章程"+".pdf";
+
+			final String realativeSavaPath2 = "/pic/certificate/conference/"+businessLicense.getCertificateName()+"/"+businessLicense.getCertificateName()
+					+"+有限公司股东会决议"+".pdf";
+
+			certificateConference.setApplynamePdfpath(applayNamePdfpath);
+
+			certificateConference.setRulesPdfpath(realativeSavaPath);
+
+			certificateConference.setMeetingPdfpath(realativeSavaPath2);
+
+			certificateConferenceDao.updatePdfPath(certificateConference);
+
 
 		}catch (Exception E){
 			E.printStackTrace();

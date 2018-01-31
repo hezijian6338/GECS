@@ -85,10 +85,16 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 	public void save(BusinessLicense businessLicense) {
 		DateFormat df = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
 
-		final String path = "E:\\certificate\\BusinessModel\\名称预先核准申请书减缩版22222.pdf";
+		final String path = "E:\\certificate\\BusinessModel\\名称预先核准申请书.pdf";
 
 		final String savaPath = "E:\\certificate\\Application\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()
 				+"+名称预先核准申请书"+".pdf";
+
+		final String applayRealativePath = "/pic/certificate/Application/"+businessLicense.getCertificateName()+"/"+businessLicense.getCertificateName()
+				+"+名称预先核准申请书"+".pdf";
+
+		//加入缓存
+		CacheUtils.put("applayRealativePath","applayRealativePath",applayRealativePath);
 
 		FileUtils.createDirectory("E:\\certificate\\Application\\"+businessLicense.getCertificateName());
 

@@ -67,6 +67,7 @@ public class CertificateConferenceController extends BaseController {
 		if (!beanValidator(model, certificateConference)){
 			return form(certificateConference, model);
 		}
+
 		certificateConferenceService.save(certificateConference);
 		addMessage(redirectAttributes, "保存股东会议表成功");
 		return "redirect:"+Global.getAdminPath()+"/conference/certificateConference/?repage";

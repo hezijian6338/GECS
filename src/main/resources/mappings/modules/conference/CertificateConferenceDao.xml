@@ -148,6 +148,17 @@
 			update_by = #{updateBy.id}
 		WHERE id = #{id}
 	</update>
+
+<!--更新pdf路径-->
+	<update id="updatePdfPath">
+		UPDATE certificate_conference SET
+		applyname_pdfpath = #{applynamePdfpath},
+		rules_pdfpath = #{rulesPdfpath},
+		meeting_pdfpath = #{meetingPdfpath},
+		update_date = #{updateDate},
+		update_by = #{updateBy.id}
+		WHERE id = #{id}
+	</update>
 	
 	<update id="delete">
 		DELETE FROM certificate_conference
