@@ -58,12 +58,12 @@ public class CertificateConferenceService extends CrudService<CertificateConfere
 		final String path = "E:\\certificate\\BusinessModel\\有限公司章程.pdf";
 
 		final String savaPath = "E:\\certificate\\Rules\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()
-				+"+有限公司章程"+".pdf";
+				+"有限公司章程"+".pdf";
 
 		final String path2 = "E:\\certificate\\BusinessModel\\有限公司股东会决议.pdf";
 
 		final String savaPath2 = "E:\\certificate\\conference\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()
-				+"+有限公司股东会决议"+".pdf";
+				+"有限公司股东会决议"+".pdf";
 
 		FileUtils.createDirectory("E:\\certificate\\conference\\"+businessLicense.getCertificateName());
 
@@ -78,10 +78,10 @@ public class CertificateConferenceService extends CrudService<CertificateConfere
 			String applayNamePdfpath = (String)CacheUtils.get("applayRealativePath","applayRealativePath");
 
 			final String realativeSavaPath = "/pic/certificate/Rules/"+businessLicense.getCertificateName()+"/"+businessLicense.getCertificateName()
-					+"+有限公司章程"+".pdf";
+					+"有限公司章程"+".pdf";
 
 			final String realativeSavaPath2 = "/pic/certificate/conference/"+businessLicense.getCertificateName()+"/"+businessLicense.getCertificateName()
-					+"+有限公司股东会决议"+".pdf";
+					+"有限公司股东会决议"+".pdf";
 
 			certificateConference.setApplynamePdfpath(applayNamePdfpath);
 
