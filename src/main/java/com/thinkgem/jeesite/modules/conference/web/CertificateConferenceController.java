@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.thinkgem.jeesite.common.persistence.Msg;
+import com.thinkgem.jeesite.modules.license.entity.BusinessLicense;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -104,5 +105,23 @@ public class CertificateConferenceController extends BaseController {
 		System.out.println("--------"+listCertificateConference.get(0).toString());
 		return Msg.success().add("certificateConference",certificateConference);
 	}
+
+/**
+ * @author 许彩开
+ * TODO (注：更新签名后的相关pdf路径)
+  * @param certificateConference
+ * @DATE: 2018\2\1 0001 11:51
+ */
+
+    @ResponseBody
+    @RequestMapping(value = "updatePdfPath")
+    public String updatePdfPath(CertificateConference certificateConference){
+
+        if (certificateConferenceService.updatePdfPath(certificateConference)>0){
+            return "true";
+        }else {
+            return "false";
+        }
+    }
 
 }

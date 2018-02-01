@@ -126,4 +126,17 @@ public class CertificateConferenceService extends CrudService<CertificateConfere
 		List<CertificateConference> listCertificateConference = super.findList(certificateConference);
 		return listCertificateConference;
 	}
+
+	/**
+	 * @author 许彩开
+	 * TODO (注：更新签名后的相关pdf路径)
+	  * @param certificateConference
+	 * @DATE: 2018\2\1 0001 14:19
+	 */
+
+	public int updatePdfPath(CertificateConference certificateConference){
+
+		return certificateConferenceDao.updatePdfPath(certificateConference);
+
+	}
 }

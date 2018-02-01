@@ -38,13 +38,19 @@
     </script>
 </head>
     <body>
+        <form:form id="inputForm" modelAttribute="certificateConference1" action="${ctx}/conference/certificateConference/updatePdfPath" method="post" class="form-horizontal">
         <div class="center_div1" >
             <div>
                 <br>
                 <h1 align="center"><font color="#317eac">请签署以下文件</font></h1>
-                <h5>章程pdf路径${certificateConference1.rulesPdfpath}</h5>
-                <h5>名称申请pdf路径${certificateConference1.applynamePdfpath}</h5>
-                <h5>会议决议pdf路径${certificateConference1.meetingPdfpath}</h5>
+                <form:input path="id"  htmlEscape="false" maxlength="64" class="input-xlarge required" readonly="true"/>
+                <h5>章程pdf路径</h5>
+                <form:input path="rulesPdfpath" htmlEscape="false" maxlength="64" class="input-xlarge required" readonly="true"/>
+                <h5>名称申请pdf路径</h5>
+                <form:input path="applynamePdfpath" htmlEscape="false" maxlength="64" class="input-xlarge required" readonly="true"/>
+                <h5>会议决议pdf路径</h5>
+                <form:input path="meetingPdfpath" htmlEscape="false" maxlength="64" class="input-xlarge required" readonly="true"/>
+
                 <br>
                 <br>
                 <div>
@@ -73,5 +79,6 @@
                 </div>
             </div>
         </div>
+</form:form>
 </body>
 </html>
