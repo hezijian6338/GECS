@@ -2,6 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="decorator" content="default"/>
     <title>选择申请证照</title>
     <style>
         body
@@ -37,37 +38,47 @@
     </script>
 </head>
     <body>
+        <form:form id="inputForm" modelAttribute="certificateConference1" action="${ctx}/conference/certificateConference/updatePdfPath" method="post" class="form-horizontal">
         <div class="center_div1" >
             <div>
                 <br>
-                <h1 align="center"><font color="#317eac">选择需要申请证照</font></h1>
+                <h1 align="center"><font color="#317eac">请签署以下文件</font></h1>
+                <form:input path="id"  htmlEscape="false" maxlength="64" class="input-xlarge required" readonly="true"/>
+                <h5>章程pdf路径</h5>
+                <form:input path="rulesPdfpath" htmlEscape="false" maxlength="64" class="input-xlarge required" readonly="true"/>
+                <h5>名称申请pdf路径</h5>
+                <form:input path="applynamePdfpath" htmlEscape="false" maxlength="64" class="input-xlarge required" readonly="true"/>
+                <h5>会议决议pdf路径</h5>
+                <form:input path="meetingPdfpath" htmlEscape="false" maxlength="64" class="input-xlarge required" readonly="true"/>
+
                 <br>
                 <br>
                 <div>
-                    <table  align="center" width="50%"   border="10"  bordercolor="#a0c6e5" cellspacing="20">
+                    <table  class="table table-bordered table-hover" align="center" width="90%"   border="10"  bordercolor="#a0c6e5" cellspacing="20">
                         <tr>
-                            <td><a href="${ctx}/license/businessLicense/applyBusinessLicense?typeName=营业执照" onMouseOut="swapImage('Image12','/static/licenseImages/business.jpg')" onMouseOver="swapImage('Image12','/static/licenseImages/business1.jpg')"><img src="/static/licenseImages/business.jpg" name="Image12" width="180" height="270" border="0" id="Image12" /></a></td>
-                        <%--    <td><a href="xcb.html" onMouseOut="swapImage('Image13','/static/licenseImages/xc.jpg')" onMouseOver="swapImage('Image13','/static/licenseImages/xc2.jpg')"><img src="/static/licenseImages/xc.jpg" name="Image13" width="180" height="270" border="0" id="Image13" /></a></td>
-                            <td><a href="zy.html" onMouseOut="swapImage('Image14','/static/licenseImages/zy.jpg')" onMouseOver="swapImage('Image14','/static/licenseImages/zy2.jpg')"><img src="/static/licenseImages/zy.jpg" name="Image14" width="180" height="270" border="0" id="Image14" /></a></td>
+<%--
+                            <td><a href="${ctx}/license/businessLicense/applyBusinessLicense?typeName=营业执照" onMouseOut="swapImage('Image12','/static/licenseImages/applayName.png')" onMouseOver="swapImage('Image12','/static/licenseImages/business1.jpg')"><img src="/static/licenseImages/business.jpg" name="Image12" width="280" height="470" border="0" id="Image12" /></a></td>
+--%>
+                            <td><img src="/static/licenseImages/applyName.png" name="Image1" id="Image1"  style="height: 550px;width:380px;"/></td>
+                            <td><img src="/static/licenseImages/zhangcheng.png" name="Image2" id="Image2"  style="height: 550px;width:380px;" /></td>
+                            <td><img src="/static/licenseImages/conference.png" name="Image3" id="Image3"  style="height: 550px;width:380px;"/></td>
                         </tr>
-
                         <tr>
-                            <td> <a href="jz.html" onMouseOut="swapImage('Image15','/static/licenseImages/jz.jpg')" onMouseOver="swapImage('Image15','/static/licenseImages/jz2.jpg')"><img src="/static/licenseImages/jz.jpg" name="Image15" width="180" height="270" border="0" id="Image15" /></a></td>
-                            <td> <a href="index.html" onMouseOut="swapImage('Image16','/static/licenseImages/sy.jpg')" onMouseOver="swapImage('Image16','/static/licenseImages/sy2.jpg')"><img src="/static/licenseImages/sy.jpg" name="Image16" width="180" height="270" border="0" id="Image16" /></a></td>
-                            <td> <a href="sc.html" onMouseOut="swapImage('Image17','/static/licenseImages/sc.jpg')" onMouseOver="swapImage('Image17','/static/licenseImages/sc2.jpg')"><img src="/static/licenseImages/sc.jpg" name="Image17" width="180" height="270" border="0" id="Image17" /></a></td>
-
-                        </tr>
-
-                        <tr>
-                            <td> <a href="cm.html" onMouseOut="swapImage('Image18','/static/licenseImages/cm.jpg')" onMouseOver="swapImage('Image18','/static/licenseImages/cm2.jpg')"><img src="/static/licenseImages/cm.jpg" name="Image18" width="180" height="270" border="0" id="Image18" /></a></td>
-                            <td> <a href="zc.html" onMouseOut="swapImage('Image19','/static/licenseImages/zc.jpg')" onMouseOver="swapImage('Image19','/static/licenseImages/zc2.jpg')"><img src="/static/licenseImages/zc.jpg" name="Image19" width="180" height="270" border="0" id="Image19" /></a></td>
-                            <td> <a href="px.html" onMouseOut="swapImage('Image20','/static/licenseImages/px.jpg')" onMouseOver="swapImage('Image20','/static/licenseImages/px2.jpg')"><img src="/static/licenseImages/px.jpg" name="Image20" width="180" height="270" border="0" id="Image20" /></a></td>--%>
+                            <td align="center"><input type="button" id="applyName" value="点击签名" class="btn btn-primary"/> </td>
+                            <td align="center"><input type="button" id="zhangcheng" value="点击签名" class="btn btn-primary"/> </td>
+                            <td align="center"><input type="button" id="conference" value="点击签名" class="btn btn-primary"/> </td>
                         </tr>
                     </table>
+                    <br>
+                    <div class="form-actions" style="text-align: center">
+                        <input type="button" id="finish" value="完成" class="btn btn-primary" />&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
+                    </div>
                     <br>
                     <br>
                 </div>
             </div>
         </div>
+</form:form>
 </body>
 </html>
