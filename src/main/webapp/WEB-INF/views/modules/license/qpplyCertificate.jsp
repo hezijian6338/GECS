@@ -42,6 +42,9 @@
             <div>
                 <br>
                 <h1 align="center"><font color="#317eac">请签署以下文件</font></h1>
+                <h5>章程pdf路径${certificateConference1.rulesPdfpath}</h5>
+                <h5>名称申请pdf路径${certificateConference1.applynamePdfpath}</h5>
+                <h5>会议决议pdf路径${certificateConference1.meetingPdfpath}</h5>
                 <br>
                 <br>
                 <div>

@@ -70,8 +70,14 @@ public class CertificateConferenceController extends BaseController {
 		}
 
 		certificateConferenceService.save(certificateConference);
+
+		CertificateConference certificateConference1 = certificateConferenceService.get(certificateConference);
+
+		model.addAttribute("certificateConference1",certificateConference1);
+
 		addMessage(redirectAttributes, "保存股东会议表成功");
-		return "redirect:"+Global.getAdminPath()+"/conference/certificateConference/?repage";
+		//return "redirect:"+Global.getAdminPath()+"/conference/certificateConference/?repage";
+		return "modules/license/qpplyCertificate";
 	}
 	
 	@RequiresPermissions("conference:certificateConference:edit")
