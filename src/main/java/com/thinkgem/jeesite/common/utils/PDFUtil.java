@@ -454,19 +454,6 @@ public class PDFUtil {
 
         s.setField("idscope", fillSpace(String.valueOf(businessLicense.getScope().getName()),15 , isNull(s,"idscope")));
 
-        s.setField("idbuildingName", fillSpace(businessLicense.getBuildingName() ,15 , isNull(s,"idbuildingName")));
-
-        s.setField("idfloorNumber", fillSpace(businessLicense.getFloorNumber() ,15 , isNull(s,"idfloorNumber")));
-
-        s.setField("iduseArea", fillSpace(businessLicense.getUseArea() ,15 , isNull(s,"iduseArea")));
-
-        s.setField("idusage1", fillSpace(businessLicense.getUsage1() ,15 , isNull(s,"idusage1")));
-
-        s.setField("iddealfireFacilities", fillSpace(businessLicense.getDealfireFacilities() ,15 , isNull(s,"iddealfireFacilities")));
-
-        s.setField("idpostcode", fillSpace(businessLicense.getPostcode(),15 , isNull(s,"idpostcode")));
-
-        s.setField("idarea", fillSpace(String.valueOf(businessLicense.getArea()),15 , isNull(s,"idarea")));
 
 
         ps.setFormFlattening(true); // 这句不能少

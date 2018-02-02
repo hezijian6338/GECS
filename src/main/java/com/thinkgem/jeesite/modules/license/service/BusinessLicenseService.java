@@ -144,8 +144,10 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 		FileUtils.createDirectory("E:\\certificate\\Business\\"+businessLicense.getCertificateName());
 		final String savaPath = "E:\\certificate\\Business\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()
 				+businessLicense.getPersonId()+".pdf";
+		/*final String realativePath = "/pic/certificate/Business/"+businessLicense.getCertificateName()+"/"+businessLicense.getCertificateName()
+				+businessLicense.getPersonId()+"_itext.pdf";*/
 		final String realativePath = "/pic/certificate/Business/"+businessLicense.getCertificateName()+"/"+businessLicense.getCertificateName()
-				+businessLicense.getPersonId()+"_itext.pdf";
+				+businessLicense.getPersonId()+".pdf";
 		final String savaPath_copy = "E:\\certificate\\Business\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()
 				+businessLicense.getPersonId()+"_copy"+".pdf";
 //		String view = "businessLicenseForm";
@@ -206,7 +208,7 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 					oaNotifyService.updateStatus(oaNotify);
 
 					try {
-						//开始盖章
+						/*//开始盖章
 						startStamp(savaPath);
 						startStamp2(savaPath_copy);
 
@@ -218,7 +220,7 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 						File file2 = new File(savaPath_copy);
 						if (file2.isFile()&&file2.exists()){
 							file2.delete();
-						}
+						}*/
 					   SendMessageUtil.sendMessage(businessLicense.getPersionName(),businessLicense.getCertificateTypeName(),
 								businessLicense.getPersionPhone());
 					} catch (Exception e) {

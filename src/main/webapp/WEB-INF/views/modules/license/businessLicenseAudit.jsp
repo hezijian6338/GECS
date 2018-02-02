@@ -84,7 +84,7 @@
                     urlCall(t, path1, path2, path3);
                 },
                 error:function(msg){
-                    alert("处理错误");
+                    alert("申请人未提交相关证明文件！！");
                 }
 
             });
