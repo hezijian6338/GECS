@@ -50,7 +50,6 @@
                 <form:input path="applynamePdfpath" htmlEscape="false" maxlength="64" class="input-xlarge required" readonly="true"/>
                 <h5>会议决议pdf路径</h5>
                 <form:input path="meetingPdfpath" htmlEscape="false" maxlength="64" class="input-xlarge required" readonly="true"/>
-
                 <br>
                 <br>
                 <div>
