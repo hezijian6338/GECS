@@ -73,6 +73,7 @@
 
         function checkDoc(name, t) {
             var path, path1, path2, path3;
+            alert(path1);
             $.ajax({
                 type: "POST",
                 url: "${ctx}/conference/certificateConference/getPathByTitle/" + name,

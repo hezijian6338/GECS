@@ -36,7 +36,7 @@ public class VerifyController extends BaseController{
     @Autowired
     private ClientTestService clientTestService;
 
-    private static final String uploadURL = "http://localhost:8081/a/signature/qm/pass/upload?";
+    private static final String uploadURL = "http://192.168.8.222:8081/a/signature/qm/pass/upload?";
 
     //跳转页面
     @RequestMapping(value = "jump")

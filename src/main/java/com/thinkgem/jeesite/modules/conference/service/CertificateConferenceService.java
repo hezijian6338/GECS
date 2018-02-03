@@ -133,7 +133,7 @@ public class CertificateConferenceService extends CrudService<CertificateConfere
 	  * @param certificateConference
 	 * @DATE: 2018\2\1 0001 14:19
 	 */
-
+	@Transactional(readOnly = false)
 	public int updatePdfPath(CertificateConference certificateConference){
 
 		return certificateConferenceDao.updatePdfPath(certificateConference);

@@ -22,23 +22,28 @@ import com.thinkgem.jeesite.modules.license.dao.BusinessElementDao;
 @Transactional(readOnly = true)
 public class BusinessElementService extends CrudService<BusinessElementDao, BusinessElement> {
 
+	@Override
 	public BusinessElement get(String id) {
 		return super.get(id);
 	}
 	
+	@Override
 	public List<BusinessElement> findList(BusinessElement businessElement) {
 		return super.findList(businessElement);
 	}
 	
+	@Override
 	public Page<BusinessElement> findPage(Page<BusinessElement> page, BusinessElement businessElement) {
 		return super.findPage(page, businessElement);
 	}
 	
+	@Override
 	@Transactional(readOnly = false)
 	public void save(BusinessElement businessElement) {
 		super.save(businessElement);
 	}
 	
+	@Override
 	@Transactional(readOnly = false)
 	public void delete(BusinessElement businessElement) {
 		super.delete(businessElement);
