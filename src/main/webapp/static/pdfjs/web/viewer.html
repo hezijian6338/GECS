@@ -41,7 +41,7 @@ See https://github.com/adobe-type-tools/cmap-resources
         cursor: pointer;
       }
       .black_overlay{
-        /*display: none;*/
+        display: none;
         position: absolute;
         top: 0%;
         left: 0%;
@@ -51,13 +51,13 @@ See https://github.com/adobe-type-tools/cmap-resources
         z-index:1001;
       }
       .white_content {
-        /*display: none;*/
+        display: none;
         position: absolute;
         top: 15%;
         left: 30%;
         text-align:center;
         width: 40%;
-        height: auto;
+        height: 80%;
         background-color: rgb(236,236,236);
         border-radius: 16px;
         z-index:1002;
@@ -395,13 +395,13 @@ See https://github.com/adobe-type-tools/cmap-resources
       <!--验证成功弹出层-->
       <div id="fade" class="black_overlay"></div>
       <div id="mydiv" class="white_content">
-        <div style="position:relative;top:-30px;height: 10%; background-color:rgb(72, 135, 238)">
+        <div style="position:relative;height: 10%; background-color:rgb(72, 135, 238)">
           <h4 style="color: #ffffff;font-size: 20px;position:relative;top: 15px;">验签结果</h4>
           <span id="close" style="cursor: pointer;float: right;font-size: 40px;
         color: #ffffff;position:absolute;top: 1px;right: 10px;">×</span>
         </div>
         <!--<p>本文档共包含电子签章个数：2</p>-->
-        <div id="result" style="margin-top:-20px;text-align: left">
+        <div id="result" style="margin-top:10px;text-align: left">
         </div>
       </div>
     </div> <!-- outerContainer -->
@@ -409,23 +409,33 @@ See https://github.com/adobe-type-tools/cmap-resources
   </body>
 
 <script type="text/javascript">
+    //接收传过来的file参数
+    var checkPath;
+    if(decodeURI(window.location.search).toString().length > 1){
+        var url = decodeURI(window.location.search);
+        checkPath = url.substring(url.lastIndexOf('=')+1, url.length);
+        checkPath = checkPath.substring(0,checkPath.lastIndexOf('?'))
+    }
+
+
     //验签
     $(function() {
         $("#getVerification").click(function () {
 
             $("#result").html("");
-            var formdata = "C:/test/sign/done/23/test-1517392539628.pdf"
-            console.log(formdata);
+//            var checkPath = "C:/test/sign/done/23/test-1517392539628.pdf"
+
             $.ajax({
 //                url: "http://sign.ieseals.cn:9961/qm/a/signature/qm/pass/Verify.do?token="+token,
-                url: "http://localhost:8086/a/verify/certificate/info",
-                type: "POST",
-                data: formdata,
-//                dataType: "JSON",
+                url: "http://localhost:8086/a/verify/certificate/info?checkPath="+checkPath,
+                type: "GET",
+//                data: {'checkPath':checkPath},
+                dataType: "JSON",
                 cache: false,
                 processData: false,
                 contentType: false,
                 success: function (result) {
+//                    result = JSON.parse(result)
                     if (result.code == 200) {
                         $("#result").append("<span style='font-weight: bold;margin-left: 35%;'>本文档共包含电子签章个数：" + result.entity.length + "</span>")
                         for (var i = 0; i < result.entity.length; i++) {
@@ -436,7 +446,7 @@ See https://github.com/adobe-type-tools/cmap-resources
                                 + "<div style='width:150px;height: 80px;background: white; border-top: 1px solid #838B83;border-left:1px solid #838B83; display: inline-block;'>"
                                 + "<img src='data:image/png;base64," + result.entity[i].signImage + "' style='width:150px;height: 80px;'>"
                                 + "</div></p>"
-                            html += "<p>文档标题：" + result.entity[i].fileName + "</p>"
+//                            html += "<p>文档标题：" + result.entity[i].fileName + "</p>"
                             html += "<p>签章用户：" + result.entity[i].signer + "</p>"
                             html += "<p>签章日期：" + result.entity[i].signDate + "</p>"
 
@@ -448,9 +458,9 @@ See https://github.com/adobe-type-tools/cmap-resources
                             html += "<p>签章原因：" + result.entity[i].cerReason + "</p>"
                             html += "<p>签章地点：" + result.entity[i].cerLocation + "</p>"
 
-                            html += "<p>验证结果：" + result.entity[i].isDocumentUseful + "<img height='40' width='50' src='../../img/pass3.png'></p>"
+                            html += "<p>验证结果：" + result.entity[i].isDocumentUseful + "<img height='40' width='50' src='images/pass3.png'></p>"
 
-                            $("#result").append("<div style='text-align: left;display: inline-block;margin-left: 10%;'>" + html + "</div><hr>");
+                            $("#result").append("<div style='text-align: left;display: inline-block;margin-left: 10%;'>" + html );
 
                         }
 

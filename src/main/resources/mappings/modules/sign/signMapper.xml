@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.thinkgem.jeesite.modules.sign.dao.ClientTestDao">
+
+	<resultMap id="BaseResultMap" type="com.thinkgem.jeesite.modules.sign.entity.Client">
+		<result column="id" property="id" />
+		<result column="pdfid" property="pdfid" />
+		<result column="signseceret" property="signseceret" />
+		<result column="ischeck" property="ischeck" />
+	</resultMap>
+
+	<parameterMap id="Client" type="com.thinkgem.jeesite.modules.sign.entity.Client"/>
+
+	<sql id="Base_Column_List">
+		id,
+		pdfid,
+		signseceret,
+		ischeck
+	</sql>
+
+	<insert id="insert" parameterType="com.thinkgem.jeesite.modules.sign.entity.Client">
+		INSERT into test(
+		id,
+		pdfid,
+		signseceret,
+		ischeck
+		)VALUE (
+		#{id},
+		#{pdfid},
+		#{signseceret},
+		#{ischeck}
+		)
+	</insert>
+
+	<select id="isPass" parameterType="com.thinkgem.jeesite.modules.sign.entity.Client" resultType="com.thinkgem.jeesite.modules.sign.entity.Client">
+		select
+		*
+		from test
+		where pdfid = #{pdfid}
+		AND
+		ischeck = '1'
+	</select>
+
+</mapper>

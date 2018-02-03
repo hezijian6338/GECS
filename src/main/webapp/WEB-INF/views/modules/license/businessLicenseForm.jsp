@@ -331,7 +331,7 @@
 					<td class="tit">公司名称</td>
 					<td>
 						<form:input id="certificateName" path="certificateName" placeholder="请点击名称申请" htmlEscape="false" maxlength="100" class="input-xlarge required" readonly="true"/>
-						<a id="change" class="btn btn-default showcod" data-toggle="modal" data-target=".modal" >名称申请</a>
+						<a id="change" class="btn btn-success showcod" data-toggle="modal" data-target=".modal" >名称申请</a>
 						<span class="help-inline"><font color="red">*</font> </span>
 					</td>
 				</tr>

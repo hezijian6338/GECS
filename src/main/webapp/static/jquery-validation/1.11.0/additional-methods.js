@@ -424,7 +424,7 @@ jQuery.validator.addMethod("accept", function(value, element, param) {
 			for (i = 0; i < element.files.length; i++) {
 				file = element.files[i];
 
-				// Grab the mimtype from the loaded file, verify it matches
+				// Grab the mimtype from the loaded file, sign it matches
 				if (!file.type.match(new RegExp( ".?(" + typeParam + ")$", "i"))) {
 					return false;
 				}

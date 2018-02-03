@@ -65,9 +65,9 @@
                 console.log(fileURL);
 //                fileURL='c:/certificate/BusinessPDF/test-1517282536608.pdf';
                 console.log("fileURL:" + fileURL)
-                $('#displayPdfIframe').attr("src", '${ctxStatic}/pdfjs/web/viewer.html?file=' + encodeURIComponent(fileURL));
+                $('#displayPdfIframe').attr("src", '${ctxStatic}/pdfjs/web/viewer.html?file=' + fileURL);
             } else {
-                alert("执照还未生成！");
+                alert("找不到文件，请联系管理员！");
             }
         }
 
@@ -113,7 +113,7 @@
     <sys:message content="${message}"/>
     <fieldset>
         <legend>审核人员：${businessLicense.act.taskName}</legend>
-        <h1 align="center">营业执照审批申请</h1>
+        <h1 align="center">公司注册</h1>
         <table class="table-form">
             <tr>
                 <td class="tit">证照类型</td>
@@ -372,7 +372,7 @@
      aria-hidden="true"
      style="width: 100%;height: 100%;left: 450px; top:0px;">
     <div class="modal-header" style="background-color: rgb(0,0,0); filter: alpha(opacity=10);">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:white;">×</button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:white;">X</button>
         <h3 id="myModalLabel"></h3>
     </div>
     <div class="modal-body" style="width: 100%;max-height: 800px; padding: 0px;overflow:hidden;">

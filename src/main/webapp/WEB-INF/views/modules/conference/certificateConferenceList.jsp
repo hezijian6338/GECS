@@ -19,7 +19,7 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/conference/certificateConference/">股东会议表列表</a></li>
-		<shiro:hasPermission name="conference:certificateConference:edit"><li><a href="${ctx}/conference/certificateConference/form">股东会议表添加</a></li></shiro:hasPermission>
+		<shiro:hasPermission name="conference:certificateConference:edit"><li><a href="${ctx}/conference/certificateConference/form">添加公司信息</a></li></shiro:hasPermission>
 	</ul>
 	<form:form id="searchForm" modelAttribute="certificateConference" action="${ctx}/conference/certificateConference/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
