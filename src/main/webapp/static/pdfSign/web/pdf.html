@@ -170,7 +170,7 @@ See https://github.com/adobe-type-tools/cmap-resources
                                 async: false,
                                 cache: false,
                                 type: 'GET',
-                                url: "http://192.168.8.118:8081/f/verify/certificate/isPass",
+                                url: "http://localhost:8086/f/verify/certificate/isPass",
                                 data: {
                                     pdfId: pdfId
                                 },
@@ -773,13 +773,13 @@ See https://github.com/adobe-type-tools/cmap-resources
             }
 
             var token = "12bb5c82-b65b-4aab-b8a0-87d19587eabe";
-            var membercode = "ad1a2fd7-53c5-463b-a35c-8bdd8861100b";
+//            var membercode = "ad1a2fd7-53c5-463b-a35c-8bdd8861100b";
 
             $("#sure").hide();
             $("#wait-btn").show();
             $.ajax({
 //            url: "http://sign.ieseals.cn:9961/signClientDemo/api/upload?token="+token+"&membercode="+membercode,
-                url: "http://192.168.8.118:8081/f/verify/certificate/upload?token=" + token + "&membercode=" + membercode + "&checkPath=" + checkPath,
+                url: "http://localhost:8086/f/verify/certificate/upload?token=" + token + "&signseceret=" + seceret + "&checkPath=" + checkPath,
                 type: "POST",
                 dataType: "json",
                 cache: false,
@@ -800,7 +800,7 @@ See https://github.com/adobe-type-tools/cmap-resources
 //            console.log(formdata);
                         $.ajax({
 //                        url: "http://sign.ieseals.cn:9961/qm/a/signature/qm/pass/sign.do?token="+token,
-                            url: "http://192.168.8.222:8081/a/signature/qm/pass/sign.do?token=" + token,
+                            url: "http://localhost:8081/a/signature/qm/pass/sign.do?token=" + token,
 //                        url: "http://localhost:8081/qm/a/signature/qm/pass/sign.do?token="+token,
                             type: "POST",
                             data: formdata,

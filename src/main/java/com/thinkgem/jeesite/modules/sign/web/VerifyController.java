@@ -102,13 +102,13 @@ public class VerifyController extends BaseController{
     /**
      * 文件上传接口，后台自动将文件上传给签名商(润成)
      * @param token
-     * @param membercode
+     * @param signseceret
      * @param checkPath
      */
     @RequestMapping(value = "upload", method = RequestMethod.POST)
     @ResponseBody
     public JsonReturn upload(@RequestParam(value = "token", required = true) String token,
-                             @RequestParam(value = "membercode", required = true) String membercode,
+                             @RequestParam(value = "signseceret", required = true) String signseceret,
                              @RequestParam(value = "checkPath", required = true) String checkPath) {
 
         File path1 = null;
@@ -128,7 +128,7 @@ public class VerifyController extends BaseController{
         // 上传文件
         String result = HttpURLConnectionUtil.uploadFile(uploadURL +
                         "token="+ token +
-                        "&membercode=" + membercode,
+                        "&signseceret=" + signseceret,
                 new String[]{path} );
 
         JSONObject jsonObject = JSONObject.fromObject(result);
