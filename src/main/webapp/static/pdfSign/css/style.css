@@ -67,6 +67,7 @@ body{
 .btn-upload{
     width: 40%;
     padding: 4px 8px;
+    margin-bottom: 2px;
     font-size: 20px;
     background-color: #6b6b6b;
     color: #fff;

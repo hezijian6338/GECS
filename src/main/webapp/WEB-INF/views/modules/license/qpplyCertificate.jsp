@@ -110,7 +110,6 @@
             }
         }
         function finishAll() {
-            alert(finishFlag)
             if (finishFlag != 3){
                 alert("请签署完全部文件！");
             }else {

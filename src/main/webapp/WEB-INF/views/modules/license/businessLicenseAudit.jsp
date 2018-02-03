@@ -56,7 +56,7 @@
                         path = path2;
                         $('#myModalLabel').text("股东会决议");
                         break;
-                    case 2:
+                    case 3:
                         path = path3;
                         $('#myModalLabel').text("公司章程");
                         break;
@@ -72,8 +72,7 @@
         }
 
         function checkDoc(name, t) {
-            var path, path1, path2, path3;
-            alert(path1);
+            var path1, path2, path3;
             $.ajax({
                 type: "POST",
                 url: "${ctx}/conference/certificateConference/getPathByTitle/" + name,

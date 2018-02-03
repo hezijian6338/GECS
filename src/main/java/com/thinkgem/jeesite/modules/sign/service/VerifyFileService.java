@@ -24,7 +24,7 @@ public class VerifyFileService {
     public Condition verifyByFile(String checkPath) {
 
         //获得当前文件
-        checkPath = checkPath.replace("/pic","E:");
+        checkPath = checkPath.replace("/img","C:/test");
 
         try {
             //验证证书信息

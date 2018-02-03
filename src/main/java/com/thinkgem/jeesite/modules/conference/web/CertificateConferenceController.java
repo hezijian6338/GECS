@@ -113,14 +113,13 @@ public class CertificateConferenceController extends BaseController {
  * @DATE: 2018\2\1 0001 11:51
  */
 
-    @ResponseBody
     @RequestMapping(value = "updatePdfPath")
     public String updatePdfPath(CertificateConference certificateConference){
 
         if (certificateConferenceService.updatePdfPath(certificateConference)>0){
-            return "true";
+			return "redirect:" + adminPath + "/oa/oaNotify/self?repage";
         }else {
-            return "false";
+			return "modules/license/qpplyCertificate";
         }
     }
 
