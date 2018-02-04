@@ -64,7 +64,7 @@
 <div class="center clearfix" style="padding-top: 2%;width: 82%;min-width: 1060px;margin-left: auto;margin-right: auto">
 	<ul class="nav nav-tabs">
 		<%--<li><a href="${ctx}/conference/certificateConference/">股东会议表列表</a></li>--%>
-		<li class="active"><a href="${ctx}/conference/certificateConference/form?id=${certificateConference.id}">股东会议表<shiro:hasPermission name="conference:certificateConference:edit">${not empty certificateConference.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="conference:certificateConference:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"><a href="${ctx}/conference/certificateConference/form?id=${certificateConference.id}">公司信息<shiro:hasPermission name="conference:certificateConference:edit">${not empty certificateConference.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="conference:certificateConference:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<%--@elvariable id="certificateConference" type=""--%>
 	<form:form id="inputForm" modelAttribute="certificateConference" action="${ctx}/conference/certificateConference/save" method="post" class="form-horizontal">
@@ -84,7 +84,10 @@
 			</td>
 			<td class="tit">通知方式：</td>
 			<td>
-				<form:input path="conferenceInformType" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				<form:select path="conferenceInformType" class="input-medium required">
+					<form:option readonly="true" value="" label="请选择通知方式"/>
+					<form:options items="${fns:getDictList('notify_type')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</td>
 		</tr>

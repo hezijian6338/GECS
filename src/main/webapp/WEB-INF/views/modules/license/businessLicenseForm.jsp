@@ -526,17 +526,17 @@
                                     <td id="th4">组织形式</td>
                                 </tr>
                                 <tr>
-                                    <td id="th5">佛山</td>
+                                    <td id="th5">肇庆</td>
                                     <td id="th55" style="display:none">芝雅</td>
                                     <td id="th6">芝雅</td>
-                                    <td id="th66" style="display:none">佛山</td>
+                                    <td id="th66" style="display:none">肇庆</td>
                                     <td id="th7">服饰</td>
-                                    <td id="th77" style="display:none">佛山</td>
+                                    <td id="th77" style="display:none">肇庆</td>
                                     <td id="th8">有限责任公司</td>
                                 </tr>
                                 <tr>
                                     <td ><font color="red" size="3">合成的名称：</font></td>
-                                    <td colspan="4" id="combinationName">佛山芝雅服饰有限责任公司 </td>
+                                    <td colspan="4" id="combinationName">肇庆芝雅服饰有限责任公司 </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -572,10 +572,11 @@
                                 <tr>
                                     <td><span class="help-inline"><font color="red">*</font> </span>行政区划：
                                         <select id="provinceCity" style="width: 150px">
-                                            <option value ="1">冠省名</option>
+
+											<option value="123">冠省市区(县)名</option>
                                             <option value ="2">冠市名</option>
                                             <option value="3">冠区(县)名</option>
-                                            <option value="123">冠省市区(县)名</option>
+											<option value ="1">冠省名</option>
                                             <option value="12">冠省市名</option>
                                             <option value="23">冠市区(县)名</option>
                                         </select>
@@ -588,15 +589,20 @@
                                     </td>
                                     <td id="shi">市：
                                         <select id="city">
-                                            <option value ="saab2">珠海</option>
-                                            <option value ="saab">珠海市</option>
+                                            <option value ="saab2">肇庆</option>
+                                            <option value ="saab">肇庆市</option>
                                         </select>
                                     </td>
                                     <td id="xian">县（区）：
                                         <select id="county">
-                                            <option value ="saab2">香洲</option>
-                                            <option value ="saab">斗门</option>
-                                            <option value="opel">金湾</option>
+                                            <option value ="saab2">端州区</option>
+                                            <option value ="saab">鼎湖区</option>
+                                            <option value="opel">高要区</option>
+											<option value ="saab2">广宁县</option>
+											<option value ="saab">怀集县</option>
+											<option value="opel">封开县</option>
+											<option value ="saab">德庆县</option>
+											<option value="opel">四会市</option>
                                         </select>
                                     </td>
                                 </tr>
