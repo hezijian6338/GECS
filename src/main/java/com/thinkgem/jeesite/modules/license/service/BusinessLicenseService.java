@@ -296,8 +296,8 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 	@Transactional(readOnly = false)
 	public void startStamp(String SRC) throws Exception {
 
-		String KEYSTORE="C://certificate/pdfsign/贺志军.pfx";
-		char[] PASSWORD = "1234".toCharArray();//keystory密码
+		String KEYSTORE="C://certificate/pdfsign/肇庆市工商行政管理局.pfx";
+		char[] PASSWORD = "112233".toCharArray();//keystory密码
 		//String SRC="E://certificate/pdfsign/src/练浩文打飞机有限公司440825199509103912.pdf" ;//原始pdf
 		//   String DEST=SRC.replace(".pdf", "_box.pdf"); //"d://demo_signed_box.pdf" ;//签名完成的pdf
 		String DEST2=SRC.replace(".pdf", "_itext.pdf");//签名完成的pdf
@@ -332,8 +332,8 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 	@Transactional(readOnly = false)
 	public void startStamp2(String SRC) throws Exception {
 
-		String KEYSTORE="C://certificate/pdfsign/贺志军.pfx";
-		char[] PASSWORD = "1234".toCharArray();//keystory密码
+		String KEYSTORE="C://certificate/pdfsign/肇庆市工商行政管理局.pfx";
+		char[] PASSWORD = "112233".toCharArray();//keystory密码
 		//String SRC="E://certificate/pdfsign/src/练浩文打飞机有限公司440825199509103912.pdf" ;//原始pdf
 		//   String DEST=SRC.replace(".pdf", "_box.pdf"); //"d://demo_signed_box.pdf" ;//签名完成的pdf
 		String DEST2=SRC.replace(".pdf", "_itext.pdf");//签名完成的pdf
