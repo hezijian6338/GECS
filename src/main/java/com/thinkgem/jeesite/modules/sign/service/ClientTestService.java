@@ -23,7 +23,7 @@ public class ClientTestService {
     public Client isPass(Client client) {
         Client client2 = clientTestDao.isPass(client);
         System.out.println("clientTestDao.isPass(client):"+client2);
-        if (client2.getId() != null){
+        if (client2 != null){
             return client2;
         }
         return null;

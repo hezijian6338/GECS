@@ -55,19 +55,19 @@ public class CertificateConferenceService extends CrudService<CertificateConfere
 	public void save(CertificateConference certificateConference) {
 		super.save(certificateConference);
 		BusinessLicense businessLicense = (BusinessLicense) CacheUtils.get("businessLicense","businessLicense");
-		final String path = "E:\\certificate\\BusinessModel\\有限公司章程.pdf";
+		final String path = "C:\\certificate\\BusinessModel\\有限公司章程.pdf";
 
-		final String savaPath = "E:\\certificate\\Rules\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()
+		final String savaPath = "C:\\certificate\\Rules\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()
 				+"有限公司章程"+".pdf";
 
-		final String path2 = "E:\\certificate\\BusinessModel\\有限公司股东会决议.pdf";
+		final String path2 = "C:\\certificate\\BusinessModel\\有限公司股东会决议.pdf";
 
-		final String savaPath2 = "E:\\certificate\\conference\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()
+		final String savaPath2 = "C:\\certificate\\conference\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()
 				+"有限公司股东会决议"+".pdf";
 
-		FileUtils.createDirectory("E:\\certificate\\conference\\"+businessLicense.getCertificateName());
+		FileUtils.createDirectory("C:\\certificate\\conference\\"+businessLicense.getCertificateName());
 
-		FileUtils.createDirectory("E:\\certificate\\Rules\\"+businessLicense.getCertificateName());
+		FileUtils.createDirectory("C:\\certificate\\Rules\\"+businessLicense.getCertificateName());
 		try {
 
 			PDFUtil_rules.fillTemplate(businessLicense,certificateConference, path, savaPath);

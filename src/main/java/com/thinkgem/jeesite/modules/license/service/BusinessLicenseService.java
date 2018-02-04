@@ -85,9 +85,9 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 	public void save(BusinessLicense businessLicense) {
 		DateFormat df = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
 
-		final String path = "E:\\certificate\\BusinessModel\\名称预先核准申请书.pdf";
+		final String path = "C:\\certificate\\BusinessModel\\名称预先核准申请书.pdf";
 
-		final String savaPath = "E:\\certificate\\Application\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()
+		final String savaPath = "C:\\certificate\\Application\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()
 				+"名称预先核准申请书"+".pdf";
 
 		final String applayRealativePath = "/pic/certificate/Application/"+businessLicense.getCertificateName()+"/"+businessLicense.getCertificateName()
@@ -96,7 +96,7 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 		//加入缓存
 		CacheUtils.put("applayRealativePath","applayRealativePath",applayRealativePath);
 
-		FileUtils.createDirectory("E:\\certificate\\Application\\"+businessLicense.getCertificateName());
+		FileUtils.createDirectory("C:\\certificate\\Application\\"+businessLicense.getCertificateName());
 
 		//申请发起
 		if(StringUtils.isBlank(businessLicense.getId())){
@@ -139,16 +139,16 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 	 */
 	@Transactional(readOnly = false)
 	public void auditSave( BusinessLicense businessLicense) throws IOException, DocumentException, ClientException {
-		final String path = "E:\\certificate\\BusinessModel\\BusinessModel.pdf";
-		final String path_copy = "E:\\certificate\\BusinessModel\\BusinessModel_copy.pdf";
-		FileUtils.createDirectory("E:\\certificate\\Business\\"+businessLicense.getCertificateName());
-		final String savaPath = "E:\\certificate\\Business\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()
+		final String path = "C:\\certificate\\BusinessModel\\BusinessModel.pdf";
+		final String path_copy = "C:\\certificate\\BusinessModel\\BusinessModel_copy.pdf";
+		FileUtils.createDirectory("C:\\certificate\\Business\\"+businessLicense.getCertificateName());
+		final String savaPath = "C:\\certificate\\Business\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()
 				+businessLicense.getPersonId()+".pdf";
 		final String realativePath = "/pic/certificate/Business/"+businessLicense.getCertificateName()+"/"+businessLicense.getCertificateName()
 				+businessLicense.getPersonId()+"_itext.pdf";
 		/*final String realativePath = "/pic/certificate/Business/"+businessLicense.getCertificateName()+"/"+businessLicense.getCertificateName()
 				+businessLicense.getPersonId()+".pdf";*/
-		final String savaPath_copy = "E:\\certificate\\Business\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()
+		final String savaPath_copy = "C:\\certificate\\Business\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()
 				+businessLicense.getPersonId()+"_copy"+".pdf";
 //		String view = "businessLicenseForm";
 		final CertificateLibrary certificateLibrary = new CertificateLibrary();
@@ -296,12 +296,12 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 	@Transactional(readOnly = false)
 	public void startStamp(String SRC) throws Exception {
 
-		String KEYSTORE="E://certificate/pdfsign/贺志军.pfx";
+		String KEYSTORE="C://certificate/pdfsign/贺志军.pfx";
 		char[] PASSWORD = "1234".toCharArray();//keystory密码
 		//String SRC="E://certificate/pdfsign/src/练浩文打飞机有限公司440825199509103912.pdf" ;//原始pdf
 		//   String DEST=SRC.replace(".pdf", "_box.pdf"); //"d://demo_signed_box.pdf" ;//签名完成的pdf
 		String DEST2=SRC.replace(".pdf", "_itext.pdf");//签名完成的pdf
-		String chapterPath="E://certificate/pdfsign/src/runcheng2.gif";//签章图片
+		String chapterPath="C://certificate/pdfsign/src/runcheng2.gif";//签章图片
 		String signername="润成科技";
 		String reason="润成电子印章签名";
 		String location="珠海";
@@ -332,12 +332,12 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 	@Transactional(readOnly = false)
 	public void startStamp2(String SRC) throws Exception {
 
-		String KEYSTORE="E://certificate/pdfsign/贺志军.pfx";
+		String KEYSTORE="C://certificate/pdfsign/贺志军.pfx";
 		char[] PASSWORD = "1234".toCharArray();//keystory密码
 		//String SRC="E://certificate/pdfsign/src/练浩文打飞机有限公司440825199509103912.pdf" ;//原始pdf
 		//   String DEST=SRC.replace(".pdf", "_box.pdf"); //"d://demo_signed_box.pdf" ;//签名完成的pdf
 		String DEST2=SRC.replace(".pdf", "_itext.pdf");//签名完成的pdf
-		String chapterPath="E://certificate/pdfsign/src/runcheng2.gif";//签章图片
+		String chapterPath="C://certificate/pdfsign/src/runcheng2.gif";//签章图片
 		String signername="润成科技";
 		String reason="润成电子印章签名";
 		String location="珠海";

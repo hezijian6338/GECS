@@ -142,9 +142,9 @@
 <%--
                             <td><a href="${ctx}/license/businessLicense/applyBusinessLicense?typeName=营业执照" onMouseOut="swapImage('Image12','/static/licenseImages/applayName.png')" onMouseOver="swapImage('Image12','/static/licenseImages/business1.jpg')"><img src="/static/licenseImages/business.jpg" name="Image12" width="280" height="470" border="0" id="Image12" /></a></td>
 --%>
-                            <td><img src="/static/licenseImages/applyName.png" name="Image1" id="Image1"  style="height: 495px;width:380px;"/></td>
-                            <td><img src="/static/licenseImages/conference.png" name="Image3" id="Image3"  style="height: 495px;width:380px;"/></td>
-                            <td><img src="/static/licenseImages/zhangcheng.png" name="Image2" id="Image2"  style="height: 495px;width:380px;" /></td>
+                            <td><img src="${ctxStatic}/licenseImages/applyName.png" name="Image1" id="Image1"  style="height: 495px;width:380px;"/></td>
+                            <td><img src="${ctxStatic}/licenseImages/conference.png" name="Image3" id="Image3"  style="height: 495px;width:380px;"/></td>
+                            <td><img src="${ctxStatic}/licenseImages/zhangcheng.png" name="Image2" id="Image2"  style="height: 495px;width:380px;" /></td>
                         </tr>
                         <tr>
                             <td align="center">

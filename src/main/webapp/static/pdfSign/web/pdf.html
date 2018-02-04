@@ -28,7 +28,8 @@ See https://github.com/adobe-type-tools/cmap-resources
 <!--<%&#45;&#45;<title>PDF.js viewer</title>&#45;&#45;%>-->
     <title>电子签章</title>
     <link href="../css/style.css?id=2" rel="stylesheet" />
-    <script src="../../js/jquery.js?id=2" type="text/javascript"></script>
+    <!--<script src="../js/jquery-1.9.1.min.js?id=2" type="text/javascript"></script>-->
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
     <script src="../js/common.js?id=2" type="text/javascript"></script>
     <link rel="stylesheet" href="viewer.css?id=2">
     <!-- This snippet is used in production (included from viewer.html) -->
@@ -157,6 +158,9 @@ See https://github.com/adobe-type-tools/cmap-resources
             }
         }
 
+        //随机变量
+        var random = Math.random().toString(36).substr(2);
+
         //签名密钥
         var seceret;
             //轮询判断是否已验证成功
@@ -164,13 +168,14 @@ See https://github.com/adobe-type-tools/cmap-resources
 
                 $.extend({
                     getorderstate: function () {
-                        var pdfId = "ABC";//示例
+                        var pdfId = random;//示例
                         try {
                             $.ajax({
                                 async: false,
                                 cache: false,
                                 type: 'GET',
-                                url: "http://localhost:8086/f/verify/certificate/isPass",
+//                                url: "http://localhost:8086/f/verify/certificate/isPass",
+                                url: "http://sign.ieseals.cn:9961/certificate/f/verify/certificate/isPass",
                                 data: {
                                     pdfId: pdfId
                                 },
@@ -207,6 +212,8 @@ See https://github.com/adobe-type-tools/cmap-resources
             bgdiv.style.width = document.body.scrollWidth;
 // bgdiv.style.height = $(document).height();
             $("#"+bg_div).height($(document).height());
+            $('#imgQRcode').attr("src","http://sign.ieseals.cn:9988/qrcode?code=20AB0011"+random+"&showcode=请打开【电子签名App】进行身份验证");
+
         };
         //关闭弹出层
         function CloseDiv(show_div,bg_div)
@@ -220,13 +227,26 @@ See https://github.com/adobe-type-tools/cmap-resources
             document.getElementById(show_div).style.display='none';
             document.getElementById('MyDiv2').style.display='block';
         };
+
         //调出签名
         function getSign(show_div,bg_div)
         {
+            var imageUrl = "http://sign.ieseals.cn:9980/Interface/Interface/GetSignImg?token=74f0cc8a-21b6-4c61-8dbf-%2000f6e26a1626&signseceret=" + seceret;
             document.getElementById(show_div).style.display='none';
             document.getElementById(bg_div).style.display='none';
             document.getElementById('signature').style.display='none';
             document.getElementById('sure').style.display='block';
+            $('#signImage').css({'background':'url('+imageUrl+')',
+//            'width':'120px',
+//            'height':'60px',
+//            'z-index':'999',
+//            'border':'2px solid #ccc',
+//            'position':'absolute',
+//            'left':'500px',
+//            'top':'50px',
+            'background-size':'cover'
+//            'cursor':'pointer'
+            });
             document.getElementById('signImage').style.visibility='visible';
         };
     </script>
@@ -552,11 +572,13 @@ See https://github.com/adobe-type-tools/cmap-resources
         <div id="viewerContainer" tabindex="0" style="position: relative">
             <!--<%&#45;&#45;增加印模图片，用于拖动和获得坐标&#45;&#45;%>-->
             <div style="width:120px;height:60px;z-index:999;border:2px solid #ccc;
-                    position:absolute; left: 500px;top:50px;
-                    background: url('http://sign.ieseals.cn:9980/Interface/Interface/GetSignImg?token=74f0cc8a-21b6-4c61-8dbf-%2000f6e26a1626&signseceret=2ba5b15b-0c35-4375-8d48-69938f3e8891');
-                    background-size: cover;cursor: pointer;visibility: hidden;"
-                 id="signImage">
+            position:absolute; left: 500px;top:50px;
+            background-size: cover;cursor: pointer;visibility: hidden;"
+                    id="signImage">
             </div>
+            <!--<div style="visibility: hidden;"-->
+                 <!--id="signImage">-->
+            <!--</div>-->
 
             <div id="viewer" class="pdfViewer" style="user-select: none;"></div>
         </div>
@@ -694,7 +716,7 @@ See https://github.com/adobe-type-tools/cmap-resources
         <div style="text-align: right; cursor: default; height: 10px;">
             <img src="images/close.png" onclick="CloseDiv('MyDiv','fade')" style="width: 10%;height: auto;"/>
         </div>
-        <img src="http://sign.ieseals.cn:9988/qrcode?code=20AB0011ABC&showcode=请打开【电子签名App】进行身份验证" style="width: 50%;height: auto;">
+        <img id="imgQRcode" style="width: 50%;height: auto;">
     </div>
 
     <!--验证通过时背景层DIV-->
@@ -779,7 +801,7 @@ See https://github.com/adobe-type-tools/cmap-resources
             $("#wait-btn").show();
             $.ajax({
 //            url: "http://sign.ieseals.cn:9961/signClientDemo/api/upload?token="+token+"&membercode="+membercode,
-                url: "http://localhost:8086/f/verify/certificate/upload?token=" + token + "&signseceret=" + seceret + "&checkPath=" + checkPath,
+                url: "http://sign.ieseals.cn:9961/certificate/f/verify/certificate/upload?token=" + token + "&signseceret=" + seceret + "&checkPath=" + checkPath,
                 type: "POST",
                 dataType: "json",
                 cache: false,
@@ -799,9 +821,8 @@ See https://github.com/adobe-type-tools/cmap-resources
                         var formdata = new FormData($("#form-signParam")[0]);
 //            console.log(formdata);
                         $.ajax({
-//                        url: "http://sign.ieseals.cn:9961/qm/a/signature/qm/pass/sign.do?token="+token,
-                            url: "http://localhost:8081/a/signature/qm/pass/sign.do?token=" + token,
-//                        url: "http://localhost:8081/qm/a/signature/qm/pass/sign.do?token="+token,
+                        url: "http://sign.ieseals.cn:9961/qm/a/signature/qm/pass/sign.do?token="+token,
+//                            url: "http://localhost:8081/a/signature/qm/pass/sign.do?token=" + token,
                             type: "POST",
                             data: formdata,
                             dataType: "JSON",

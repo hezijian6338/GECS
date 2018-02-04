@@ -5,8 +5,8 @@
 <head>
     <title>用户注册</title>
     <meta name="decorator" content="blank"/>
-    <link href="/static/css/front/frontCss.css" rel="stylesheet" />
-    <script src="/static/js/idCardNo.js" type="text/javascript"></script>
+    <link href="${ctxStatic}/css/front/frontCss.css" rel="stylesheet" />
+    <script src="${ctxStatic}/js/idCardNo.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             //验证手机号码格式
@@ -155,12 +155,12 @@
     <a href="javascript:;" class="tel">
         <div class="box">
             <p>客服电话：</p>
-            <p>140202011026</p>
+            <p>0756-33210684</p>
         </div>
     </a>
     <a href="javascript:;" class="wechat">
         <div class="box">
-            <img src="/static/images/runcheng.jpg">
+            <img src="${ctxStatic}/images/runcheng.jpg">
             <p>关注微信</p>
         </div>
     </a>

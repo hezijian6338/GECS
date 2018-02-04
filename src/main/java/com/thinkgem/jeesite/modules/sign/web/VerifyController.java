@@ -36,7 +36,8 @@ public class VerifyController extends BaseController{
     @Autowired
     private ClientTestService clientTestService;
 
-    private static final String uploadURL = "http://192.168.8.222:8081/a/signature/qm/pass/upload?";
+    //private static final String uploadURL = "http://192.168.8.222:8081/a/signature/qm/pass/upload?";
+    private static final String uploadURL = "http://sign.ieseals.cn:9961/qm/a/signature/qm/pass/upload?";
 
     //跳转页面
     @RequestMapping(value = "jump")
@@ -83,7 +84,7 @@ public class VerifyController extends BaseController{
         Client client = new Client();
         client.setPdfid(pdfId);
         client = clientTestService.isPass(client);
-        System.out.println("getSignseceret="+client.getSignseceret());
+
         if (client != null){
             JsonReturn jsonReturn = new JsonReturn();
             jsonReturn.setCode(JsonReturn.SUCCESS_CODE);
@@ -119,7 +120,7 @@ public class VerifyController extends BaseController{
         }
         if(!path1.exists()) path1 = new File("");
 
-        checkPath = checkPath.replace("/pic","E:");
+        checkPath = checkPath.replace("/pic","C:");
         File file = new File(checkPath);//部署本地地址
 
         String path = file.getAbsolutePath();

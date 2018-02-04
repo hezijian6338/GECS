@@ -323,9 +323,9 @@ public class BusinessLicenseController extends BaseController {
 //	@RequiresPermissions("license:businessLicense:edit")
 	@RequestMapping(value = "downLoad")
 	public void downLoad(String certificateName,HttpServletRequest request,HttpServletResponse response,RedirectAttributes redirectAttributes){
-		String savaPath = "E:\\certificate\\Business";
-		String isExsitFile = "E:\\certificate\\Business\\"+certificateName;
-		String downLoadPath = "E:\\certificate\\Business\\"+certificateName+".zip";
+		String savaPath = "C:\\certificate\\Business";
+		String isExsitFile = "C:\\certificate\\Business\\"+certificateName;
+		String downLoadPath = "C:\\certificate\\Business\\"+certificateName+".zip";
 		File file = new File(isExsitFile);
 		if (file.exists()){
 			FileUtils.zipFiles(savaPath,certificateName,downLoadPath);
