@@ -303,8 +303,8 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 		String DEST2=SRC.replace(".pdf", "_itext.pdf");//签名完成的pdf
 		String chapterPath="C://certificate/pdfsign/src/runcheng2.gif";//签章图片
 		String signername="润成科技";
-		String reason="润成电子印章签名";
-		String location="珠海";
+		String reason="电子印章防伪";
+		String location="中国";
 
 
 		System.out.println("==================这里是startStamp方法======================");
@@ -339,8 +339,8 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 		String DEST2=SRC.replace(".pdf", "_itext.pdf");//签名完成的pdf
 		String chapterPath="C://certificate/pdfsign/src/runcheng2.gif";//签章图片
 		String signername="润成科技";
-		String reason="润成电子印章签名";
-		String location="珠海";
+		String reason="电子印章防伪";
+		String location="中国";
 
 
 		System.out.println("==================这里是startStamp2方法======================");
