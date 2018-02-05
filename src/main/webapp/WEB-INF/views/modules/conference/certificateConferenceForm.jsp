@@ -74,7 +74,7 @@
 		<tr>
 			<td class="tit">会议类型：</td>
 			<td>
-				<form:input path="conferenceType" htmlEscape="false" maxlength="24" class="input-xlarge "/>
+				<form:input path="conferenceType" htmlEscape="false" maxlength="24" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</td>
 			<td class="tit">公司名称：</td>
@@ -94,36 +94,36 @@
 		<tr>
 			<td class="tit">通知时间：</td>
 			<td>
-				<input name="conferenceInformTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
+				<input name="conferenceInformTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required "
 					value="<fmt:formatDate value="${certificateConference.conferenceInformTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</td>
 			<td class="tit">公司地址：</td>
 			<td>
-				<form:input path="companyAddr" htmlEscape="false" maxlength="120" class="input-xlarge "/>
+				<form:input path="companyAddr" htmlEscape="false" maxlength="120" class="input-xlarge required "/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</td>
 			<td class="tit">经营场所：</td>
 			<td>
-				<form:input path="manageAddr" htmlEscape="false" maxlength="120" class="input-xlarge "/>
+				<form:input path="manageAddr" htmlEscape="false" maxlength="120" class="input-xlarge  required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</td>
 		</tr>
 		<tr>
 			<td class="tit">股东人数：</td>
 			<td>
-				<form:input path="shareholdersNum" htmlEscape="false" maxlength="11" class="input-xlarge "/>
+				<form:input path="shareholdersNum" htmlEscape="false" maxlength="11" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</td>
 			<td class="tit">注册资本：</td>
 			<td>
-				<form:input path="registerFund" htmlEscape="false" maxlength="12" class="input-xlarge "/>
+				<form:input path="registerFund" htmlEscape="false" maxlength="12" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</td>
 			<td class="tit">会议时间：</td>
 			<td>
-				<input name="conferenceTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
+				<input name="conferenceTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
 					value="<fmt:formatDate value="${certificateConference.conferenceTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 				<span class="help-inline"><font color="red">*</font> </span>
@@ -132,19 +132,19 @@
 		<tr>
 			<td class="tit">章程订立日期：</td>
 			<td>
-				<input name="concludeDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
+				<input name="concludeDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
 					value="<fmt:formatDate value="${certificateConference.concludeDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</td>
 			<td class="tit">会议地址：</td>
 			<td>
-				<form:input path="conferenceAddr" htmlEscape="false" maxlength="255" class="input-xlarge "/>
+				<form:input path="conferenceAddr" htmlEscape="false" maxlength="255" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</td>
 			<td class="tit">是否设立董事会：</td>
 			<td>
-				<form:input path="setDirectors" htmlEscape="false" maxlength="6" class="input-xlarge "/>
+				<form:input path="setDirectors" htmlEscape="false" maxlength="6" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</td>
 		</tr>
@@ -180,67 +180,67 @@
 								</td>
 								<td class="tit" style="text-align: center">股东姓名：</td>
 								<td>
-									<input id="certificateConferenceSubList{{idx}}_name" name="certificateConferenceSubList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="25" class="input-small "/>
+									<input id="certificateConferenceSubList{{idx}}_name" name="certificateConferenceSubList[{{idx}}].name" type="text" value="{{row.name}}" maxlength="25" class="input-small required"/>
 								</td>
 								<td  class="tit" style="text-align: center">性别：</td>
 								<td>
-									<input id="certificateConferenceSubList{{idx}}_sex" name="certificateConferenceSubList[{{idx}}].sex" type="text" value="{{row.sex}}" maxlength="10" class="input-small "/>
+									<input id="certificateConferenceSubList{{idx}}_sex" name="certificateConferenceSubList[{{idx}}].sex" type="text" value="{{row.sex}}" maxlength="10" class="input-small required"/>
 								</td>
 								<td  class="tit" style="text-align: center">年龄：</td>
 								<td>
-									<input id="certificateConferenceSubList{{idx}}_age" name="certificateConferenceSubList[{{idx}}].age" type="text" value="{{row.age}}" maxlength="10" class="input-small "/>
+									<input id="certificateConferenceSubList{{idx}}_age" name="certificateConferenceSubList[{{idx}}].age" type="text" value="{{row.age}}" maxlength="10" class="input-small required"/>
 								</td>
 								<td  class="tit" style="text-align: center">籍贯：</td>
 								<td>
-									<input id="certificateConferenceSubList{{idx}}_placeOrigin" name="certificateConferenceSubList[{{idx}}].placeOrigin" type="text" value="{{row.placeOrigin}}" maxlength="64" class="input-small "/>
+									<input id="certificateConferenceSubList{{idx}}_placeOrigin" name="certificateConferenceSubList[{{idx}}].placeOrigin" type="text" value="{{row.placeOrigin}}" maxlength="64" class="input-small required"/>
 								</td>
 								</tr>
 								<tr>
 								<td  class="tit" style="text-align: center">住所：</td>
 								<td>
-									<input id="certificateConferenceSubList{{idx}}_residence" name="certificateConferenceSubList[{{idx}}].residence" type="text" value="{{row.residence}}" maxlength="255" class="input-small "/>
+									<input id="certificateConferenceSubList{{idx}}_residence" name="certificateConferenceSubList[{{idx}}].residence" type="text" value="{{row.residence}}" maxlength="255" class="input-small required"/>
 								</td>
 
 								<td  class="tit" style="text-align: center">以货币出资：</td>
 								<td>
-									<input id="certificateConferenceSubList{{idx}}_currency" name="certificateConferenceSubList[{{idx}}].currency" type="text" value="{{row.currency}}" maxlength="64" class="input-small "/>
+									<input id="certificateConferenceSubList{{idx}}_currency" name="certificateConferenceSubList[{{idx}}].currency" type="text" value="{{row.currency}}" maxlength="64" class="input-small required"/>
 								</td>
 
 								<td class="tit" style="text-align: center">出资方式：</td>
 								<td>
-									<input id="certificateConferenceSubList{{idx}}_contributionType" name="certificateConferenceSubList[{{idx}}].contributionType" type="text" value="{{row.contributionType}}" maxlength="64" class="input-small "/>
+									<input id="certificateConferenceSubList{{idx}}_contributionType" name="certificateConferenceSubList[{{idx}}].contributionType" type="text" value="{{row.contributionType}}" maxlength="64" class="input-small required"/>
 								</td>
 
 								<td class="tit" style="text-align: center">作价出资：</td>
 								<td>
-									<input id="certificateConferenceSubList{{idx}}_contributionPrice" name="certificateConferenceSubList[{{idx}}].contributionPrice" type="text" value="{{row.contributionPrice}}" maxlength="64" class="input-small "/>
+									<input id="certificateConferenceSubList{{idx}}_contributionPrice" name="certificateConferenceSubList[{{idx}}].contributionPrice" type="text" value="{{row.contributionPrice}}" maxlength="64" class="input-small required"/>
 								</td>
 								</tr>
 								<tr>
 								<td class="tit" style="text-align: center">总认缴出资：</td>
 								<td>
-									<input id="certificateConferenceSubList{{idx}}_totalPrice" name="certificateConferenceSubList[{{idx}}].totalPrice" type="text" value="{{row.totalPrice}}" maxlength="64" class="input-small "/>
+									<input id="certificateConferenceSubList{{idx}}_totalPrice" name="certificateConferenceSubList[{{idx}}].totalPrice" type="text" value="{{row.totalPrice}}" maxlength="64" class="input-small required"/>
 								</td>
 								<td class="tit" style="text-align: center">资本缴足日期：</td>
 								<td>
-									<input id="certificateConferenceSubList{{idx}}_payTime" name="certificateConferenceSubList[{{idx}}].payTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
+									<input id="certificateConferenceSubList{{idx}}_payTime" name="certificateConferenceSubList[{{idx}}].payTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
 										value="{{row.payTime}}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 								</td>
 
 								<td class="tit" style="text-align: center">参会状态：</td>
 								<td>
-									<input id="certificateConferenceSubList{{idx}}_attendState" name="certificateConferenceSubList[{{idx}}].attendState" type="text" value="{{row.attendState}}" maxlength="6" class="input-small "/>
+									<input id="certificateConferenceSubList{{idx}}_attendState" name="certificateConferenceSubList[{{idx}}].attendState" type="text" value="{{row.attendState}}" maxlength="6" class="input-small required"/>
 								</td>
 
 								<td class="tit" style="text-align: center">出资金额：</td>
 								<td>
-									<input id="certificateConferenceSubList{{idx}}_fund" name="certificateConferenceSubList[{{idx}}].fund" type="text" value="{{row.fund}}" maxlength="12" class="input-small "/>
+									<input id="certificateConferenceSubList{{idx}}_fund" name="certificateConferenceSubList[{{idx}}].fund" type="text" value="{{row.fund}}" maxlength="12" class="input-small required"/>
 								</td>
 								</tr>
 								<tr>
 								<td class="tit" style="text-align: center">资本占比：</td>
 								<td>
-									<input id="certificateConferenceSubList{{idx}}_sg" name="certificateConferenceSubList[{{idx}}].sg" type="text" value="{{row.sg}}" maxlength="10" class="input-small "/>
+									<input id="certificateConferenceSubList{{idx}}_sg" name="certificateConferenceSubList[{{idx}}].sg" type="text" value="{{row.sg}}" maxlength="10" class="input-small required"/>
 								</td>
 
 								<td class="tit" style="text-align: center">职位：</td>
