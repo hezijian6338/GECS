@@ -145,7 +145,7 @@ public class BusinessLicenseService extends CrudService<BusinessLicenseDao, Busi
 		final String savaPath = "C:\\certificate\\Business\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()
 				+businessLicense.getPersonId()+".pdf";
 		final String realativePath = "/pic/certificate/Business/"+businessLicense.getCertificateName()+"/"+businessLicense.getCertificateName()
-				+businessLicense.getPersonId()+"_itext.pdf";
+				+businessLicense.getPersonId()+"_copy"+"_itext.pdf";
 		/*final String realativePath = "/pic/certificate/Business/"+businessLicense.getCertificateName()+"/"+businessLicense.getCertificateName()
 				+businessLicense.getPersonId()+".pdf";*/
 		final String savaPath_copy = "C:\\certificate\\Business\\"+businessLicense.getCertificateName()+"\\"+businessLicense.getCertificateName()

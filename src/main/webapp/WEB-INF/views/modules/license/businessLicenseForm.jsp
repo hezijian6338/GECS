@@ -260,7 +260,7 @@
 <div class="center clearfix" style="padding-top: 2%;width: 82%;min-width: 1060px;margin-left: auto;margin-right: auto">
 	<ul class="nav nav-tabs">
 		<%--<li><a href="${ctx}/license/businessLicense/">营业执照列表</a></li>--%>
-		<li class="active"><a href="${ctx}/license/businessLicense/form?id=${businessLicense.id}">营业执照<shiro:hasPermission name="license:businessLicense:edit">${not empty businessLicense.id?'修改':'申请'}流程</shiro:hasPermission><shiro:lacksPermission name="license:businessLicense:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"><a href="${ctx}/license/businessLicense/form?id=${businessLicense.id}">网上设立<shiro:hasPermission name="license:businessLicense:edit">${not empty businessLicense.id?'修改':'登记'}</shiro:hasPermission><shiro:lacksPermission name="license:businessLicense:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="businessLicense" action="${ctx}/license/businessLicense/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
@@ -273,7 +273,7 @@
 		<form:hidden id="flag" path="act.flag"/>
 		<sys:message content="${message}"/>
 		<fieldset>
-			<h1 align="center">营业执照审批申请</h1>
+			<h1 align="center" style="margin-bottom: 10px;margin-top: -15px;">企业信息填写</h1>
 			<table class="table-form">
 				<form:hidden path="certificateTypeId"/>
 				<tr>
