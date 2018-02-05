@@ -64,7 +64,7 @@
 </head>
 <body>
 <ul class="nav nav-tabs">
-	<li class="active"><a href="${ctx}/license/businessLicense/">营业执照列表</a></li>
+	<li class="active"><a href="${ctx}/license/businessLicense/">营业执照备案列表</a></li>
 	<%--	<shiro:hasPermission name="license:businessLicense:edit"><li><a href="${ctx}/license/businessLicense/form">营业执照申请流程</a></li></shiro:hasPermission>--%>
 </ul>
 <form:form id="searchForm" modelAttribute="businessLicense" action="${ctx}/license/businessLicense/" method="post" class="breadcrumb form-search">
@@ -170,7 +170,7 @@
 				<a href="${ctx}/license/businessLicense/form?id=${businessLicense.id}">详情</a>
 				<a data-toggle="modal" onclick="licenseInfo('${businessLicense.path}')">预览</a>
 				<a href="javascript:location.href=encodeURI('${ctx}/license/businessLicense/downLoad?certificateName=${businessLicense.certificateName}')">下载</a>
-				<a href="${ctx}/license/businessLicense/delete?id=${businessLicense.id}" onclick="return confirmx('确认要删除该营业执照吗？', this.href)">删除</a>
+				<a href="${ctx}/license/businessLicense/delete?id=${businessLicense.id}" onclick="return confirmx('确认要删除该营业执照吗？', this.href)">备案</a>
 			</td></shiro:hasPermission>
 		</tr>
 	</c:forEach>

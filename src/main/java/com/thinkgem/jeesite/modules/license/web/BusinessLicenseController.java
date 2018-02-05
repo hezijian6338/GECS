@@ -346,5 +346,62 @@ public class BusinessLicenseController extends BaseController {
 //		return "redirect:"+Global.getAdminPath()+"/license/businessLicense/?repage";
 	}
 
+/**
+ * @author 许彩开
+ * @TODO (注：变更列表)
+  * @param businessLicense
+ * @DATE: 2018\2\5 0005 9:21
+ */
+
+	@RequiresPermissions("license:businessLicense:view")
+	@RequestMapping(value = {"changeList"})
+	public String changeList(BusinessLicense businessLicense, HttpServletRequest request, HttpServletResponse response, Model model) {
+		User user = UserUtils.getUser();
+		if (!user.isAdmin()){
+			businessLicense.setCreateBy(user);
+		}
+		Page<BusinessLicense> page = businessLicenseService.findPage(new Page<BusinessLicense>(request, response), businessLicense);
+		model.addAttribute("page", page);
+		return "modules/conference/businessLicense_change_List";
+	}
+
+
+	/**
+	 * @author 许彩开
+	 * @TODO (注：注销列表)
+	 * @param businessLicense
+	 * @DATE: 2018\2\5 0005 9:21
+	 */
+
+	@RequiresPermissions("license:businessLicense:view")
+	@RequestMapping(value = {"cancelList"})
+	public String cancelList(BusinessLicense businessLicense, HttpServletRequest request, HttpServletResponse response, Model model) {
+		User user = UserUtils.getUser();
+		if (!user.isAdmin()){
+			businessLicense.setCreateBy(user);
+		}
+		Page<BusinessLicense> page = businessLicenseService.findPage(new Page<BusinessLicense>(request, response), businessLicense);
+		model.addAttribute("page", page);
+		return "modules/conference/businessLicense_cancel_List";
+	}
+
+	/**
+	 * @author 许彩开
+	 * @TODO (注：备案列表)
+	 * @param businessLicense
+	 * @DATE: 2018\2\5 0005 9:21
+	 */
+
+	@RequiresPermissions("license:businessLicense:view")
+	@RequestMapping(value = {"recordList"})
+	public String recordList(BusinessLicense businessLicense, HttpServletRequest request, HttpServletResponse response, Model model) {
+		User user = UserUtils.getUser();
+		if (!user.isAdmin()){
+			businessLicense.setCreateBy(user);
+		}
+		Page<BusinessLicense> page = businessLicenseService.findPage(new Page<BusinessLicense>(request, response), businessLicense);
+		model.addAttribute("page", page);
+		return "modules/conference/businessLicense_record_List";
+	}
 
 }
