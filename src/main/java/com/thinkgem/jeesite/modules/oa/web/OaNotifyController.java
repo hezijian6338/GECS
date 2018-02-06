@@ -204,9 +204,9 @@ public class OaNotifyController extends BaseController {
 	@RequestMapping(value = "downLoad")
 	public void downLoad(String certificateName,HttpServletRequest request,HttpServletResponse response,RedirectAttributes redirectAttributes){
 		String companyName = certificateName.substring(0,certificateName.indexOf("-"));
-		String savaPath = "E:\\certificate\\Business";
-		String isExsitFile = "E:\\certificate\\Business\\"+companyName;
-		String downLoadPath = "E:\\certificate\\Business\\"+companyName+".zip";
+		String savaPath = "C:\\certificate\\Business";
+		String isExsitFile = "C:\\certificate\\Business\\"+companyName;
+		String downLoadPath = "C:\\certificate\\Business\\"+companyName+".zip";
 		File file = new File(isExsitFile);
 		if (file.exists()){
 			FileUtils.zipFiles(savaPath,companyName,downLoadPath);

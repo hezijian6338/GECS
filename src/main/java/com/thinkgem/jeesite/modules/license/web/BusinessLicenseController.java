@@ -327,6 +327,7 @@ public class BusinessLicenseController extends BaseController {
 		String isExsitFile = "C:\\certificate\\Business\\"+certificateName;
 		String downLoadPath = "C:\\certificate\\Business\\"+certificateName+".zip";
 		File file = new File(isExsitFile);
+		System.out.println("文件是否存在==="+file.exists());
 		if (file.exists()){
 			FileUtils.zipFiles(savaPath,certificateName,downLoadPath);
 			File file1 = new File(downLoadPath);
