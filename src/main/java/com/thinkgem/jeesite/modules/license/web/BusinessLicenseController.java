@@ -315,12 +315,11 @@ public class BusinessLicenseController extends BaseController {
 	 * @author 练浩文
 	 * @TODO (注：下载)
 	 * @param certificateName
-	 * @param request
-	 * @param response
-	 * @param redirectAttributes
+	 * @param request
+	 * @param response
+	 * @param redirectAttributes
 	 * @DATE: 2017/11/20 17:57
 	 */
-//	@RequiresPermissions("license:businessLicense:edit")
 	@RequestMapping(value = "downLoad")
 	public void downLoad(String certificateName,HttpServletRequest request,HttpServletResponse response,RedirectAttributes redirectAttributes){
 		String savaPath = "C:\\certificate\\Business";

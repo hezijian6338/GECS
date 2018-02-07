@@ -28,7 +28,6 @@
         function licenseInfo(s) {
             var rand = Math.random();
             path = s;
-            console.log("+++++++"+path);
             if(path!=""&&path!=null){
                 $('#btn_browse').modal({});
                 url1=path+"?"+rand;
@@ -39,18 +38,6 @@
         }
 	</script>
 	<style type="text/css">
-		.bg-primary {
-			color: #fff;
-			background-color: #337ab7;
-		}
-		a.bg-primary:hover,
-		a.bg-primary:focus {
-			background-color: #286090;
-		}
-
-		.bg-info {
-			background-color: #d9edf7;
-		}
 		.modal {
 			width:900px;
 			margin-left:-450px;
