@@ -17,6 +17,7 @@ import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 
 public class SendMessageUtil {
+    //发送的验证码
     private static String authCode;
 
     /**
@@ -128,8 +129,6 @@ public class SendMessageUtil {
      * @DATE: 2017/10/26 9:33
      */
     public static boolean isValidate(String valiNum){
-//        System.out.println("+++"+randNum);
-
         if (valiNum.equals(authCode)){
             return true;
         }else{

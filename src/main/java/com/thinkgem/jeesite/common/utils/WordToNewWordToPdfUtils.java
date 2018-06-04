@@ -3,12 +3,13 @@ package com.thinkgem.jeesite.common.utils;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+
+import com.thinkgem.jeesite.common.utils.filetopdf.FileToPdf;
 import org.apache.poi.POIXMLDocument;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
@@ -17,7 +18,9 @@ import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 
-public class WorderToNewWordUtils {
+public class WordToNewWordToPdfUtils {
+    
+    
 	/**
      * 根据模板生成新word文档
      * 判断表格是需要替换还是需要插入，判断逻辑有$为替换，表格无$为插入
@@ -27,28 +30,33 @@ public class WorderToNewWordUtils {
      * @param tableList 需要插入的表格信息集合
      * @return 成功返回true,失败返回false
      */
-    public static boolean changWord(String inputUrl, String outputUrl,
+    public static boolean   changWord(String inputUrl, String outputUrl,
             Map<String, String> textMap, List<String[]> tableList) {
-
+        FileOutputStream stream = null;
         //模板转换默认成功
         boolean changeFlag = true;
         try {
             //获取docx解析对象
             XWPFDocument document = new XWPFDocument(POIXMLDocument.openPackage(inputUrl));
             //解析替换文本段落对象
-            WorderToNewWordUtils.changeText(document, textMap);
+            WordToNewWordToPdfUtils.changeText(document, textMap);
             //解析替换表格对象
-            WorderToNewWordUtils.changeTable(document, textMap, tableList);
+            WordToNewWordToPdfUtils.changeTable(document, textMap, tableList);
 
             //生成新的word
             File file = new File(outputUrl);
-            FileOutputStream stream = new FileOutputStream(file);
+            stream = new FileOutputStream(file);
             document.write(stream);
-            stream.close();
-
+            
         } catch (IOException e) {
             e.printStackTrace();
             changeFlag = false;
+        }finally {
+            try {
+                stream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         return changeFlag;
@@ -67,8 +75,8 @@ public class WorderToNewWordUtils {
         for (XWPFParagraph paragraph : paragraphs) {
             //判断此段落时候需要进行替换
             String text = paragraph.getText();
-            if(checkText(text)){
-                List<XWPFRun> runs = paragraph.getRuns();
+            if(checkText(text)){	
+                List<XWPFRun> runs = paragraph.getRuns();     
                 System.out.println(runs.toString());
                 for (XWPFRun run : runs) {
                     //替换模板原来位置
@@ -120,6 +128,7 @@ public class WorderToNewWordUtils {
                     List<XWPFParagraph> paragraphs = cell.getParagraphs();
                     for (XWPFParagraph paragraph : paragraphs) {
                         List<XWPFRun> runs = paragraph.getRuns();
+                        System.out.println(runs.toString());
                         for (XWPFRun run : runs) {
                             run.setText(changeValue(run.toString(), textMap),0);
                         }
@@ -189,19 +198,40 @@ public class WorderToNewWordUtils {
         }
         return value;
     }
-    
+      
     public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String inputUrl = "D:\\template.doc";
-		String outputUrl = "D:\\template1.doc";
+		String inputUrl = "D:\\template.docx";
+		String outputUrl = "D:\\template1.docx";
 		
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append("姓名：");
+		stringBuffer.append("许彩开，");
+		stringBuffer.append("性别：");
+		stringBuffer.append("女， ");
+		stringBuffer.append("籍贯：");
+		stringBuffer.append("广东， ");
+		stringBuffer.append("户口所在地： ");
+		stringBuffer.append("梅州;");
+		stringBuffer.append("       ");
+		stringBuffer.append("2、 ");
+		stringBuffer.append("姓名：  ");
+		stringBuffer.append("许彩开， ");
+		stringBuffer.append("性别：  ");
+		stringBuffer.append("女， ");
+		stringBuffer.append("籍贯： ");
+		stringBuffer.append("广东， ");
+		stringBuffer.append("户口所在地： ");
+		stringBuffer.append("梅州;");
+		stringBuffer.append("  ");
+
+		System.out.println(stringBuffer.toString());
 		Map<String, String> testMap = new HashMap<String,String>();
-		testMap.put("name", "许彩开");
-		testMap.put("age", "52");
-		testMap.put("intelligen", "2500000000000000");
-		testMap.put("sex", "女");
-//		List<String[]> testList = new ArrayList<String[]>();
-		WorderToNewWordUtils.changWord(inputUrl, outputUrl, testMap, null);
+		testMap.put("companyName", "润成科技");
+		testMap.put("personalInfos", stringBuffer.toString());
+
+		WordToNewWordToPdfUtils.changWord(inputUrl, outputUrl, testMap, null);
+        FileToPdf.FileConvertPdf(outputUrl,null);
 		
 		System.out.println("finish");
 		
