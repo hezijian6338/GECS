@@ -206,6 +206,37 @@
             },2000);
         }
 
+        //上传文件
+        function uploadFile(){
+
+            setTimeout(function () {
+                alert("上传成功！")
+            },2000)
+
+			/*var formdata = new FormData($("#tempFileForm")[0]);
+			 $.ajax({
+			 url: "http://localhost:8081/f/verify/certificate/tempUpload?type="+ type +"&random=" + time,//url
+			 type: "POST",//方法类型
+			 data:formdata,
+			 dataType: "json",//预期服务器返回的数据类型
+			 cache: false,
+			 processData: false,
+			 contentType: false,
+			 // url: "http://sign.ieseals.cn:9961/certificate/f/verify/certificate/tempUpload?type="+ type +"&random=" + time,//url
+			 // url:"http://sign.ieseals.cn:9988/sh",
+			 success: function (result) {
+			 console.log(result);//打印服务端返回的数据(调试用)
+			 if (result.resultCode == 200) {
+			 alert("上传成功!");
+			 }
+			 ;
+			 },
+			 error : function() {
+			 alert("上传出错!");
+			 }
+			 });*/
+
+        }
 	</script>
 
 	<meta name="decorator" content="default"/>
@@ -412,6 +443,31 @@
 						<form:input path="handlerPhone" placeholder="请输入手机号码" htmlEscape="false" maxlength="20" class="input-xlarge required"/>
 					</td>
 				</tr>
+				<center>
+					<tr>
+						<td class="tit" rowspan="3">附件上传</td>
+						<td class="tit"><strong>法人身份证复印件</strong></td>
+						<td><input type="file" name="file"></td>
+						<td>
+							<a class="btn btn-primary" data-toggle="modal"
+							   onclick="uploadFile()">点击上传</a>
+						</td>
+					</tr>
+					<tr>
+						<td class="tit"><strong>经办人身份证复印件</strong></td>
+						<td><input type="file" name="file"></td>
+						<td>
+							<a class="btn btn-primary" data-toggle="modal" onclick="uploadFile()">点击上传</a>
+						</td>
+					</tr>
+					<tr>
+						<td class="tit"><strong>房屋租赁合同复印件</strong></td>
+						<td><input type="file" name="file"></td>
+						<td>
+							<a class="btn btn-primary" data-toggle="modal" onclick="uploadFile()">点击上传</a>
+						</td>
+					</tr>
+				</center>
 				<%--<tr>
 					<td colspan="6" class="tit">所入驻建筑信息</td>
 				</tr>

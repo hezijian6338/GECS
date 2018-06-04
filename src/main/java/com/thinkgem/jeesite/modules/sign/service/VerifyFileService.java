@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.security.SignatureException;
 import java.util.List;
@@ -24,7 +25,14 @@ public class VerifyFileService {
     public Condition verifyByFile(String checkPath) {
 
         //获得当前文件
-        checkPath = checkPath.replace("/img","C:/test");
+        if (checkPath.contains("img")){
+            checkPath = checkPath.replace("/img","D:/stamp");
+        } else if (checkPath.contains("pic")){
+            checkPath = checkPath.replace("/pic","D:");
+        } else {
+            return new Condition(Condition.ERROR_CODE, "文件验证失败！查无此验章文件信息！");
+        }
+
 
         try {
             //验证证书信息

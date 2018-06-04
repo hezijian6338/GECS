@@ -14,7 +14,75 @@
         }
     </style>
 
+    <style>
+        #real{
+            /*点击弹出模态框的图片*/
+            margin: 30px;
+            width: 250px;
+            border-radius:6px;
+        }
+        #real:hover{
+            opacity: 0.6;
+        }
+        #mo{
+            display: none;/*隐藏*/
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+            top: 0px;
+            left: 0px;
+            z-index: 1;
+        }
+        #moimg{
+            display: block;
+            margin:25px auto;
+            width: 60%;
+            max-width: 750px;
+        }
+        #caption{
+            text-align: center;
+            margin: 15px auto;
+            width: 60%;
+            max-height: 750px;
+            font-size: 20px;
+            color:#ccc;
+        }
+        #moimg,#caption{
+            -webkit-animation: first 1s;
+            -o-animation: first 1s;
+            animation: first 1s;
+        }
+        @keyframes first{
+            from{transform: scale(0.1);}
+            to{transform: scale(1);}
+        }
+        .close2{
+            font-size: 40px;
+            font-weight: bold;
+            position: absolute;
+            top: 20px;
+            right: 14%;
+            color:#f1f1f1;
+        }
+        .close2:hover,
+        .close2:focus{
+            color:#bbb;
+            cursor:pointer;
+        }
+        @media only screen and(max-width:750px ) {
+            #moimg{
+                width: 100%;
+            }
+        }
+    </style>
+
     <script type="text/javascript">
+
+        //窗口类型(签署的文件)
+        var iframeType = 0;
+
         $(document).ready(function () {
             $("#name").focus();
             $("#inputForm").validate({
@@ -62,7 +130,6 @@
                         break;
                 }
                 fileURL = path + "?" + rand;
-                console.log(fileURL);
 //                fileURL='c:/certificate/BusinessPDF/test-1517282536608.pdf';
                 console.log("fileURL:" + fileURL)
                 $('#displayPdfIframe').attr("src", '${ctxStatic}/pdfjs/web/viewer.html?file=' + fileURL);
@@ -256,7 +323,29 @@
             </tr>
             <center>
                 <tr>
-                    <td class="tit" rowspan="4">附件审批</td>
+                    <td class="tit" rowspan="3">上传材料审批</td>
+                    <td class="tit" colspan="2"><strong>法人身份证复印件</strong></td>
+                    <td>
+                        <a class="btn btn-primary" data-toggle="modal"
+                           onclick="lookPic(1)">查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tit" colspan="2"><strong>经办人身份证复印件</strong></td>
+                    <td>
+                        <a class="btn btn-primary" data-toggle="modal" onclick="lookPic(1)">查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tit" colspan="2"><strong>房屋租赁合同复印件</strong></td>
+                    <td>
+                        <a class="btn btn-primary" data-toggle="modal" onclick="lookPic(2)">查看</a>
+                    </td>
+                </tr>
+            </center>
+            <center>
+                <tr>
+                    <td class="tit" rowspan="4">文件审批</td>
                     <td class="tit" colspan="2"><strong>申请书</strong></td>
                     <td>
                         <a class="btn btn-primary" data-toggle="modal"
@@ -381,5 +470,37 @@
 
     </div>
 </div>
+
+<!--图片模态框 -->
+<div class="motai" id="mo">
+    <span class="close2" id="close2">×</span>
+    <img class="motaiimg" id="moimg">
+</div>
+
+
+<script>
+    function lookPic(type) {
+        var motai=document.getElementById('mo')
+        var moimg=document.getElementById("moimg")
+        var realimg=document.getElementById("real")
+
+        if(type == 1){
+            motai.style.display="block"
+            moimg.src='${ctxStatic}/images/PIC2.JPG'
+        }else if(type ==2){
+            motai.style.display="block"
+            moimg.src='${ctxStatic}/images/PIC1.JPG'
+        }
+
+
+
+        var span=document.getElementById("close2");
+        span.onclick=function(){
+            motai.style.display="none";
+        }
+    }
+
+</script>
+
 </body>
 </html>

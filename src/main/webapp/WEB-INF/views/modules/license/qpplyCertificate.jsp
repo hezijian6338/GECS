@@ -47,6 +47,8 @@
             document.getElementById(x).src=src1
         }
 
+
+        //文件类型
         var fileType = 0;
         function signDoc(type) {
             var path

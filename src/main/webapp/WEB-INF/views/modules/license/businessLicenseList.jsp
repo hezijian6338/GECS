@@ -6,6 +6,8 @@
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 
+        //窗口类型(电子营业执照)
+        var iframeType = 1;
 
         $(document).ready(function() {
 
@@ -32,7 +34,7 @@
             if(path!=""&&path!=null){
                 $('#btn_browse').modal({});
                 url1=path+"?"+rand;
-                $('#displayPdfIframe').attr("src",'${ctxStatic}/pdfjs/web/viewer.html?file='+encodeURIComponent(url1));
+                $('#displayPdfIframe').attr("src",'${ctxStatic}/pdfjs/web/viewer.html?file='+url1);
             }else {
                 alert("执照还未生成！");
             }

@@ -116,6 +116,7 @@ public class VerifyUtil {
 
 					PdfDictionary imageDictionary = image.getDictionary();
 					PRStream maskStream = (PRStream) imageDictionary.getAsStream(PdfName.SMASK);
+					System.out.println("maskStream:"+maskStream);
 					//2.若签章为签名
 					if (maskStream != null)
 					{
@@ -168,6 +169,6 @@ public class VerifyUtil {
 	}
 	
 	public static void main(String[] args) throws GeneralSecurityException, IOException {
-		List list =  getCerInfo("C:\\test\\sign\\done\\23\\test-1517281933598.pdf");
+		List list =  getCerInfo("C:\\0412_demo3.pdf");
 	}
 }

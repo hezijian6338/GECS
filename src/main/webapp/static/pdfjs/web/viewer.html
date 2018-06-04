@@ -65,6 +65,12 @@ See https://github.com/adobe-type-tools/cmap-resources
       }
     </style>
 
+    <script type="text/javascript">
+        //从父窗口传过来的文件类型
+        var iframeType;
+        iframeType = window.parent.iframeType;
+        alert(iframeType);
+    </script>
 <!-- This snippet is used in production (included from viewer.html) -->
 <link rel="resource" type="application/l10n" href="locale/locale.properties">
 <script src="l10n.js"></script>
@@ -416,20 +422,19 @@ See https://github.com/adobe-type-tools/cmap-resources
         checkPath = url.substring(url.lastIndexOf('=')+1, url.length);
         checkPath = checkPath.substring(0,checkPath.lastIndexOf('?'))
     }
-
+alert("checkPath:"+decodeURI(window.location.search))
 
     //验签
     $(function() {
         $("#getVerification").click(function () {
 
             $("#result").html("");
-//            var checkPath = "C:/test/sign/done/23/test-1517392539628.pdf"
 
             $.ajax({
 //                url: "http://sign.ieseals.cn:9961/qm/a/signature/qm/pass/Verify.do?token="+token,
                 url: "http://sign.ieseals.cn:9962/certificate/f/verify/certificate/info?checkPath="+checkPath,
+//                url: "http://localhost:8086/f/verify/certificate/info?checkPath="+checkPath,
                 type: "GET",
-//                data: {'checkPath':checkPath},
                 dataType: "JSON",
                 cache: false,
                 processData: false,
@@ -442,20 +447,29 @@ See https://github.com/adobe-type-tools/cmap-resources
                             var j = i + 1;
 //                            var date = changeDate(result.entity[i].signDate);
                             var html = "<p>序号：" + j + "</p><br>"
-                            html += "<p style='display: inline;'>签&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名："
-                                + "<div style='width:150px;height: 80px;background: white; border-top: 1px solid #838B83;border-left:1px solid #838B83; display: inline-block;'>"
-                                + "<img src='data:image/png;base64," + result.entity[i].signImage + "' style='width:150px;height: 80px;'>"
-                                + "</div></p><br>"
-//                            html += "<p>文档标题：" + result.entity[i].fileName + "</p>"
-                            html += "<p>签章用户：" + result.entity[i].signer + "</p><br>"
-                            html += "<p>签章日期：" + result.entity[i].signDate + "</p><br>"
 
-                            html += "<p>签章有效性：" + result.entity[i].isSignValid + "</p><br>"
-                            html += "<p>证书持有人：" + result.entity[i].cerHolder + "</p><br>"
-                            html += "<p>证书颁发机构：" + result.entity[i].cerAuthority + "</p><br>"
-                            html += "<p>证书有效期：" + result.entity[i].cerDate + "</p><br>"
-                            html += "<p>签章所用证书当前状态：" + result.entity[i].cerState + "</p><br>"
-                            html += "<p>签章原因：" + result.entity[i].cerReason + "</p><br>"
+                            if (iframeType == 0){//签名
+                                html += "<p style='display: inline;'>签&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名："
+                                    + "<div style='width:150px;height: 80px;background: white; border-top: 1px solid #838B83;border-left:1px solid #838B83; display: inline-block;'>"
+                                    + "<img src='data:image/png;base64," + result.entity[i].signImage + "' style='width:150px;height: 80px;'>"
+                                    + "</div></p><br>"
+                            } else if (iframeType == 1){//印章
+                                html += "<p style='display: inline;'>签&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名："
+                                    + "<div style='width:150px;height: 150px;background: white; border-top: 1px solid #838B83;border-left:1px solid #838B83; display: inline-block;'>"
+                                    + "<img src='data:image/png;base64," + result.entity[i].signImage + "' style='width:150px;height: 150px;'>"
+                                    + "</div></p><br>"
+                            }
+
+//                            html += "<p>文档标题：" + result.entity[i].fileName + "</p>"
+                            html += "<p>签章用户：" + result.entity[i].signer + "</p>"
+                            html += "<p>签章日期：" + result.entity[i].signDate + "</p>"
+
+                            html += "<p>签章有效性：" + result.entity[i].isSignValid + "</p>"
+                            html += "<p>证书持有人：" + result.entity[i].cerHolder + "</p>"
+                            html += "<p>证书颁发机构：" + result.entity[i].cerAuthority + "</p>"
+                            html += "<p>证书有效期：" + result.entity[i].cerDate + "</p>"
+                            html += "<p>签章所用证书当前状态：" + result.entity[i].cerState + "</p>"
+                            html += "<p>签章原因：" + result.entity[i].cerReason + "</p>"
                             html += "<p>签章地点：" + result.entity[i].cerLocation + "</p>"
 
                             html += "<p>验证结果：" + result.entity[i].isDocumentUseful + "<img height='40' width='50' src='images/pass3.png'></p>"

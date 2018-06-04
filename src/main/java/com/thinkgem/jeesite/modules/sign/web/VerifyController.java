@@ -20,6 +20,8 @@ import net.sf.json.JSONObject;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 /**
@@ -158,8 +160,11 @@ public class VerifyController extends BaseController{
     @RequestMapping(value="info")
     @ResponseBody
     public String verifyByFile(@RequestParam(value="checkPath")String checkPath,
-                               HttpServletResponse response){
+                               HttpServletResponse response) throws UnsupportedEncodingException {
+
+        checkPath = URLDecoder.decode(checkPath,"utf-8");//解码
         System.out.println("checkPath="+checkPath);
+
         response.setHeader("Access-Control-Allow-Origin", "*");//解决跨域问题
 
         Condition condition = verifyFileService.verifyByFile(checkPath);

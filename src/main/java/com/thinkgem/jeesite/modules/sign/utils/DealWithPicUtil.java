@@ -117,9 +117,8 @@ public class DealWithPicUtil {
                 if(gray < 30){
                      //newPixel = colorToRGB(255  , 255, 255, 255);
                     newPixel = (0 << 24) | (255 << 16) | (255 << 8) | 255;
-                }else{
-                    newPixel = (255 << 24) | (0 << 16) | (0 << 8) | 0;
-
+                }else{//签名黑色
+                    newPixel = (255 << 24) | (255 << 16) | (0 << 8) | 0;
                 }
                 grayImage.setRGB(i, j, newPixel);
             }

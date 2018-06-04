@@ -73,8 +73,8 @@
 <body>
 <div class="header">
     <div class="container">
-        <h3 class="logo">电子证照系统</h3>
-        <a class="back" href="${ctx}/a">返回首页登录</a>
+        <h3 class="logo">商事登记平台</h3>
+        <a class="back" href="/a">返回首页登录</a>
     </div>
 </div>
 <div class="container register">
